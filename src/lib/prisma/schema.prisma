@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  user_id    String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp()
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  role_id String?
+  role    Role?   @relation(fields: [role_id], references: [role_id])
+
+  UserPermissions UserPermission[]
+
+  @@index([role_id])
+  @@index([is_deleted])
+  @@index([created_at])
+}
+
+model Module {
+  module_id  String   @id @default(cuid())
+  name       String   @unique
+  slug       String   @unique
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp()
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  permissions Permission[]
+
+  @@index([is_deleted])
+  @@index([created_at])
+}
+
+model Action {
+  action_id  String   @id @default(cuid())
+  name       String   @unique
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp()
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  permissions Permission[]
+
+  @@index([is_deleted])
+  @@index([created_at])
+}
+
+model Role {
+  role_id     String   @id @default(cuid())
+  name        String   @unique @db.VarChar(100)
+  slug        String
+  description String?  @db.Text
+  is_deleted  Boolean  @default(false)
+  created_at  DateTime @default(now()) @db.Timestamp()
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  rolePermissions RolePermission[]
+  users           User[]
+
+  @@index([is_deleted])
+  @@index([created_at])
+}
+
+model Permission {
+  permission_id String @id @default(cuid())
+
+  module    Module @relation(fields: [module_id], references: [module_id])
+  module_id String
+
+  action    Action @relation(fields: [action_id], references: [action_id])
+  action_id String
+
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp()
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  RolePermissions RolePermission[]
+  UserPermissions UserPermission[]
+
+  @@unique([module_id, action_id])
+  @@index([module_id])
+  @@index([action_id])
+  @@index([is_deleted])
+  @@index([created_at])
+}
+
+model RolePermission {
+  role_permission_id String @id @default(cuid())
+
+  role    Role   @relation(fields: [role_id], references: [role_id])
+  role_id String
+
+  Permission    Permission @relation(fields: [permission_id], references: [permission_id])
+  permission_id String
+
+  @@unique([role_id, permission_id])
+  @@index([role_id])
+  @@index([permission_id])
+}
+
+model UserPermission {
+  user_permission_id String @id @default(cuid())
+
+  user    User   @relation(fields: [user_id], references: [user_id])
+  user_id String
+
+  Permission    Permission @relation(fields: [permission_id], references: [permission_id])
+  permission_id String
+
+  is_deleted Boolean  @default(false)
+  created_at DateTime @default(now()) @db.Timestamp()
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  @@unique([user_id, permission_id])
+  @@index([user_id])
+  @@index([permission_id])
+  @@index([is_deleted])
+  @@index([created_at])
+}

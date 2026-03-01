@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+
+    "noEmit": true,
+    "lib": ["ES2023"],
+    "target": "ESNext",
+    "module": "nodenext",
+    "moduleResolution": "NodeNext",
+    "pretty": true,
+    "skipLibCheck": true,
+    "strict": true,                    
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "baseUrl": ".",                    
+    "ignoreDeprecations": "6.0"      
+  },
+  "include": ["src", "prisma.config.ts"]
+}
