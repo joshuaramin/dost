@@ -1,0 +1,22 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+
+
+.title {
+    font-size: $fnt2xl;
+    font-family: "Alegreya";
+    padding: 0.5rem 0;
+
+    font-size: $fntxl;
+
+
+    @include down(md) {
+        font-size: $fntbase;
+    }
+
+    @include down(md) {
+        font-size: $fntxl;
+    }
+}

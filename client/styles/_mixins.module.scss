@@ -1,0 +1,71 @@
+@use "sass:map";
+@use "./breakpoints.module" as *;
+
+@mixin up($size) {
+    @if map.has-key($breakpoints, $size) {
+        @media (min-width: map.get($breakpoints, $size)) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}
+
+@mixin down($size) {
+    @if map.has-key($breakpoints, $size) {
+        $max: map.get($breakpoints, $size) - 1px;
+
+        @media (max-width: $max) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}
+
+@mixin between($min, $max) {
+    @if map.has-key($breakpoints, $min) and map.has-key($breakpoints, $max) {
+        $min-value: map.get($breakpoints, $min);
+        $max-value: map.get($breakpoints, $max) - 1px;
+
+        @media (min-width: $min-value) and (max-width: $max-value) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint range: #{$min} → #{$max}";
+    }
+}
+
+@mixin only($size) {
+    $keys: map.keys($breakpoints);
+    $index: index($keys, $size);
+
+    @if $index {
+        $min: map.get($breakpoints, $size);
+
+        @if $index < length($keys) {
+            $next: nth($keys, $index + 1);
+            $max: map.get($breakpoints, $next) - 1px;
+
+            @media (min-width: $min) and (max-width: $max) {
+                @content;
+            }
+        }
+
+        @else {
+            @media (min-width: $min) {
+                @content;
+            }
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}

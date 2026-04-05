@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model heatmap_points {
+  id         String                  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  platform   String?
+  keyword    String?
+  sentiment  Decimal?                @db.Decimal
+  engagement Int?
+  weight     Int?
+  geom       Unsupported("geometry")
+  created_at DateTime?               @default(now()) @db.Timestamp(6)
+
+  @@index([geom], map: "idx_heatmap_geom", type: Gist)
+}
+
+model spatial_ref_sys {
+  srid      Int     @id
+  auth_name String? @db.VarChar(256)
+  auth_srid Int?
+  srtext    String? @db.VarChar(2048)
+  proj4text String? @db.VarChar(2048)
+}

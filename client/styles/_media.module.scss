@@ -1,0 +1,65 @@
+@use 'breakpoints' as *;
+
+@mixin up($size) {
+    @if map-has-key($breakpoints, $size) {
+        @media (min-width: map-get($breakpoints, $size)) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}
+
+@mixin down($size) {
+    @if map-has-key($breakpoints, $size) {
+        @media (max-width: map-get($breakpoints, $size)) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}
+
+@mixin between($min, $max) {
+    @if map-has-key($breakpoints, $min) and map-has-key($breakpoints, $max) {
+        @media (min-width: map-get($breakpoints, $min)) and (max-width: map-get($breakpoints, $max)) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint range: #{$min} → #{$max}";
+    }
+}
+
+@mixin only($size) {
+    $keys: map-keys($breakpoints);
+    $index: index($keys, $size);
+
+    @if $index {
+        $min: map-get($breakpoints, $size);
+
+        @if $index < length($keys) {
+            $next: nth($keys, $index + 1);
+            $max: map-get($breakpoints, $next) - 1px;
+
+            @media (min-width: $min) and (max-width: $max) {
+                @content;
+            }
+        }
+
+        @else {
+            @media (min-width: $min) {
+                @content;
+            }
+        }
+    }
+
+    @else {
+        @error "Invalid breakpoint: #{$size}";
+    }
+}

@@ -1,0 +1,117 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5rem 10rem;
+
+
+    form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 15px;
+
+        button {
+            @include down(md) {
+                font-size: font-size(tiny);
+            }
+        }
+    }
+
+    @include down(xxl) {
+        padding: 3rem 7rem;
+    }
+
+    @include down(xl) {
+        padding: 3rem 5rem;
+    }
+
+    @include down(lg) {
+        padding: 3rem 4rem;
+    }
+
+    @include down(md) {
+        padding: 3rem 1.5rem;
+    }
+
+    @include down(sm) {
+        padding: 3rem 1.1rem;
+    }
+
+    h1 {
+        font-size: font-size(3xl);
+        margin: 0;
+        padding: 0;
+
+        @include down(sm) {
+            font-size: font-size(2xl);
+        }
+    }
+
+    p {
+        margin: 0;
+    }
+
+    span {
+        // text-transform: uppercase;
+    }
+
+
+    .reminder {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background-color: color(success, 100);
+        padding: 1rem 5rem;
+        border-radius: 4px;
+
+        p {
+            line-height: 1.8rem;
+            font-size: font-size(base);
+
+            @include down(md) {
+                line-height: 1.4rem;
+                font-size: font-size(tiny);
+            }
+        }
+
+        @include down(xxl) {
+            padding: 2rem 7rem;
+        }
+
+        @include down(xl) {
+            padding: 2rem 5rem;
+        }
+
+        @include down(lg) {
+            padding: 2rem 4rem;
+        }
+
+        @include down(md) {
+            padding: 2rem 1.5rem;
+        }
+
+        @include down(sm) {
+            padding: 1.8rem 1.1rem;
+        }
+    }
+
+    .contact {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 5px;
+
+        span,
+        a {
+            @include down(md) {
+                font-size: font-size(tiny);
+            }
+        }
+    }
+}

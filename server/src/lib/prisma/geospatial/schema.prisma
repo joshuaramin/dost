@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["geo"]
+}
+
+model barangay {
+  ogc_fid        Int                      @id(map: "cities_pkey") @default(autoincrement())
+  geom           Unsupported("geometry")?
+  gid_3          String?                  @db.VarChar
+  gid_0          String?                  @db.VarChar
+  country        String?                  @db.VarChar
+  gid_1          String?                  @db.VarChar
+  name_1         String?                  @db.VarChar
+  nl_name_1      String?                  @db.VarChar
+  gid_2          String?                  @db.VarChar
+  name_2         String?                  @db.VarChar
+  nl_name_2      String?                  @db.VarChar
+  name_3         String?                  @db.VarChar
+  varname_3      String?                  @db.VarChar
+  nl_name_3      String?                  @db.VarChar
+  type_3         String?                  @db.VarChar
+  engtype_3      String?                  @db.VarChar
+  cc_3           String?                  @db.VarChar
+  hasc_3         String?                  @db.VarChar
+  municipalities municipalities?          @relation(fields: [gid_2], references: [gid_2], onDelete: Restrict, map: "fk_barangay_municipality_gid2")
+
+  @@index([geom], map: "idx_barangay_geom", type: Gist)
+  @@index([gid_0], map: "idx_barangay_gid_0")
+  @@index([gid_1], map: "idx_barangay_gid_1")
+  @@index([gid_2], map: "idx_barangay_gid_2")
+  @@index([gid_2], map: "idx_barangay_gid_2_fk")
+  @@index([name_3], map: "idx_barangay_name")
+  @@schema("geo")
+}
+
+model municipalities {
+  ogc_fid   Int                      @id(map: "provinces_pkey") @default(autoincrement())
+  geom      Unsupported("geometry")?
+  gid_2     String?                  @unique(map: "uq_municipalities_gid_2") @db.VarChar
+  gid_0     String?                  @db.VarChar
+  country   String?                  @db.VarChar
+  gid_1     String?                  @db.VarChar
+  name_1    String?                  @db.VarChar
+  nl_name_1 String?                  @db.VarChar
+  name_2    String?                  @db.VarChar
+  varname_2 String?                  @db.VarChar
+  nl_name_2 String?                  @db.VarChar
+  type_2    String?                  @db.VarChar
+  engtype_2 String?                  @db.VarChar
+  cc_2      String?                  @db.VarChar
+  hasc_2    String?                  @db.VarChar
+  barangay  barangay[]
+  provinces provinces?               @relation(fields: [gid_1], references: [gid_1], onDelete: Restrict, map: "fk_municipalities_province_gid1")
+
+  @@index([geom], map: "idx_municipalities_geom", type: Gist)
+  @@index([gid_0], map: "idx_municipalities_gid_0")
+  @@index([gid_1], map: "idx_municipalities_gid_1")
+  @@index([gid_1], map: "idx_municipalities_gid_1_fk")
+  @@index([gid_2], map: "idx_municipalities_gid_2_fk")
+  @@index([name_2], map: "idx_municipalities_name")
+  @@schema("geo")
+}
+
+model provinces {
+  ogc_fid          Int                      @id(map: "regions_pkey") @default(autoincrement())
+  geom             Unsupported("geometry")?
+  gid_1            String?                  @unique(map: "uq_provinces_gid_1") @db.VarChar
+  gid_0            String?                  @db.VarChar
+  country          String?                  @db.VarChar
+  name_1           String?                  @db.VarChar
+  varname_1        String?                  @db.VarChar
+  nl_name_1        String?                  @db.VarChar
+  type_1           String?                  @db.VarChar
+  engtype_1        String?                  @db.VarChar
+  cc_1             String?                  @db.VarChar
+  hasc_1           String?                  @db.VarChar
+  iso_1            String?                  @db.VarChar
+  region_psgc_code String?
+  municipalities   municipalities[]
+  regions          regions?                 @relation(fields: [region_psgc_code], references: [psgc_code], map: "fk_provinces_region_psgc")
+  region_provinces region_provinces[]
+
+  @@index([geom], map: "idx_provinces_geom", type: Gist)
+  @@index([gid_0], map: "idx_provinces_gid_0")
+  @@index([name_1], map: "idx_provinces_name")
+  @@index([region_psgc_code], map: "idx_provinces_region_psgc_code")
+  @@schema("geo")
+}
+
+model regions {
+  id               Int                      @id(map: "regions_pkey1") @default(autoincrement())
+  psgc_code        String                   @unique
+  name             String
+  region_code      String?
+  geom             Unsupported("geometry")?
+  provinces        provinces[]
+  region_provinces region_provinces[]
+
+  @@index([name], map: "idx_regions_name")
+  @@index([psgc_code], map: "idx_regions_psgc_code")
+  @@schema("geo")
+}
+
+model region_provinces {
+  id           Int       @id @default(autoincrement())
+  region_code  String    @db.VarChar(9)
+  province_gid String    @db.VarChar(50)
+  provinces    provinces @relation(fields: [province_gid], references: [gid_1], onDelete: Cascade, onUpdate: NoAction, map: "fk_province")
+  regions      regions   @relation(fields: [region_code], references: [psgc_code], onDelete: Cascade, onUpdate: NoAction, map: "fk_region")
+
+  @@unique([region_code, province_gid], map: "uq_region_province")
+  @@index([province_gid], map: "idx_region_provinces_province")
+  @@index([region_code], map: "idx_region_provinces_region")
+  @@schema("geo")
+}

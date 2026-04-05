@@ -1,0 +1,163 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+.container {
+
+
+    section {
+        width: 100%;
+        padding: 2rem 10rem;
+
+
+        h2 {
+            line-height: 1.5em;
+            font-size: $fnt3xl;
+            color: color(primary, 500);
+            font-family: "Alegreya";
+
+            @include down(md) {
+                font-size: $fnt2xl;
+            }
+        }
+
+        p {
+            font-size: $fntbase;
+            color: color(neutral, 700);
+        }
+
+        @include down(xxl) {
+            padding: 3rem 7rem;
+        }
+
+        @include down(xl) {
+            padding: 3rem 5rem;
+        }
+
+        @include down(lg) {
+            padding: 3rem 4rem;
+        }
+
+        @include down(md) {
+            padding: 3rem 1.5rem;
+        }
+
+        @include down(sm) {
+            padding: 3rem 1.1rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+
+            button {
+                padding: 0.75rem 1.5rem;
+                font-size: $fntbase;
+                background-color: color(primary, 500);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: color(primary, 600);
+                }
+
+                &:nth-child(2) {
+                    border: 1px solid color(primary, 500);
+                    background-color: transparent;
+                    color: color(primary, 500);
+
+                    &:hover {
+                        background-color: color(secondary, 600);
+                    }
+                }
+            }
+        }
+
+
+        .gridContainer {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 2rem;
+
+            @include down(xxl) {
+                grid-template-columns: 1fr;
+            }
+
+            @include down(lg) {
+                grid-template-columns: 1fr;
+            }
+
+            @include down(md) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .methodologyItem {
+            width: 100%;
+            padding: 3rem;
+            border: 1px solid color(neutral, 300);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+
+            @include down(xxl) {
+                padding: 2rem;
+            }
+
+            span {
+
+                font-size: $fntlg;
+                // text-transform: uppercase;
+                font-weight: 500;
+
+                @include down(md) {
+                    font-size: $fnttiny;
+                }
+
+            }
+
+            h3 {
+                // text-transform: uppercase;
+                font-size: $fntxl;
+                font-family: "Alegreya";
+
+                @include down(md) {
+                    font-size: $fntlg;
+                }
+            }
+
+            p {
+                font-size: $fntbase;
+
+                @include down(md) {
+                    font-size: $fnttiny;
+                }
+            }
+
+
+            &:nth-child(odd) {
+                background-color: color(primary, 500);
+                color: #fff;
+
+                p {
+                    color: #fff !important;
+                }
+            }
+
+            &:nth-child(even) {
+                background-color: color(secondary, 500);
+                color: color(primary, 500) !important;
+
+                p {
+                    color: color(primary, 500) !important;
+                }
+            }
+        }
+    }
+}
