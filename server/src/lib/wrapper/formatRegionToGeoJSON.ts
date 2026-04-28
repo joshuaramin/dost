@@ -7,14 +7,23 @@ export const formatMultiAdminToGeoJSON = (rows: any[]) => {
   };
 
   rows.forEach((row) => {
-    groupByLevel[row.level].push({
+    if (!row?.level) return;
+
+    const level = row.level.toLowerCase().trim();
+
+    if (!groupByLevel[level]) {
+      console.warn("Invalid level:", row.level); // 🔥 debug
+      return;
+    }
+
+    groupByLevel[level].push({
       type: "Feature",
       id: row.code,
       geometry: row.geom,
       properties: {
         code: row.code,
         name: row.name,
-        level: row.level,
+        level,
       },
     });
   });
@@ -22,19 +31,19 @@ export const formatMultiAdminToGeoJSON = (rows: any[]) => {
   return {
     regions: {
       type: "FeatureCollection",
-      features: groupByLevel.region,
+      features: groupByLevel.region || [],
     },
     provinces: {
       type: "FeatureCollection",
-      features: groupByLevel.province,
+      features: groupByLevel.province || [],
     },
     municipalities: {
       type: "FeatureCollection",
-      features: groupByLevel.municipality,
+      features: groupByLevel.municipality || [],
     },
     barangays: {
       type: "FeatureCollection",
-      features: groupByLevel.barangay,
+      features: groupByLevel.barangay || [],
     },
   };
 };

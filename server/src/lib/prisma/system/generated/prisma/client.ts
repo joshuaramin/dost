@@ -77,6 +77,16 @@ export type RolePermission = Prisma.RolePermissionModel
  */
 export type ActivityLog = Prisma.ActivityLogModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
  * Model DeviceSession
  * 
  */

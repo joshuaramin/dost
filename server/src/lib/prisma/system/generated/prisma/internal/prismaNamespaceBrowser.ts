@@ -58,6 +58,8 @@ export const ModelName = {
   Permission: 'Permission',
   RolePermission: 'RolePermission',
   ActivityLog: 'ActivityLog',
+  Notification: 'Notification',
+  Organization: 'Organization',
   DeviceSession: 'DeviceSession'
 } as const
 
@@ -83,7 +85,8 @@ export const UserScalarFieldEnum = {
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  role_id: 'role_id'
+  role_id: 'role_id',
+  organization_id: 'organization_id'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -162,6 +165,29 @@ export const ActivityLogScalarFieldEnum = {
 } as const
 
 export type ActivityLogScalarFieldEnum = (typeof ActivityLogScalarFieldEnum)[keyof typeof ActivityLogScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  notification_id: 'notification_id',
+  title: 'title',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  organization_id: 'organization_id',
+  name: 'name',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
 
 
 export const DeviceSessionScalarFieldEnum = {

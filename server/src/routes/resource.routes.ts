@@ -10,9 +10,9 @@ import { withPermission } from "@/lib/helpers/usePermission";
 
 const router = express.Router();
 
-router.get("/", withAuth, getAllResource);
+router.get("/", getAllResource);
 router.get("/:id", withAuth, getResourceById);
-router.post("/", withAuth, createResource);
+router.post("/", createResource);
 router.patch("/:id", withAuth, softDeleteResource);
 
 export default router;

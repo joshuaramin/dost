@@ -10,7 +10,6 @@ import Form from '@/components/form';
 import Button from '@/components/button';
 
 //lib and hooks
-import Header from '@/lib/ui/header';
 import TitleWrapper from '@/lib/ui/titleWrapper';
 import Title from '@/lib/ui/title';
 import Input from '@/components/input'
@@ -19,7 +18,7 @@ import { UserSchema } from '@/lib/validations/user.validation';
 import { UserFormFields } from '@/lib/types/user.type';
 
 import Link from 'next/link'
-import Footer from '@/lib/ui/footer';
+import useFormMutation from '@/lib/hooks/useMutation';
 
 export default function Page() {
 
@@ -30,47 +29,61 @@ export default function Page() {
         }
     })
 
-    const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => { }
+    const mutation = useFormMutation<UserFormFields>({
+        url: "auth/login",
+        key: ["Login"],
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+    const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => {
+        mutation.mutateAsync({ email: data.email }, {
+            onSuccess: (data) => {
+                console.log(data)
+            },
+            onError: () => { }
+        })
+    }
     return (
-        <div>
-            <Header />
-            <div className={styles.container}>
-                <TitleWrapper title='ADVOCAID RESEARCH PORTAL' />
-                <div>
-                    <Title title='Sign in to your Account' />
-                    <p>We{"'"}ll send a one-time 6-digit code to your institutional</p>
-                </div>
-                <Form onSubmit={handleSubmit(onHandleSubmit)}>
-                    <Input
-                        name={'email'} label={'Institutional Email Address'}
-                        isRequired={true}
-                        register={register}
-                        error={errors.email}
-                    />
-                    <Button full={true} variant='secondary'>
-                        <span>Send Verification Code</span>
-                    </Button>
-                </Form>
-                <div className={styles.reminder}>
-                    <p><b>Passwordless & secure</b>. A 6-digit code will be sent to your inbox, valid for 10 minutes. Compliant with <b>RA 10173 — Data Privacy Act.</b></p>
-                </div>
-                <hr />
-                <div className={styles.contact}>
-                    <span> Having Trouble <Link style={{
+        <div className={styles.container}>
+            <TitleWrapper title='ADVOCAID RESEARCH PORTAL' />
+            <div>
+                <Title title='Sign in to your Account' />
+                <p>We{"'"}ll send a one-time 6-digit code to your institutional</p>
+            </div>
+            <Form onSubmit={handleSubmit(onHandleSubmit)}>
+                <Input
+                    name={'email'} label={'Institutional Email Address'}
+                    isRequired={true}
+                    register={register}
+                    error={errors.email}
+                    autoFocus={false}
+                    autoComplete='additional-name'
+                />
+                <Button size="md" full={true} variant='primary'>
+                    <span>SEND VERIFICATION CODE</span>
+                </Button>
+            </Form>
+            <div className={styles.reminder}>
+                <p><b>Passwordless & secure</b>. A 6-digit code will be sent to your inbox, valid for 10 minutes. Compliant with <b>RA 10173 — Data Privacy Act.</b></p>
+            </div>
+            <hr />
+            <div className={styles.contact}>
+                <span> Having Trouble? <Link style={{
+                    color: "#1B4264",
+                    fontWeight: "bold",
+                    textDecoration: "none"
+                }} href="mailto:raminjoshua05@gmail.com">Contact Avocaid Team</Link></span>
+                <Link
+                    style={{
                         color: "#1B4264",
                         fontWeight: "bold",
                         textDecoration: "none"
-                    }} href="mailto:raminjoshua05@gmail.com">Contact Avocaid Team</Link></span>
-                    <Link
-                        style={{
-                            color: "#1B4264",
-                            fontWeight: "bold",
-                            textDecoration: "none"
-                        }}
-                        href="/">RETURN TO HOME</Link>
-                </div>
+                    }}
+                    href="/">RETURN TO HOME</Link>
             </div>
-            <Footer />
         </div>
     )
 }

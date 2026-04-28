@@ -1,0 +1,15 @@
+.container {
+    padding: 3rem 2rem;
+    height: 100vh;
+    overflow-y: auto;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .body {
+        padding: 10px 0;
+    }
+}

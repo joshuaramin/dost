@@ -3,7 +3,7 @@
 @use "@/styles/colors.module" as *;
 
 .btn {
-    padding: 14px 24px;
+    padding: 16px 24px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
@@ -16,21 +16,33 @@
     align-items: center;
 }
 
+
 .full {
     width: 100%;
 }
 
 .primary {
-    background-color: red;
+    background-color: color(primary, 500);
+    color: #fff;
 }
 
 .secondary {
     border: 1px solid color(primary, 500);
     background-color: transparent;
     color: color(primary, 500);
+}
 
-    &:hover {
-        background-color: color(primary, 500);
-        color: #fff;
-    }
+.sm {
+    padding: 12px 14px;
+    font-size: font-size(tiny);
+}
+
+.md {
+    padding: 14px 16px;
+    font-size: font-size(base);
+}
+
+.lg {
+    padding: 16px 24px;
+    font-size: font-size(base);
 }

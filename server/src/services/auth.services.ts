@@ -1,11 +1,21 @@
+import "dotenv/config";
 import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
 import { prisma } from "@/lib/prisma/system/prisma";
 import {
   ActivityLog,
   DeviceSession,
+  Profile,
   User,
 } from "@/lib/prisma/system/generated/prisma/client";
 import jwt from "jsonwebtoken";
+import useSES from "@/lib/helpers/useSES";
+import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
+
+console.log({
+  AWS_REGION: process.env.AWS_REGION,
+  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+});
 
 interface DeviceSessions {
   device_name: string;
@@ -34,10 +44,24 @@ const ActivityLogManage = new PrismaCRUDManager<
   typeof prisma.activityLog
 >(prisma.activityLog, "activity_logs_id");
 
+const ProfileManage = new PrismaCRUDManager<
+  Profile,
+  "profile_id",
+  typeof prisma.profile
+>(prisma.profile, "profile_id");
 export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
-  const user = await UserManage.unique("email", data.email);
-
-  console.log("Data ", user);
+  const user = await UserManage.unique("email", data.email, {
+    select: {
+      email: true,
+      user_id: true,
+      Profile: {
+        select: {
+          first_name: true,
+          last_name: true,
+        },
+      },
+    },
+  });
 
   if (!user) {
     return {
@@ -45,9 +69,25 @@ export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
     };
   }
 
+  const profile = await ProfileManage.readById(user.user_id, "user_id");
+
+  const firstName = profile?.first_name ?? "";
+  const lastName = profile?.last_name ?? "";
+  const fullname = `${firstName} ${lastName}`.trim();
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+  const html = await renderOTPTemplate(fullname, otp);
+
+  await useSES({
+    html,
+    subject: "Your OTP Code",
+    toAddress: [user.email],
+  });
+
   await ActivityLogManage.create({
     type: "Logged In",
-    decription: "Logged in Macintosdh",
+    decription: `Logged in from ${deviceSesssion.device_name}`,
     user: {
       connect: { user_id: user.user_id },
     },
@@ -55,7 +95,7 @@ export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
 
   await DeviceSessionManage.create({
     device_name: deviceSesssion.device_name,
-    expired_at: new Date(Date.now()),
+    expired_at: new Date(Date.now() + 1000 * 60 * 60 * 24), // +1 day
     browser: deviceSesssion.browser,
     os: deviceSesssion.os,
     device_type: deviceSesssion.device_type,
@@ -66,14 +106,19 @@ export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
     user: { connect: { user_id: user.user_id } },
   });
 
-  const token = jwt.sign({ email: user.email, user_id: user.user_id }, "test", {
-    algorithm: "HS512",
-    expiresIn: "1d",
-  });
+  const token = jwt.sign(
+    { email: user.email, user_id: user.user_id },
+    (process.env.JWT_SECRET as string) || "testing",
+    {
+      algorithm: "HS512",
+      expiresIn: "1d",
+    },
+  );
 
   return {
     token,
     user,
+    otp, // optionally return or store securely
   };
 };
 

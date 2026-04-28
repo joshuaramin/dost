@@ -1,0 +1,11 @@
+import React from 'react'
+import Template from '@/lib/ui/template'
+import RolesPermissions from '@/lib/ui/dashboard/system-maintenance/roles-and-permissions/roles-and-permissions'
+
+export default function Page() {
+    return (
+        <Template title='Roles and Permissions'>
+            <RolesPermissions />
+        </Template>
+    )
+}

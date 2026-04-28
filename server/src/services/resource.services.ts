@@ -35,10 +35,12 @@ export const GetAllResource = ({
     select: {
       resource_id: true,
       name: true,
+      slug: true,
       children: {
         select: {
           resource_id: true,
           name: true,
+          slug: true,
         },
       },
       created_at: true,
@@ -55,47 +57,63 @@ export const UpdateResourceById = async (id: string, data: any) => {
   return ResourceManage.update(id, data);
 };
 
-export const CreateResource = async (data: any) => {
-  const slug = useSlugify(data.name);
-  const defaultActions = [
-    "create",
-    "read",
-    "updated",
-    "delete",
-    "deny",
-    "export",
-  ];
+export const CreateResource = async (data: any[]) => {
+  return await prisma.$transaction(async (tx) => {
+    const defaultActions = [
+      "create",
+      "read",
+      "update",
+      "delete",
+      "deny",
+      "export",
+    ];
+    return await Promise.all(
+      data.map(async (resource, resourceIndex: number) => {
+        const slug = useSlugify(resource.name);
 
-  return ResourceManage.create({
-    name: data.name,
-    slug,
-    order: data.order,
-    permissions: {
-      createMany: {
-        data: defaultActions.map((permission) => ({
-          name: `${slug}:${permission}`,
-          slug: useSlugify(permission),
-        })),
-      },
-    },
+        return await tx.resource.create({
+          data: {
+            name: resource.name,
+            slug,
+            order: resource.order ?? resourceIndex + 1,
 
-    children: {
-      create: data.children.map(
-        ({ name }: { name: string }, index: number) => ({
-          name,
-          order: index + 1,
-          slug: useSlugify(name),
-          permissions: {
-            createMany: {
-              data: defaultActions.map((permission) => ({
-                name: `${useSlugify(name)}:${permission}`,
-                slug: useSlugify(permission),
-              })),
+            permissions: {
+              createMany: {
+                data: defaultActions.map((permission: string) => ({
+                  name: `${slug}:${permission}`,
+                  slug: useSlugify(permission),
+                })),
+              },
             },
+
+            children: resource.children?.length
+              ? {
+                  create: resource.children.map(
+                    (child: { name: string }, index: number) => {
+                      const childSlug = useSlugify(child.name);
+
+                      return {
+                        name: child.name,
+                        order: index + 1,
+                        slug: childSlug,
+
+                        permissions: {
+                          createMany: {
+                            data: defaultActions.map((permission: string) => ({
+                              name: `${childSlug}:${permission}`,
+                              slug: useSlugify(permission),
+                            })),
+                          },
+                        },
+                      };
+                    },
+                  ),
+                }
+              : undefined,
           },
-        }),
-      ),
-    },
+        });
+      }),
+    );
   });
 };
 

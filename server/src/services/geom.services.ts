@@ -1,9 +1,17 @@
+import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
 import { geodb } from "@/lib/prisma/geospatial/prisma";
 import { formatMultiAdminToGeoJSON } from "@/lib/wrapper/formatRegionToGeoJSON";
+import { regions } from "@/lib/prisma/geospatial/generated/prisma/client";
+
+const RegionManage = new PrismaCRUDManager<regions, "id", typeof geodb.regions>(
+  geodb.regions,
+  "id",
+  false,
+);
 
 export const GetAllAdminGeo = async () => {
   const rows = await geodb.$queryRawUnsafe<any[]>(`
-    SELECT 
+      SELECT 
       'region' AS level,
       r.psgc_code AS code,
       r.name,
@@ -31,12 +39,16 @@ export const GetAllAdminGeo = async () => {
     UNION ALL
 
     SELECT 
-      'barangay' AS level,
+      'barangays' AS level,
       b.gid_3 AS code,
       b.name_3 AS name,
       ST_AsGeoJSON(b.geom)::json AS geom
-    FROM geo.barangay b;
+    FROM geo.barangays b;
   `);
 
   return formatMultiAdminToGeoJSON(rows);
+};
+
+export const GetAllRegions = async () => {
+  return RegionManage.read();
 };

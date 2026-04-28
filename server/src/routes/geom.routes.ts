@@ -1,8 +1,8 @@
-import { getAllRegions } from "@/controller/geom.controller";
+import { getAllGeom, getRegions } from "@/controller/geom.controller";
 import express from "express";
 
 const router = express.Router();
 
-router.get("/", getAllRegions);
-
+router.get("/geom", getAllGeom);
+router.get("/regions", getRegions);
 export default router;

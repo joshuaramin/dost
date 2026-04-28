@@ -17,6 +17,7 @@ import AuthRouter from "@/routes/auth.routes";
 import ResourceRouter from "@/routes/resource.routes";
 import RegionRouter from "@/routes/geom.routes";
 import NlpRouter from "@/routes/nlp.routes";
+import OrganizationRouter from "@/routes/organization.routes";
 
 export const app = express();
 app.use(
@@ -33,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   expressRateLimiter({
-    limit: 10,
+    limit: 1000,
     windowMs: 60000,
     message: "Too many request, Please try again",
   }),
@@ -50,8 +51,10 @@ app.use("/maintenance/users", UserRouter);
 app.use("/maintenance/resource", ResourceRouter);
 app.use("/maintenance/roles", RolesRouter);
 app.use("/auth", AuthRouter);
-app.use("/maintenance/regions", RegionRouter);
+app.use("/maintenance/geospatial", RegionRouter);
 app.use("/maintenance/nlp", NlpRouter);
+app.use("/maintenance/organization", OrganizationRouter);
+
 app.get("/test-version", withAuth, (req, res) => {
   res.json({
     message: "API versioning works!",

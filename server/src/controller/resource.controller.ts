@@ -7,7 +7,7 @@ import {
   SoftDeleteResource,
   UpdateResourceById,
 } from "@/services/resource.services";
-import { ResoucreSchema } from "@/lib/validation/resource.validation";
+import { ResourceSchema } from "@/lib/validation/resource.validation";
 
 export const getAllResource = async (request: Request, response: Response) => {
   try {
@@ -58,36 +58,35 @@ export const getResourceById = async (request: Request, response: Response) => {
 
 export const createResource = async (request: Request, response: Response) => {
   try {
-    const body = request.body;
-    const parsedData = ResoucreSchema.safeParse(body);
+    const parsedData = ResourceSchema.safeParse(request.body.resource);
 
     if (!parsedData.success) {
-      return {
-        message: parsedData.error.flatten,
-        timestamp: new Date(Date.now()),
-      };
+      return response.status(400).json({
+        message: parsedData.error.flatten(),
+        success: false,
+        timestamp: new Date(),
+      });
     }
 
     const result = await CreateResource(parsedData.data);
 
-    return response.status(200).json({
-      ...result,
-      timestamp: new Date(Date.now()),
+    return response.status(201).json({
+      data: result,
       success: true,
+      timestamp: new Date(),
     });
   } catch (error) {
     return response.status(500).json({
       message: "Internal Server Error",
       success: false,
-      timestamp: new Date(Date.now()),
+      timestamp: new Date(),
     });
   }
 };
-
 export const updateResource = async (request: Request, response: Response) => {
   try {
     const id = String(request.params.id);
-    const parsedData = ResoucreSchema.safeParse(request.body);
+    const parsedData = ResourceSchema.safeParse(request.body);
 
     const result = await UpdateResourceById(id, parsedData.data);
     return response.status(200).json({

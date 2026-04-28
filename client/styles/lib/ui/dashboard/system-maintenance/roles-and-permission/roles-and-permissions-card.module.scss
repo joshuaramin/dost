@@ -1,0 +1,52 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+.container {
+    width: 100%;
+    box-shadow: 0 0 3px 0 #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+
+    .header,
+    .body,
+    .footer {
+        padding: 1rem 0;
+    }
+
+    .header {
+        h1 {
+            font-size: font-size(xl);
+        }
+    }
+
+
+    .body {
+        padding: 20px 0;
+    }
+
+    .footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        border-top: 1px solid #ccc;
+
+
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: color(primary, 500);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            cursor: pointer;
+
+            svg {
+                stroke-width: 1.5px;
+                stroke: #fff;
+            }
+        }
+    }
+}

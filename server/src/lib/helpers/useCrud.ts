@@ -61,10 +61,23 @@ export class PrismaCRUDManager<
     };
   }
 
-  async unique<K extends keyof T>(key: K, value: T[K]): Promise<T | null> {
+  async unique<
+    K extends keyof T,
+    Args extends NonNullable<Parameters<M["findUnique"]>[0]>,
+  >(
+    key: K,
+    value: T[K],
+    options?: {
+      select?: Args["select"];
+      include?: Args["include"];
+    } & Omit<Args, "where" | "select" | "include">,
+  ): Promise<ReturnType<M["findUnique"]>> {
     return this.model.findUnique({
-      where: { [key]: value },
-    } as any);
+      where: { [key]: value } as any,
+      select: options?.select,
+      include: options?.include,
+      ...(options as any),
+    });
   }
 
   async create(data: CreateArgs<M>["data"]): Promise<T> {

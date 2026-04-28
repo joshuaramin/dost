@@ -1,9 +1,12 @@
 import { SecondaryFont } from "@/lib/typography";
 import styles from "./page.module.scss";
+
+//lib and hooks
 import Header from "@/lib/ui/header";
 import Title from "@/lib/ui/title";
 import TitleWrapper from "@/lib/ui/titleWrapper";
 import Footer from "@/lib/ui/footer";
+
 
 export default function Home() {
   return (
@@ -13,7 +16,7 @@ export default function Home() {
         <TitleWrapper title="ADVOCACY RESEARCH PROGRAM" />
         <h2>Transformation Digital Conversation: </h2>
         <h2>into <span style={{
-          color: "#ffa400"
+          color: "#ffd41d"
         }}>HIV INTELLIGENCE</span>:</h2>
         <h2>Geospatial AI for Public Health Surveillance</h2>
       </section>
@@ -71,23 +74,9 @@ export default function Home() {
         </div>
       </section>
       <section>
-        <TitleWrapper title="Partners and Agencies" />
-        <div className="">
-          {[
-            {
-              name: "Department of Health",
-              logo: "http://localhost:3000/dost"
-            }, {}
-          ].map(({ name }, index: number) => (
-            <div key={index} className={styles.pa_card}>
-              <div></div>
-              <div>
-                <h2>{name}</h2>
-              </div>
-            </div>
-          ))}
-        </div>
+        <TitleWrapper title="Surveillance Map" />
       </section>
+
       <section>
         <TitleWrapper title="Research Team" />
       </section>

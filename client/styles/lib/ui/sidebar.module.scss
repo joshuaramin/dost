@@ -1,0 +1,76 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+.container {
+    width: 400px;
+    height: 100vh;
+    padding: 25px;
+    border-right: 1px solid #ccc;
+    background-color: color(primary, 500);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    inset: 0;
+
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #ffff;
+
+        h2,
+        span {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: font-size(xl);
+        }
+
+        span {
+            text-transform: uppercase;
+            font-size: font-size(tiny);
+        }
+    }
+
+    .body {
+        height: 100%;
+        padding: 10px 0;
+        color: #fff;
+
+        .card {
+            padding: 10px 0;
+        }
+
+        .body_header_container {
+            border-bottom: 1px solid #ccc;
+
+            h3 {
+                font-size: font-size(base);
+                font-weight: normal;
+                padding: 5px 0;
+            }
+        }
+
+        .body_body_container {
+            width: 100%;
+            padding: 0 0 0 25px;
+            display: flex;
+            flex-direction: column;
+
+            a {
+                padding: 10px 0;
+                color: #fff;
+                text-decoration: none;
+
+            }
+        }
+
+    }
+
+
+}
