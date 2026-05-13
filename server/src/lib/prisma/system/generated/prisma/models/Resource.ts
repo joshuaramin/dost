@@ -466,14 +466,6 @@ export type ResourceUncheckedCreateNestedManyWithoutParentInput = {
   connect?: Prisma.ResourceWhereUniqueInput | Prisma.ResourceWhereUniqueInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ResourceUpdateOneWithoutChildrenNestedInput = {
   create?: Prisma.XOR<Prisma.ResourceCreateWithoutChildrenInput, Prisma.ResourceUncheckedCreateWithoutChildrenInput>
   connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutChildrenInput

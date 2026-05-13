@@ -122,11 +122,11 @@
 
             h3 {
                 // text-transform: uppercase;
-                font-size: $fntxl;
+                font-size: $fntlg;
                 font-family: "Alegreya";
 
                 @include down(md) {
-                    font-size: $fntlg;
+                    font-size: $fntbase;
                 }
             }
 
@@ -134,7 +134,7 @@
                 font-size: $fntbase;
 
                 @include down(md) {
-                    font-size: $fnttiny;
+                    font-size: $fntbase;
                 }
             }
 

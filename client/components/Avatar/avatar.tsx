@@ -3,7 +3,7 @@ import styles from '@/styles/components/Avatar/avatar.module.scss'
 import Image from 'next/image'
 
 
-type Variant = "small" | "medium" | "large"
+type Variant = "sm" | "md" | "lg"
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     variant: Variant
@@ -12,7 +12,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function Avatar({
-    variant = "medium",
+    variant = "md",
     src,
     alt = "avatar",
     ...rest
@@ -22,7 +22,9 @@ export default function Avatar({
             className={`${styles.container} ${styles[variant]}`}
             {...rest}
         >
-            {src ? <Image src={src} alt={alt} layout='fill' /> : <Image layout='fill' src={"/assets/default.jpg"} alt={alt} />}
+            {src ? <Image src={src} alt={alt} layout='fill' style={{
+                objectFit: "contain"
+            }} /> : <Image layout='fill' src={"/assets/default.jpg"} alt={alt} />}
         </div>
     );
 }

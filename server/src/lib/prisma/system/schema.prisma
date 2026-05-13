@@ -14,8 +14,8 @@ model User {
   is_deleted Boolean  @default(false)
   created_at DateTime @default(now()) @db.Timestamp()
   updated_at DateTime @default(now()) @updatedAt @db.Timestamp()
-
-  Profile Profile?
+  OTP        OTP[]
+  Profile    Profile?
 
   role_id String?
   role    Role?   @relation(fields: [role_id], references: [role_id])
@@ -29,6 +29,27 @@ model User {
   @@index([role_id])
   @@index([is_deleted])
   @@index([created_at])
+}
+
+model OTP {
+  otp_id       String   @id @default(cuid())
+  identifier   String   @default("email") @db.VarChar(255)
+  code_hash    String   @db.VarChar(255)
+  type         String   @default("login")
+  expires_at   DateTime
+  is_used      Boolean  @default(false)
+  attempts     Int      @default(0)
+  max_attempts Int      @default(5)
+  ip_address   String?  @db.VarChar(100)
+  user_agent   String?
+
+  user    User?   @relation(fields: [user_id], references: [user_id])
+  user_id String?
+
+  created_at DateTime @default(now())
+
+  @@index([identifier, type])
+  @@index([expires_at])
 }
 
 model Profile {
@@ -134,7 +155,10 @@ model Notification {
 
 model Organization {
   organization_id String   @id @default(cuid())
+  logo            String
   name            String   @db.VarChar(100)
+  address         String?
+  contact         String
   is_deleted      Boolean  @default(false) @db.Boolean
   created_at      DateTime @default(now()) @db.Timestamp()
   updated_at      DateTime @default(now()) @updatedAt @db.Timestamp()

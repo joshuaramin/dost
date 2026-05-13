@@ -26,7 +26,10 @@ export type AggregateOrganization = {
 
 export type OrganizationMinAggregateOutputType = {
   organization_id: string | null
+  logo: string | null
   name: string | null
+  address: string | null
+  contact: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -34,7 +37,10 @@ export type OrganizationMinAggregateOutputType = {
 
 export type OrganizationMaxAggregateOutputType = {
   organization_id: string | null
+  logo: string | null
   name: string | null
+  address: string | null
+  contact: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -42,7 +48,10 @@ export type OrganizationMaxAggregateOutputType = {
 
 export type OrganizationCountAggregateOutputType = {
   organization_id: number
+  logo: number
   name: number
+  address: number
+  contact: number
   is_deleted: number
   created_at: number
   updated_at: number
@@ -52,7 +61,10 @@ export type OrganizationCountAggregateOutputType = {
 
 export type OrganizationMinAggregateInputType = {
   organization_id?: true
+  logo?: true
   name?: true
+  address?: true
+  contact?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -60,7 +72,10 @@ export type OrganizationMinAggregateInputType = {
 
 export type OrganizationMaxAggregateInputType = {
   organization_id?: true
+  logo?: true
   name?: true
+  address?: true
+  contact?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -68,7 +83,10 @@ export type OrganizationMaxAggregateInputType = {
 
 export type OrganizationCountAggregateInputType = {
   organization_id?: true
+  logo?: true
   name?: true
+  address?: true
+  contact?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -149,7 +167,10 @@ export type OrganizationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 
 export type OrganizationGroupByOutputType = {
   organization_id: string
+  logo: string
   name: string
+  address: string | null
+  contact: string
   is_deleted: boolean
   created_at: Date
   updated_at: Date
@@ -178,7 +199,10 @@ export type OrganizationWhereInput = {
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   organization_id?: Prisma.StringFilter<"Organization"> | string
+  logo?: Prisma.StringFilter<"Organization"> | string
   name?: Prisma.StringFilter<"Organization"> | string
+  address?: Prisma.StringNullableFilter<"Organization"> | string | null
+  contact?: Prisma.StringFilter<"Organization"> | string
   is_deleted?: Prisma.BoolFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
@@ -187,7 +211,10 @@ export type OrganizationWhereInput = {
 
 export type OrganizationOrderByWithRelationInput = {
   organization_id?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  contact?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -199,7 +226,10 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
+  logo?: Prisma.StringFilter<"Organization"> | string
   name?: Prisma.StringFilter<"Organization"> | string
+  address?: Prisma.StringNullableFilter<"Organization"> | string | null
+  contact?: Prisma.StringFilter<"Organization"> | string
   is_deleted?: Prisma.BoolFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
@@ -208,7 +238,10 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
 
 export type OrganizationOrderByWithAggregationInput = {
   organization_id?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  contact?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -222,7 +255,10 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   OR?: Prisma.OrganizationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.OrganizationScalarWhereWithAggregatesInput | Prisma.OrganizationScalarWhereWithAggregatesInput[]
   organization_id?: Prisma.StringWithAggregatesFilter<"Organization"> | string
+  logo?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   name?: Prisma.StringWithAggregatesFilter<"Organization"> | string
+  address?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  contact?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   is_deleted?: Prisma.BoolWithAggregatesFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
@@ -230,7 +266,10 @@ export type OrganizationScalarWhereWithAggregatesInput = {
 
 export type OrganizationCreateInput = {
   organization_id?: string
+  logo: string
   name: string
+  address?: string | null
+  contact: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -239,7 +278,10 @@ export type OrganizationCreateInput = {
 
 export type OrganizationUncheckedCreateInput = {
   organization_id?: string
+  logo: string
   name: string
+  address?: string | null
+  contact: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -248,7 +290,10 @@ export type OrganizationUncheckedCreateInput = {
 
 export type OrganizationUpdateInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -257,7 +302,10 @@ export type OrganizationUpdateInput = {
 
 export type OrganizationUncheckedUpdateInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -266,7 +314,10 @@ export type OrganizationUncheckedUpdateInput = {
 
 export type OrganizationCreateManyInput = {
   organization_id?: string
+  logo: string
   name: string
+  address?: string | null
+  contact: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -274,7 +325,10 @@ export type OrganizationCreateManyInput = {
 
 export type OrganizationUpdateManyMutationInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -282,7 +336,10 @@ export type OrganizationUpdateManyMutationInput = {
 
 export type OrganizationUncheckedUpdateManyInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -295,7 +352,10 @@ export type OrganizationNullableScalarRelationFilter = {
 
 export type OrganizationCountOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -303,7 +363,10 @@ export type OrganizationCountOrderByAggregateInput = {
 
 export type OrganizationMaxOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -311,7 +374,10 @@ export type OrganizationMaxOrderByAggregateInput = {
 
 export type OrganizationMinOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
+  logo?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  contact?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -335,7 +401,10 @@ export type OrganizationUpdateOneWithoutUserNestedInput = {
 
 export type OrganizationCreateWithoutUserInput = {
   organization_id?: string
+  logo: string
   name: string
+  address?: string | null
+  contact: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -343,7 +412,10 @@ export type OrganizationCreateWithoutUserInput = {
 
 export type OrganizationUncheckedCreateWithoutUserInput = {
   organization_id?: string
+  logo: string
   name: string
+  address?: string | null
+  contact: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -367,7 +439,10 @@ export type OrganizationUpdateToOneWithWhereWithoutUserInput = {
 
 export type OrganizationUpdateWithoutUserInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,7 +450,10 @@ export type OrganizationUpdateWithoutUserInput = {
 
 export type OrganizationUncheckedUpdateWithoutUserInput = {
   organization_id?: Prisma.StringFieldUpdateOperationsInput | string
+  logo?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contact?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -414,7 +492,10 @@ export type OrganizationCountOutputTypeCountUserArgs<ExtArgs extends runtime.Typ
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   organization_id?: boolean
+  logo?: boolean
   name?: boolean
+  address?: boolean
+  contact?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -424,7 +505,10 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   organization_id?: boolean
+  logo?: boolean
   name?: boolean
+  address?: boolean
+  contact?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -432,7 +516,10 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   organization_id?: boolean
+  logo?: boolean
   name?: boolean
+  address?: boolean
+  contact?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -440,13 +527,16 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 
 export type OrganizationSelectScalar = {
   organization_id?: boolean
+  logo?: boolean
   name?: boolean
+  address?: boolean
+  contact?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"organization_id" | "name" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"organization_id" | "logo" | "name" | "address" | "contact" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   User?: boolean | Prisma.Organization$UserArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
@@ -461,7 +551,10 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     organization_id: string
+    logo: string
     name: string
+    address: string | null
+    contact: string
     is_deleted: boolean
     created_at: Date
     updated_at: Date
@@ -890,7 +983,10 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
  */
 export interface OrganizationFieldRefs {
   readonly organization_id: Prisma.FieldRef<"Organization", 'String'>
+  readonly logo: Prisma.FieldRef<"Organization", 'String'>
   readonly name: Prisma.FieldRef<"Organization", 'String'>
+  readonly address: Prisma.FieldRef<"Organization", 'String'>
+  readonly contact: Prisma.FieldRef<"Organization", 'String'>
   readonly is_deleted: Prisma.FieldRef<"Organization", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Organization", 'DateTime'>

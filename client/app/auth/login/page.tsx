@@ -1,31 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
-import React from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import styles from '@/styles/lib/ui/auth/login.module.scss';
+import store2 from 'store2'
 import { SubmitHandler } from 'react-hook-form';
 
-
 //components
-import Form from '@/components/form';
-import Button from '@/components/button';
+import Form from '@/components/Form/form';
+import Button from '@/components/Button/button';
+import Input from '@/components/Input/input'
 
 //lib and hooks
 import TitleWrapper from '@/lib/ui/titleWrapper';
 import Title from '@/lib/ui/title';
-import Input from '@/components/input'
 import useFormHook from '@/lib/hooks/useFormHook';
 import { UserSchema } from '@/lib/validations/user.validation';
 import { UserFormFields } from '@/lib/types/user.type';
 
-import Link from 'next/link'
 import useFormMutation from '@/lib/hooks/useMutation';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
+import Text from '@/components/Typography/Text/text';
 
 export default function Page() {
 
-    const { register, errors, handleSubmit } = useFormHook({
+    const store = store2
+    const router = useRouter();
+
+    const { register, errors, handleSubmit, reset } = useFormHook({
         schema: UserSchema,
         defaultValues: {
-            email: ""
+            email: "",
         }
     })
 
@@ -39,11 +45,34 @@ export default function Page() {
     })
 
     const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => {
-        mutation.mutateAsync({ email: data.email }, {
-            onSuccess: (data) => {
-                console.log(data)
+        mutation.mutate({ email: data.email }, {
+            onSuccess: (res: any) => {
+
+
+                toastSuccess({
+                    title: "Verification Sent",
+                    body: "Check your email for the 6-digit code.",
+                })
+
+                store.set("email", res.data.email);
+
+                reset({
+                    email: "",
+                })
+
+                setTimeout(() => {
+                    router.push(`/auth/verification?email=${res.data.email}`)
+                }, 800)
             },
-            onError: () => { }
+            onError: (error: any) => {
+                toastError({
+                    title: "Login Failed",
+                    body:
+                        error?.response?.data?.data?.message ||
+                        error?.message ||
+                        "Something went wrong",
+                });
+            },
         })
     }
     return (
@@ -62,7 +91,7 @@ export default function Page() {
                     autoFocus={false}
                     autoComplete='additional-name'
                 />
-                <Button size="md" full={true} variant='primary'>
+                <Button size="lg" full={true} variant='primary'>
                     <span>SEND VERIFICATION CODE</span>
                 </Button>
             </Form>

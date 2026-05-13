@@ -6,8 +6,8 @@ import expressRateLimiter from "express-rate-limit";
 dotenv.config();
 
 //library
-import { createApiVersionMiddleware } from "@/lib/middleware.ts/api.middleware";
-import { responseWrapperMiddleware } from "@/lib/middleware.ts/reponse.middleware";
+import { createApiVersionMiddleware } from "@/lib/common/middleware.ts/api.middleware";
+import { responseWrapperMiddleware } from "@/lib/common/middleware.ts/reponse.middleware";
 import { withAuth } from "@/lib/helpers/useAuth";
 
 // routers
@@ -18,6 +18,7 @@ import ResourceRouter from "@/routes/resource.routes";
 import RegionRouter from "@/routes/geom.routes";
 import NlpRouter from "@/routes/nlp.routes";
 import OrganizationRouter from "@/routes/organization.routes";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
 
 export const app = express();
 app.use(
@@ -36,16 +37,19 @@ app.use(
   expressRateLimiter({
     limit: 1000,
     windowMs: 60000,
+    standardHeaders: true,
+    legacyHeaders: true,
     message: "Too many request, Please try again",
   }),
 );
 app.use(
   cors({
     credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTION"],
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
     origin: ["http://localhost:3000"],
   }),
 );
+
 app.use(responseWrapperMiddleware);
 app.use("/maintenance/users", UserRouter);
 app.use("/maintenance/resource", ResourceRouter);
@@ -61,6 +65,7 @@ app.get("/test-version", withAuth, (req, res) => {
     api_version: req.apiVersionInfo,
   });
 });
+app.use(errorHandler);
 
 app.listen(4000, () => {
   console.log(`Server is running at port http://localhost:4000/`);

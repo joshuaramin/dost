@@ -3,6 +3,7 @@ import { UserInterface } from "@/lib/interface/user.interface";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, User } from "@/lib/prisma/system/generated/prisma/client";
 import { UserWhereInput } from "@/lib/prisma/system/generated/prisma/models";
+import { AppError } from "@/lib/common/appError";
 
 const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   prisma.user,
@@ -45,6 +46,10 @@ export const GetUserById = async (data: any) => {
 };
 
 export const CreateUser = async (data: any) => {
+  const user = await UserManage.readById(data.email, "email");
+
+  if (user) throw new AppError("Email address is already exist", 409);
+
   return UserManage.create({
     email: data.email,
     Profile: {

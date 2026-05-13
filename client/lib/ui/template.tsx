@@ -1,3 +1,5 @@
+"use client"
+
 import React, { ReactNode } from 'react'
 import styles from '@/styles/lib/ui/template.module.scss'
 import Title from './title'

@@ -1,4 +1,4 @@
-import { GetAllAdminGeo, GetAllRegions } from "@/services/geom.services";
+import { GetAllAdminGeo, GetRegionHierarchy } from "@/services/geom.services";
 import { Request, Response } from "express";
 
 export const getAllGeom = async (request: Request, response: Response) => {
@@ -20,20 +20,22 @@ export const getAllGeom = async (request: Request, response: Response) => {
   }
 };
 
-export const getRegions = async (request: Request, response: Response) => {
+export const getRegions = async (req: Request, res: Response) => {
   try {
-    const result = await GetAllRegions();
-    return response.status(200).json({
-      ...result,
-      timestamp: new Date(Date.now()),
+    const data = await GetRegionHierarchy();
+
+    return res.status(200).json({
       success: true,
+      data,
+      timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.log(error);
-    return response.status(500).json({
-      message: "Internal Server Error",
+    console.error("getRegions error:", error);
+
+    return res.status(500).json({
       success: false,
-      timestamp: new Date(Date.now()),
+      message: "Internal Server Error",
+      timestamp: new Date().toISOString(),
     });
   }
 };

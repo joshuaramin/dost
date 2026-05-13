@@ -41,6 +41,12 @@ export const GetAllResource = ({
           resource_id: true,
           name: true,
           slug: true,
+          permissions: {
+            select: {
+              permission_id: true,
+              name: true,
+            },
+          },
         },
       },
       created_at: true,

@@ -1,15 +1,54 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import styles from "@/styles/lib/ui/dashboard/surviellance/map.module.scss";
 
 import Title from "@/lib/ui/title";
+import useFormQuery from "@/lib/hooks/useQuery";
+import Text from "@/components/Typography/Text/text";
+import SkeletonRegionProvince from "../../loading/Map/SkeletonRegionProvince";
+
+
+type Province = {
+    code: string
+    name: string
+    bounds: any
+}
+
+type Region = {
+    region_code: string
+    region_name: string
+    bounds: any
+    provinces: Province[]
+}
+
 
 export default function MapUI() {
     const mapRef = useRef<HTMLDivElement | null>(null);
     const mapInstance = useRef<maplibregl.Map | null>(null);
+
+
+    const { data, isLoading, error } = useFormQuery({
+        key: ["Regions"],
+        url: "maintenance/geospatial/geom"
+    })
+
+
+
+    const [regions, setRegions] = useState<Region[]>([])
+
+    useEffect(() => {
+        const load = async () => {
+            const res = await fetch("http://localhost:4000/maintenance/geospatial/hierarchy")
+            const json = await res.json()
+            setRegions(json.data.data)
+        }
+        load()
+    }, [])
+
 
     useEffect(() => {
         if (!mapRef.current || mapInstance.current) return;
@@ -22,12 +61,19 @@ export default function MapUI() {
             style: `https://maps.geo.${region}.amazonaws.com/v2/styles/Standard/descriptor?key=${apiKey}&color-scheme=Light`,
             center: [121.7740, 12.9000],
             zoom: 5.1,
+            scrollZoom: false,
+            zoomSnap: 0
         });
 
         map.on("load", async () => {
             const res = await fetch("http://localhost:4000/maintenance/geospatial/geom");
             const data = await res.json();
 
+
+
+            if (!res) {
+                return null
+            }
 
             console.log(data)
             const regionsFeatures = data.data.regions.features.filter(
@@ -122,9 +168,6 @@ export default function MapUI() {
                 },
             });
 
-            // -----------------------------------
-            // MUNICIPALITIES
-            // -----------------------------------
             map.addLayer({
                 id: "municipalities-fill",
                 type: "fill",
@@ -216,15 +259,54 @@ export default function MapUI() {
         };
     }, []);
 
+
+
+
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
-                <div>
+                <div className={styles.header}>
                     <Title title="Geospatial Signal map" />
-                    <span>Province Level</span>
+                    <Text>Regions and Provincial Level</Text>
+                </div>
+
+
+                <div className={styles.rp}>
+                    {regions.length > 0 ? regions.map((region) => (
+                        <div key={region.region_code}>
+                            <div className={styles.region_headers}>
+                                <h2>{region.region_name}</h2>
+                            </div>
+                            <div className={styles.provinces}>
+                                {region.provinces.map((p) => (
+                                    <div className={styles.provinces_name} key={p.code}>
+                                        <span>{p.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )) : <>
+
+                        {
+                            Array.from({ length: 4 }).map((node, index) => (
+                                <SkeletonRegionProvince key={index} />
+                            ))
+                        }</>}
+
                 </div>
             </div>
             <div ref={mapRef} style={{ width: "100%", height: "100vh" }} />
+            <div className={styles.legends}>
+                <Title title="Heat Map Symbology" />
+                <div className={styles.grid}>
+                    {Array.from({ length: 4 }).map((node, index) => (
+                        <div className={styles.critical} key={index}>
+                            <div className={styles.box}> </div>
+                            <Text>...</Text>
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

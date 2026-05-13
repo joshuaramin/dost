@@ -2,16 +2,23 @@
 
 import React from "react";
 import Image from "next/image";
-import styles from "@/styles/lib/ui/sidebar.module.scss";
-import Title from "./title";
-import useFormQuery from "../hooks/useQuery";
-import { PrimaryFont } from "../typography";
-import { ResourceResult } from "@/lib/interface/resource/resource.interface";
+import styles from "@/styles/lib/ui/dashboard/sidebar.module.scss";
+import Title from "../title";
 import Link from "next/link";
-import Profile from "./dashboard/profile";
-import Avatar from "@/components/avatar";
+import Profile from "./profile";
 
-export default function Sidebar() {
+
+//components
+import Avatar from "@/components/Avatar/avatar";
+
+
+//lib & hooks
+import { PrimaryFont } from "@/lib/typography";
+import useFormQuery from "@/lib/hooks/useQuery";
+import { ResourceResult } from "@/lib/interface/resource/resource.interface";
+import SkeletonSidebar from "../loading/SkeletonSidebar";
+
+export default function DashboardSidebar() {
 
     const { data, isLoading, error } = useFormQuery<ResourceResult>({
         key: ["Resources"],
@@ -25,15 +32,17 @@ export default function Sidebar() {
 
     const edges = data?.data.edges ?? []
     if (isLoading) {
-        return <div className={styles.container}>Loading...</div>;
+        return <aside className={styles.container}>
+            <SkeletonSidebar />
+        </aside>
     }
 
     return (
         <aside className={styles.container}>
             <div className={styles.header}>
-                <Avatar variant="large" src="/assets/logo.png" />
+                <Avatar variant="lg" src="/assets/logo.png" />
                 <div>
-                    <Title title="ADOVAID" />
+                    <Title title="ADVOCAID" />
                     <span>Advocacy Program</span>
                 </div>
             </div>

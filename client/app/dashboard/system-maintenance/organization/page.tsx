@@ -1,10 +1,11 @@
+import Organization from '@/lib/ui/dashboard/system-maintenance/organization/organization'
 import Template from '@/lib/ui/template'
 import React from 'react'
 
 export default function Page() {
     return (
-        <Template title='Organization'>
-            asd
+        <Template title='Organizations'>
+            <Organization />
         </Template>
     )
 }

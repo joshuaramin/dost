@@ -1,0 +1,27 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+.container {
+    width: 100%;
+
+    .grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+
+        @include down(xl) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include down(lg) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @include down(sm) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}

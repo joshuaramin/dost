@@ -4,5 +4,5 @@ import express from "express";
 const router = express.Router();
 
 router.get("/geom", getAllGeom);
-router.get("/regions", getRegions);
+router.get("/hierarchy", getRegions);
 export default router;

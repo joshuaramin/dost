@@ -1,6 +1,6 @@
 "use client"
 
-import Avatar from '@/components/avatar'
+import Avatar from '@/components/Avatar/avatar'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { TbSettings, TbBell } from 'react-icons/tb'
@@ -13,7 +13,7 @@ export default function Profile() {
     return (
         <div className={styles.footer}>
             <div className={styles.col1}>
-                <Avatar variant="medium" />
+                <Avatar variant="md" />
                 <div>
                     <h2>John Doe</h2>
                     <span>Developer</span>

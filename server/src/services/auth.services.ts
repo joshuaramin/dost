@@ -4,18 +4,15 @@ import { prisma } from "@/lib/prisma/system/prisma";
 import {
   ActivityLog,
   DeviceSession,
+  OTP,
   Profile,
   User,
 } from "@/lib/prisma/system/generated/prisma/client";
 import jwt from "jsonwebtoken";
 import useSES from "@/lib/helpers/useSES";
 import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
-
-console.log({
-  AWS_REGION: process.env.AWS_REGION,
-  AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
-  AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-});
+import { generateOTP, hashOTP } from "@/utils/otpGenerator";
+import { AppError } from "@/lib/common/appError";
 
 interface DeviceSessions {
   device_name: string;
@@ -32,6 +29,11 @@ const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   "user_id",
 );
 
+const OTPManage = new PrismaCRUDManager<OTP, "otp_id", typeof prisma.oTP>(
+  prisma.oTP,
+  "otp_id",
+);
+
 const DeviceSessionManage = new PrismaCRUDManager<
   DeviceSession,
   "device_sessions_id",
@@ -44,63 +46,116 @@ const ActivityLogManage = new PrismaCRUDManager<
   typeof prisma.activityLog
 >(prisma.activityLog, "activity_logs_id");
 
-const ProfileManage = new PrismaCRUDManager<
-  Profile,
-  "profile_id",
-  typeof prisma.profile
->(prisma.profile, "profile_id");
-export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
-  const user = await UserManage.unique("email", data.email, {
-    select: {
-      email: true,
-      user_id: true,
-      Profile: {
-        select: {
-          first_name: true,
-          last_name: true,
-        },
+export const AuthLogin = async (data: any, deviceSession: DeviceSessions) => {
+  const recent = await prisma.oTP.count({
+    where: {
+      identifier: data.email,
+      created_at: {
+        gte: new Date(Date.now() - 60 * 1000),
       },
     },
   });
 
-  if (!user) {
-    return {
-      message: "Email Address is not found",
-    };
+  if (recent >= 3) {
+    throw new AppError("Too many request. Try again later.", 500);
   }
 
-  const profile = await ProfileManage.readById(user.user_id, "user_id");
+  await prisma.oTP.updateMany({
+    where: { identifier: data.email, is_used: false },
+    data: { is_used: true },
+  });
 
-  const firstName = profile?.first_name ?? "";
-  const lastName = profile?.last_name ?? "";
-  const fullname = `${firstName} ${lastName}`.trim();
+  const code = generateOTP();
+  const code_hash = hashOTP(code);
 
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  await OTPManage.create({
+    identifier: data.email,
+    type: "login",
+    code_hash,
+    expires_at: new Date(Date.now() + 10 * 60 * 1000),
+    ip_address: deviceSession.ip_address,
+    user_agent: deviceSession.user_agent,
+  });
 
-  const html = await renderOTPTemplate(fullname, otp);
+  const user = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
+
+  if (!user) {
+    throw new AppError("Email address is not found", 400);
+  }
+
+  const profile = await prisma.profile.findFirst({
+    where: { User: { email: data.email } },
+  });
+
+  const fullname = profile?.first_name + " " + profile?.last_name;
+
+  const html = await renderOTPTemplate(fullname, code);
 
   await useSES({
     html,
-    subject: "Your OTP Code",
-    toAddress: [user.email],
+    subject: "One-Time Password",
+    toAddress: [data.email],
   });
 
-  await ActivityLogManage.create({
-    type: "Logged In",
-    decription: `Logged in from ${deviceSesssion.device_name}`,
-    user: {
-      connect: { user_id: user.user_id },
+  return { email: data.email, success: true };
+};
+
+export const AuthVerfiy = async (
+  email: string,
+  data: any,
+  deviceSession: DeviceSessions,
+) => {
+  const hashed = hashOTP(data.code);
+
+  const otp = await prisma.oTP.findFirst({
+    where: {
+      identifier: email,
+      type: "login",
+      is_used: false,
     },
+    orderBy: { created_at: "desc" },
   });
 
+  if (!otp) {
+    throw new AppError("Invalid or expired OTP", 400);
+  }
+
+  if (otp.expires_at < new Date()) {
+    throw new AppError("One-Time Password expired", 400);
+  }
+
+  if (otp.attempts >= otp.max_attempts) {
+    throw new AppError("Too many attempts", 429);
+  }
+
+  if (otp.code_hash !== hashed) {
+    await prisma.oTP.update({
+      where: { otp_id: otp.otp_id },
+      data: { attempts: { increment: 1 } },
+    });
+
+    throw new AppError("Invalid Code", 400);
+  }
+
+  await OTPManage.update(otp.otp_id, {
+    is_used: true,
+  });
+
+  let user = await prisma.user.findFirst({ where: { email: data.email } });
+
+  if (!user) {
+    throw new AppError("Email Address is not found", 404);
+  }
   await DeviceSessionManage.create({
-    device_name: deviceSesssion.device_name,
-    expired_at: new Date(Date.now() + 1000 * 60 * 60 * 24), // +1 day
-    browser: deviceSesssion.browser,
-    os: deviceSesssion.os,
-    device_type: deviceSesssion.device_type,
-    user_agent: deviceSesssion.user_agent,
-    ip_address: deviceSesssion.ip_address,
+    device_name: deviceSession.device_name,
+    expired_at: new Date(Date.now() + 1000 * 60 * 60 * 24),
+    browser: deviceSession.browser,
+    os: deviceSession.os,
+    device_type: deviceSession.device_type,
+    user_agent: deviceSession.user_agent,
+    ip_address: deviceSession.ip_address,
     is_deleted: false,
     is_revoked: false,
     user: { connect: { user_id: user.user_id } },
@@ -118,11 +173,10 @@ export const AuthLogin = async (data: any, deviceSesssion: DeviceSessions) => {
   return {
     token,
     user,
-    otp, // optionally return or store securely
   };
 };
 
-export async function AuthLogout(id: string) {
+export const AuthLogout = async (id: string) => {
   const user = await UserManage.readById(id, "user_id");
 
   await ActivityLogManage.create({
@@ -130,5 +184,5 @@ export async function AuthLogout(id: string) {
     user: { connect: { user_id: user?.user_id } },
   });
 
-  return user;
-}
+  return { user };
+};

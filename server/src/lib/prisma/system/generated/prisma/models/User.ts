@@ -198,6 +198,7 @@ export type UserWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableFilter<"User"> | string | null
+  OTP?: Prisma.OTPListRelationFilter
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   ActivityLog?: Prisma.ActivityLogListRelationFilter
@@ -214,6 +215,7 @@ export type UserOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  OTP?: Prisma.OTPOrderByRelationAggregateInput
   Profile?: Prisma.ProfileOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
   ActivityLog?: Prisma.ActivityLogOrderByRelationAggregateInput
@@ -233,6 +235,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableFilter<"User"> | string | null
+  OTP?: Prisma.OTPListRelationFilter
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   ActivityLog?: Prisma.ActivityLogListRelationFilter
@@ -273,6 +276,7 @@ export type UserCreateInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
@@ -289,6 +293,7 @@ export type UserUncheckedCreateInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
@@ -301,6 +306,7 @@ export type UserUpdateInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
@@ -317,6 +323,7 @@ export type UserUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -381,6 +388,11 @@ export type UserMinOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
@@ -394,11 +406,6 @@ export type UserListRelationFilter = {
 
 export type UserOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -415,6 +422,22 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type UserCreateNestedOneWithoutOTPInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOTPInput, Prisma.UserUncheckedCreateWithoutOTPInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOTPInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutOTPNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOTPInput, Prisma.UserUncheckedCreateWithoutOTPInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOTPInput
+  upsert?: Prisma.UserUpsertWithoutOTPInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOTPInput, Prisma.UserUpdateWithoutOTPInput>, Prisma.UserUncheckedUpdateWithoutOTPInput>
 }
 
 export type UserCreateNestedOneWithoutProfileInput = {
@@ -563,12 +586,85 @@ export type UserUpdateOneWithoutDeviceSessionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDeviceSessionInput, Prisma.UserUpdateWithoutDeviceSessionInput>, Prisma.UserUncheckedUpdateWithoutDeviceSessionInput>
 }
 
+export type UserCreateWithoutOTPInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutOTPInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutOTPInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOTPInput, Prisma.UserUncheckedCreateWithoutOTPInput>
+}
+
+export type UserUpsertWithoutOTPInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOTPInput, Prisma.UserUncheckedUpdateWithoutOTPInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOTPInput, Prisma.UserUncheckedCreateWithoutOTPInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOTPInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOTPInput, Prisma.UserUncheckedUpdateWithoutOTPInput>
+}
+
+export type UserUpdateWithoutOTPInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOTPInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutProfileInput = {
   user_id?: string
   email: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
@@ -584,6 +680,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -611,6 +708,7 @@ export type UserUpdateWithoutProfileInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
@@ -626,6 +724,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -637,6 +736,7 @@ export type UserCreateWithoutRoleInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
@@ -651,6 +751,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   created_at?: Date | string
   updated_at?: Date | string
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
@@ -702,6 +803,7 @@ export type UserCreateWithoutActivityLogInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
@@ -717,6 +819,7 @@ export type UserUncheckedCreateWithoutActivityLogInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -744,6 +847,7 @@ export type UserUpdateWithoutActivityLogInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
@@ -759,6 +863,7 @@ export type UserUncheckedUpdateWithoutActivityLogInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -770,6 +875,7 @@ export type UserCreateWithoutNotificationInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
@@ -785,6 +891,7 @@ export type UserUncheckedCreateWithoutNotificationInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
@@ -812,6 +919,7 @@ export type UserUpdateWithoutNotificationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
@@ -827,6 +935,7 @@ export type UserUncheckedUpdateWithoutNotificationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -838,6 +947,7 @@ export type UserCreateWithoutOrganizationInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
@@ -852,6 +962,7 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   created_at?: Date | string
   updated_at?: Date | string
   role_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
@@ -890,6 +1001,7 @@ export type UserCreateWithoutDeviceSessionInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
@@ -905,6 +1017,7 @@ export type UserUncheckedCreateWithoutDeviceSessionInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -932,6 +1045,7 @@ export type UserUpdateWithoutDeviceSessionInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
@@ -947,6 +1061,7 @@ export type UserUncheckedUpdateWithoutDeviceSessionInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -967,6 +1082,7 @@ export type UserUpdateWithoutRoleInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
@@ -981,6 +1097,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -1011,6 +1128,7 @@ export type UserUpdateWithoutOrganizationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
@@ -1025,6 +1143,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
@@ -1046,12 +1165,14 @@ export type UserUncheckedUpdateManyWithoutOrganizationInput = {
  */
 
 export type UserCountOutputType = {
+  OTP: number
   ActivityLog: number
   DeviceSession: number
   Notification: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  OTP?: boolean | UserCountOutputTypeCountOTPArgs
   ActivityLog?: boolean | UserCountOutputTypeCountActivityLogArgs
   DeviceSession?: boolean | UserCountOutputTypeCountDeviceSessionArgs
   Notification?: boolean | UserCountOutputTypeCountNotificationArgs
@@ -1065,6 +1186,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOTPArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OTPWhereInput
 }
 
 /**
@@ -1097,6 +1225,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updated_at?: boolean
   role_id?: boolean
   organization_id?: boolean
+  OTP?: boolean | Prisma.User$OTPArgs<ExtArgs>
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   ActivityLog?: boolean | Prisma.User$ActivityLogArgs<ExtArgs>
@@ -1142,6 +1271,7 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "email" | "is_deleted" | "created_at" | "updated_at" | "role_id" | "organization_id", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  OTP?: boolean | Prisma.User$OTPArgs<ExtArgs>
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   ActivityLog?: boolean | Prisma.User$ActivityLogArgs<ExtArgs>
@@ -1162,6 +1292,7 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    OTP: Prisma.$OTPPayload<ExtArgs>[]
     Profile: Prisma.$ProfilePayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs> | null
     ActivityLog: Prisma.$ActivityLogPayload<ExtArgs>[]
@@ -1571,6 +1702,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  OTP<T extends Prisma.User$OTPArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$OTPArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OTPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Profile<T extends Prisma.User$ProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ProfileArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   ActivityLog<T extends Prisma.User$ActivityLogArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ActivityLogArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2011,6 +2143,30 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.OTP
+ */
+export type User$OTPArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OTP
+   */
+  select?: Prisma.OTPSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OTP
+   */
+  omit?: Prisma.OTPOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OTPInclude<ExtArgs> | null
+  where?: Prisma.OTPWhereInput
+  orderBy?: Prisma.OTPOrderByWithRelationInput | Prisma.OTPOrderByWithRelationInput[]
+  cursor?: Prisma.OTPWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OTPScalarFieldEnum | Prisma.OTPScalarFieldEnum[]
 }
 
 /**

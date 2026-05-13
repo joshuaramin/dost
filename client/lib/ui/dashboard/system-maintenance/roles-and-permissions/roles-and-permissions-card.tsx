@@ -1,10 +1,17 @@
 "use client"
 
 import React from 'react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/roles-and-permissions-card.module.scss';
-import { TbArrowRight } from 'react-icons/tb';
+import { TbEdit, TbExternalLink, TbTrash } from 'react-icons/tb';
+
+
+//components
+
+//lib & hooks
 import Title from '@/lib/ui/title';
+import Button from '@/components/Button/button';
+import Text from '@/components/Typography/Text/text';
 
 
 
@@ -17,22 +24,31 @@ interface Props {
 export default function RolesAndPermissionsCard({ name, description, slug }: Props) {
 
 
-    const router = useRouter();;
+    const router = useRouter();
+    const pathname = usePathname()
 
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Title title={name}></Title>
+                <Title
+
+                    onClick={() => router.push(`${pathname}/${slug}`)}
+                    style={{
+                        cursor: "pointer"
+                    }}
+                    title={name}></Title>
+                <TbExternalLink size={16} />
             </div>
-            <div className={styles.body}>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Possimus, voluptatum.
-                </p>
-            </div>
+            <Text>
+                {description.slice(0, 120)}...
+            </Text>
             <div className={styles.footer}>
-                <button onClick={() => router.push(`/dashboard/system-maintenance/roles-and-permissions/${slug}`)}>
-                    <TbArrowRight size={23} />
-                </button>
+                <Button types='outline' variant='danger' size='md'>
+                    <TbTrash size={20} />
+                </Button>
+                <Button types='outline' variant='primary' size='md'>
+                    <TbEdit size={20} />
+                </Button>
             </div>
         </div>
     )

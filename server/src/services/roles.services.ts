@@ -33,6 +33,7 @@ export const GetAllRoles = ({
     select: {
       role_id: true,
       name: true,
+      slug: true,
       description: true,
       created_at: true,
       rolePermissions: {
@@ -48,7 +49,7 @@ export const GetAllRoles = ({
   });
 };
 export const GetRoleBySlug = async (data: any) => {
-  return RoleManage.readById(data.key, "slug");
+  return RoleManage.readById(data, "slug");
 };
 
 export const CreateRole = async (data: any) => {
@@ -64,7 +65,6 @@ export const SoftDeleteRole = async (data: any) => {
 };
 
 export const AddRolePermission = async (role_id: string, data: any) => {
-  console.log("Data: ", data);
   return RoleManage.update(role_id, {
     rolePermissions: {
       createMany: {

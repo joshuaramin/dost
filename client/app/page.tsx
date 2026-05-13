@@ -6,6 +6,8 @@ import Header from "@/lib/ui/header";
 import Title from "@/lib/ui/title";
 import TitleWrapper from "@/lib/ui/titleWrapper";
 import Footer from "@/lib/ui/footer";
+import SurveillanceMap from "@/lib/ui/home/map";
+import Text from "@/components/Typography/Text/text";
 
 
 export default function Home() {
@@ -16,10 +18,22 @@ export default function Home() {
         <TitleWrapper title="ADVOCACY RESEARCH PROGRAM" />
         <h2>Transformation Digital Conversation: </h2>
         <h2>into <span style={{
-          color: "#ffd41d"
+          color: "#ffbd59"
         }}>HIV INTELLIGENCE</span>:</h2>
         <h2>Geospatial AI for Public Health Surveillance</h2>
       </section>
+
+       <section>
+        <TitleWrapper title="Surveillance Map" />
+        <SurveillanceMap />
+        <div style={{
+          padding: '10px 0'
+        }}>
+          <Text style={{ fontStyle: "italic" }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
+
+        </div>
+      </section>
+
       <section>
 
         <Title title="Abstract" />
@@ -73,9 +87,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section>
-        <TitleWrapper title="Surveillance Map" />
-      </section>
+     
 
       <section>
         <TitleWrapper title="Research Team" />

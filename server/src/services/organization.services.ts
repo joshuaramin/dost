@@ -31,3 +31,12 @@ export const GetAllOrganization = ({
     },
   });
 };
+
+export const CreateOrganization = (data: any) => {
+  return OrganizationManage.create({
+    logo: data.logo,
+    name: data.name,
+    contact: data.contact,
+    address: data.address,
+  });
+};

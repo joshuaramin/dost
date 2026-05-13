@@ -3,7 +3,7 @@
 @use "@/styles/colors.module" as *;
 
 .container {
-    width: 400px;
+    width: 430px;
     height: 100vh;
     padding: 25px;
     border-right: 1px solid #ccc;
@@ -13,6 +13,10 @@
     flex-direction: column;
     justify-content: space-between;
     inset: 0;
+
+    @include down(sm) {
+        display: none;
+    }
 
     .header {
         width: 100%;

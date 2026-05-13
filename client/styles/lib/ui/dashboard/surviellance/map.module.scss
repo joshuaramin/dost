@@ -1,3 +1,7 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
 .container {
     width: 100%;
     display: flex;
@@ -5,5 +9,92 @@
     .sidebar {
         width: 500px;
         padding: 20px;
+        height: 100vh;
+        overflow-y: auto;
+
+        .header {
+            // background-color: red;
+            padding: 20px 0;
+        }
+
+
+        .rp {
+            padding: 10px 0;
+        }
+
+        h2 {
+            font-size: font-size(base);
+            margin-bottom: 5px;
+        }
+
+        .provinces {
+            padding: 0 30px;
+            overflow-y: auto;
+            margin-bottom: 5;
+
+            .provinces_name {
+                padding: 10 15;
+                cursor: pointer;
+                border-radius: 4px;
+
+                span {
+                    font-size: font-size(tiny)
+                }
+
+                &:hover {
+                    background-color: color(secondary, 500);
+                }
+            }
+        }
+
     }
+
+    .legends {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 200px;
+        height: auto;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 4px;
+
+        h1 {
+            font-size: font-size(base);
+            margin-bottom: 20px;
+        }
+
+        .critical {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .box {
+            width: 25px;
+            height: 25px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+
+            &:nth-child(1) {
+                background-color: color(success, 100);
+            }
+
+            &:nth-child(2) {
+                background-color: color(secondary, 100);
+            }
+        }
+
+        span {
+            font-size: font-size(base);
+        }
+    }
+
 }

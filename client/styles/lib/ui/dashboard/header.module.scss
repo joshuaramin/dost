@@ -1,0 +1,38 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+
+.container {
+    width: 100%;
+    height: 10vh;
+    background-color: color(primary, 500);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    @include up(md) {
+        display: none;
+    }
+
+    .col2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        button {
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            cursor: pointer;
+            border: none;
+
+            svg {
+                stroke: #fff;
+            }
+        }
+    }
+}
