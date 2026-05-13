@@ -5,13 +5,14 @@ import styles from '@/styles/lib/ui/dashboard/system-maintenance/organization/or
 import OrganizationCard from './organization-card';
 import useFormQuery from '@/lib/hooks/useQuery';
 import { sessionStore } from '@/lib/utils/sessions';
+import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
 
 
 export default function Organization() {
 
 
     const token = sessionStore.getToken()
-    const { data } = useFormQuery({
+    const { data } = useFormQuery<OrganizationResult>({
         key: ["Organizatoin"],
         url: "maintenance/organization",
         headers: {

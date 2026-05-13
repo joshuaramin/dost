@@ -10,7 +10,7 @@ import { TbEdit, TbTrash } from 'react-icons/tb';
 interface Props {
     logo: string
     address: string
-    contact: number
+    contact: string
     name: string
 }
 
