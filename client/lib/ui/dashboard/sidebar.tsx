@@ -10,13 +10,14 @@ import Profile from "./profile";
 
 //components
 import Avatar from "@/components/Avatar/avatar";
+import Text from "@/components/Typography/Text/text";
 
 
 //lib & hooks
-import { PrimaryFont } from "@/lib/typography";
 import useFormQuery from "@/lib/hooks/useQuery";
+import SkeletonSidebar from "@/lib/ui/loading/SkeletonSidebar";
 import { ResourceResult } from "@/lib/interface/resource/resource.interface";
-import SkeletonSidebar from "../loading/SkeletonSidebar";
+import { PrimaryFont } from "@/lib/typography";
 
 export default function DashboardSidebar() {
 
@@ -43,7 +44,7 @@ export default function DashboardSidebar() {
                 <Avatar variant="lg" src="/assets/logo.png" />
                 <div>
                     <Title title="ADVOCAID" />
-                    <span>Advocacy Program</span>
+                    <Text>Advocacy Program</Text>
                 </div>
             </div>
 

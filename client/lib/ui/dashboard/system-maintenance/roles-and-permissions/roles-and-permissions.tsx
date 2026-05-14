@@ -2,10 +2,17 @@
 
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/roles-and-permission.module.scss';
 import RolesAndPermissionsCard from './roles-and-permissions-card'
+
+// Components
+
+
+
+//lib & hooks
+import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import useFormQuery from '@/lib/hooks/useQuery';
 import { sessionStore } from "@/lib/utils/sessions"
 import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
-import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
+
 
 export default function RolesPermissions() {
 
@@ -24,7 +31,7 @@ export default function RolesPermissions() {
     if(isLoading) {
         return (
             <div className={styles.loading}>
-                {Array.from({length: 6}).map((node, index) => (
+                {Array.from({length: 20}).map((node, index) => (
                     <SkeletonCard key={index} />
                 ))}
             </div>

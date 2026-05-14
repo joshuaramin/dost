@@ -1,0 +1,20 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+
+
+.title {
+    // font-size: font-size(xl);
+}
+
+.sm {
+    font-size: font-size(base);
+}
+
+.md {
+    font-size: font-size(lg);
+}
+
+.lg {
+    font-size: font-size(xl);
+}

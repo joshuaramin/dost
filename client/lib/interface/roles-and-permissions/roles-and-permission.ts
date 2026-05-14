@@ -5,6 +5,7 @@ export interface RolesAndPermissionsInterface {
   name: string;
   slug: string;
   description: string;
+  rolePermissions: Array<{ permission_id: string; name: string }>;
   is_deleted: boolean;
   created_at: boolean;
   updated_at: boolean;

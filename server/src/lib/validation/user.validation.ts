@@ -11,4 +11,5 @@ export const ProfileSchema = z.object({
 
 export const CreateUserSchema = UserSchema.extend({
   ...ProfileSchema.shape,
+  role_id: z.string().min(1, "Role ID is required"),
 });

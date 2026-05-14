@@ -1,9 +1,17 @@
+import { OrganizationInterface } from "../organization/organization.interface";
+import { RolesAndPermissionsInterface } from "../roles-and-permissions/roles-and-permission";
+
+export interface ProfileInterface {
+  first_name: string;
+  last_name: string;
+}
 export interface UserInterface {
   user_id: string;
   email: string;
   is_deleted: boolean;
   created_at: string;
   updated: string;
-  role_id: string;
-  organization_id: string;
+  Profile: ProfileInterface;
+  role: RolesAndPermissionsInterface;
+  organization: OrganizationInterface;
 }

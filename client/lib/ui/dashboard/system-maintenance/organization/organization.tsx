@@ -6,13 +6,14 @@ import OrganizationCard from './organization-card';
 import useFormQuery from '@/lib/hooks/useQuery';
 import { sessionStore } from '@/lib/utils/sessions';
 import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
+import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 
 
 export default function Organization() {
 
 
     const token = sessionStore.getToken()
-    const { data } = useFormQuery<OrganizationResult>({
+    const { data, isLoading } = useFormQuery<OrganizationResult>({
         key: ["Organizatoin"],
         url: "maintenance/organization",
         headers: {
@@ -21,6 +22,19 @@ export default function Organization() {
             "Authorization": `Bearer ${token}`
         }
     })
+
+
+
+    if(isLoading) {
+        return (
+            <div
+            className={styles.loading}            >
+                {Array.from({length: 20}).map((node, index) => (
+                    <SkeletonCard  key={index}/>
+                ))}
+            </div>
+        )
+    }
 
     return (
         <div className={styles.container}>

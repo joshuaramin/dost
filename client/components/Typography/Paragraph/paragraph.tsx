@@ -1,7 +1,12 @@
 import React from 'react'
 
-export default function Paragraph() {
+
+interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
+    children: React.ReactNode
+}
+
+export default function Paragraph({children}: Props) {
     return (
-        <p>Paragraph</p>
+        <p>{children}</p>
     )
 }

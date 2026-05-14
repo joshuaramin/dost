@@ -7,10 +7,9 @@ import { TbEdit, TbExternalLink, TbTrash } from 'react-icons/tb';
 
 
 //components
-
-//lib & hooks
-import Title from '@/lib/ui/title';
 import Button from '@/components/Button/button';
+import Title from '@/components/Typography/Title/title';
+import Paragraph from '@/components/Typography/Paragraph/paragraph';
 import Text from '@/components/Typography/Text/text';
 
 
@@ -30,17 +29,16 @@ export default function RolesAndPermissionsCard({ name, description, slug }: Pro
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Title
-
+                <Title size="lg"
                     onClick={() => router.push(`${pathname}/${slug}`)}
                     style={{
                         cursor: "pointer"
                     }}
-                    title={name}></Title>
+                    >{name}</Title>
                 <TbExternalLink size={16} />
             </div>
             <Text>
-                {description.slice(0, 120)}...
+                {description.length < 80 ? description : `${description.slice(0, 80)}...`}
             </Text>
             <div className={styles.footer}>
                 <Button types='outline' variant='danger' size='md'>

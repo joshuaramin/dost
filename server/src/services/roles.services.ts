@@ -49,7 +49,13 @@ export const GetAllRoles = ({
   });
 };
 export const GetRoleBySlug = async (data: any) => {
-  return RoleManage.readById(data, "slug");
+  return RoleManage.readById(data, "slug", {
+    select: {
+      name: true,
+      description: true,
+      rolePermissions: true,
+    },
+  });
 };
 
 export const CreateRole = async (data: any) => {
@@ -65,11 +71,23 @@ export const SoftDeleteRole = async (data: any) => {
 };
 
 export const AddRolePermission = async (role_id: string, data: any) => {
+  console.log("Role ID: ", role_id);
+
+  console.log("Body: ", data);
+  const existing = await prisma.permission.findMany({
+    where: { permission_id: { in: data.permissions } },
+    select: { permission_id: true },
+  });
+
+  console.log("FOUND:", existing.length);
+  console.log("EXPECTED:", data.permissions.length);
+
   return RoleManage.update(role_id, {
     rolePermissions: {
+      deleteMany: {},
       createMany: {
-        data: data.permissions.map((permissions: { permissions: string }) => ({
-          permission_id: permissions,
+        data: existing.map((p) => ({
+          permission_id: p.permission_id,
         })),
         skipDuplicates: true,
       },

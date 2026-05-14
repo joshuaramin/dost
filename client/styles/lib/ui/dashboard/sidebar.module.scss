@@ -18,6 +18,10 @@
         display: none;
     }
 
+    @include down(lg) {
+        display: none;
+    }
+
     .header {
         width: 100%;
         display: flex;

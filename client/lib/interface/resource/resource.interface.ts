@@ -5,12 +5,17 @@ interface ResourceEdge<T> {
   cursor: string;
 }
 
+interface Permission {
+  permission_id: string;
+  name: string;
+}
 export interface ResourceInterface {
   resource_id: string;
   name: string;
   slug: string;
   order: number;
   parent_id: string | null;
+  permissions: Permission[];
   children?: ResourceInterface[];
   is_deleted: boolean;
   created_at: string;

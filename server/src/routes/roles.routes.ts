@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", withAuth, asyncHandler(getAllRoles));
 router.post("/", withAuth, asyncHandler(createRoles));
-router.get("/:id", withAuth, asyncHandler(getRoleBySlug));
+router.get("/:slug", withAuth, asyncHandler(getRoleBySlug));
 router.patch("/:id", withAuth, asyncHandler(softDeleteRoles));
 router.put("/addRolePermission/:id", asyncHandler(addRolePermission));
 

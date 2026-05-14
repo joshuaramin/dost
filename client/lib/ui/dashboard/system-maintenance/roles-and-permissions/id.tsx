@@ -1,9 +1,8 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/id.module.scss";
 import { useParams } from 'next/navigation'
-import { Metadata } from 'next'
 
 import useFormQuery from '@/lib/hooks/useQuery'
 import Template from '@/lib/ui/template'
@@ -12,15 +11,12 @@ import { RoleIDInterface } from '@/lib/interface/roles-and-permissions/roles-and
 import { ResourceResult } from '@/lib/interface/resource/resource.interface'
 import Button from '@/components/Button/button';
 
-
-export async function generateMetadata(): Promise<Metadata> {
-    return { title: "Hello World" }
-}
-
 export default function PageID() {
 
     const token = sessionStore.getToken()
     const params = useParams<{ id: string }>()
+
+    const [selectedKeys, setSelectedKeys] = useState<string[]>([])
 
     const headers = {
         "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
@@ -28,66 +24,116 @@ export default function PageID() {
         "Authorization": `Bearer ${token}`
     }
 
-    const { data, isLoading } = useFormQuery<RoleIDInterface>({
+    const { data } = useFormQuery<RoleIDInterface>({
         key: ["RolesandPermissions", params.id],
+        enabled: !!params.id,
         url: `maintenance/roles/${params.id}`,
-        headers: {
-            ...headers
-        }
+        headers
     })
-
 
     const { data: ResourceData } = useFormQuery<ResourceResult>({
         key: ["Resources"],
         url: "maintenance/resource",
-        headers: {
-            ...headers
-        }
+        headers
     })
 
+    useEffect(() => {
+        const permissions = data?.data?.rolePermissions
+
+        if (!permissions) return
+
+        setSelectedKeys(
+            permissions.map((p) => p.permission_id)
+        )
+    }, [data?.data?.rolePermissions])
+
+    const togglePermission = (id: string) => {
+        setSelectedKeys((prev) =>
+            prev.includes(id)
+                ? prev.filter((k) => k !== id)
+                : [...prev, id]
+        )
+    }
+
     const actions = ["Create", "Read", "Update", "Delete", "Deny", "Export"]
+
     return (
-        <Template title={params.id.toUpperCase()} >
-            <div className={styles.container} >
+        <Template
+            title={data?.data.name ?? ""}
+            description={data?.data.description ?? ""}
+        >
+            <div className={styles.container}>
                 <table style={{ width: "100%" }}>
                     <thead>
                         <tr>
                             <th>Module / Permissions</th>
-                            {actions.map((name, index) => (
-                                <th key={index}>{name}</th>
+
+                            {actions.map((name) => (
+                                <th key={name}>{name}</th>
                             ))}
                         </tr>
                     </thead>
+
                     <tbody>
-                        {ResourceData?.data.edges.map((edge, index) => (
-                            <React.Fragment key={index}>
+                        {ResourceData?.data.edges.map((edge) => (
+                            <React.Fragment key={edge.node.resource_id}>
+
                                 <tr>
-                                    <td colSpan={2}>
+                                    <th colSpan={actions.length + 1}>
                                         <strong>{edge.node.name}</strong>
-                                    </td>
+                                    </th>
                                 </tr>
+
                                 {edge.node.children?.map((child) => (
-                                    <tr key={child.resource_id}>
-                                        <td style={{ paddingLeft: 20 }}>
+                                    <tr
+                                        className={styles.body_tr}
+                                        key={child.resource_id}
+                                    >
+                                        <th
+                                            className={styles.body_th}
+                                            style={{ paddingLeft: 20 }}
+                                        >
                                             {child.name}
-                                        </td>
-                                        {actions.map((node, index) => (
-                                            <td key={index}>
-                                                <input type="checkbox" />
-                                            </td>
-                                        ))}
+                                        </th>
+
+                                        {actions.map((action) => {
+                                            const permission = child.permissions.find(
+                                                (p) =>
+                                                    p.name.toLowerCase() === action.toLowerCase()
+                                            )
+
+                                            const isChecked = permission
+                                                ? selectedKeys.includes(permission.permission_id)
+                                                : false
+
+                                            return (
+                                                <td key={action}>
+                                                    <input
+                                                        type="checkbox"
+                                                        disabled={!permission}
+                                                        checked={isChecked}
+                                                        onChange={() =>
+                                                            permission &&
+                                                            togglePermission(permission.permission_id)
+                                                        }
+                                                    />
+                                                </td>
+                                            )
+                                        })}
                                     </tr>
                                 ))}
 
                             </React.Fragment>
                         ))}
                     </tbody>
-
                 </table>
+
                 <div className={styles.btn}>
-                    <Button types='filled' size='sm' variant='primary'>Submit</Button>
+                    <Button types="filled" size="sm" variant="primary">
+                        Submit
+                    </Button>
                 </div>
             </div>
-        </Template >
+        </Template>
     )
 }

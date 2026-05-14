@@ -6,17 +6,26 @@ import React from 'react'
 import { TbSettings, TbBell } from 'react-icons/tb'
 
 import styles from "@/styles/lib/ui/profile.module.scss";
+import { sessionStore } from '@/lib/utils/sessions';
+import Title from '@/components/Typography/Title/title';
+import Text from '@/components/Typography/Text/text';
 
 export default function Profile() {
 
     const router = useRouter()
+
+
+    const token = sessionStore.get();
+
     return (
         <div className={styles.footer}>
             <div className={styles.col1}>
                 <Avatar variant="md" />
-                <div>
-                    <h2>John Doe</h2>
-                    <span>Developer</span>
+                <div className={styles.header}>
+                    <Title size="md" style={{ color: "#fff"}}>
+                        {token?.data.Profile.first_name} {token?.data.Profile.last_name}
+                    </Title>
+                    <Text>{token?.data.Role.name}</Text>
                 </div>
             </div>
             <div className={styles.col2}>

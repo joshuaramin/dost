@@ -394,7 +394,8 @@ export const ModelName = {
   ActivityLog: 'ActivityLog',
   Notification: 'Notification',
   Organization: 'Organization',
-  DeviceSession: 'DeviceSession'
+  DeviceSession: 'DeviceSession',
+  spatial_ref_sys: 'spatial_ref_sys'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession"
+    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "spatial_ref_sys"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1228,6 +1229,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    spatial_ref_sys: {
+      payload: Prisma.$spatial_ref_sysPayload<ExtArgs>
+      fields: Prisma.spatial_ref_sysFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.spatial_ref_sysFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.spatial_ref_sysFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        findFirst: {
+          args: Prisma.spatial_ref_sysFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.spatial_ref_sysFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        findMany: {
+          args: Prisma.spatial_ref_sysFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>[]
+        }
+        create: {
+          args: Prisma.spatial_ref_sysCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        createMany: {
+          args: Prisma.spatial_ref_sysCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.spatial_ref_sysCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>[]
+        }
+        delete: {
+          args: Prisma.spatial_ref_sysDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        update: {
+          args: Prisma.spatial_ref_sysUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        deleteMany: {
+          args: Prisma.spatial_ref_sysDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.spatial_ref_sysUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.spatial_ref_sysUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>[]
+        }
+        upsert: {
+          args: Prisma.spatial_ref_sysUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$spatial_ref_sysPayload>
+        }
+        aggregate: {
+          args: Prisma.Spatial_ref_sysAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSpatial_ref_sys>
+        }
+        groupBy: {
+          args: Prisma.spatial_ref_sysGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Spatial_ref_sysGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.spatial_ref_sysCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Spatial_ref_sysCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1283,7 +1358,6 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const OTPScalarFieldEnum = {
   otp_id: 'otp_id',
   identifier: 'identifier',
-  code_hash: 'code_hash',
   type: 'type',
   expires_at: 'expires_at',
   is_used: 'is_used',
@@ -1292,7 +1366,8 @@ export const OTPScalarFieldEnum = {
   ip_address: 'ip_address',
   user_agent: 'user_agent',
   user_id: 'user_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  code_hash: 'code_hash'
 } as const
 
 export type OTPScalarFieldEnum = (typeof OTPScalarFieldEnum)[keyof typeof OTPScalarFieldEnum]
@@ -1315,11 +1390,11 @@ export const ResourceScalarFieldEnum = {
   resource_id: 'resource_id',
   name: 'name',
   slug: 'slug',
-  order: 'order',
   parent_id: 'parent_id',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  order: 'order'
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
@@ -1328,11 +1403,11 @@ export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typ
 export const RoleScalarFieldEnum = {
   role_id: 'role_id',
   name: 'name',
-  slug: 'slug',
   description: 'description',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  slug: 'slug'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
@@ -1340,12 +1415,12 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 
 export const PermissionScalarFieldEnum = {
   permission_id: 'permission_id',
-  name: 'name',
-  slug: 'slug',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  resource_id: 'resource_id'
+  resource_id: 'resource_id',
+  name: 'name',
+  slug: 'slug'
 } as const
 
 export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -1387,13 +1462,13 @@ export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[k
 
 export const OrganizationScalarFieldEnum = {
   organization_id: 'organization_id',
-  logo: 'logo',
   name: 'name',
-  address: 'address',
-  contact: 'contact',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  address: 'address',
+  contact: 'contact',
+  logo: 'logo'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -1402,20 +1477,31 @@ export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[k
 export const DeviceSessionScalarFieldEnum = {
   device_sessions_id: 'device_sessions_id',
   device_name: 'device_name',
-  device_type: 'device_type',
-  os: 'os',
-  browser: 'browser',
-  user_agent: 'user_agent',
   ip_address: 'ip_address',
   expired_at: 'expired_at',
   is_deleted: 'is_deleted',
   is_revoked: 'is_revoked',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  browser: 'browser',
+  device_type: 'device_type',
+  os: 'os',
+  user_agent: 'user_agent'
 } as const
 
 export type DeviceSessionScalarFieldEnum = (typeof DeviceSessionScalarFieldEnum)[keyof typeof DeviceSessionScalarFieldEnum]
+
+
+export const Spatial_ref_sysScalarFieldEnum = {
+  srid: 'srid',
+  auth_name: 'auth_name',
+  auth_srid: 'auth_srid',
+  srtext: 'srtext',
+  proj4text: 'proj4text'
+} as const
+
+export type Spatial_ref_sysScalarFieldEnum = (typeof Spatial_ref_sysScalarFieldEnum)[keyof typeof Spatial_ref_sysScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1616,6 +1702,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   organization?: Prisma.OrganizationOmit
   deviceSession?: Prisma.DeviceSessionOmit
+  spatial_ref_sys?: Prisma.spatial_ref_sysOmit
 }
 
 /* Types for Logging */

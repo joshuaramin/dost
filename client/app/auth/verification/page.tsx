@@ -127,7 +127,16 @@ export default function Page() {
                     data: {
                         user_id: res.user.user_id,
                         email: res.user.email,
-                        role_id: res.user.role_id
+                        Profile: {
+                            first_name: res.user.Profile.first_name,
+                            last_name: res.user.Profile.last_name
+                        },
+                        Role : {
+                            name: res.user.role.name
+                        },
+                        Organization: { 
+                            name: res.user.organization.name
+                        }
                     }
                 })
 

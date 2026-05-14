@@ -143,7 +143,31 @@ export const AuthVerfiy = async (
     is_used: true,
   });
 
-  let user = await prisma.user.findFirst({ where: { email: data.email } });
+  let user = await prisma.user.findFirst({
+    where: { email: data.email },
+    select: {
+      user_id: true,
+      email: true,
+      Profile: {
+        select: {
+          first_name: true,
+          last_name: true,
+        },
+      },
+      role: {
+        select: {
+          role_id: true,
+          name: true,
+        },
+      },
+      organization: {
+        select: {
+          organization_id: true,
+          name: true,
+        },
+      },
+    },
+  });
 
   if (!user) {
     throw new AppError("Email Address is not found", 404);

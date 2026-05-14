@@ -61,7 +61,8 @@ export const ModelName = {
   ActivityLog: 'ActivityLog',
   Notification: 'Notification',
   Organization: 'Organization',
-  DeviceSession: 'DeviceSession'
+  DeviceSession: 'DeviceSession',
+  spatial_ref_sys: 'spatial_ref_sys'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -96,7 +97,6 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const OTPScalarFieldEnum = {
   otp_id: 'otp_id',
   identifier: 'identifier',
-  code_hash: 'code_hash',
   type: 'type',
   expires_at: 'expires_at',
   is_used: 'is_used',
@@ -105,7 +105,8 @@ export const OTPScalarFieldEnum = {
   ip_address: 'ip_address',
   user_agent: 'user_agent',
   user_id: 'user_id',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  code_hash: 'code_hash'
 } as const
 
 export type OTPScalarFieldEnum = (typeof OTPScalarFieldEnum)[keyof typeof OTPScalarFieldEnum]
@@ -128,11 +129,11 @@ export const ResourceScalarFieldEnum = {
   resource_id: 'resource_id',
   name: 'name',
   slug: 'slug',
-  order: 'order',
   parent_id: 'parent_id',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  order: 'order'
 } as const
 
 export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typeof ResourceScalarFieldEnum]
@@ -141,11 +142,11 @@ export type ResourceScalarFieldEnum = (typeof ResourceScalarFieldEnum)[keyof typ
 export const RoleScalarFieldEnum = {
   role_id: 'role_id',
   name: 'name',
-  slug: 'slug',
   description: 'description',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  slug: 'slug'
 } as const
 
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
@@ -153,12 +154,12 @@ export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof Role
 
 export const PermissionScalarFieldEnum = {
   permission_id: 'permission_id',
-  name: 'name',
-  slug: 'slug',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  resource_id: 'resource_id'
+  resource_id: 'resource_id',
+  name: 'name',
+  slug: 'slug'
 } as const
 
 export type PermissionScalarFieldEnum = (typeof PermissionScalarFieldEnum)[keyof typeof PermissionScalarFieldEnum]
@@ -200,13 +201,13 @@ export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[k
 
 export const OrganizationScalarFieldEnum = {
   organization_id: 'organization_id',
-  logo: 'logo',
   name: 'name',
-  address: 'address',
-  contact: 'contact',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  address: 'address',
+  contact: 'contact',
+  logo: 'logo'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -215,20 +216,31 @@ export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[k
 export const DeviceSessionScalarFieldEnum = {
   device_sessions_id: 'device_sessions_id',
   device_name: 'device_name',
-  device_type: 'device_type',
-  os: 'os',
-  browser: 'browser',
-  user_agent: 'user_agent',
   ip_address: 'ip_address',
   expired_at: 'expired_at',
   is_deleted: 'is_deleted',
   is_revoked: 'is_revoked',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  user_id: 'user_id'
+  user_id: 'user_id',
+  browser: 'browser',
+  device_type: 'device_type',
+  os: 'os',
+  user_agent: 'user_agent'
 } as const
 
 export type DeviceSessionScalarFieldEnum = (typeof DeviceSessionScalarFieldEnum)[keyof typeof DeviceSessionScalarFieldEnum]
+
+
+export const Spatial_ref_sysScalarFieldEnum = {
+  srid: 'srid',
+  auth_name: 'auth_name',
+  auth_srid: 'auth_srid',
+  srtext: 'srtext',
+  proj4text: 'proj4text'
+} as const
+
+export type Spatial_ref_sysScalarFieldEnum = (typeof Spatial_ref_sysScalarFieldEnum)[keyof typeof Spatial_ref_sysScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -58,6 +58,9 @@ export const CreateUser = async (data: any) => {
         last_name: data.last_name,
       },
     },
+    role: {
+      connect: { role_id: data.role_id },
+    },
   });
 };
 

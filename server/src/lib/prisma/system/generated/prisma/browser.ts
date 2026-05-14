@@ -72,3 +72,8 @@ export type Organization = Prisma.OrganizationModel
  * 
  */
 export type DeviceSession = Prisma.DeviceSessionModel
+/**
+ * Model spatial_ref_sys
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type spatial_ref_sys = Prisma.spatial_ref_sysModel

@@ -1,16 +1,28 @@
 import React from 'react'
-import styles from '@/styles/lib/ui/dashboard/header.module.scss'
-import Avatar from '@/components/Avatar/avatar'
 import { TbMenu2 } from 'react-icons/tb'
+
+//components
+import Title from '@/components/Typography/Title/title';
+import Text from '@/components/Typography/Text/text';
+import Avatar from '@/components/Avatar/avatar'
+
+//lib & hooks
+import styles from '@/styles/lib/ui/dashboard/header.module.scss'
 
 export default function DashboardHeader() {
     return (
         <div className={styles.container}>
-            <div></div>
+            <div className={styles.col1}>
+               <Avatar src="/assets/logo.png" variant="lg" />
+                <div>
+                    <Title size="md">HIV GEOSPATIAL SURVIELLANCE</Title>
+                    <Text>Advocacy Program</Text>
+                </div>
+            </div>
             <div className={styles.col2}>
-                <Avatar variant='md' />
+              
                 <button>
-                    <TbMenu2 size={28} />
+                    <TbMenu2 size={32} />
                 </button>
             </div>
         </div>

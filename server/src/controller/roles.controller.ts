@@ -29,9 +29,11 @@ export const getAllRoles = async (request: Request, response: Response) => {
 };
 
 export const getRoleBySlug = async (request: Request, response: Response) => {
-  const id = request.params.slug;
+  const slug = request.params.slug;
 
-  const result = await GetRoleBySlug(id);
+  console.log(slug);
+
+  const result = await GetRoleBySlug(slug);
   return response.status(200).json({
     ...result,
     timestamp: new Date(Date.now()),

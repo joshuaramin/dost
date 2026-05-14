@@ -8,7 +8,16 @@ export type SessionData = {
   data: {
     user_id: string;
     email: string;
-    role_id: string;
+    Profile: {
+      first_name: string;
+      last_name: string;
+    };
+    Role: {
+      name: string;
+    };
+    Organization: {
+      name: string;
+    };
   };
 };
 

@@ -39,7 +39,6 @@ export type OTPSumAggregateOutputType = {
 export type OTPMinAggregateOutputType = {
   otp_id: string | null
   identifier: string | null
-  code_hash: string | null
   type: string | null
   expires_at: Date | null
   is_used: boolean | null
@@ -49,12 +48,12 @@ export type OTPMinAggregateOutputType = {
   user_agent: string | null
   user_id: string | null
   created_at: Date | null
+  code_hash: string | null
 }
 
 export type OTPMaxAggregateOutputType = {
   otp_id: string | null
   identifier: string | null
-  code_hash: string | null
   type: string | null
   expires_at: Date | null
   is_used: boolean | null
@@ -64,12 +63,12 @@ export type OTPMaxAggregateOutputType = {
   user_agent: string | null
   user_id: string | null
   created_at: Date | null
+  code_hash: string | null
 }
 
 export type OTPCountAggregateOutputType = {
   otp_id: number
   identifier: number
-  code_hash: number
   type: number
   expires_at: number
   is_used: number
@@ -79,6 +78,7 @@ export type OTPCountAggregateOutputType = {
   user_agent: number
   user_id: number
   created_at: number
+  code_hash: number
   _all: number
 }
 
@@ -96,7 +96,6 @@ export type OTPSumAggregateInputType = {
 export type OTPMinAggregateInputType = {
   otp_id?: true
   identifier?: true
-  code_hash?: true
   type?: true
   expires_at?: true
   is_used?: true
@@ -106,12 +105,12 @@ export type OTPMinAggregateInputType = {
   user_agent?: true
   user_id?: true
   created_at?: true
+  code_hash?: true
 }
 
 export type OTPMaxAggregateInputType = {
   otp_id?: true
   identifier?: true
-  code_hash?: true
   type?: true
   expires_at?: true
   is_used?: true
@@ -121,12 +120,12 @@ export type OTPMaxAggregateInputType = {
   user_agent?: true
   user_id?: true
   created_at?: true
+  code_hash?: true
 }
 
 export type OTPCountAggregateInputType = {
   otp_id?: true
   identifier?: true
-  code_hash?: true
   type?: true
   expires_at?: true
   is_used?: true
@@ -136,6 +135,7 @@ export type OTPCountAggregateInputType = {
   user_agent?: true
   user_id?: true
   created_at?: true
+  code_hash?: true
   _all?: true
 }
 
@@ -228,7 +228,6 @@ export type OTPGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type OTPGroupByOutputType = {
   otp_id: string
   identifier: string
-  code_hash: string
   type: string
   expires_at: Date
   is_used: boolean
@@ -238,6 +237,7 @@ export type OTPGroupByOutputType = {
   user_agent: string | null
   user_id: string | null
   created_at: Date
+  code_hash: string
   _count: OTPCountAggregateOutputType | null
   _avg: OTPAvgAggregateOutputType | null
   _sum: OTPSumAggregateOutputType | null
@@ -266,7 +266,6 @@ export type OTPWhereInput = {
   NOT?: Prisma.OTPWhereInput | Prisma.OTPWhereInput[]
   otp_id?: Prisma.StringFilter<"OTP"> | string
   identifier?: Prisma.StringFilter<"OTP"> | string
-  code_hash?: Prisma.StringFilter<"OTP"> | string
   type?: Prisma.StringFilter<"OTP"> | string
   expires_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
   is_used?: Prisma.BoolFilter<"OTP"> | boolean
@@ -276,13 +275,13 @@ export type OTPWhereInput = {
   user_agent?: Prisma.StringNullableFilter<"OTP"> | string | null
   user_id?: Prisma.StringNullableFilter<"OTP"> | string | null
   created_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
+  code_hash?: Prisma.StringFilter<"OTP"> | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type OTPOrderByWithRelationInput = {
   otp_id?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
-  code_hash?: Prisma.SortOrder
   type?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
   is_used?: Prisma.SortOrder
@@ -292,6 +291,7 @@ export type OTPOrderByWithRelationInput = {
   user_agent?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  code_hash?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -301,7 +301,6 @@ export type OTPWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OTPWhereInput[]
   NOT?: Prisma.OTPWhereInput | Prisma.OTPWhereInput[]
   identifier?: Prisma.StringFilter<"OTP"> | string
-  code_hash?: Prisma.StringFilter<"OTP"> | string
   type?: Prisma.StringFilter<"OTP"> | string
   expires_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
   is_used?: Prisma.BoolFilter<"OTP"> | boolean
@@ -311,13 +310,13 @@ export type OTPWhereUniqueInput = Prisma.AtLeast<{
   user_agent?: Prisma.StringNullableFilter<"OTP"> | string | null
   user_id?: Prisma.StringNullableFilter<"OTP"> | string | null
   created_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
+  code_hash?: Prisma.StringFilter<"OTP"> | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "otp_id">
 
 export type OTPOrderByWithAggregationInput = {
   otp_id?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
-  code_hash?: Prisma.SortOrder
   type?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
   is_used?: Prisma.SortOrder
@@ -327,6 +326,7 @@ export type OTPOrderByWithAggregationInput = {
   user_agent?: Prisma.SortOrderInput | Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  code_hash?: Prisma.SortOrder
   _count?: Prisma.OTPCountOrderByAggregateInput
   _avg?: Prisma.OTPAvgOrderByAggregateInput
   _max?: Prisma.OTPMaxOrderByAggregateInput
@@ -340,7 +340,6 @@ export type OTPScalarWhereWithAggregatesInput = {
   NOT?: Prisma.OTPScalarWhereWithAggregatesInput | Prisma.OTPScalarWhereWithAggregatesInput[]
   otp_id?: Prisma.StringWithAggregatesFilter<"OTP"> | string
   identifier?: Prisma.StringWithAggregatesFilter<"OTP"> | string
-  code_hash?: Prisma.StringWithAggregatesFilter<"OTP"> | string
   type?: Prisma.StringWithAggregatesFilter<"OTP"> | string
   expires_at?: Prisma.DateTimeWithAggregatesFilter<"OTP"> | Date | string
   is_used?: Prisma.BoolWithAggregatesFilter<"OTP"> | boolean
@@ -350,12 +349,12 @@ export type OTPScalarWhereWithAggregatesInput = {
   user_agent?: Prisma.StringNullableWithAggregatesFilter<"OTP"> | string | null
   user_id?: Prisma.StringNullableWithAggregatesFilter<"OTP"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"OTP"> | Date | string
+  code_hash?: Prisma.StringWithAggregatesFilter<"OTP"> | string
 }
 
 export type OTPCreateInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -364,13 +363,13 @@ export type OTPCreateInput = {
   ip_address?: string | null
   user_agent?: string | null
   created_at?: Date | string
+  code_hash: string
   user?: Prisma.UserCreateNestedOneWithoutOTPInput
 }
 
 export type OTPUncheckedCreateInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -380,12 +379,12 @@ export type OTPUncheckedCreateInput = {
   user_agent?: string | null
   user_id?: string | null
   created_at?: Date | string
+  code_hash: string
 }
 
 export type OTPUpdateInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -394,13 +393,13 @@ export type OTPUpdateInput = {
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   user?: Prisma.UserUpdateOneWithoutOTPNestedInput
 }
 
 export type OTPUncheckedUpdateInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -410,12 +409,12 @@ export type OTPUncheckedUpdateInput = {
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type OTPCreateManyInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -425,12 +424,12 @@ export type OTPCreateManyInput = {
   user_agent?: string | null
   user_id?: string | null
   created_at?: Date | string
+  code_hash: string
 }
 
 export type OTPUpdateManyMutationInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -439,12 +438,12 @@ export type OTPUpdateManyMutationInput = {
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type OTPUncheckedUpdateManyInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -454,6 +453,7 @@ export type OTPUncheckedUpdateManyInput = {
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type OTPListRelationFilter = {
@@ -469,7 +469,6 @@ export type OTPOrderByRelationAggregateInput = {
 export type OTPCountOrderByAggregateInput = {
   otp_id?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
-  code_hash?: Prisma.SortOrder
   type?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
   is_used?: Prisma.SortOrder
@@ -479,6 +478,7 @@ export type OTPCountOrderByAggregateInput = {
   user_agent?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  code_hash?: Prisma.SortOrder
 }
 
 export type OTPAvgOrderByAggregateInput = {
@@ -489,7 +489,6 @@ export type OTPAvgOrderByAggregateInput = {
 export type OTPMaxOrderByAggregateInput = {
   otp_id?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
-  code_hash?: Prisma.SortOrder
   type?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
   is_used?: Prisma.SortOrder
@@ -499,12 +498,12 @@ export type OTPMaxOrderByAggregateInput = {
   user_agent?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  code_hash?: Prisma.SortOrder
 }
 
 export type OTPMinOrderByAggregateInput = {
   otp_id?: Prisma.SortOrder
   identifier?: Prisma.SortOrder
-  code_hash?: Prisma.SortOrder
   type?: Prisma.SortOrder
   expires_at?: Prisma.SortOrder
   is_used?: Prisma.SortOrder
@@ -514,6 +513,7 @@ export type OTPMinOrderByAggregateInput = {
   user_agent?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  code_hash?: Prisma.SortOrder
 }
 
 export type OTPSumOrderByAggregateInput = {
@@ -574,7 +574,6 @@ export type IntFieldUpdateOperationsInput = {
 export type OTPCreateWithoutUserInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -583,12 +582,12 @@ export type OTPCreateWithoutUserInput = {
   ip_address?: string | null
   user_agent?: string | null
   created_at?: Date | string
+  code_hash: string
 }
 
 export type OTPUncheckedCreateWithoutUserInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -597,6 +596,7 @@ export type OTPUncheckedCreateWithoutUserInput = {
   ip_address?: string | null
   user_agent?: string | null
   created_at?: Date | string
+  code_hash: string
 }
 
 export type OTPCreateOrConnectWithoutUserInput = {
@@ -631,7 +631,6 @@ export type OTPScalarWhereInput = {
   NOT?: Prisma.OTPScalarWhereInput | Prisma.OTPScalarWhereInput[]
   otp_id?: Prisma.StringFilter<"OTP"> | string
   identifier?: Prisma.StringFilter<"OTP"> | string
-  code_hash?: Prisma.StringFilter<"OTP"> | string
   type?: Prisma.StringFilter<"OTP"> | string
   expires_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
   is_used?: Prisma.BoolFilter<"OTP"> | boolean
@@ -641,12 +640,12 @@ export type OTPScalarWhereInput = {
   user_agent?: Prisma.StringNullableFilter<"OTP"> | string | null
   user_id?: Prisma.StringNullableFilter<"OTP"> | string | null
   created_at?: Prisma.DateTimeFilter<"OTP"> | Date | string
+  code_hash?: Prisma.StringFilter<"OTP"> | string
 }
 
 export type OTPCreateManyUserInput = {
   otp_id?: string
   identifier?: string
-  code_hash: string
   type?: string
   expires_at: Date | string
   is_used?: boolean
@@ -655,12 +654,12 @@ export type OTPCreateManyUserInput = {
   ip_address?: string | null
   user_agent?: string | null
   created_at?: Date | string
+  code_hash: string
 }
 
 export type OTPUpdateWithoutUserInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -669,12 +668,12 @@ export type OTPUpdateWithoutUserInput = {
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type OTPUncheckedUpdateWithoutUserInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -683,12 +682,12 @@ export type OTPUncheckedUpdateWithoutUserInput = {
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type OTPUncheckedUpdateManyWithoutUserInput = {
   otp_id?: Prisma.StringFieldUpdateOperationsInput | string
   identifier?: Prisma.StringFieldUpdateOperationsInput | string
-  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   expires_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   is_used?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -697,6 +696,7 @@ export type OTPUncheckedUpdateManyWithoutUserInput = {
   ip_address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   user_agent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  code_hash?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -704,7 +704,6 @@ export type OTPUncheckedUpdateManyWithoutUserInput = {
 export type OTPSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   otp_id?: boolean
   identifier?: boolean
-  code_hash?: boolean
   type?: boolean
   expires_at?: boolean
   is_used?: boolean
@@ -714,13 +713,13 @@ export type OTPSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   user_agent?: boolean
   user_id?: boolean
   created_at?: boolean
+  code_hash?: boolean
   user?: boolean | Prisma.OTP$userArgs<ExtArgs>
 }, ExtArgs["result"]["oTP"]>
 
 export type OTPSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   otp_id?: boolean
   identifier?: boolean
-  code_hash?: boolean
   type?: boolean
   expires_at?: boolean
   is_used?: boolean
@@ -730,13 +729,13 @@ export type OTPSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   user_agent?: boolean
   user_id?: boolean
   created_at?: boolean
+  code_hash?: boolean
   user?: boolean | Prisma.OTP$userArgs<ExtArgs>
 }, ExtArgs["result"]["oTP"]>
 
 export type OTPSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   otp_id?: boolean
   identifier?: boolean
-  code_hash?: boolean
   type?: boolean
   expires_at?: boolean
   is_used?: boolean
@@ -746,13 +745,13 @@ export type OTPSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   user_agent?: boolean
   user_id?: boolean
   created_at?: boolean
+  code_hash?: boolean
   user?: boolean | Prisma.OTP$userArgs<ExtArgs>
 }, ExtArgs["result"]["oTP"]>
 
 export type OTPSelectScalar = {
   otp_id?: boolean
   identifier?: boolean
-  code_hash?: boolean
   type?: boolean
   expires_at?: boolean
   is_used?: boolean
@@ -762,9 +761,10 @@ export type OTPSelectScalar = {
   user_agent?: boolean
   user_id?: boolean
   created_at?: boolean
+  code_hash?: boolean
 }
 
-export type OTPOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"otp_id" | "identifier" | "code_hash" | "type" | "expires_at" | "is_used" | "attempts" | "max_attempts" | "ip_address" | "user_agent" | "user_id" | "created_at", ExtArgs["result"]["oTP"]>
+export type OTPOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"otp_id" | "identifier" | "type" | "expires_at" | "is_used" | "attempts" | "max_attempts" | "ip_address" | "user_agent" | "user_id" | "created_at" | "code_hash", ExtArgs["result"]["oTP"]>
 export type OTPInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.OTP$userArgs<ExtArgs>
 }
@@ -783,7 +783,6 @@ export type $OTPPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     otp_id: string
     identifier: string
-    code_hash: string
     type: string
     expires_at: Date
     is_used: boolean
@@ -793,6 +792,7 @@ export type $OTPPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     user_agent: string | null
     user_id: string | null
     created_at: Date
+    code_hash: string
   }, ExtArgs["result"]["oTP"]>
   composites: {}
 }
@@ -1219,7 +1219,6 @@ export interface Prisma__OTPClient<T, Null = never, ExtArgs extends runtime.Type
 export interface OTPFieldRefs {
   readonly otp_id: Prisma.FieldRef<"OTP", 'String'>
   readonly identifier: Prisma.FieldRef<"OTP", 'String'>
-  readonly code_hash: Prisma.FieldRef<"OTP", 'String'>
   readonly type: Prisma.FieldRef<"OTP", 'String'>
   readonly expires_at: Prisma.FieldRef<"OTP", 'DateTime'>
   readonly is_used: Prisma.FieldRef<"OTP", 'Boolean'>
@@ -1229,6 +1228,7 @@ export interface OTPFieldRefs {
   readonly user_agent: Prisma.FieldRef<"OTP", 'String'>
   readonly user_id: Prisma.FieldRef<"OTP", 'String'>
   readonly created_at: Prisma.FieldRef<"OTP", 'DateTime'>
+  readonly code_hash: Prisma.FieldRef<"OTP", 'String'>
 }
     
 
