@@ -1,0 +1,28 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
+.container {
+    width: 100%;
+
+    table {
+        width: 100%;
+        overflow-x: auto;
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        border-radius: 4px;
+
+        tr {
+            th {
+                text-align: center;
+                padding: space(lg);
+                border: 1px solid #ccc;
+
+                &:nth-child(1) {
+                    width: 5px;
+                }
+            }
+        }
+    }
+}

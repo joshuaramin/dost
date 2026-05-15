@@ -121,6 +121,11 @@ export default function Page() {
                     title: "Login Successfully",
                     body: "You have successfully signed in. Redirecting to your dashboard..."
                 })
+                const permission: string[] = [];
+
+                res.user.role.rolePermissions.map(({ Permission: { name}}) => {
+                    permission.push(name)
+                })
 
                 store.set("data_sessions", {
                     token: res.token,
@@ -132,7 +137,8 @@ export default function Page() {
                             last_name: res.user.Profile.last_name
                         },
                         Role : {
-                            name: res.user.role.name
+                            name: res.user.role.name,
+                            permission: permission
                         },
                         Organization: { 
                             name: res.user.organization.name

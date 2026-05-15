@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
 import styles from "@/styles/lib/ui/dashboard/sidebar.module.scss";
 import Title from "../title";
 import Link from "next/link";

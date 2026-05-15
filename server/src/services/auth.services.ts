@@ -139,7 +139,7 @@ export const AuthVerfiy = async (
     throw new AppError("Invalid Code", 400);
   }
 
-  await OTPManage.update(otp.otp_id, {
+  await OTPManage.update("otp_id", otp.otp_id, {
     is_used: true,
   });
 
@@ -158,6 +158,14 @@ export const AuthVerfiy = async (
         select: {
           role_id: true,
           name: true,
+          rolePermissions: {
+            select: {
+              Permission: {
+                select: { name: true },
+              },
+              permission_id: true,
+            },
+          },
         },
       },
       organization: {

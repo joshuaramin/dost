@@ -217,6 +217,7 @@ export type RoleOrderByWithRelationInput = {
 export type RoleWhereUniqueInput = Prisma.AtLeast<{
   role_id?: string
   name?: string
+  slug?: string
   AND?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   OR?: Prisma.RoleWhereInput[]
   NOT?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
@@ -224,10 +225,9 @@ export type RoleWhereUniqueInput = Prisma.AtLeast<{
   is_deleted?: Prisma.BoolFilter<"Role"> | boolean
   created_at?: Prisma.DateTimeFilter<"Role"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Role"> | Date | string
-  slug?: Prisma.StringFilter<"Role"> | string
   rolePermissions?: Prisma.RolePermissionListRelationFilter
   users?: Prisma.UserListRelationFilter
-}, "role_id" | "name">
+}, "role_id" | "name" | "slug">
 
 export type RoleOrderByWithAggregationInput = {
   role_id?: Prisma.SortOrder

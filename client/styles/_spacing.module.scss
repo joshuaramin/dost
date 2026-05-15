@@ -1,0 +1,20 @@
+@use "sass:map";
+
+$spacing: (
+    sm: 4px,
+    tiny: 8px,
+    base: 12,
+    lg: 16,
+    xl: 24,
+    2xl: 32,
+    3xl: 36
+);
+
+
+@function space($space) {
+    @if not map.has-key($spacing, $space) {
+        @error "Spacing `#{$space}` is not found";
+    }
+
+    @return map.get($spacing, $space);
+}

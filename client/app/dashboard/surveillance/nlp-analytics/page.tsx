@@ -1,7 +1,8 @@
+import Template from '@/lib/ui/template';
 import React from 'react'
 
 export default function Page() {
     return (
-        <div>Page</div>
+        <Template title="NLP Analytics"></Template>
     )
 }

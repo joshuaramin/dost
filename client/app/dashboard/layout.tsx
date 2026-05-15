@@ -12,7 +12,9 @@ export default function RootLayout({ children }: Props) {
             <DashboardSidebar />
             <div className={styles.children}>
                 <DashboardHeader />
-                {children}
+                <div>
+                    {children}
+                </div>
             </div>
         </div>
     )

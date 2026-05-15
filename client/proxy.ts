@@ -10,7 +10,7 @@ interface TokenPayload extends JwtPayload {
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const publicRoutes = ["/auth/login", "/auth/verification", "/"];
+  const publicRoutes = ["/auth/login", "/auth/verification"];
 
   if (publicRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.next();

@@ -149,9 +149,13 @@ export class PrismaCRUDManager<
     });
   }
 
-  async update(id: T[TIdKey], data: UpdateArgs<M>["data"]): Promise<T> {
+  async update<K extends string>(
+    key: keyof T = this.idKey,
+    value: T[TIdKey] | string,
+    data: UpdateArgs<M>["data"],
+  ): Promise<T> {
     return this.model.update({
-      where: { [this.idKey]: id },
+      where: { [key]: value },
       data,
     });
   }

@@ -82,7 +82,7 @@ export const AddRolePermission = async (role_id: string, data: any) => {
   console.log("FOUND:", existing.length);
   console.log("EXPECTED:", data.permissions.length);
 
-  return RoleManage.update(role_id, {
+  return RoleManage.update("slug", role_id, {
     rolePermissions: {
       deleteMany: {},
       createMany: {

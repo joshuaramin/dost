@@ -37,7 +37,10 @@ export default function RolesAndPermissionsCard({ name, description, slug }: Pro
                     >{name}</Title>
                 <TbExternalLink size={16} />
             </div>
-            <Text>
+            <Text style={{
+                color: "#7A7A7A",
+                whiteSpace: "wrap"
+            }}>
                 {description.length < 80 ? description : `${description.slice(0, 80)}...`}
             </Text>
             <div className={styles.footer}>
