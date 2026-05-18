@@ -10,12 +10,16 @@ interface TokenPayload extends JwtPayload {
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const publicRoutes = ["/auth/login", "/auth/verification"];
+  const publicRoutes = ["/auth/login", "/auth/verification", "/"];
 
-  if (publicRoutes.some((route) => pathname.startsWith(route))) {
+  const isPublicRoute =
+    publicRoutes.includes(pathname) ||
+    pathname.startsWith("/auth/login") ||
+    pathname.startsWith("/auth/verification");
+
+  if (isPublicRoute) {
     return NextResponse.next();
   }
-
   const token =
     req.cookies.get("token")?.value ||
     req.headers.get("authorization")?.replace("Bearer ", "");

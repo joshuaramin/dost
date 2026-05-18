@@ -4,8 +4,6 @@ import RolesPermissions from '@/lib/ui/dashboard/system-maintenance/roles-and-pe
 
 export default function Page() {
     return (
-        <Template title='Roles and Permissions'>
-            <RolesPermissions />
-        </Template>
+        <RolesPermissions />
     )
 }

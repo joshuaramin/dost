@@ -26,5 +26,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 20
+    gap: 20;
+    padding: 20px;
+    overflow-y: auto;
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/id.module.scss";
 import { useParams } from 'next/navigation'
 
@@ -31,6 +31,8 @@ export default function PageID() {
         "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
         "Authorization": `Bearer ${token}`
     }
+
+    const [ open, setOpen ] = useState<boolean>(false);
 
     const { data } = useFormQuery<RoleIDInterface>({
         key: ["RolesandPermissions", params.id],
@@ -113,6 +115,10 @@ export default function PageID() {
     }
 
     const actions = ["Create", "Read", "Update", "Delete", "Deny", "Export"]
+
+    const onHandleAddNew = () => {
+        setOpen((prev) => !prev)
+    }
 
     return (
         <Template

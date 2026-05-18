@@ -4,8 +4,8 @@
 
 .container {
     // white-space: nowrap;
-
-    font-size: font-size(base);
+    font-weight: 500;
+    font-size: font-size(tiny);
 
     @include down(sm) {
         font-size: font-size(tiny);
@@ -13,5 +13,11 @@
 
     @include down(md) {
         white-space: nowrap;
+        font-size: font-size(base);
+    }
+
+
+    @include down(lg) {
+        color: color(base, white);
     }
 }

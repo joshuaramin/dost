@@ -1,17 +1,43 @@
 "use client"
 
 import React, { ReactNode } from 'react'
-
+import styles from '@/styles/components/Modal/modal-form.module.scss';
+import { TbX } from 'react-icons/tb';
+import Title from '@/lib/ui/title';
+import Text from '../Typography/Text/text';
+import Button from '../Button/button';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>{
     children: ReactNode
+    height?: number
+    width?: number
+    title: string
+    onHandleCloseBtn: () => void
 }
 
 
-export default function ModalForm({ children, ...props}: Props) {
+export default function ModalForm({ children, title, width, height,onHandleCloseBtn}: Props) {
   return (
-    <div>
-        {children}
+    <div className={styles.container}>
+      <div className={styles.sub_container}>
+        <div className={styles.sub_container_header}>
+          <Title title={title} />
+          <button onClick={onHandleCloseBtn}>
+            <TbX size={18} />
+          </button>
+        </div>
+        <div className={styles.sub_container_body}>
+          {children}
+        </div>
+        <div className={styles.sub_container_footer}>
+          <Button onClick={onHandleCloseBtn} size="md" variant="disabled" types="outline">
+            <Text>Cancel</Text>
+          </Button>
+          <Button size="md" variant="primary">
+            <Text>Submit</Text>
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }
