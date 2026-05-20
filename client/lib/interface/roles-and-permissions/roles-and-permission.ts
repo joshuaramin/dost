@@ -28,7 +28,7 @@ export interface RolesAndPermissionResponse {
     }[];
     pageInfo: {
       endCursor: string;
-      hasNextPag: boolean;
+      hasNextPage: boolean;
     };
     totalCount: number;
     timestamp: string;

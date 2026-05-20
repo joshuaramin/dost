@@ -3,21 +3,30 @@
 @use "@/styles/colors.module" as *;
 
 .container {
+    width: 100%;
     // white-space: nowrap;
     font-weight: 500;
     font-size: font-size(tiny);
 
-    @include down(sm) {
-        font-size: font-size(tiny);
-    }
+    // @include down(sm) {
+    //     font-size: font-size(tiny);
+    // }
 
-    @include down(md) {
-        white-space: nowrap;
-        font-size: font-size(base);
-    }
+    // @include down(md) {
+    //     white-space: nowrap;
+    //     font-size: font-size(lg);
+    // }
 
 
-    @include down(lg) {
-        color: color(base, white);
-    }
+    // @include down(lg) {
+    //     color: color(base, white);
+    // }
+}
+
+.sm {
+    font-size: font-size(tiny);
+}
+
+.md {
+    font-size: font-size(base)
 }

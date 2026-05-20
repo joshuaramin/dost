@@ -9,7 +9,7 @@
         width: 100%;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
+        gap: 20;
 
 
         @include down(xl) {
@@ -27,7 +27,11 @@
 }
 
 .loading {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20;
+    padding: 20;
+    overflow-y: auto;
 }

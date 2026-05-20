@@ -18,24 +18,22 @@ export default function Button({
     size = "sm",
     children,
     disabled,
-    types,
+    types ="filled",
     className = "",
     ...props
 }: ButtonProps) {
-
-
+    const buttonClass = [
+        styles.btn,
+        styles[variant],
+        styles[size],
+        styles[types],
+        full ? styles.full : "",
+        className
+    ].join(" ");
 
     return (
         <button
-            className={`
-                ${styles.btn} 
-                ${styles[variant]}
-                ${styles.full} 
-                ${styles[size]}
-                ${styles[types]}
-                ${styles.full}
-                ${className}
-                `}
+            className={buttonClass}
             disabled={disabled}
             {...props}
         >

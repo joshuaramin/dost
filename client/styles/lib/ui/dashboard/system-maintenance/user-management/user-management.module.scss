@@ -5,24 +5,132 @@
 
 .container {
     width: 100%;
+}
+
+.tableWrapper {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
 
     table {
         width: 100%;
-        overflow-x: auto;
-        border: 1px solid #ccc;
+        min-width: 900px;
         border-collapse: collapse;
-        border-radius: 4px;
+        table-layout: fixed;
+        font-size: 14px;
+    }
 
+    thead {
+        background: #f9fafb;
+    }
+
+    th,
+    td {
+        padding: space(base);
+    }
+
+    th {
+        text-align: left;
+        font-weight: 600;
+        color: #374151;
+        border-bottom: 1px solid #e5e7eb;
+        white-space: nowrap;
+
+        &:first-child {
+            width: 48px;
+            text-align: center;
+        }
+
+        &:nth-child(2) {
+            width: 320px;
+        }
+
+        &:last-child {
+            width: 120px;
+            text-align: right;
+        }
+    }
+
+    td {
+        color: #111827;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+
+        &:first-child {
+            text-align: center;
+        }
+
+        &:last-child {
+            white-space: nowrap;
+        }
+    }
+
+    tbody {
         tr {
-            th {
-                text-align: center;
-                padding: space(lg);
-                border: 1px solid #ccc;
+            transition: background 0.15s ease;
 
-                &:nth-child(1) {
-                    width: 5px;
-                }
+            &:hover {
+                background: #f3f4f6;
+            }
+
+            &:nth-child(even) {
+                background: #fafafa;
             }
         }
+    }
+}
+
+.nameCell {
+    display: flex;
+    align-items: center;
+    gap: space(tiny);
+    min-width: 0;
+
+    >div:first-child {
+        flex-shrink: 0;
+    }
+
+    p,
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.actionButtons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px;
+}
+
+.actionButton {
+    height: 32px;
+    width: 32px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+
+    &:hover {
+        background: #f3f4f6;
+    }
+
+    &:active {
+        transform: scale(0.96);
+    }
+
+    &:focus-visible {
+        outline: 2px solid #2563eb;
+        outline-offset: 2px;
     }
 }

@@ -12,30 +12,22 @@ interface Props extends React.HTMLAttributes<HTMLDivElement>{
     height?: number
     width?: number
     title: string
-    onHandleCloseBtn: () => void
+    onHandleCloseToggle: () => void;
 }
 
 
-export default function ModalForm({ children, title, width, height,onHandleCloseBtn}: Props) {
+export default function ModalForm({ children, title, width, height, onHandleCloseToggle}: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.sub_container}>
         <div className={styles.sub_container_header}>
           <Title title={title} />
-          <button onClick={onHandleCloseBtn}>
+          <button onClick={onHandleCloseToggle}>
             <TbX size={18} />
           </button>
         </div>
         <div className={styles.sub_container_body}>
           {children}
-        </div>
-        <div className={styles.sub_container_footer}>
-          <Button onClick={onHandleCloseBtn} size="md" variant="disabled" types="outline">
-            <Text>Cancel</Text>
-          </Button>
-          <Button size="md" variant="primary">
-            <Text>Submit</Text>
-          </Button>
         </div>
       </div>
     </div>

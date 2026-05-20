@@ -29,7 +29,7 @@ export default function Home() {
         <div style={{
           padding: '10px 0'
         }}>
-          <Text style={{ fontStyle: "italic" }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
+          <Text size="sm" style={{ fontStyle: "italic" }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
 
         </div>
       </section>
@@ -87,7 +87,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-     
 
       <section>
         <TitleWrapper title="Research Team" />

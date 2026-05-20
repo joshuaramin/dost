@@ -19,11 +19,12 @@
         min-height: 350px;
         border-radius: 5px;
         background-color: color(base, white);
-        padding: 10px 15px;
+        // padding: 25px;
+        padding: 10px 25px;
 
         .sub_container_header {
             border-bottom: 1px solid #ccc;
-            padding: 10px 0;
+            padding: 15px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -41,34 +42,13 @@
                 justify-content: center;
                 border: none;
                 cursor: pointer;
+                transition: all 0.2s ease;
+                background-color: transparent;
+
+                &:hover {
+                    background-color: color(neutral, 300);
+                }
             }
-        }
-
-        .sub_container_body {
-            padding: 10px 0;
-        }
-
-        .sub_container_footer {
-            border-top: 1px solid #ccc;
-            padding: 10px 0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 5px;
-
-            // button {
-            //     padding: 10px 15px;
-            //     border-radius: 4px;
-            //     border: none;
-
-            //     &:nth-child(2) {
-            //         background-color: color(primary, 500);
-            //         color: color(base, white);
-            //     }
-
-            //     span {
-            //         font-size: font-size(tiny)
-            //     }
-            // }
         }
     }
 }

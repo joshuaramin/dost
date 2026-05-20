@@ -22,6 +22,7 @@ import { VerifyOTPFormFields } from "@/lib/types/auth.type"
 import useFormMutation from "@/lib/hooks/useMutation"
 import { VerifyResponse } from "@/lib/interface/auth/verify.interface"
 import { toastSuccess } from "@/lib/ui/toast"
+import Text from "@/components/Typography/Text/text";
 
 export default function Page() {
 
@@ -193,37 +194,38 @@ export default function Page() {
                 <Button
                     disabled={isLoading}
                     size="lg" full={true} variant='primary'>
-                    <span>{isLoading ? "Verifying Code" : "SEND VERIFICATION CODE"}</span>
+                    <Text size="md">{isLoading ? "Verifying Code" : "SEND VERIFICATION CODE"}</Text>
                 </Button>
             </Form>
 
             <Button
                 size="md"
-                variant="secondary"
+                types="outline"
+                variant={countdown > 0 ? "disabled" : "primary"}
                 className={styles.resend}
                 onClick={() => {
                     setCountdown(INITIAL_SECOND)
                 }}
             >
-                {countdown > 0 ? <span>Resend Code {formatTimer(countdown)}</span> : <span>Resend Code</span>}
+                {countdown > 0 ? <Text size="md">Resend Code {formatTimer(countdown)}</Text> : <Text size="md">Resend Code</Text>}
             </Button>
             <div className={styles.reminder}>
                 <p>This code is <b>single-use</b> and expires automatically. Advocaid will never ask for your code via phone, chat, or email.</p>
             </div>
             <div className={styles.divider}>
                 <hr />
-                <span>OR</span>
+                <Text size="sm">OR</Text>
                 <hr />
             </div>
             <Button
 
-                types="outline"
+                types="filled"
                 size="lg"
                 onClick={onHandleBackRoute}
                 full={true}
                 variant='secondary'
             >
-                <span>USE ANOTHER EMAIL ADDRESS</span>
+                <Text size="md">USE ANOTHER EMAIL ADDRESS</Text>
             </Button>
         </div>
     )

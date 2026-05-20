@@ -25,7 +25,7 @@ export default function Profile() {
                     <Title size="md" style={{ color: "#fff"}}>
                         {token?.data.Profile.first_name} {token?.data.Profile.last_name}
                     </Title>
-                    <Text>{token?.data.Role.name}</Text>
+                    <Text size="sm">{token?.data.Role.name}</Text>
                 </div>
             </div>
             <div className={styles.col2}>

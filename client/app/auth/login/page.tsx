@@ -92,7 +92,7 @@ export default function Page() {
                     autoComplete='additional-name'
                 />
                 <Button size="lg" full={true} variant='primary'>
-                    <span>SEND VERIFICATION CODE</span>
+                    <Text size="md">SEND VERIFICATION CODE</Text>
                 </Button>
             </Form>
             <div className={styles.reminder}>

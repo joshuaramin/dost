@@ -38,6 +38,16 @@ export const GetAllUsers = ({
     orderBy: {
       [orderBy]: sortBy,
     },
+    select: {
+      user_id: true,
+      email: true,
+      Profile: {
+        select: { first_name: true, last_name: true },
+      },
+      role: { select: { name: true } },
+      organization: { select: { name: true } },
+      created_at: true,
+    },
   });
 };
 

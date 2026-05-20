@@ -14,9 +14,9 @@ import Text from "@/components/Typography/Text/text";
 
 //lib & hooks
 import useFormQuery from "@/lib/hooks/useQuery";
-import SkeletonSidebar from "@/lib/ui/loading/SkeletonSidebar";
 import { ResourceResult } from "@/lib/interface/resource/resource.interface";
 import { PrimaryFont } from "@/lib/typography";
+import TemplateLoading from "./template-loading";
 
 export default function DashboardSidebar() {
 
@@ -32,9 +32,7 @@ export default function DashboardSidebar() {
 
     const edges = data?.data.edges ?? []
     if (isLoading) {
-        return <aside className={styles.container}>
-            <SkeletonSidebar />
-        </aside>
+        return <TemplateLoading />
     }
 
     return (
@@ -43,7 +41,7 @@ export default function DashboardSidebar() {
                 <Avatar variant="lg" src="/assets/logo.png" />
                 <div>
                     <Title title="ADVOCAID" />
-                    <Text>Advocacy Program</Text>
+                    <Text size="sm">Advocacy Program</Text>
                 </div>
             </div>
 

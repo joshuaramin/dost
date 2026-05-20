@@ -1,3 +1,4 @@
+import { MetaInterface } from "../meta.interface";
 import { OrganizationInterface } from "../organization/organization.interface";
 import { RolesAndPermissionsInterface } from "../roles-and-permissions/roles-and-permission";
 
@@ -14,4 +15,21 @@ export interface UserInterface {
   Profile: ProfileInterface;
   role: RolesAndPermissionsInterface;
   organization: OrganizationInterface;
+}
+
+export interface UserResult {
+  meta: MetaInterface;
+  data: {
+    edges: {
+      node: UserInterface;
+      cursor: string;
+    }[];
+    pageInfo: {
+      endCursor: string;
+      hasNextpage: boolean;
+    };
+    totalCount: number;
+    timestamp: string;
+    success: boolean;
+  };
 }

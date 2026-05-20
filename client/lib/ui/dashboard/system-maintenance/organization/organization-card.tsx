@@ -3,7 +3,7 @@ import styles from '@/styles/lib/ui/dashboard/system-maintenance/organization/or
 import Avatar from '@/components/Avatar/avatar';
 import Title from '@/lib/ui/title';
 import Button from '@/components/Button/button';
-import { TbEdit, TbTrash } from 'react-icons/tb';
+import { TbDots, TbEdit, TbTrash } from 'react-icons/tb';
 
 
 
@@ -18,7 +18,12 @@ export default function OrganizationCard({ logo, address, contact, name }: Props
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Avatar variant='lg' src={logo} />
+                <div className={styles.header_col1}>
+                    <Avatar variant='lg' src={logo} />
+                    <button>
+                        <TbDots size={18} />
+                    </button>
+                </div>
                 <Title title={name} />
             </div>
             <div className={styles.body}>
@@ -28,14 +33,14 @@ export default function OrganizationCard({ logo, address, contact, name }: Props
                 <span>Contact No: {" "}</span>
                 <span>{contact}</span>
             </div>
-            <div className={styles.footer}>
+            {/* <div className={styles.footer}>
                 <Button size="md" variant='danger' types="outline">
                     <TbTrash size={18} />
                 </Button>
                 <Button size="md" variant='primary' types="outline">
                     <TbEdit size={18} />
                 </Button>
-            </div>
+            </div> */}
         </div >
     )
 }

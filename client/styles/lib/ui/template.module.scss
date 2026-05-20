@@ -8,11 +8,18 @@
         justify-content: center;
         justify-content: space-between;
         gap: 5px;
-        margin: 20px 0;
+        // margin: 20px 0;
 
         .header_col1 {
             width: 750px;
         }
+    }
+
+    .model_footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 0;
+        gap: 5px;
     }
 
     .body {

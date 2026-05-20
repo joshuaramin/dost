@@ -5,6 +5,7 @@ import styles from "@/styles/lib/ui/dashboard/system-maintenance/roles-and-permi
 import { useParams } from 'next/navigation'
 
 // components
+import Form from '@/components/Form/form'
 import Button from '@/components/Button/button'
 
 // lib & hooks
@@ -18,8 +19,8 @@ import { AddRolePermissionsSchema } from '@/lib/validations/role.validation'
 import useFormMutation from '@/lib/hooks/useMutation'
 import { SubmitHandler } from 'react-hook-form'
 import { RolesAndPermissionsFormField } from '@/lib/types/roles-and-permissions'
-import Form from '@/components/Form/form'
 import { toastError, toastSuccess } from '@/lib/ui/toast'
+import Text from '@/components/Typography/Text/text';
 
 export default function PageID() {
 
@@ -51,7 +52,6 @@ export default function PageID() {
         handleSubmit,
         setValue,
         watch,
-        errors
     } = useFormHook({
         schema: AddRolePermissionsSchema,
         defaultValues: {
@@ -61,7 +61,6 @@ export default function PageID() {
 
     const permissions = watch("permissions") || []
 
-    // initialize from API
     useEffect(() => {
         const rolePermissions = data?.data?.rolePermissions
         if (!rolePermissions) return
@@ -71,7 +70,6 @@ export default function PageID() {
         setValue("permissions", initial)
     }, [data?.data?.rolePermissions, setValue])
 
-    // toggle logic (single source of truth: RHF)
     const togglePermission = (id: string) => {
         const current = watch("permissions") || []
 
@@ -115,10 +113,6 @@ export default function PageID() {
     }
 
     const actions = ["Create", "Read", "Update", "Delete", "Deny", "Export"]
-
-    const onHandleAddNew = () => {
-        setOpen((prev) => !prev)
-    }
 
     return (
         <Template
@@ -192,7 +186,7 @@ export default function PageID() {
                             size="sm"
                             variant="primary"
                         >
-                            Submit
+                            <Text size="sm">Submit</Text>
                         </Button>
                     </div>
 
