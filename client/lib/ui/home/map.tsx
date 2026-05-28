@@ -114,7 +114,6 @@ export default function SurveillanceMap() {
                 },
             })
 
-            // ---------------- MUNICIPALITIES BASE ----------------
             map.addLayer({
                 id: "municipalities-base",
                 type: "line",
@@ -174,7 +173,6 @@ export default function SurveillanceMap() {
                 if (!map.getLayer(layer)) return
                 map.setFilter(layer, filter)
             }
-            // ---------------- PROVINCE CLICK ----------------
             map.on("click", "provinces-fill", (e) => {
                 const f = e.features?.[0]
                 if (!f) return
@@ -223,8 +221,7 @@ export default function SurveillanceMap() {
                 )
             })
 
-            // ---------------- MUNICIPALITY CLICK ----------------
-            map.on("click", "municipalities-base", (e) => {
+             map.on("click", "municipalities-base", (e) => {
                 const f = e.features?.[0]
                 if (!f) return
 

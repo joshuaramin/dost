@@ -7,8 +7,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import styles from "@/styles/lib/ui/dashboard/surviellance/map.module.scss";
 
 import Title from "@/lib/ui/title";
-import useFormQuery from "@/lib/hooks/useQuery";
 import Text from "@/components/Typography/Text/text";
+import useFormQuery from "@/lib/hooks/useQuery";
 import SkeletonRegionProvince from "../../loading/Map/SkeletonRegionProvince";
 
 
@@ -25,288 +25,452 @@ type Region = {
     provinces: Province[]
 }
 
-
 export default function MapUI() {
-    const mapRef = useRef<HTMLDivElement | null>(null);
-    const mapInstance = useRef<maplibregl.Map | null>(null);
-
-
-    const { data, isLoading, error } = useFormQuery({
-        key: ["Regions"],
-        url: "maintenance/geospatial/geom"
-    })
-
-
+    const mapRef = useRef<HTMLDivElement | null>(null)
+    const mapInstance = useRef<maplibregl.Map | null>(null)
 
     const [regions, setRegions] = useState<Region[]>([])
-
-    useEffect(() => {
-        const load = async () => {
-            const res = await fetch("http://localhost:4000/maintenance/geospatial/hierarchy")
-            const json = await res.json()
-            setRegions(json.data.data)
-        }
-        load()
-    }, [])
+    const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
 
 
-    useEffect(() => {
-        if (!mapRef.current || mapInstance.current) return;
-
-        const apiKey = process.env.NEXT_PUBLIC_AWS_MAP_API as string;
-        const region = process.env.NEXT_PUBLIC_AWS_MAP_REGION;
-
-        const map = new maplibregl.Map({
-            container: mapRef.current,
-            style: `https://maps.geo.${region}.amazonaws.com/v2/styles/Standard/descriptor?key=${apiKey}&color-scheme=Light`,
-            center: [121.7740, 12.9000],
-            zoom: 5.1,
-            scrollZoom: false,
-            zoomSnap: 0
-        });
-
-        map.on("load", async () => {
-            const res = await fetch("http://localhost:4000/maintenance/geospatial/geom");
-            const data = await res.json();
+        const { data, isLoading, error} = useFormQuery({
+                    key: ["MapRegions", selectedProvince],
+                    url: "maintenance/geospatial/hierarchy"
+        })
 
 
 
-            if (!res) {
-                return null
+        useEffect(() => {
+            if (!mapRef.current || mapInstance.current) return
+
+            const map = new maplibregl.Map({
+                container: mapRef.current,
+                style: `https://maps.geo.${process.env.NEXT_PUBLIC_AWS_MAP_REGION}.amazonaws.com/v2/styles/Standard/descriptor?key=${process.env.NEXT_PUBLIC_AWS_MAP_API}`,
+                center: [121.774, 12.9],
+                zoom: 4.5,
+                scrollZoom: false,
+            })
+
+            mapInstance.current = map
+
+            const safeSetFilter = (
+                layer: string,
+                filter: maplibregl.FilterSpecification
+            ) => {
+                if (!map.getLayer(layer)) return
+                map.setFilter(layer, filter)
             }
 
-            console.log(data)
-            const regionsFeatures = data.data.regions.features.filter(
-                (f: any) =>
-                    f?.geometry &&
-                    (f.geometry.type === "Polygon" ||
-                        f.geometry.type === "MultiPolygon")
-            );
+            map.on("load", async () => {
+                try {
+                    const res = await fetch(
+                        "http://localhost:4000/maintenance/geospatial/geom"
+                    )
 
-            map.addSource("regions", {
-                type: "geojson",
-                data: {
-                    type: "FeatureCollection",
-                    features: regionsFeatures,
-                },
-            });
+                    const json = await res.json()
 
-            map.addSource("provinces", {
-                type: "geojson",
-                data: data.data.provinces,
-            });
+                    const { regions, provinces, municipalities } = json.data
 
-            map.addSource("municipalities", {
-                type: "geojson",
-                data: data.data.municipalities,
-            });
+                    if (!map.getSource("regions")) {
+                        map.addSource("regions", {
+                            type: "geojson",
+                            data: {
+                                type: "FeatureCollection",
+                                features: regions.features,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "regions-fill",
-                type: "fill",
-                source: "regions",
-                paint: {
-                    "fill-color": "#3b82f6",
-                    "fill-opacity": 0.12,
-                },
-            });
+                    if (!map.getSource("provinces")) {
+                        map.addSource("provinces", {
+                            type: "geojson",
+                            data: {
+                                type: "FeatureCollection",
+                                features: provinces.features,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "regions-outline",
-                type: "line",
-                source: "regions",
-                layout: {
-                    "line-join": "round",
-                    "line-cap": "round",
-                },
-                paint: {
-                    "line-color": "#0f172a",
-                    "line-width": 2.5,
-                    "line-opacity": 0.1,
-                },
-            });
+                    if (!map.getSource("municipalities")) {
+                        map.addSource("municipalities", {
+                            type: "geojson",
+                            data: {
+                                type: "FeatureCollection",
+                                features: municipalities.features,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "provinces-fill",
-                type: "fill",
-                source: "provinces",
-                paint: {
-                    "fill-color": "#cbd5e1",
-                    "fill-opacity": [
-                        "case",
-                        ["boolean", ["feature-state", "hover"], false],
-                        0.7,
-                        0.2,
-                    ],
-                },
-            });
+                    if (!map.getLayer("regions-fill")) {
+                        map.addLayer({
+                            id: "regions-fill",
+                            type: "fill",
+                            source: "regions",
+                            paint: {
+                                "fill-color": "#3b82f6",
+                                "fill-opacity": 0.1,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "provinces-line",
-                type: "line",
-                source: "provinces",
-                paint: {
-                    "line-color": "#334155",
-                    "line-width": 0.6,
-                },
-            });
+                    if (!map.getLayer("region-line")) {
+                        map.addLayer({
+                            id: "region-line",
+                            type: "line",
+                            source: "regions",
+                            paint: {
+                                "line-color": "#1e293b",
+                                "line-width": 0.5,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "province-labels",
-                type: "symbol",
-                source: "provinces",
-                layout: {
-                    "text-field": ["get", "name"],
-                    "text-size": 11,
-                    "text-font": ["Open Sans Bold"],
-                    "text-anchor": "center",
-                },
-                paint: {
-                    "text-color": "#111",
-                    "text-halo-color": "#fff",
-                    "text-halo-width": 0.5,
-                },
-            });
+                    if (!map.getLayer("provinces-fill")) {
+                        map.addLayer({
+                            id: "provinces-fill",
+                            type: "fill",
+                            source: "provinces",
+                            paint: {
+                                "fill-color": "#e5e7eb",
+                                "fill-opacity": 0.4,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "municipalities-fill",
-                type: "fill",
-                source: "municipalities",
-                paint: {
-                    "fill-color": "#e2e8f0",
-                    "fill-opacity": 0.15,
-                },
-            });
+                    if (!map.getLayer("province-highlight")) {
+                        map.addLayer({
+                            id: "province-highlight",
+                            type: "fill",
+                            source: "provinces",
+                            paint: {
+                                "fill-color": "#35408E",
+                                "fill-opacity": 0.4,
+                            },
+                            filter: ["==", ["get", "code"], ""],
+                        })
+                    }
 
-            map.addLayer({
-                id: "municipalities-line",
-                type: "line",
-                source: "municipalities",
-                paint: {
-                    "line-color": "#475569",
-                    "line-width": 0.3,
-                },
-            });
+                    if (!map.getLayer("provinces-line")) {
+                        map.addLayer({
+                            id: "provinces-line",
+                            type: "line",
+                            source: "provinces",
+                            paint: {
+                                "line-color": "#334155",
+                                "line-width": 0.8,
+                            },
+                        })
+                    }
 
-            map.addLayer({
-                id: "municipalities-labels",
-                type: "symbol",
-                source: "municipalities",
-                layout: {
-                    "text-field": ["get", "name"],
-                    "text-size": 10,
-                    "text-font": ["Open Sans Bold"],
-                    "text-anchor": "center",
-                },
-                paint: {
-                    "text-color": "#111",
-                    "text-halo-color": "#fff",
-                    "text-halo-width": 1,
-                },
-            });
+                    if (!map.getLayer("municipalities-base")) {
+                        map.addLayer({
+                            id: "municipalities-base",
+                            type: "line",
+                            source: "municipalities",
+                            paint: {
+                                "line-color": "#000000",
+                                "line-width": [
+                                    "interpolate",
+                                    ["linear"],
+                                    ["zoom"],
+                                    5,
+                                    0.5,
+                                    8,
+                                    1,
+                                    12,
+                                    2,
+                                ],
+                                "line-opacity": 0.8,
+                            },
+                        })
+                    }
 
-            map.moveLayer("regions-outline");
+                    if (!map.getLayer("municipalities-glow")) {
+                        map.addLayer({
+                            id: "municipalities-glow",
+                            type: "line",
+                            source: "municipalities",
+                            paint: {
+                                "line-color": "#94a3b8",
+                                "line-width": 2,
+                                "line-opacity": 0.3,
+                            },
+                        })
+                    }
 
-            const popup = new maplibregl.Popup({
-                closeButton: false,
-                closeOnClick: false,
-            });
+                    if (!map.getLayer("municipality-highlight")) {
+                        map.addLayer({
+                            id: "municipality-highlight",
+                            type: "line",
+                            source: "municipalities",
+                            paint: {
+                                "line-color": "#f59e0b",
+                                "line-width": 3,
+                            },
+                            filter: ["==", ["get", "code"], ""],
+                        })
+                    }
 
-            let lastHTML = "";
+                    if (!map.getLayer("municipality-labels")) {
+                        map.addLayer({
+                            id: "municipality-labels",
+                            type: "symbol",
+                            source: "municipalities",
+                            layout: {
+                                "text-field": ["get", "name"],
+                                "text-size": 11,
+                                "text-anchor": "center",
+                            },
+                            paint: {
+                                "text-color": "#000",
+                                "text-halo-color": "#fff",
+                                "text-halo-width": 1,
+                            },
+                        })
+                    }
 
-            map.on("mousemove", (e) => {
-                const features = map.queryRenderedFeatures(e.point, {
-                    layers: ["provinces-fill"],
-                });
+                    map.on("click", "provinces-fill", (e) => {
+                        if (!map.loaded()) return
 
-                if (!features.length) {
-                    popup.remove();
-                    lastHTML = "";
-                    return;
+                        const f = e.features?.[0]
+
+                        if (!f) return
+
+                        const code = f.properties?.code
+                        const bounds = f.properties?.bounds
+
+                        if (!code || !bounds) return
+
+                        setSelectedProvince(code)
+
+                        safeSetFilter("municipalities-base", [
+                            "==",
+                            ["get", "province_code"],
+                            code,
+                        ])
+
+                        safeSetFilter("municipalities-glow", [
+                            "==",
+                            ["get", "province_code"],
+                            code,
+                        ])
+
+                        safeSetFilter("municipality-labels", [
+                            "==",
+                            ["get", "province_code"],
+                            code,
+                        ])
+
+                        safeSetFilter("municipality-highlight", [
+                            "==",
+                            ["get", "code"],
+                            "",
+                        ])
+
+                        safeSetFilter("province-highlight", [
+                            "==",
+                            ["get", "code"],
+                            code,
+                        ])
+
+                        if (map.getLayer("municipality-labels")) {
+                            map.setPaintProperty(
+                                "municipality-labels",
+                                "text-color",
+                                "#fff"
+                            )
+
+                            map.setPaintProperty(
+                                "municipality-labels",
+                                "text-halo-color",
+                                "#000"
+                            )
+
+                            map.setPaintProperty(
+                                "municipality-labels",
+                                "text-halo-width",
+                                0.5
+                            )
+                        }
+
+                        const coords = bounds.coordinates[0]
+
+                        const lngs = coords.map((c: any) => c[0])
+                        const lats = coords.map((c: any) => c[1])
+
+                        map.fitBounds(
+                            [
+                                [Math.min(...lngs), Math.min(...lats)],
+                                [Math.max(...lngs), Math.max(...lats)],
+                            ],
+                            {
+                                padding: 40,
+                                duration: 800,
+                            }
+                        )
+                    })
+
+                    map.on("click", "municipalities-base", (e) => {
+                        if (!map.loaded()) return
+
+                        const f = e.features?.[0]
+
+                        if (!f) return
+
+                        const code = f.properties?.code
+                        const bounds = f.properties?.bounds
+
+                        if (!code || !bounds) return
+
+                        safeSetFilter("municipality-highlight", [
+                            "==",
+                            ["get", "code"],
+                            code,
+                        ])
+
+                        const coords = bounds.coordinates[0]
+
+                        const lngs = coords.map((c: any) => c[0])
+                        const lats = coords.map((c: any) => c[1])
+
+                        map.fitBounds(
+                            [
+                                [Math.min(...lngs), Math.min(...lats)],
+                                [Math.max(...lngs), Math.max(...lats)],
+                            ],
+                            {
+                                padding: 30,
+                                duration: 600,
+                            }
+                        )
+                    })
+
+                    map.addControl(new maplibregl.NavigationControl())
+                } catch (error) {
+                    console.error(error)
                 }
+            })
 
-                const p = features[0].properties;
-
-                const html = `
-                    <div style="font-size:12px;color:#000">
-                        <strong>${p?.name ?? "Unknown"}</strong><br/>
-                        Type: Province<br/>
-                        Code: ${p?.code ?? "-"}
-                    </div>
-                `;
-
-                if (html !== lastHTML) {
-                    lastHTML = html;
-                    popup.setLngLat(e.lngLat).setHTML(html).addTo(map);
+            return () => {
+                if (mapInstance.current) {
+                    mapInstance.current.remove()
+                    mapInstance.current = null
                 }
-            });
+            }
+        }, [])
 
-            map.on("mouseenter", "provinces-fill", () => {
-                map.getCanvas().style.cursor = "pointer";
-            });
+   
 
-            map.on("mouseleave", "provinces-fill", () => {
-                map.getCanvas().style.cursor = "";
-            });
+    const zoomToBounds = (bounds: any, code?: string) => {
+        const map = mapInstance.current
 
-            map.addControl(new maplibregl.NavigationControl());
-        });
+        if (!map || !map.loaded() || !bounds) return
 
-        mapInstance.current = map;
+        const coords = bounds.coordinates[0]
 
-        return () => {
-            mapInstance.current?.remove();
-        };
-    }, []);
+        const lngs = coords.map((c: any) => c[0])
+        const lats = coords.map((c: any) => c[1])
 
+        map.fitBounds(
+            [
+                [Math.min(...lngs), Math.min(...lats)],
+                [Math.max(...lngs), Math.max(...lats)],
+            ],
+            {
+                padding: 40,
+                duration: 800,
+            }
+        )
 
+        if (code) {
+            if (map.getLayer("province-highlight")) {
+                map.setFilter("province-highlight", [
+                    "==",
+                    ["get", "code"],
+                    code,
+                ])
+            }
 
+            setSelectedProvince(code)
+        }
+    }
 
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
                 <div className={styles.header}>
                     <Title title="Geospatial Signal map" />
-                    <Text>Regions and Provincial Level</Text>
+                    <Text size="lg">
+                        Regions and Provincial Level
+                    </Text>
                 </div>
-
 
                 <div className={styles.rp}>
-                    {regions.length > 0 ? regions.map((region) => (
+                    {isLoading ? Array.from({length: 4}).map((node, index) => (
+                        <SkeletonRegionProvince  key={index} />
+                    )) : data?.data.data.map((region: any) => (
                         <div key={region.region_code}>
-                            <div className={styles.region_headers}>
-                                <h2>{region.region_name}</h2>
+                            <div
+                                style={{
+                                    fontWeight: "bold",
+                                    padding: 8,
+                                    cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                    zoomToBounds(region.bounds)
+                                }
+                            >
+                                {region.region_name}
                             </div>
-                            <div className={styles.provinces}>
-                                {region.provinces.map((p) => (
-                                    <div className={styles.provinces_name} key={p.code}>
-                                        <span>{p.name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )) : <>
 
-                        {
-                            Array.from({ length: 4 }).map((node, index) => (
-                                <SkeletonRegionProvince key={index} />
-                            ))
-                        }</>}
-
-                </div>
-            </div>
-            <div ref={mapRef} style={{ width: "100%", height: "100vh" }} />
-            <div className={styles.legends}>
-                <Title title="Heat Map Symbology" />
-                <div className={styles.grid}>
-                    {Array.from({ length: 4 }).map((node, index) => (
-                        <div className={styles.critical} key={index}>
-                            <div className={styles.box}> </div>
-                            <Text>...</Text>
+                            {region.provinces?.map((p: any) => (
+                                <div
+                                    key={p.code}
+                                    style={{
+                                        paddingLeft: 40,
+                                        cursor: "pointer",
+                                        background:
+                                            selectedProvince === p.code
+                                                ? "#fee2e2"
+                                                : "transparent",
+                                    }}
+                                    onClick={() =>
+                                        zoomToBounds(
+                                            p.bounds,
+                                            p.code
+                                        )
+                                    }
+                                >
+                                    {p.name}
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
             </div>
+
+      
+        <div
+            ref={mapRef}
+            style={{
+                width: "100%",
+                height: "100vh",
+            }}
+        />
+        <div className={styles.legends}>
+            <Title title="Heat Map Symbology" />   
+            <div className={styles.grid}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <div
+                        className={styles.critical}
+                        key={index}
+                    >
+                    <div className={styles.box} />
+                        <Text size="md">...</Text>
+                    </div>
+                ))}
+            </div>
         </div>
-    );
+        </div>
+    )
 }

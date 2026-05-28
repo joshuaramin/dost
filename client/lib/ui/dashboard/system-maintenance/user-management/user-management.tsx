@@ -13,6 +13,10 @@ import Text from '@/components/Typography/Text/text';
 import useFormHook from '@/lib/hooks/useFormHook';
 import { CreateUserSchema } from '@/lib/validations/user.validation';
 import Input from '@/components/Input/input';
+import SkeletonTable from '@/lib/ui/loading/SkeletonTable';
+import TemplateLoading from '../../template-loading';
+import useFormMutation from '@/lib/hooks/useMutation';
+import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 
 export default function UserManagement() {
   const token = sessionStore.getToken();
@@ -50,8 +54,27 @@ export default function UserManagement() {
   })
 
 
-  const onHandleSubmit = () => {
+  const mutation = useFormMutation({
+    key:["CreateUser"],
+    method: "POST",
+    url: "maintenance/user-management",
+    headers,
+  })
 
+  const onHandleSubmit = () => {
+    mutation.mutateAsync({}, {
+      onSuccess: () => {},
+      onError: () => {}
+    })
+  }
+
+
+  if(isLoading) {
+    return (
+      <div className={styles.loading}>
+        <SkeletonTable />
+      </div>
+    )
   }
   return (
     <Template
@@ -120,7 +143,7 @@ export default function UserManagement() {
                     </div>
                   </td>
 
-                  <td>
+                  <td style={{ textWrap: "wrap"}}>
                     <Text size="sm">{node.email}</Text>
                   </td>
 
@@ -142,12 +165,15 @@ export default function UserManagement() {
                     <div className={styles.actionCell}>
                       <button className={styles.actionBtn} aria-label="View user">
                         {/* <EyeIcon /> */}
+                        <TbEye size={23} />
                       </button>
                       <button className={styles.actionBtn} aria-label="Edit user">
                         {/* <EditIcon /> */}
+                        <TbEdit size={23} />
                       </button>
                       <button className={styles.actionBtn} aria-label="Delete user">
                         {/* <TrashIcon /> */}
+                        <TbTrash size={23} />
                       </button>
                     </div>
                   </td>

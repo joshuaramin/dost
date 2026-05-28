@@ -18,6 +18,6 @@ export default function Text({
 
     const sizeClass = [styles.container, styles[size]].join(" ")
     return (
-        <span className={cn(sizeClass)} {...props}>{children}</span>
+        <span className={cn(sizeClass, SecondaryFont.className)} {...props}>{children}</span>
     )
 }

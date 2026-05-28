@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  addSubResource,
   createResource,
   getAllResource,
   getResourceById,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/", asyncHandler(getAllResource));
 router.get("/:id", withAuth, asyncHandler(getResourceById));
+router.patch("/addResource/:id", withAuth, asyncHandler(addSubResource));
 router.post("/", asyncHandler(createResource));
 router.patch("/:id", withAuth, asyncHandler(softDeleteResource));
 

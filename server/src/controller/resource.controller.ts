@@ -1,13 +1,17 @@
 import { Response, Request } from "express";
 
 import {
+  AddSubResources,
   CreateResource,
   GetAllResource,
   GetResourceBySlug,
   SoftDeleteResource,
   UpdateResourceById,
 } from "@/services/resource.services";
-import { ResourceSchema } from "@/lib/validation/resource.validation";
+import {
+  AddSubResourceSchema,
+  ResourceSchema,
+} from "@/lib/validation/resource.validation";
 
 export const getAllResource = async (request: Request, response: Response) => {
   const { limit, after, orderBy, sortBy, search } = request.query;
@@ -77,6 +81,20 @@ export const softDeleteResource = async (
   const id = String(request.params.id);
 
   const result = await SoftDeleteResource(id);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const addSubResource = async (request: Request, response: Response) => {
+  const id = String(request.params.id);
+
+  const body = await AddSubResourceSchema.safeParse(request.body);
+
+  const result = AddSubResources(id, body);
+
   return response.status(200).json({
     ...result,
     timestamp: new Date(Date.now()),

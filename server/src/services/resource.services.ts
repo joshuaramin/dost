@@ -60,7 +60,7 @@ export const GetResourceBySlug = (data: any) => {
 };
 
 export const UpdateResourceById = async (id: string, data: any) => {
-  return ResourceManage.update(id, data);
+  return ResourceManage.update("resource_id", id, data);
 };
 
 export const CreateResource = async (data: any[]) => {
@@ -125,4 +125,14 @@ export const CreateResource = async (data: any[]) => {
 
 export const SoftDeleteResource = async (data: any) => {
   return ResourceManage.delete(data.resource_id);
+};
+
+export const AddSubResources = async (id: string, data: any) => {
+  const resource = await ResourceManage.readById(id, "resource_id");
+
+  return ResourceManage.update("resource_id", id, {
+    name: data.name,
+    resource_id: resource?.resource_id,
+    
+  });
 };

@@ -79,7 +79,7 @@
         .gridContainer {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 3px;
             margin-top: 2rem;
 
             @include down(xxl) {
@@ -98,7 +98,7 @@
         .methodologyItem {
             width: 100%;
             padding: 3rem;
-            border: 1px solid color(neutral, 300);
+            border: 1px solid color(neutral, 700);
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -108,21 +108,21 @@
                 padding: 2rem;
             }
 
-            span {
+            // span {
 
-                font-size: $fntlg;
+            //     font-size: $fntlg;
+            // text-transform: uppercase;
+            //     font-weight: 500;
+
+            //     @include down(md) {
+            //         font-size: $fnttiny;
+            //     }
+
+            // }
+
+            h1 {
                 // text-transform: uppercase;
-                font-weight: 500;
-
-                @include down(md) {
-                    font-size: $fnttiny;
-                }
-
-            }
-
-            h3 {
-                // text-transform: uppercase;
-                font-size: $fntlg;
+                font-size: $fntxl;
                 font-family: "Alegreya";
 
                 @include down(md) {
@@ -131,31 +131,44 @@
             }
 
             p {
-                font-size: $fntbase;
-
-                @include down(md) {
-                    font-size: $fntbase;
-                }
+                text-align: justify;
             }
 
-
-            &:nth-child(odd) {
-                background-color: color(primary, 500);
+            &:nth-child(2) {
+                background-color: color(primary, 800);
                 color: #fff;
 
                 p {
-                    color: #fff !important;
+                    color: #fff;
                 }
             }
 
-            &:nth-child(even) {
-                background-color: color(secondary, 500);
-                color: #000;
+            // p {
+            //     font-size: $fntbase;
 
-                p {
-                    color: #000;
-                }
-            }
+            //     @include down(md) {
+            //         font-size: $fntbase;
+            //     }
+            // }
+
+
+            // &:nth-child(odd) {
+            //     background-color: color(primary, 500);
+            //     color: #fff;
+
+            //     p {
+            //         color: #fff !important;
+            //     }
+            // }
+
+            // &:nth-child(even) {
+            //     background-color: color(secondary, 500);
+            //     color: #000;
+
+            //     p {
+            //         color: #000;
+            //     }
+            // }
         }
     }
 }

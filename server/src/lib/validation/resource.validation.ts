@@ -13,3 +13,8 @@ export const ResourceSchema = z.array(
       .optional(),
   }),
 );
+
+export const AddSubResourceSchema = z.object({
+  resource_id: z.string().min(1, "Resource ID is required"),
+  name: z.string().min(1, "Sub Resource name is required"),
+});
