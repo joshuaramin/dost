@@ -33,7 +33,7 @@ interface Props<T extends FieldValues = FieldValues> {
     description?: string;
     children: ReactNode;
     onModalOpenToggle?: boolean;
-    onHandleCloseToggle: () => void;
+    onHandleCloseToggle?: () => void | null |undefined;
     modal?: Modal<T>;
     modalChildren?: ReactNode
 }
@@ -79,6 +79,18 @@ export default function Template<T extends FieldValues = FieldValues>({
         ]
     )
 
+    const canExport = hasAnyPermission([
+        "system-maintenance:export",
+        "user-management:export",
+        "roles-and-permissions:export",
+        "organization:export"
+    ], pathname, [  
+        "/dashboard/products",
+        "/dashboard/booking",
+        "/dashboard/system-maintenance/user-management",
+        "/dashboard/system-maintenance/roles-and-permissions",
+        "/dashboard/system-maintenance/organization",])
+
     if (!mounted) return null;
 
     return (
@@ -89,7 +101,8 @@ export default function Template<T extends FieldValues = FieldValues>({
                     <Text size="sm">{description}</Text>
                 </div>
 
-                {mounted && canCreate && (
+                <div className={styles.btns}>
+                    {mounted && canCreate && (
                     <div className={styles.header_col2}>
                         <Button
                             onClick={onHandleCloseToggle}
@@ -101,6 +114,15 @@ export default function Template<T extends FieldValues = FieldValues>({
                         </Button>
                     </div>
                 )}
+
+                {mounted && canExport && (
+                    <div className={styles.header_col3}>
+                        <Button size="md" variant="secondary" type="button">
+                            <Text size="sm">Export</Text>
+                        </Button>
+                    </div>
+                )}
+                </div>
             </div>
 
             <div className={styles.body}>
@@ -110,7 +132,9 @@ export default function Template<T extends FieldValues = FieldValues>({
             {onModalOpenToggle && (
                 <ModalForm
                     title={modalTitle ?? ""}
-                    onHandleCloseToggle={onHandleCloseToggle}
+                    onHandleCloseToggle={
+                        onHandleCloseToggle ?? (() => {})
+                    }
                 >
                     <Form
                         onSubmit={handleSubmit?.(

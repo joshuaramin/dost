@@ -45,7 +45,6 @@ export default function SurveillanceMap() {
 
             const { regions, provinces, municipalities } = json.data
 
-            // ---------------- SOURCES ----------------
             map.addSource("regions", {
                 type: "geojson",
                 data: { type: "FeatureCollection", features: regions.features },
@@ -82,7 +81,6 @@ export default function SurveillanceMap() {
                 },
             })
 
-            // ---------------- PROVINCES ----------------
             map.addLayer({
                 id: "provinces-fill",
                 type: "fill",
@@ -183,7 +181,6 @@ export default function SurveillanceMap() {
 
                 setSelectedProvince(code)
 
-                // show municipalities by province
                 map.setFilter("municipalities-base", ["==", ["get", "province_code"], code])
                 map.setFilter("municipalities-glow", ["==", ["get", "province_code"], code])
                 map.setFilter("municipality-labels", ["==", ["get", "province_code"], code])
@@ -203,7 +200,6 @@ export default function SurveillanceMap() {
                         "text-halo-width": 0.5,
                     },
                 })
-                // reset highlight
                 map.setFilter("municipality-highlight", ["==", ["get", "code"], ""])
                 safeSetFilter(map, "province-highlight", ["==", ["get", "code"], code])
                 // map.setFilter("province-highlight", ["==", ["get", "code"], code])

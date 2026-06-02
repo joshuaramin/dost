@@ -5,8 +5,9 @@
 .container {
     width: 100%;
     // white-space: nowrap;
+    font-size: font-size(base);
     font-weight: 500;
-    font-size: font-size(tiny);
+    // font-size: font-size(tiny);
 
     // @include down(sm) {
     //     font-size: font-size(tiny);
@@ -21,12 +22,16 @@
     // @include down(lg) {
     //     color: color(base, white);
     // }
+
+    .sm {
+        font-size: font-size(sm);
+    }
 }
 
 .sm {
     font-size: font-size(tiny);
 }
 
-.md {
-    font-size: font-size(base)
-}
+// .md {
+//     font-size: font-size(base)
+// }

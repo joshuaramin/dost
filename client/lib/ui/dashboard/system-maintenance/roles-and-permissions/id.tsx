@@ -45,7 +45,12 @@ export default function PageID() {
     const { data: ResourceData } = useFormQuery<ResourceResult>({
         key: ["Resources"],
         url: "maintenance/resource",
-        headers
+        headers,
+        params: {
+            limit: 20,
+            orderBy: "order",
+            sortBy: "asc",
+        }, 
     })
 
     const {
@@ -183,7 +188,7 @@ export default function PageID() {
                         <Button
                             type="submit"
                             types="filled"
-                            size="sm"
+                            size="md"
                             variant="primary"
                         >
                             <Text size="sm">Submit</Text>

@@ -33,21 +33,14 @@ export default function MapUI() {
     const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
 
 
-        const { data, isLoading, error} = useFormQuery({
-                    key: ["MapRegions", selectedProvince],
-                    url: "maintenance/geospatial/hierarchy"
-        })
-
-
-
-        useEffect(() => {
+    useEffect(() => {
             if (!mapRef.current || mapInstance.current) return
 
             const map = new maplibregl.Map({
                 container: mapRef.current,
                 style: `https://maps.geo.${process.env.NEXT_PUBLIC_AWS_MAP_REGION}.amazonaws.com/v2/styles/Standard/descriptor?key=${process.env.NEXT_PUBLIC_AWS_MAP_API}`,
                 center: [121.774, 12.9],
-                zoom: 4.5,
+                zoom: 5.5,
                 scrollZoom: false,
             })
 
@@ -60,7 +53,6 @@ export default function MapUI() {
                 if (!map.getLayer(layer)) return
                 map.setFilter(layer, filter)
             }
-
             map.on("load", async () => {
                 try {
                     const res = await fetch(
@@ -357,9 +349,16 @@ export default function MapUI() {
                     mapInstance.current = null
                 }
             }
-        }, [])
+    }, [])
 
-   
+   useEffect(() => {
+        const load = async () => {
+            const res = await fetch("http://localhost:4000/maintenance/geospatial/hierarchy")
+            const json = await res.json()
+            setRegions(json.data.data)
+        }
+        load()
+    }, [])
 
     const zoomToBounds = (bounds: any, code?: string) => {
         const map = mapInstance.current
@@ -394,7 +393,6 @@ export default function MapUI() {
             setSelectedProvince(code)
         }
     }
-
     return (
         <div className={styles.container}>
             <div className={styles.sidebar}>
@@ -406,50 +404,32 @@ export default function MapUI() {
                 </div>
 
                 <div className={styles.rp}>
-                    {isLoading ? Array.from({length: 4}).map((node, index) => (
-                        <SkeletonRegionProvince  key={index} />
-                    )) : data?.data.data.map((region: any) => (
-                        <div key={region.region_code}>
-                            <div
-                                style={{
-                                    fontWeight: "bold",
-                                    padding: 8,
-                                    cursor: "pointer",
-                                }}
-                                onClick={() =>
-                                    zoomToBounds(region.bounds)
-                                }
-                            >
-                                {region.region_name}
-                            </div>
-
-                            {region.provinces?.map((p: any) => (
-                                <div
-                                    key={p.code}
-                                    style={{
-                                        paddingLeft: 40,
-                                        cursor: "pointer",
-                                        background:
-                                            selectedProvince === p.code
-                                                ? "#fee2e2"
-                                                : "transparent",
-                                    }}
-                                    onClick={() =>
-                                        zoomToBounds(
-                                            p.bounds,
-                                            p.code
-                                        )
-                                    }
-                                >
-                                    {p.name}
-                                </div>
-                            ))}
+            {regions.map((region) => (
+                    <div key={region.region_code}>
+                        <div
+                            style={{ fontWeight: "bold", padding: 8, cursor: "pointer" }}
+                            onClick={() => zoomToBounds(region.bounds)}
+                        >
+                            {region.region_name}
                         </div>
-                    ))}
-                </div>
-            </div>
 
-      
+                        {region.provinces?.map((p) => (
+                            <div
+                                key={p.code}
+                                style={{
+                                    paddingLeft: 40,
+                                    cursor: "pointer",
+                                    background: selectedProvince === p.code ? "#fee2e2" : "transparent",
+                                }}
+                                onClick={() => zoomToBounds(p.bounds, p.code)}
+                            >
+                                {p.name}
+                            </div>
+                        ))}
+                    </div>
+            ))}
+                </div>
+            </div>      
         <div
             ref={mapRef}
             style={{
@@ -457,20 +437,6 @@ export default function MapUI() {
                 height: "100vh",
             }}
         />
-        <div className={styles.legends}>
-            <Title title="Heat Map Symbology" />   
-            <div className={styles.grid}>
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <div
-                        className={styles.critical}
-                        key={index}
-                    >
-                    <div className={styles.box} />
-                        <Text size="md">...</Text>
-                    </div>
-                ))}
-            </div>
-        </div>
         </div>
     )
 }

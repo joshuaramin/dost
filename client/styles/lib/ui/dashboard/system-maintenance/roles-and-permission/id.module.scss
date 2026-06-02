@@ -97,13 +97,8 @@
 
     /* BUTTON AREA */
     .btn {
-        margin-top: 20px;
         display: flex;
         justify-content: flex-end;
-
-        button {
-            width: 100px;
-            padding: 10px;
-        }
+        padding: 20px;
     }
 }

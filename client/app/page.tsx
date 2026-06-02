@@ -119,8 +119,12 @@ export default function Home() {
       </section>
 
       <section>
-        <TitleWrapper title="Research Team" />
-      </section>
+        <TitleWrapper title="The Team" />
+         <Title size="lg">Research & Advocates</Title>
+          <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
+       Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
+        </Paragraph>
+        </section>
       <Footer />
     </div>
   );

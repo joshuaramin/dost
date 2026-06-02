@@ -44,7 +44,8 @@ export default function RolesPermissions() {
             "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
             "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
             "Authorization": `Bearer ${token}`
-        }
+        },
+        
     })
 
      const { register, errors, handleSubmit } = useFormHook({
