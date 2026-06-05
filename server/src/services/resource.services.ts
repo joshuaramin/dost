@@ -4,6 +4,8 @@ import { ResourceInterface } from "@/lib/interface/resource.interface";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, Resource } from "@/lib/prisma/system/generated/prisma/client";
 
+const defaultActions = ["create", "read", "update", "delete", "deny", "export"];
+
 const ResourceManage = new PrismaCRUDManager<
   Resource,
   "resource_id",
@@ -65,14 +67,6 @@ export const UpdateResourceById = async (id: string, data: any) => {
 
 export const CreateResource = async (data: any[]) => {
   return await prisma.$transaction(async (tx) => {
-    const defaultActions = [
-      "create",
-      "read",
-      "update",
-      "delete",
-      "deny",
-      "export",
-    ];
     return await Promise.all(
       data.map(async (resource, resourceIndex: number) => {
         const slug = useSlugify(resource.name);
@@ -128,11 +122,25 @@ export const SoftDeleteResource = async (data: any) => {
 };
 
 export const AddSubResources = async (id: string, data: any) => {
-  const resource = await ResourceManage.readById(id, "resource_id");
+  const resource = await ResourceManage.readById(id, "slug");
 
-  return ResourceManage.update("resource_id", id, {
-    name: data.name,
-    resource_id: resource?.resource_id,
-    
+  console.log("Resource to add sub-resource to:", data);
+
+  return ResourceManage.update("slug", id, {
+    children: {
+      create: {
+        name: data.data.name,
+        order: data.data.order,
+        slug: useSlugify(data.data.name),
+        permissions: {
+          createMany: {
+            data: defaultActions.map((permission: string) => ({
+              name: `${useSlugify(data.data.name)}:${permission}`,
+              slug: useSlugify(permission),
+            })),
+          },
+        },
+      },
+    },
   });
 };

@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from "@/styles/lib/ui/dashboard/sidebar.module.scss";
-import Title from "../title";
+import Title from "@/components/Typography/Title/title";
 import Link from "next/link";
 import Profile from "./profile";
 
@@ -40,7 +40,7 @@ export default function DashboardSidebar() {
             <div className={styles.header}>
                 <Avatar variant="lg" src="/assets/logo.png" />
                 <div>
-                    <Title title="ADVOCAID" />
+                <Title size="md">ADVOCAID</Title>
                     <Text size="sm">Advocacy Program</Text>
                 </div>
             </div>

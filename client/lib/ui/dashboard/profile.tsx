@@ -22,7 +22,7 @@ export default function Profile() {
             <div className={styles.col1}>
                 <Avatar variant="md" />
                 <div className={styles.header}>
-                    <Title size="md" style={{ color: "#fff"}}>
+                    <Title size="sm" style={{ color: "#fff"}}>
                         {token?.data.Profile.first_name} {token?.data.Profile.last_name}
                     </Title>
                     <Text size="sm">{token?.data.Role.name}</Text>

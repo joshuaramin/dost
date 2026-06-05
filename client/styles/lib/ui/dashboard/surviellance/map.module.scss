@@ -1,6 +1,7 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
 
 .container {
     width: 100%;
@@ -49,52 +50,52 @@
 
     }
 
-    .legends {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 250px;
-        height: auto;
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 4px;
+    // .legends {
+    //     position: absolute;
+    //     top: 20px;
+    //     right: 20px;
+    //     width: 250px;
+    //     height: auto;
+    //     background-color: #fff;
+    //     padding: 15px;
+    //     border-radius: 4px;
 
-        h1 {
-            font-size: font-size(base);
-            margin-bottom: 20px;
-        }
+    //     h1 {
+    //         font-size: font-size(base);
+    //         margin-bottom: 20px;
+    //     }
 
-        .critical {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    //     .critical {
+    //         width: 100%;
+    //         display: flex;
+    //         align-items: center;
+    //         gap: 5px;
+    //     }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
+    //     .grid {
+    //         display: grid;
+    //         grid-template-columns: repeat(2, 1fr);
+    //         gap: 10px;
+    //     }
 
-        .box {
-            width: 38px;
-            height: 25px;
-            margin-bottom: 5px;
-            border-radius: 4px;
+    //     .box {
+    //         width: 38px;
+    //         height: 25px;
+    //         margin-bottom: 5px;
+    //         border-radius: 4px;
 
-            &:nth-child(1) {
-                background-color: color(success, 100);
-            }
+    //         &:nth-child(1) {
+    //             background-color: color(success, 100);
+    //         }
 
-            &:nth-child(2) {
-                background-color: color(secondary, 100);
-            }
-        }
+    //         &:nth-child(2) {
+    //             background-color: color(secondary, 100);
+    //         }
+    //     }
 
-        span {
-            font-size: font-size(base);
-        }
-    }
+    //     span {
+    //         font-size: font-size(base);
+    //     }
+    // }
 
 }

@@ -8,9 +8,6 @@ import styles from "@/styles/lib/ui/dashboard/surviellance/map.module.scss";
 
 import Title from "@/lib/ui/title";
 import Text from "@/components/Typography/Text/text";
-import useFormQuery from "@/lib/hooks/useQuery";
-import SkeletonRegionProvince from "../../loading/Map/SkeletonRegionProvince";
-
 
 type Province = {
     code: string

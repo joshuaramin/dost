@@ -1,14 +1,14 @@
-import { Alegreya, Poppins } from "next/font/google";
+import { Alegreya, Inter, Poppins } from "next/font/google";
 
 
-export const PrimaryFont = Alegreya({
+export const PrimaryFont = Poppins({
     display: "auto",
     subsets: ["latin"],
     weight: ["400", "500", "700"]
 })
 
-export const SecondaryFont = Poppins({
+export const SecondaryFont = Inter({
     display: "auto",
     subsets: ["latin"],
-    weight: ["400", "500", "700"]
+
 })

@@ -1,3 +1,8 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
 .container {
     padding: 3rem 2rem;
     height: 100vh;
@@ -11,12 +16,15 @@
         // margin: 20px 0;
 
         .header_col1 {
-            width: 750px;
+            width: auto;
         }
+
 
         .btns {
             display: flex;
-            gap: 10px
+            gap: 10px;
+
+
         }
     }
 

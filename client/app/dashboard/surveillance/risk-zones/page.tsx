@@ -3,7 +3,8 @@ import React from 'react'
 
 export default function Page() {
     return (
-        <Template title='Trends and Analytics'>
+        <Template title='Risk Zones'>
+
         </Template>
     )
 }

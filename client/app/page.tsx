@@ -1,4 +1,4 @@
-import { SecondaryFont } from "@/lib/typography";
+import { PrimaryFont, SecondaryFont } from "@/lib/typography";
 import styles from "./page.module.scss";
 
 //lib and hooks
@@ -24,7 +24,7 @@ export default function Home() {
         <h2>Geospatial AI for Public Health Surveillance</h2>
       </section>
 
-       <section>
+    <section>
         <TitleWrapper title="Surveillance Map" />
         <SurveillanceMap />
         <div style={{
@@ -101,9 +101,9 @@ export default function Home() {
           ].map((item, index) => (
             <div key={index} className={styles.methodologyItem}>
               <div>
-                <span className={SecondaryFont.className}>Stage 0{index + 1}</span>
+                <span className={PrimaryFont.className}>Stage 0{index + 1}</span>
                 <br/>
-                <Title size="lg">{item.name}</Title>
+                <Title className={PrimaryFont.className} size="lg">{item.name}</Title>
               </div>
               <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
                 {item.description}
