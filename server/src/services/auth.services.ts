@@ -5,14 +5,12 @@ import {
   ActivityLog,
   DeviceSession,
   OTP,
-  Profile,
   User,
 } from "@/lib/prisma/system/generated/prisma/client";
 import jwt from "jsonwebtoken";
-import useSES from "@/lib/helpers/useSES";
-import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
 import { generateOTP, hashOTP } from "@/utils/otpGenerator";
 import { AppError } from "@/lib/common/appError";
+import { authQueue } from "@/jobs/auth/auth.queue";
 
 interface DeviceSessions {
   device_name: string;
@@ -47,39 +45,7 @@ const ActivityLogManage = new PrismaCRUDManager<
 >(prisma.activityLog, "activity_logs_id");
 
 export const AuthLogin = async (data: any, deviceSession: DeviceSessions) => {
-  const recent = await prisma.oTP.count({
-    where: {
-      identifier: data.email,
-      created_at: {
-        gte: new Date(Date.now() - 60 * 1000),
-      },
-    },
-  });
-
-  if (recent >= 3) {
-    throw new AppError("Too many request. Try again later.", 500);
-  }
-
-  await prisma.oTP.updateMany({
-    where: { identifier: data.email, is_used: false },
-    data: { is_used: true },
-  });
-
-  const code = generateOTP();
-  const code_hash = hashOTP(code);
-
-  await OTPManage.create({
-    identifier: data.email,
-    type: "login",
-    code_hash,
-    expires_at: new Date(Date.now() + 10 * 60 * 1000),
-    ip_address: deviceSession.ip_address,
-    user_agent: deviceSession.user_agent,
-  });
-
-  const user = await prisma.user.findUnique({
-    where: { email: data.email },
-  });
+  const user = await UserManage.unique("email", data.email);
 
   if (!user) {
     throw new AppError("Email address is not found", 400);
@@ -91,13 +57,23 @@ export const AuthLogin = async (data: any, deviceSession: DeviceSessions) => {
 
   const fullname = profile?.first_name + " " + profile?.last_name;
 
-  const html = await renderOTPTemplate(fullname, code);
-
-  await useSES({
-    html,
-    subject: "One-Time Password",
-    toAddress: [data.email],
-  });
+  await authQueue.add(
+    "send-login-otp",
+    {
+      email: data.email,
+      fullname,
+      ip: deviceSession.ip_address,
+      userAgent: deviceSession.user_agent,
+    },
+    {
+      attempts: 5,
+      backoff: {
+        type: "exponential",
+        delay: 3000,
+      },
+      removeOnComplete: true,
+    },
+  );
 
   return { email: data.email, success: true };
 };

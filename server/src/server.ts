@@ -20,7 +20,22 @@ import NlpRouter from "@/routes/nlp.routes";
 import OrganizationRouter from "@/routes/organization.routes";
 import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
 
+//bullmq
+import { createBullBoard } from "@bull-board/api";
+import { ExpressAdapter } from "@bull-board/express";
+import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
+import { authQueue } from "./jobs/auth/auth.queue";
+
 export const app = express();
+
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath("/admin/queues");
+
+createBullBoard({
+  queues: [new BullMQAdapter(authQueue)],
+  serverAdapter,
+});
+
 app.use(
   createApiVersionMiddleware({
     supported: ["2026-02-26"],
@@ -50,6 +65,10 @@ app.use(
   }),
 );
 
+//bullmq route
+app.use("/admin/queues", serverAdapter.getRouter());
+
+//main routes
 app.use(responseWrapperMiddleware);
 app.use("/maintenance/users", UserRouter);
 app.use("/maintenance/resource", ResourceRouter);

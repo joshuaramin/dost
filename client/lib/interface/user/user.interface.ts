@@ -27,6 +27,7 @@ export interface UserResult {
     pageInfo: {
       endCursor: string;
       hasNextpage: boolean;
+      hasPrevPage: boolean;
     };
     totalCount: number;
     timestamp: string;

@@ -35,6 +35,7 @@ interface Result<TNode, TCursor = unknown> {
   pageInfo: {
     endCursor: TCursor | null;
     hasNextPage: boolean;
+    hasPrevPage: boolean;
   };
   totalCount: number;
 }
@@ -124,7 +125,9 @@ export class PrismaCRUDManager<
       pageInfo: {
         endCursor: items.length ? items[items.length - 1][this.idKey] : null,
         hasNextPage,
+        hasPrevPage: Boolean(cursor),
       },
+
       totalCount,
     });
   }

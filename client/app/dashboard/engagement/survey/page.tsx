@@ -1,8 +1,8 @@
 import Template from '@/lib/ui/template';
 import React from 'react'
 
-export default function Pages() {
+export default function Page() {
   return (
-    <Template title="Trends Topics"></Template>
+    <Template title="Survey">Page</Template>
   )
 }

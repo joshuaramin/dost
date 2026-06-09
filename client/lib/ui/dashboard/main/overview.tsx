@@ -5,7 +5,7 @@ import Template from '../../template';
 import TitleWrapper from '../../titleWrapper';
 import styles from '@/styles/lib/ui/dashboard/main/overview.module.scss'
 import Text from '@/components/Typography/Text/text';
-import { TbArrowsExchange, TbArrowUp, TbChartAreaLine, TbMapPinExclamation } from 'react-icons/tb';
+import { TbArrowUp, TbChartAreaLine, TbMapPinExclamation } from 'react-icons/tb';
 import Title from '@/components/Typography/Title/title';
 import SurveillanceMap from '../../home/map';
 

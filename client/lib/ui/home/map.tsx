@@ -28,6 +28,7 @@ export default function SurveillanceMap() {
 
     useEffect(() => {
         if (!mapRef.current || mapInstance.current) return
+        if (typeof window === "undefined") return
 
         const map = new maplibregl.Map({
             container: mapRef.current,
@@ -38,6 +39,16 @@ export default function SurveillanceMap() {
         })
 
         mapInstance.current = map
+
+        const safeSetFilter = (map: maplibregl.Map, layer: string, filter: any) => {
+            if (!map.getLayer(layer)) return
+            map.setFilter(layer, filter)
+        }
+
+        const addLayerSafe = (map: maplibregl.Map, layer: any) => {
+            if (map.getLayer(layer.id)) return
+            map.addLayer(layer)
+        }
 
         map.on("load", async () => {
             const res = await fetch("http://localhost:4000/maintenance/geospatial/geom")
@@ -61,7 +72,7 @@ export default function SurveillanceMap() {
             })
 
             // ---------------- REGIONS ----------------
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "regions-fill",
                 type: "fill",
                 source: "regions",
@@ -71,7 +82,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "region-line",
                 type: "line",
                 source: "regions",
@@ -81,7 +92,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "provinces-fill",
                 type: "fill",
                 source: "provinces",
@@ -91,7 +102,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "province-highlight",
                 type: "fill",
                 source: "provinces",
@@ -102,7 +113,7 @@ export default function SurveillanceMap() {
                 filter: ["==", ["get", "code"], ""],
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "provinces-line",
                 type: "line",
                 source: "provinces",
@@ -112,7 +123,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "municipalities-base",
                 type: "line",
                 source: "municipalities",
@@ -130,7 +141,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "municipalities-glow",
                 type: "line",
                 source: "municipalities",
@@ -141,7 +152,7 @@ export default function SurveillanceMap() {
                 },
             })
 
-            map.addLayer({
+            addLayerSafe(map, {
                 id: "municipality-highlight",
                 type: "line",
                 source: "municipalities",
@@ -152,7 +163,8 @@ export default function SurveillanceMap() {
                 filter: ["==", ["get", "code"], ""],
             })
 
-            map.addLayer({
+            // ✅ ONLY ONE LABEL LAYER (FIXED DUPLICATE BUG)
+            addLayerSafe(map, {
                 id: "municipality-labels",
                 type: "symbol",
                 source: "municipalities",
@@ -167,10 +179,7 @@ export default function SurveillanceMap() {
                     "text-halo-width": 1,
                 },
             })
-            const safeSetFilter = (map: maplibregl.Map, layer: string, filter: any) => {
-                if (!map.getLayer(layer)) return
-                map.setFilter(layer, filter)
-            }
+
             map.on("click", "provinces-fill", (e) => {
                 const f = e.features?.[0]
                 if (!f) return
@@ -185,24 +194,7 @@ export default function SurveillanceMap() {
                 map.setFilter("municipalities-glow", ["==", ["get", "province_code"], code])
                 map.setFilter("municipality-labels", ["==", ["get", "province_code"], code])
 
-                map.addLayer({
-                    id: "municipality-labels",
-                    type: "symbol",
-                    source: "municipalities",
-                    layout: {
-                        "text-field": ["get", "name"],
-                        "text-size": 11,
-                        "text-anchor": "center",
-                    },
-                    paint: {
-                        "text-color": "#fff",
-                        "text-halo-color": "#fff",
-                        "text-halo-width": 0.5,
-                    },
-                })
-                map.setFilter("municipality-highlight", ["==", ["get", "code"], ""])
                 safeSetFilter(map, "province-highlight", ["==", ["get", "code"], code])
-                // map.setFilter("province-highlight", ["==", ["get", "code"], code])
 
                 const coords = bounds.coordinates[0]
                 const lngs = coords.map((c: any) => c[0])
@@ -217,7 +209,7 @@ export default function SurveillanceMap() {
                 )
             })
 
-             map.on("click", "municipalities-base", (e) => {
+            map.on("click", "municipalities-base", (e) => {
                 const f = e.features?.[0]
                 if (!f) return
 
@@ -243,7 +235,10 @@ export default function SurveillanceMap() {
             map.addControl(new maplibregl.NavigationControl())
         })
 
-        return () => map.remove()
+        return () => {
+            map.remove()
+            mapInstance.current = null
+        }
     }, [])
 
     useEffect(() => {

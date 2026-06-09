@@ -2,21 +2,29 @@
 
 import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/user-management/user-management.module.scss';
-import Checkbox from '@/components/Input/checkbox';
-import Template from '@/lib/ui/template';
-import { sessionStore } from '@/lib/utils/sessions';
-import useFormQuery from '@/lib/hooks/useQuery';
-import { UserResult } from '@/lib/interface/user/user.interface';
 import { format } from 'date-fns'
-import Avatar from '@/components/Avatar/avatar';
-import Text from '@/components/Typography/Text/text';
-import useFormHook from '@/lib/hooks/useFormHook';
-import { CreateUserSchema } from '@/lib/validations/user.validation';
-import Input from '@/components/Input/input';
+
+//lib & utils
 import SkeletonTable from '@/lib/ui/loading/SkeletonTable';
-import TemplateLoading from '../../template-loading';
+import useFormHook from '@/lib/hooks/useFormHook';
+import useFormQuery from '@/lib/hooks/useQuery';
+import Template from '@/lib/ui/template';
 import useFormMutation from '@/lib/hooks/useMutation';
+import { sessionStore } from '@/lib/utils/sessions';
+import { CreateUserSchema } from '@/lib/validations/user.validation';
+import { UserResult } from '@/lib/interface/user/user.interface';
+
+
+//components
+import Input from '@/components/Input/input';
+import Avatar from '@/components/Avatar/avatar';
+import Checkbox from '@/components/Input/checkbox';
+import Text from '@/components/Typography/Text/text';
+
+
 import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
+import Search from '@/components/Search/search';
+import Pagination from '@/components/Pagination/pagination';
 
 export default function UserManagement() {
   const token = sessionStore.getToken();
@@ -28,6 +36,26 @@ export default function UserManagement() {
   }
 
   const [open, setOpen] = useState<boolean>(false);
+  const [ search, setSearch ] = useState<string>("");
+  const [ page, setPage ] = useState<number>(0)
+
+  const onHandleNextPage = () => { 
+    setPage(() => page + 1)
+  }
+
+  const onHandlePrevPage = () => {
+    setPage(() =>page - 1)
+  }
+
+  const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.currentTarget.value)
+  }
+
+
+  const onHandleClear = () => {
+      setSearch('')
+  }
+
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
   const { data, isLoading } = useFormQuery<UserResult>({
@@ -82,7 +110,7 @@ export default function UserManagement() {
       onHandleCloseToggle={onHandleAddnewToggle}
       onModalOpenToggle={open}
       modal={{
-        modalTitle: "Add new User",
+        modalTitle: "Add new user",
         handleSubmit,
         onHandleSubmit
       }}
@@ -97,6 +125,14 @@ export default function UserManagement() {
       }
     >
       <div className={styles.container}>
+        <div className={styles.filter}>
+          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+
+          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+
+
+        </div>
         <div className={styles.tableWrapper}>
           <table>
             <thead>
@@ -143,7 +179,7 @@ export default function UserManagement() {
                     </div>
                   </td>
 
-                  <td style={{ textWrap: "wrap"}}>
+                  <td>
                     <Text size="sm">{node.email}</Text>
                   </td>
 
@@ -182,6 +218,15 @@ export default function UserManagement() {
             </tbody>
           </table>
         </div>
+        <Pagination 
+          totalItems={data?.data.totalCount || 0}
+          currentCount={data?.data.edges.length || 0}
+          hasNextPage={data?.data.pageInfo.hasNextpage || false}
+          hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+          onNext={onHandleNextPage}
+          onPrev={onHandlePrevPage}
+          
+        />
       </div>
     </Template>
   )

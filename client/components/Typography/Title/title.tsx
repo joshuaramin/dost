@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react'
 import styles from '@/styles/components/Typography/title.module.scss'
 import cn from '@/lib/utils/cn'
+import { PrimaryFont } from '@/lib/typography';
 
 type Size = 'sm' | 'md' | 'lg'
 
@@ -16,7 +17,7 @@ export default function Title({
   size,
   ...props
 }: Props) {
-  const headingClass = cn(styles.title, styles[size], className)
+  const headingClass = cn(styles.title, styles[size], className, PrimaryFont.className)
 
   return (
     <h1 className={headingClass} {...props}>
