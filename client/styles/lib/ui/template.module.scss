@@ -7,6 +7,10 @@
     padding: 3rem 2rem;
     height: 100vh;
 
+    @include down(md) {
+        padding: 3rem 1rem;
+    }
+
     .header {
         display: flex;
         // flex-direction: column;

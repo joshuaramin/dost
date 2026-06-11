@@ -25,9 +25,12 @@
             border: none;
             cursor: pointer;
 
-            &:hover {
-                background-color: color(primary, 500);
-                color: color(base, white);
+            svg {
+                color: color(neutral, 400)
+            }
+
+            &:disabled {
+                background: color(error, 500);
             }
 
         }

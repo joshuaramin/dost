@@ -7,7 +7,10 @@ export default function Footer() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
+                <div style={{ display: "flex", alignItems: "center", justifyItems: "center"}}>
+                    <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
+                    <Image src={"/assets/philippine_logo.png"} alt="logo" width={80} height={80} />
+                </div>
 
                 <h2>
                     HIV Geospatial Intelligence · Avocaid Program

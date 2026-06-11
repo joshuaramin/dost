@@ -8,6 +8,7 @@ import Text from '@/components/Typography/Text/text';
 import { TbArrowUp, TbChartAreaLine, TbMapPinExclamation } from 'react-icons/tb';
 import Title from '@/components/Typography/Title/title';
 import SurveillanceMap from '../../home/map';
+import { format } from 'date-fns';
 
 export default function Overview() {
   return (
@@ -34,7 +35,7 @@ export default function Overview() {
               </div>
               <div className={styles.footer}>
                 <Text size="sm">+15% vs Last Period</Text>
-                <span>Last updated: 2024-06-01</span>
+                <span>Last updated: {format(new Date("2024-06-01"), "MMM dd, yyyy")}</span>
               </div>
             </div>
         ))}
@@ -61,20 +62,20 @@ export default function Overview() {
             </div>
         ))}
           </div>
-        <TitleWrapper title="Key Metrics"/>
+        {/* <TitleWrapper title="Key Metrics"/>
         <div className={styles.col3}>
-           {[
+        {[
             { total: "140K", title: "Post analyzed", description: "Geospatial Sample", percentage: "+12.4%"}, 
             { total: "24", title: "High Risk Zones", description: "Geospatial Sample", percentage: "+12.4%"}, 
             { total: "91.40%", title: "NLP Accuracy", description: "Geospatial Sample", percentage: "+12.4%"}, 
             { total: "3,120", title: "Testing Referral", description: "Geospatial Sample", percentage: "+12.4%"}
-           ].map((node, index) => (
+        ].map((node, index) => (
             <div className={styles.col3_card} key={index}>
               <div className={styles.header}>
                 <div>
                   <TbChartAreaLine  size={52} />
                 </div>
-                 <div className={styles.percentage}>
+                <div className={styles.percentage}>
                   <TbArrowUp size={18} />
                   <Text size="sm" weight="bold">{node.percentage}</Text>
                 </div>
@@ -87,7 +88,7 @@ export default function Overview() {
               </div>
             </div>
         ))}
-        </div>
+        </div> */}
         <TitleWrapper title="Geospatial Intelligence"/>
         <SurveillanceMap />
         <TitleWrapper title="Barangay Intelligence"/>

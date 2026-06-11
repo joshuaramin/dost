@@ -25,6 +25,8 @@ import Text from '@/components/Typography/Text/text';
 import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 import Search from '@/components/Search/search';
 import Pagination from '@/components/Pagination/pagination';
+import { Select } from '@/components/Select/select';
+import SelectArray from '@/components/Select/select-array';
 
 export default function UserManagement() {
   const token = sessionStore.getToken();
@@ -126,13 +128,22 @@ export default function UserManagement() {
     >
       <div className={styles.container}>
         <div className={styles.filter}>
-          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
-          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
-
-          <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
-
+          <SelectArray
+          value=""
+            label="Organizations"
+            options={[{label: "National University", value: "national-university"}]}
+            name="email"
+          />
+           <SelectArray
+            value=""
+            label="Role"
+            options={[{label: "Administrator", value: "national-university"}]}
+            name="email"
+          />
 
         </div>
+            <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+
         <div className={styles.tableWrapper}>
           <table>
             <thead>
