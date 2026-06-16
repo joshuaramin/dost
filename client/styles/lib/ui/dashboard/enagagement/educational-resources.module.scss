@@ -1,0 +1,35 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
+.container {
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background-color: color(base, white);
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+        .card {
+            background-color: color(base, white);
+            padding: 20px;
+            border: 4px;
+
+            .tag {
+                // padding: 12;
+                // background-color: color(primary, 500);
+                // color: color(base, white);
+                border-radius: 100px;
+                // margin: 20px;
+            }
+        }
+    }
+}

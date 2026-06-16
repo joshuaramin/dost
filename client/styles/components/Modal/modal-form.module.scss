@@ -4,51 +4,82 @@
 @use "@/styles/spacing.module" as *;
 
 .container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    background: rgba($color: color(neutral, 800), $alpha: 0.7);
     position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
     align-items: center;
     justify-content: center;
-    inset: 0;
-    padding: 10px;
+
+    padding: 16px;
+
+    background: rgba(color(neutral, 800), 0.7);
+
+    overflow: hidden;
 
     .sub_container {
-        width: 650px;
-        min-height: 300px;
-        border-radius: 5px;
+        width: 100%;
+        max-width: 750px;
+
+        max-height: calc(100vh - 32px);
+        display: flex;
+        flex-direction: column;
+
+        border-radius: 10px;
         background-color: color(base, white);
-        // padding: 25px;
-        padding: 12px 25px;
+
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 
         .sub_container_header {
-            border-bottom: 1px solid #ccc;
-            padding: 15px 0;
+            flex-shrink: 0;
+
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
 
+            border-bottom: 1px solid color(neutral, 200);
+
+            position: sticky;
+            top: 0;
+            background: color(base, white);
+            z-index: 2;
+
             h1 {
                 font-size: font-size(lg);
+                margin: 0;
             }
 
             button {
-                height: 35px;
-                width: 35px;
-                border-radius: 100px;
+                height: 36px;
+                width: 36px;
+
+                border-radius: 999px;
+                border: none;
+
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                border: none;
+
                 cursor: pointer;
-                transition: all 0.2s ease;
+                transition: background-color 0.2s ease;
+
                 background-color: transparent;
 
                 &:hover {
                     background-color: color(neutral, 300);
                 }
             }
+        }
+
+        // optional: body wrapper for scroll content
+        .sub_container_body {
+            padding: 16px 20px;
+
+            overflow-y: auto;
+            flex: 1;
         }
     }
 }

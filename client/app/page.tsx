@@ -73,6 +73,9 @@ export default function Home() {
         </div>
       </section>
       <section>
+        <TitleWrapper title="Educational Resources" />
+      </section>
+      <section>
         <TitleWrapper title="METHODOLOGY" />
 
         <Title size="lg">A Four-Stage of Intelligence Pipeline</Title>

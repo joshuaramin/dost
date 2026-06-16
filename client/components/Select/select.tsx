@@ -41,18 +41,18 @@ export function Select({ ref, label, error, register, name, onChange, isRequired
                 {isRequired ? <span className={styles.isRequired}>*</span> : null}
             </div>
             <div className={styles.select}>
-                <div className={styles.selectContainer} {...register(name)}>
+                <div className={error ? styles.selectError : styles.selectContainer} {...register(name)}>
                     <Text size="sm">
                         {options.find(option => option.value === value)?.label || `Please select a ${label.toLowerCase()}`}
                     </Text>
 
 
-                    <button onClick={onHandleToggle}>
+                    <button type="button" onClick={onHandleToggle}>
                         {toggle ? <TbCaretUpFilled size={23} /> : <TbCaretDownFilled size={23} />}
                     </button>
                 </div>
                 {toggle &&
-                    <div className={styles.optionContainer}>
+                    <div className={error ? styles.optionContainerError : styles.optionContainer}>
                         <input
                             type="text"
                             onChange={onChange}

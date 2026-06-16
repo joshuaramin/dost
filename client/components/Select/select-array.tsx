@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import styles from '@/styles/components/Select/select-array.module.scss';
 import Text from '../Typography/Text/text';
-import { TbCaretUpFilled } from 'react-icons/tb';
+import { TbCaretDownFilled, TbCaretUpFilled } from 'react-icons/tb';
 
 
 type Options = {
@@ -36,8 +36,8 @@ export default function SelectArray({ label, name, options, value}: Props) {
                 <Text size="sm">
                     {options?.find((option) => option.value === value)?.label || `Please select a ${label.toLowerCase()}`}
                 </Text>
-                <button onClick={onHandleToggle}>
-                    <TbCaretUpFilled size={23} />
+                <button type="button" onClick={onHandleToggle}>
+                    {toggle ? <TbCaretUpFilled size={23} /> : <TbCaretDownFilled size={23} />}
                 </button>
             </div>
             {toggle && (

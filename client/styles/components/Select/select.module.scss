@@ -7,7 +7,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
+    // padding: 20px 10px;
 
     gap: 10px;
 
@@ -67,6 +67,47 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        position: relative;
+    }
+
+    .selectError {
+        width: 100%;
+        height: 55px;
+        border: 1px solid color(error, 500);
+        appearance: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .categoryspan {
+            font-size: font-size(tiny);
+        }
+
+        button {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+            svg {
+                fill: color(neutral, 500);
+            }
+
+            &:hover {
+                svg {
+                    fill: color(primary, 500)
+                }
+            }
+        }
+
+
     }
 
     .selectContainer {
@@ -107,60 +148,117 @@
         }
     }
 
-    .optionContainer {
+    .optionContainerError {
+        width: 100%;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: color(base, white);
 
-        padding: 5px 0;
-        border-radius: 5px;
+        position: absolute;
+        top: 45px;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+
+        max-height: 260px;
+        overflow-y: auto;
+
+        border: 1px solid color(error, 500);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+
+        z-index: 1000;
 
         input {
             width: 100%;
-            height: 50px;
-            padding: 10px;
-            border-radius: 5px;
+
+            padding: 16px 12px;
             border: none;
-            box-shadow: 0px 0px 3px 0px color(neutral, 500);
             outline: none;
+            border-bottom: 1px solid color(neutral, 200);
+
+            position: sticky;
+            top: 0;
+
+            background-color: color(base, white);
         }
 
-        .option {
+        button {
             width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
-            padding: 10px 0;
-            display: inline-flexbox;
-            flex-direction: column;
-            gap: 5px;
 
-            &::-webkit-scrollbar {
-                width: 5px;
-            }
+            padding: 10px 14px;
+            text-align: left;
 
-            &::-webkit-scrollbar-thumb {
-                background-color: color(neutral, 600);
-                border-radius: 100px;
-            }
+            background-color: transparent;
+            border: none;
 
-            button {
-                height: 50px;
-                border: none;
-                border-radius: 5px;
-                background-color: transparent;
-                display: flex;
-                align-items: flex-start;
-                justify-content: center;
-                padding: 0 10px;
-                margin: 5px 0;
+            cursor: pointer;
 
-                // background-color: #f5f5f;
-                border: 1px solid color(neutral, 600);
-                cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease;
 
-                &:hover {
-                    background-color: color(primary, 500);
-                    color: color(base, white);
-                }
+            &:hover {
+                background-color: color(primary, 500);
+                color: color(base, white);
             }
         }
+    }
 
+    .optionContainer {
+        width: 100%;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: color(base, white);
+
+        position: absolute;
+        top: 45px;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+
+        max-height: 260px;
+        overflow-y: auto;
+
+        border: 1px solid color(neutral, 200);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+
+        z-index: 1000;
+
+        input {
+            width: 100%;
+
+            padding: 16px 12px;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid color(neutral, 200);
+
+            position: sticky;
+            top: 0;
+
+            background-color: color(base, white);
+        }
+
+        button {
+            width: 100%;
+
+            padding: 10px 14px;
+            text-align: left;
+
+            background-color: transparent;
+            border: none;
+
+            cursor: pointer;
+
+            transition: background-color 0.15s ease, color 0.15s ease;
+
+            &:hover {
+                background-color: color(primary, 500);
+                color: color(base, white);
+            }
+        }
     }
 }

@@ -27,6 +27,8 @@ import Search from '@/components/Search/search';
 import Pagination from '@/components/Pagination/pagination';
 import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
+import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
+import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
 
 export default function UserManagement() {
   const token = sessionStore.getToken();
@@ -71,8 +73,19 @@ export default function UserManagement() {
     }
   })
 
+  const { data: RoleData } = useFormQuery<RolesAndPermissionResponse>({
+    key: ["RoleMangement"],
+    url: `maintenance/roles/`,
+    headers
+  })
 
-  const { errors, handleSubmit, register } = useFormHook({
+  const { data: OrganizationData } = useFormQuery<OrganizationResult>({
+    key: ["Organizatoin"],
+    url: "maintenance/organization",
+    headers
+  })
+
+  const { errors, handleSubmit, register, setValue, watch} = useFormHook({
     schema: CreateUserSchema,
     defaultValues: {
       email: "",
@@ -123,6 +136,30 @@ export default function UserManagement() {
               <Input label="First Name" name="first_name" register={register} error={errors.first_name}  isRequired/>
               <Input label="Last Name" name="last_name" register={register} error={errors.last_name}  isRequired/>
           </div>
+           <Select 
+                label="Role"
+                name="role_id"
+                register={register}
+
+                error={errors.role_id} 
+                isRequired={true}
+                options={(RoleData?.data.edges || []).map(({node}) => ({
+                  label: node.name,
+                  value: node.role_id
+                }))}
+          />
+           <Select 
+                label="Organization"
+                name="organization_id"
+                value={watch("organization_id")}
+                register={register}
+                error={errors.organization_id} 
+                isRequired={true}
+                options={(OrganizationData?.data.edges || []).map(({node}) => ({
+                  label: node.name,
+                  value: node.organization_id
+                }))}
+          />
         </div>
       }
     >
@@ -131,13 +168,19 @@ export default function UserManagement() {
           <SelectArray
           value=""
             label="Organizations"
-            options={[{label: "National University", value: "national-university"}]}
+             options={(OrganizationData?.data.edges || []).map(({node}) => ({
+                  label: node.name,
+                  value: node.organization_id
+                }))}
             name="email"
           />
            <SelectArray
             value=""
             label="Role"
-            options={[{label: "Administrator", value: "national-university"}]}
+             options={(RoleData?.data.edges || []).map(({node}) => ({
+                  label: node.name,
+                  value: node.role_id
+                }))}
             name="email"
           />
 

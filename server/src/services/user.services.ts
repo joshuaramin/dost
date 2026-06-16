@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, User } from "@/lib/prisma/system/generated/prisma/client";
 import { UserWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
+import { userQueue } from "@/jobs/user/user.queue";
 
 const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   prisma.user,
@@ -56,11 +57,11 @@ export const GetUserById = async (data: any) => {
 };
 
 export const CreateUser = async (data: any) => {
-  const user = await UserManage.readById(data.email, "email");
+  const existingUser = await UserManage.readById(data.email, "email");
 
-  if (user) throw new AppError("Email address is already exist", 409);
+  if (existingUser) throw new AppError("Email address is already exist", 409);
 
-  return UserManage.create({
+  const user = UserManage.create({
     email: data.email,
     Profile: {
       create: {
@@ -72,6 +73,24 @@ export const CreateUser = async (data: any) => {
       connect: { role_id: data.role_id },
     },
   });
+
+  await userQueue.add(
+    "send-welcome-email",
+    {
+      email: data.email,
+      fullname: `${data.first_name} ${data.last_name}`,
+    },
+    {
+      attempts: 3,
+      removeOnComplete: true,
+      backoff: {
+        type: "exponential",
+        delay: 3000,
+      },
+    },
+  );
+
+  return user;
 };
 
 export const SoftDeleteUser = async (data: any) => {
