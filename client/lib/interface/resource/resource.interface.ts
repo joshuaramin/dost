@@ -31,7 +31,8 @@ export interface ResourceResult {
     }[];
     pageInfo: {
       endCursor: string;
-      hasNextPage: boolean;
+      hasNextpage: boolean;
+      hasPrevPage: boolean;
     };
     totalCount: number;
     timestamp: string;

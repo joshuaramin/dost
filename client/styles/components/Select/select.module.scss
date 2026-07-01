@@ -29,8 +29,8 @@
         display: flex;
         align-items: center;
         width: 100%;
-        border: 1px solid $Neutral200;
-        border-radius: 5px;
+        border: 1px solid color(neutral, 500);
+        border-radius: radius(sm);
         padding: 0 20px;
 
         button {
@@ -76,7 +76,7 @@
         border: 1px solid color(error, 500);
         appearance: none;
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: radius(sm);
         outline: none;
         display: flex;
         align-items: center;
@@ -113,10 +113,10 @@
     .selectContainer {
         width: 100%;
         height: 55px;
-        border: 1px solid color(neutral, 200);
+        border: 1px solid color(neutral, 500);
         appearance: none;
         padding: 10px 20px;
-        border-radius: 5px;
+        border-radius: radius(sm);
         outline: none;
         display: flex;
         align-items: center;

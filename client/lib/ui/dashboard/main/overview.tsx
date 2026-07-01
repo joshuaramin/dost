@@ -1,14 +1,18 @@
 "use client"
 
 import React from 'react'
-import Template from '../../template';
-import TitleWrapper from '../../titleWrapper';
 import styles from '@/styles/lib/ui/dashboard/main/overview.module.scss'
-import Text from '@/components/Typography/Text/text';
-import { TbArrowUp, TbChartAreaLine, TbMapPinExclamation } from 'react-icons/tb';
-import Title from '@/components/Typography/Title/title';
-import SurveillanceMap from '../../home/map';
+import { TbArrowUp, TbTrendingUp, TbMapPinExclamation } from 'react-icons/tb';
 import { format } from 'date-fns';
+
+//components
+import Text from '@/components/Typography/Text/text';
+import TitleWrapper from '../../titleWrapper';
+import Title from '@/components/Typography/Title/title';
+
+//
+import SurveillanceMap from '../../home/map';
+import Template from '../../template';
 
 export default function Overview() {
   return (
@@ -25,7 +29,7 @@ export default function Overview() {
           ].map(({title, value}, index) => (
             <div className={styles.col1_card} key={index}>
               <div className={styles.header}>
-                <div>
+                <div className={styles.iconChart}>
                   <TbMapPinExclamation size={32} />
                 </div>
                 <div className={styles.header_col1}>
@@ -49,8 +53,8 @@ export default function Overview() {
           { title: "#HIVStigma", value: "+47%" },
         ].map(({title, value}, index) => (
             <div className={styles.col2_card} key={index}>
-              <div className={styles.header}>
-                <TbChartAreaLine size={40} />
+              <div className={styles.iconChart}>
+                <TbTrendingUp size={23} />
               </div>
               <div>
                 <Title size="md">{title}</Title>
@@ -62,7 +66,7 @@ export default function Overview() {
             </div>
         ))}
           </div>
-        {/* <TitleWrapper title="Key Metrics"/>
+        <TitleWrapper title="Key Metrics"/>
         <div className={styles.col3}>
         {[
             { total: "140K", title: "Post analyzed", description: "Geospatial Sample", percentage: "+12.4%"}, 
@@ -72,8 +76,8 @@ export default function Overview() {
         ].map((node, index) => (
             <div className={styles.col3_card} key={index}>
               <div className={styles.header}>
-                <div>
-                  <TbChartAreaLine  size={52} />
+                <div className={styles.iconChart}>
+                  <TbTrendingUp  size={52} />
                 </div>
                 <div className={styles.percentage}>
                   <TbArrowUp size={18} />
@@ -88,7 +92,7 @@ export default function Overview() {
               </div>
             </div>
         ))}
-        </div> */}
+        </div>
         <TitleWrapper title="Geospatial Intelligence"/>
         <SurveillanceMap />
         <TitleWrapper title="Barangay Intelligence"/>

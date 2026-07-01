@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const SurveyType = {
+  SHORT_TEXT: 'SHORT_TEXT',
+  LONG_TEXT: 'LONG_TEXT',
+  MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
+  CHECKBOX: 'CHECKBOX'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type SurveyType = (typeof SurveyType)[keyof typeof SurveyType]

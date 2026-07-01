@@ -12,13 +12,16 @@ type Options = {
 }
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement>  {
-    label: string
+    label?: string
+    labelShow?: boolean
+    full?: boolean
     name: string
     options?: Options[]
     value: string
 }
 
-export default function SelectArray({ label, name, options, value}: Props) {
+export default function SelectArray({ 
+    label, full = true, labelShow, name, options, value, className = ""}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
 
@@ -26,15 +29,24 @@ export default function SelectArray({ label, name, options, value}: Props) {
     setToggle(prev => !prev)
   }
 
+
+  const selectArray = [
+    styles.container,
+    full ? styles.full : "",
+    className
+  ].join(" ")
+
   return (
-    <div className={styles.container}>
-        <div className={styles.header}>
-            <label>{label}</label>
-        </div>
+    <div className={selectArray}>
+        {label && labelShow && (
+            <div className={styles.header}>
+                <label>{label}</label>
+            </div>
+        )}
         <div className={styles.select}>
             <div className={styles.selectContainer}>
                 <Text size="sm">
-                    {options?.find((option) => option.value === value)?.label || `Please select a ${label.toLowerCase()}`}
+                    {options?.find((option) => option.value === value)?.label || `Please select a ${label?.toLowerCase()}`}
                 </Text>
                 <button type="button" onClick={onHandleToggle}>
                     {toggle ? <TbCaretUpFilled size={23} /> : <TbCaretDownFilled size={23} />}
@@ -42,6 +54,7 @@ export default function SelectArray({ label, name, options, value}: Props) {
             </div>
             {toggle && (
                 <div className={styles.optionContainer}>
+                    <hr />
                     {options?.map(({label, value}) => (
                         <button
                         value={value}

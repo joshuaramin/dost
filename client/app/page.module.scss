@@ -1,6 +1,8 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
 
@@ -14,7 +16,7 @@
             line-height: 1.5em;
             font-size: $fnt3xl;
             color: color(primary, 500);
-            font-family: "Alegreya";
+            // font-family: "Alegreya";
 
             @include down(md) {
                 font-size: $fnt2xl;
@@ -57,7 +59,7 @@
                 background-color: color(primary, 500);
                 color: white;
                 border: none;
-                border-radius: 4px;
+                border-radius: radius(sm);
                 cursor: pointer;
                 transition: background-color 0.3s ease;
 
@@ -79,8 +81,9 @@
         .gridContainer {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 3px;
+            gap: 10px;
             margin-top: 2rem;
+
 
             @include down(xxl) {
                 grid-template-columns: 1fr;
@@ -98,35 +101,28 @@
         .methodologyItem {
             width: 100%;
             padding: 3rem;
-            border: 1px solid color(neutral, 700);
+            border: 1px solid color(neutral, 500);
             display: flex;
             flex-direction: column;
             gap: 10px;
 
 
+            border-radius: radius(sm);
+
             @include down(xxl) {
                 padding: 2rem;
             }
 
-            // span {
-
-            //     font-size: $fntlg;
-            // text-transform: uppercase;
-            //     font-weight: 500;
-
-            //     @include down(md) {
-            //         font-size: $fnttiny;
-            //     }
-
-            // }
-
             h1 {
-                // text-transform: uppercase;
-                font-size: $fntxl;
-                font-family: "Alegreya";
+
+                font-size: font-size(xl);
 
                 @include down(md) {
-                    font-size: $fntbase;
+                    font-size: font-size(xl);
+                }
+
+                @include down(sm) {
+                    font-size: font-size(lg);
                 }
             }
 
@@ -142,33 +138,6 @@
                     color: #fff;
                 }
             }
-
-            // p {
-            //     font-size: $fntbase;
-
-            //     @include down(md) {
-            //         font-size: $fntbase;
-            //     }
-            // }
-
-
-            // &:nth-child(odd) {
-            //     background-color: color(primary, 500);
-            //     color: #fff;
-
-            //     p {
-            //         color: #fff !important;
-            //     }
-            // }
-
-            // &:nth-child(even) {
-            //     background-color: color(secondary, 500);
-            //     color: #000;
-
-            //     p {
-            //         color: #000;
-            //     }
-            // }
         }
     }
 }

@@ -8,7 +8,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/", withAuth, getAllOrganization);
+router.get("/", getAllOrganization);
 router.post("/", withAuth, upload.single("logo"), createOrganization);
 router.put("/:id", withAuth);
 router.patch("/:id", withAuth);

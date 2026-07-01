@@ -2,29 +2,72 @@
 
 
 import React, { useState } from 'react'
-import Template from '@/lib/ui/template';
-import Input from '@/components/Input/input';
-import useFormHook from '@/lib/hooks/useFormHook';
-import { EducationResourceSchema } from '@/lib/validations/education.validation';
-import Textarea from '@/components/Textarea/textarea';
-import SelectArray from '@/components/Select/select-array';
 import styles from '@/styles/lib/ui/dashboard/enagagement/educational-resources.module.scss'
+
+
+//components
 import { Select } from '@/components/Select/select';
 import ReactEditor from '@/components/Lexical/editor';
 import Text from '@/components/Typography/Text/text';
 import Title from '@/components/Typography/Title/title';
 import Search from '@/components/Search/search';
+import Input from '@/components/Input/input';
+import Pagination from '@/components/Pagination/pagination';
+import Textarea from '@/components/Textarea/textarea';
+
+
+//lib and hooks
+import useFormHook from '@/lib/hooks/useFormHook';
+import Template from '@/lib/ui/template';
+import { EducationResourceSchema } from '@/lib/validations/education.validation';
+import SelectArray from '@/components/Select/select-array';
+import { sessionStore } from '@/lib/utils/sessions';
+import useFormQuery from '@/lib/hooks/useQuery';
+import { EducationalResourceInterface, EducationalResourceResult } from '@/lib/interface/education-resource/educational-resources.interface';
+import NoData from '../../no-data';
 
 export default function EducationResources() {
 
 
+    const token = sessionStore.getToken()
   const [ open, setOpen ] = useState<boolean>(false);
+  const [ search, setSearch ] = useState<string>("");
+  const [ page, setPage ] = useState<number>(0)
 
+
+    const headers = {
+        "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
+        "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
+        "Authorization": `Bearer ${token}`
+    }
+
+    const { data, isLoading, error} = useFormQuery<EducationalResourceResult>({
+       key: ["EducationResource"],
+       url: "maintenance/educationResource",
+       params: {
+          orderBy: "created_at",
+          sortBy: "asc",
+          limit: 20
+        },
+       headers
+    })
   const onHnadleOpenToggle = () => {
     setOpen((prev) => !prev)
   }
 
+  const onHandleNextPage = () => { 
+    setPage(() => page + 1)
+  }
 
+  const onHandlePrevPage = () => {
+    setPage(() =>page - 1)
+  }
+
+  const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.currentTarget.value)
+  }
+
+  console.log(data)
 
   const { register, errors, handleSubmit, setValue, watch } = useFormHook({
     schema: EducationResourceSchema,
@@ -83,9 +126,11 @@ export default function EducationResources() {
     }}
     >
       <div className={styles.container}>
-      <div className={styles.header}>
+      <div className={styles.filter}>
           <Search />
-          <SelectArray 
+            <SelectArray 
+            full={false}
+            
             label="Category"
             name="category"
               options={[
@@ -99,20 +144,30 @@ export default function EducationResources() {
           />
       </div>
       
-      <div className={styles.grid}>
-        {[
-          { title: "HIV Prevention Guide", excerpt: "Essential Information about prevention methods", category: "Prevention"},
-          { title: "Understanding HIV Testing", excerpt: "Learn about different testing methods and what result mean", category: "Testing"}
-            ].map(({ excerpt, title, category}, index) => (
-              <div className={styles.card} key={index}>
-                  <Title size="md">{title}</Title>
-                <div>
-                  <Text className={styles.tag} size="md">{category}</Text>
-                </div>
-                <Text size="sm">{excerpt}</Text>
+        {data?.data.totalCount === 0 ? <NoData text="Educational Resoucre" /> :    
+        <div className={styles.grid}>
+          {data?.data.edges.map(({ node: { category, content,  excerpt, title}}, index) => (
+            <div className={styles.card} key={index}>
+              <div className={styles.image} />
+              <Title size="md">{title}</Title>
+              <div>
+                <Text className={styles.tag} size="sm">
+                  {category}
+                </Text>
               </div>
-            ))}
-          </div>
+              <Text size="sm">{excerpt}</Text>
+            </div>
+          ))}
+        </div>
+        }
+        <Pagination 
+          totalItems={data?.data.totalCount || 0}
+          currentCount={data?.data.edges.length || 0}
+          hasNextPage={data?.data.pageInfo.hasNextpage || false}
+          hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+          onNext={onHandleNextPage}
+          onPrev={onHandlePrevPage}
+        />
       </div>
     </Template>
   )

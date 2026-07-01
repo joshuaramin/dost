@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 import { TbSettings, TbBell } from 'react-icons/tb'
 
+//lib & hooks
 import styles from "@/styles/lib/ui/profile.module.scss";
 import { sessionStore } from '@/lib/utils/sessions';
 import Title from '@/components/Typography/Title/title';

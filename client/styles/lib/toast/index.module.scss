@@ -1,6 +1,8 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 400px;

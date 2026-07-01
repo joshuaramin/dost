@@ -2,21 +2,21 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 
 .title {
-    font-size: $fnt2xl;
     padding: 0.5rem 0;
     margin: 0;
     padding: 0;
-    font-size: $fntxl;
+    font-size: font-size(xl);
 
 
     @include down(md) {
-        font-size: $fntbase;
+        font-size: font-size(base);
     }
 
-    @include down(md) {
-        font-size: $fntxl;
+    @include down(sm) {
+        font-size: font-size(base);
     }
 }

@@ -2,9 +2,10 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
-    width: 100%;
+    // width: 100%;
     // white-space: nowrap;
     font-size: font-size(base);
     font-weight: 500;
@@ -27,6 +28,10 @@
     .sm {
         font-size: font-size(sm);
     }
+}
+
+.xs {
+    font-size: font-size(sm);
 }
 
 .sm {

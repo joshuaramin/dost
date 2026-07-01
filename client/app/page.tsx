@@ -1,3 +1,5 @@
+"use client";
+
 import { PrimaryFont, SecondaryFont } from "@/lib/typography";
 import styles from "./page.module.scss";
 
@@ -9,9 +11,19 @@ import Footer from "@/lib/ui/footer";
 import SurveillanceMap from "@/lib/ui/home/map";
 import Text from "@/components/Typography/Text/text";
 import Paragraph from "@/components/Typography/Paragraph/paragraph";
+import useFormQuery from "@/lib/hooks/useQuery";
+import { OrganizationResult } from "@/lib/interface/organization/organization.interface";
+import Avatar from "@/components/Avatar/avatar";
+import Grid from "@/components/Grid/grid";
 
 
 export default function Home() {
+
+
+  const { data: OrganizationData, isLoading: OrganizationLoading } = useFormQuery<OrganizationResult>({ 
+    key: ["Organizations"],
+    url: "maintenance/organization",
+  }); 
   return (
     <div className={styles.container}>
       <Header />
@@ -118,7 +130,15 @@ export default function Home() {
 
       <section>
         <TitleWrapper title="Organizations" />
-
+       <Grid max={"1fr"} min={50} gap={10}>
+          <Grid.Column>
+              {OrganizationData?.data.edges.map(({node: {logo }}, index) => (
+            <div key={index}>
+              <Avatar src={logo} variant="lg"/>
+            </div>
+          ))}
+          </Grid.Column>
+       </Grid>
       </section>
 
       <section>

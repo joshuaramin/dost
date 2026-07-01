@@ -15,37 +15,46 @@ import Template from '@/lib/ui/template';
 import useFormHook from '@/lib/hooks/useFormHook';
 import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import useFormQuery from '@/lib/hooks/useQuery';
+import headers  from '@/lib/utils/headers';
 import useFormMutation from '@/lib/hooks/useMutation';
-import { sessionStore } from "@/lib/utils/sessions"
 import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
 import { RolesSchema } from '@/lib/validations/role.validation';
 import { RolesSchemaFormField } from '@/lib/types/roles-and-permissions';
-
+import Grid from '@/components/Grid/grid';
+import Search from '@/components/Search/search';
+import Pagination from '@/components/Pagination/pagination';
+import NoData from '@/lib/ui/no-data';
 
 export default function RolesPermissions() {
 
-    const token = sessionStore.getToken()
+    const [ open, setOpen ] = useState<boolean>(false);
+    const [ search, setSearch ] = useState<string>("");
+    const [ page, setPage ] = useState<number>(1);
 
-     const headers = {
-        "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
-        "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
-        "Authorization": `Bearer ${token}`
+    const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.currentTarget.value)
     }
-    const [ open, setOpen ] = useState<boolean>(false)
+
+    const onHandleNextPage = () => { 
+        setPage(() => page + 1)
+    }
+
+    const onHandlePrevPage = () => {
+        setPage(() =>page - 1)
+    }
+
 
     const onHandleAddNewToggle = () => {
         setOpen(prev => !prev)
     }
 
     const { data, isLoading } = useFormQuery<RolesAndPermissionResponse>({
-        key: ["RolesandPermissions"],
+        key: ["RolesandPermissions",  search, page],
         url: "maintenance/roles",
-        headers: {
-            "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
-            "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
-            "Authorization": `Bearer ${token}`
-        },
-        
+        headers,
+        params: {
+            search, limit: 20, orderBy: "created_at", sortBy: "desc"
+        }
     })
 
      const { register, errors, handleSubmit } = useFormHook({
@@ -57,10 +66,11 @@ export default function RolesPermissions() {
     })
 
     const mutaiton = useFormMutation<RolesSchemaFormField>({
-        key: ["RolesAndPermission"],
+        key: ["RolesAndPermission",],
         method: "POST",
         url: "maintenance/roles",
-        headers
+        headers,
+      
     })
 
     const onHandleSubmition: SubmitHandler<RolesSchemaFormField> = (data) => {
@@ -73,17 +83,6 @@ export default function RolesPermissions() {
         })
     }
 
-
-
-    if(isLoading) {
-        return (
-            <div className={styles.loading}>
-                {Array.from({length: 20}).map((node, index) => (
-                    <SkeletonCard key={index} />
-                ))}
-            </div>
-        )
-    }
     return (
         <Template 
             title="Roles and Permissions"
@@ -97,14 +96,29 @@ export default function RolesPermissions() {
             modalChildren={
                 <div style={{ display: "flex", flexDirection: "column",  gap: 10}}>
                     <Input isRequired={true}  name={"name"} label="Name" register={register} error={errors.name}/>
-                    <Textarea name="description" register={register} isRequired={true} label="Description" error={errors.description}/>
+                    <Textarea name="description" register={register} isRequired={true} label="Description" errors={errors.description}/>
                 </div>
             }
         >   
         <div className={styles.container}>
-            {data?.data.edges.map((node, index) => (
-                <RolesAndPermissionsCard key={index} name={node.node.name} description={node.node.description} slug={node.node.slug} />
-            ))}
+            <Search 
+                onChange={onHandleSearch} value={search}
+            />
+            {data?.data.totalCount === 0 ? <NoData text="Roles and Permissions" /> : (
+                <Grid min={330} gap={10}>
+                    {data?.data.edges.map((node, index) => (
+                        <RolesAndPermissionsCard key={index} name={node.node.name} description={node.node.description} slug={node.node.slug} />
+                    ))}
+                </Grid>
+            )}
+        <Pagination 
+            totalItems={data?.data.totalCount || 0}
+            currentCount={data?.data.edges.length || 0}
+            hasNextPage={data?.data.pageInfo.hasNextpage || false}
+            hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+            onNext={onHandleNextPage}
+            onPrev={onHandlePrevPage}
+        />
         </div>
         </Template>
     )

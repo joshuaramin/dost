@@ -73,6 +73,41 @@ export type Organization = Prisma.OrganizationModel
  */
 export type DeviceSession = Prisma.DeviceSessionModel
 /**
+ * Model EducationResource
+ * 
+ */
+export type EducationResource = Prisma.EducationResourceModel
+/**
+ * Model Survey
+ * 
+ */
+export type Survey = Prisma.SurveyModel
+/**
+ * Model SurveyQuestion
+ * 
+ */
+export type SurveyQuestion = Prisma.SurveyQuestionModel
+/**
+ * Model QuestionOption
+ * 
+ */
+export type QuestionOption = Prisma.QuestionOptionModel
+/**
+ * Model SurveyResponse
+ * 
+ */
+export type SurveyResponse = Prisma.SurveyResponseModel
+/**
+ * Model SurveyAnswer
+ * 
+ */
+export type SurveyAnswer = Prisma.SurveyAnswerModel
+/**
+ * Model SurveyAnswerOption
+ * 
+ */
+export type SurveyAnswerOption = Prisma.SurveyAnswerOptionModel
+/**
  * Model spatial_ref_sys
  * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
  */

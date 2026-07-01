@@ -48,8 +48,7 @@ export const createUser = async (request: Request, response: Response) => {
       timestamp: new Date(Date.now()),
     });
   }
-
-  console.log(parsedData.data);
+  
   const result = await CreateUser(parsedData.data);
   return response.status(200).json({
     ...result,

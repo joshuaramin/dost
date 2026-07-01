@@ -2,24 +2,17 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
-    display: grid;
-    gap: 20;
-    grid-template-columns: repeat(3, 1fr);
-
-
-    @include down(lg) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include down(xl) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @include down(md) {
-        grid-template-columns: repeat(1, 1fr);
-    }
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px 0px color(neutral, 200);
 }
 
 .loading {

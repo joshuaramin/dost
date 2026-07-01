@@ -72,6 +72,9 @@ export const CreateUser = async (data: any) => {
     role: {
       connect: { role_id: data.role_id },
     },
+    organization: {
+      connect: { organization_id: data.organization_id },
+    },
   });
 
   await userQueue.add(

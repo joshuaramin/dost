@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react"
 import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import styles from "@/styles/lib/ui/home/surveillance.module.scss"
+import { raw } from "next/dist/build/webpack/loaders/next-image-loader";
 
 type Province = {
     code: string
@@ -288,9 +289,12 @@ export default function SurveillanceMap() {
                             <div
                                 key={p.code}
                                 style={{
-                                    paddingLeft: 40,
+                                    padding: 10,
+                                    paddingLeft: 25,
                                     cursor: "pointer",
-                                    background: selectedProvince === p.code ? "#fee2e2" : "transparent",
+                                    borderRadius: 5,
+                                    color: selectedProvince === p.code ? "white" : "black",
+                                    background: selectedProvince === p.code ? "#35408E" : "transparent",
                                 }}
                                 onClick={() => zoomToBounds(p.bounds, p.code)}
                             >

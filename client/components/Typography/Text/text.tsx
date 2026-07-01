@@ -4,7 +4,7 @@ import cn from '@/lib/utils/cn';
 import { SecondaryFont } from '@/lib/typography';
 
 
-type Size = "sm" | "md" | "lg"
+type Size = "xs" | "sm" | "md" | "lg"
 type Weight = "thin" | "extralight" | "light" | "normal" | "medium" | "semibold" | "bold" | "extrabold" | "black"
 
 interface Props extends React.HTMLAttributes<HTMLSpanElement> {

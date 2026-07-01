@@ -18,6 +18,8 @@ import ResourceRouter from "@/routes/resource.routes";
 import RegionRouter from "@/routes/geom.routes";
 import NlpRouter from "@/routes/nlp.routes";
 import OrganizationRouter from "@/routes/organization.routes";
+import EducationResourceRouter from "@/routes/educational-resources.routes";
+import SurveyRouter from "@/routes/survey.routes";
 import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
 
 //bullmq
@@ -72,6 +74,8 @@ app.use("/admin/queues", serverAdapter.getRouter());
 app.use(responseWrapperMiddleware);
 app.use("/maintenance/users", UserRouter);
 app.use("/maintenance/resource", ResourceRouter);
+app.use("/maintenance/educationResource", EducationResourceRouter);
+app.use("/maintenance/survey", SurveyRouter);
 app.use("/maintenance/roles", RolesRouter);
 app.use("/auth", AuthRouter);
 app.use("/maintenance/geospatial", RegionRouter);

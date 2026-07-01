@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/user-management/user-management.module.scss';
+import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 import { format } from 'date-fns'
 
 //lib & utils
@@ -10,9 +11,11 @@ import useFormHook from '@/lib/hooks/useFormHook';
 import useFormQuery from '@/lib/hooks/useQuery';
 import Template from '@/lib/ui/template';
 import useFormMutation from '@/lib/hooks/useMutation';
-import { sessionStore } from '@/lib/utils/sessions';
 import { CreateUserSchema } from '@/lib/validations/user.validation';
+import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
 import { UserResult } from '@/lib/interface/user/user.interface';
+import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
+import  headers from '@/lib/utils/headers';
 
 
 //components
@@ -20,24 +23,13 @@ import Input from '@/components/Input/input';
 import Avatar from '@/components/Avatar/avatar';
 import Checkbox from '@/components/Input/checkbox';
 import Text from '@/components/Typography/Text/text';
-
-
-import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 import Search from '@/components/Search/search';
 import Pagination from '@/components/Pagination/pagination';
 import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
-import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
-import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
+import Grid from '@/components/Grid/grid';
 
 export default function UserManagement() {
-  const token = sessionStore.getToken();
-
-  const headers = {
-    "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
-    "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
-    "Authorization": `Bearer ${token}`
-  }
 
   const [open, setOpen] = useState<boolean>(false);
   const [ search, setSearch ] = useState<string>("");
@@ -63,13 +55,13 @@ export default function UserManagement() {
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
   const { data, isLoading } = useFormQuery<UserResult>({
-    key: ["UserManagement"],
+    key: ["UserManagement", search, page],
     url: "maintenance/users",
     headers,
     params: {
       orderBy: "created_at",
       sortBy: "asc",
-      limit: 20
+      limit: 20,
     }
   })
 
@@ -85,7 +77,7 @@ export default function UserManagement() {
     headers
   })
 
-  const { errors, handleSubmit, register, setValue, watch} = useFormHook({
+  const { errors, handleSubmit, register, watch} = useFormHook({
     schema: CreateUserSchema,
     defaultValues: {
       email: "",
@@ -112,13 +104,13 @@ export default function UserManagement() {
   }
 
 
-  if(isLoading) {
-    return (
-      <div className={styles.loading}>
-        <SkeletonTable />
-      </div>
-    )
-  }
+  // if(isLoading) {
+  //   return (
+  //     <div className={styles.loading}>
+  //       <SkeletonTable />
+  //     </div>
+  //   )
+  // }
   return (
     <Template
       title="User Management"
@@ -140,7 +132,7 @@ export default function UserManagement() {
                 label="Role"
                 name="role_id"
                 register={register}
-
+                
                 error={errors.role_id} 
                 isRequired={true}
                 options={(RoleData?.data.edges || []).map(({node}) => ({
@@ -164,28 +156,35 @@ export default function UserManagement() {
       }
     >
       <div className={styles.container}>
-        <div className={styles.filter}>
-          <SelectArray
+      <Grid gap={3}>
+      <Grid.Column span={1}>
+              <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+      </Grid.Column>
+      <Grid.Column span={1}>
+            <SelectArray
           value=""
             label="Organizations"
-             options={(OrganizationData?.data.edges || []).map(({node}) => ({
+            options={(OrganizationData?.data.edges || []).map(({node}) => ({
                   label: node.name,
                   value: node.organization_id
                 }))}
             name="email"
-          />
-           <SelectArray
+        />
+      </Grid.Column>
+      <Grid.Column span={1}>
+          <SelectArray
             value=""
             label="Role"
-             options={(RoleData?.data.edges || []).map(({node}) => ({
+            options={(RoleData?.data.edges || []).map(({node}) => ({
                   label: node.name,
                   value: node.role_id
                 }))}
             name="email"
-          />
+        />
+      </Grid.Column>
 
-        </div>
-            <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
+  
+      </Grid>
 
         <div className={styles.tableWrapper}>
           <table>

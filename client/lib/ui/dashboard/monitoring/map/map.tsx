@@ -6,6 +6,7 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import styles from "@/styles/lib/ui/dashboard/surviellance/map.module.scss";
 
+//lib
 import Title from "@/lib/ui/title";
 import Text from "@/components/Typography/Text/text";
 
@@ -414,9 +415,12 @@ export default function MapUI() {
                             <div
                                 key={p.code}
                                 style={{
-                                    paddingLeft: 40,
+                                    padding: 10,
+                                    paddingLeft: 25,
                                     cursor: "pointer",
-                                    background: selectedProvince === p.code ? "#fee2e2" : "transparent",
+                                    borderRadius: 5,
+                                    color: selectedProvince === p.code ? "white" : "black",
+                                    background: selectedProvince === p.code ? "#35408E" : "transparent",
                                 }}
                                 onClick={() => zoomToBounds(p.bounds, p.code)}
                             >

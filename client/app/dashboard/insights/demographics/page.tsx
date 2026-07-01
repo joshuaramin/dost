@@ -1,8 +1,8 @@
-import Template from '@/lib/ui/template';
-import React from 'react'
+import Demographics from '@/lib/ui/dashboard/insights/demographics/page';
+
 
 export default function Page() {
   return (
-    <Template title="Demographics"></Template>
+    <Demographics />
   )
 }

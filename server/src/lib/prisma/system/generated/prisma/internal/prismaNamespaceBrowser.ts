@@ -62,6 +62,13 @@ export const ModelName = {
   Notification: 'Notification',
   Organization: 'Organization',
   DeviceSession: 'DeviceSession',
+  EducationResource: 'EducationResource',
+  Survey: 'Survey',
+  SurveyQuestion: 'SurveyQuestion',
+  QuestionOption: 'QuestionOption',
+  SurveyResponse: 'SurveyResponse',
+  SurveyAnswer: 'SurveyAnswer',
+  SurveyAnswerOption: 'SurveyAnswerOption',
   spatial_ref_sys: 'spatial_ref_sys'
 } as const
 
@@ -230,6 +237,95 @@ export const DeviceSessionScalarFieldEnum = {
 } as const
 
 export type DeviceSessionScalarFieldEnum = (typeof DeviceSessionScalarFieldEnum)[keyof typeof DeviceSessionScalarFieldEnum]
+
+
+export const EducationResourceScalarFieldEnum = {
+  education_resource_id: 'education_resource_id',
+  title: 'title',
+  category: 'category',
+  excerpt: 'excerpt',
+  content: 'content',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type EducationResourceScalarFieldEnum = (typeof EducationResourceScalarFieldEnum)[keyof typeof EducationResourceScalarFieldEnum]
+
+
+export const SurveyScalarFieldEnum = {
+  survey_id: 'survey_id',
+  title: 'title',
+  description: 'description',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SurveyScalarFieldEnum = (typeof SurveyScalarFieldEnum)[keyof typeof SurveyScalarFieldEnum]
+
+
+export const SurveyQuestionScalarFieldEnum = {
+  survey_question_id: 'survey_question_id',
+  survey_id: 'survey_id',
+  text: 'text',
+  type: 'type',
+  is_required: 'is_required',
+  order_index: 'order_index',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SurveyQuestionScalarFieldEnum = (typeof SurveyQuestionScalarFieldEnum)[keyof typeof SurveyQuestionScalarFieldEnum]
+
+
+export const QuestionOptionScalarFieldEnum = {
+  question_option_id: 'question_option_id',
+  survey_question_id: 'survey_question_id',
+  label: 'label',
+  value: 'value',
+  order_index: 'order_index',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type QuestionOptionScalarFieldEnum = (typeof QuestionOptionScalarFieldEnum)[keyof typeof QuestionOptionScalarFieldEnum]
+
+
+export const SurveyResponseScalarFieldEnum = {
+  response_id: 'response_id',
+  survey_id: 'survey_id',
+  created_at: 'created_at'
+} as const
+
+export type SurveyResponseScalarFieldEnum = (typeof SurveyResponseScalarFieldEnum)[keyof typeof SurveyResponseScalarFieldEnum]
+
+
+export const SurveyAnswerScalarFieldEnum = {
+  answer_id: 'answer_id',
+  survey_response_id: 'survey_response_id',
+  survey_question_id: 'survey_question_id',
+  answer_text: 'answer_text',
+  answer_option_id: 'answer_option_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SurveyAnswerScalarFieldEnum = (typeof SurveyAnswerScalarFieldEnum)[keyof typeof SurveyAnswerScalarFieldEnum]
+
+
+export const SurveyAnswerOptionScalarFieldEnum = {
+  survey_answer_option_id: 'survey_answer_option_id',
+  survey_answer_id: 'survey_answer_id',
+  question_option_id: 'question_option_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SurveyAnswerOptionScalarFieldEnum = (typeof SurveyAnswerOptionScalarFieldEnum)[keyof typeof SurveyAnswerOptionScalarFieldEnum]
 
 
 export const Spatial_ref_sysScalarFieldEnum = {

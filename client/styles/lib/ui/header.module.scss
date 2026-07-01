@@ -2,6 +2,7 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
@@ -67,15 +68,15 @@
 
             h2 {
                 @include up(lg) {
-                    font-size: $fnt2xl;
+                    font-size: font-size(2xl);
                 }
 
                 @include up(md) {
-                    font-size: $fntlg;
+                    font-size: font-size(lg);
                 }
 
                 @include down(md) {
-                    font-size: $fntbase;
+                    font-size: font-size(base);
                 }
             }
 
@@ -83,7 +84,7 @@
                 text-transform: uppercase;
 
                 @include up(lg) {
-                    font-size: $fntbase;
+                    font-size: font-size(base);
                 }
             }
         }
@@ -92,14 +93,14 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            font-size: $fntbase;
+            font-size: font-size(base);
             gap: 1rem;
 
             a {
                 color: #fff;
                 text-decoration: none;
 
-                font-size: $fntlg;
+                font-size: font-size(lg);
 
                 &:hover {
                     text-decoration: 1px solid underline #fff;
@@ -110,14 +111,6 @@
             @include down(xxl) {
                 display: none;
             }
-
-
-            // @include up(xl) {
-            //     display: none;
-            // }
-
-
-
         }
     }
 

@@ -10,14 +10,14 @@ interface Props<T extends FieldValues> extends React.TextareaHTMLAttributes<HTML
     isRequired: boolean
     register: UseFormRegister<T>
     rules?: RegisterOptions<T, Path<T>>
-    error?: FieldError | undefined
+    errors?: FieldError | undefined
 }
 
 export default function Textarea<T extends FieldValues>(
-    {label, isRequired, error, name,  register }: Props<T>
+    {label, isRequired, errors, name,  register }: Props<T>
 ) {
 
-  const hasError = !!error
+  const hasError = !!errors
 
   return (
     <div className={styles.container}>
@@ -25,10 +25,10 @@ export default function Textarea<T extends FieldValues>(
             <label>{label}</label>
             {isRequired &&  <span className={styles.required}>*</span>}
         </div>
-        <textarea className={cn(error ? styles.error :  "", SecondaryFont.className)} {...register(name)} />
+        <textarea className={cn(errors ? styles.error :  "", SecondaryFont.className)} {...register(name)} />
         {hasError && (
                 <div className={styles.error_message}>
-                    <span>{error.message}</span>
+                    <span>{errors.message}</span>
                 </div>
             )}
     </div>

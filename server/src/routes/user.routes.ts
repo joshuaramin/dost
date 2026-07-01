@@ -12,14 +12,29 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/", asyncHandler(getAllUsers));
+router.get(
+  "/",
+  withAuth,
+  withPermission("user", "read"),
+  asyncHandler(getAllUsers),
+);
 router.get(
   "/:id",
   withAuth,
   withPermission("user", "read"),
   asyncHandler(getUserById),
 );
-router.post("/", asyncHandler(createUser));
-router.patch("/:id", withAuth, asyncHandler(softDeleteUser));
+router.post(
+  "/",
+  withAuth,
+  withPermission("user", "create"),
+  asyncHandler(createUser),
+);
+router.patch(
+  "/:id",
+  withAuth,
+  withPermission("user", "update"),
+  asyncHandler(softDeleteUser),
+);
 
 export default router;

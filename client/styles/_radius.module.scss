@@ -1,0 +1,19 @@
+@use "sass:map";
+
+$borderRadius: (
+    sm: 4px,
+    tiny: 8px,
+    base: 12,
+    lg: 16,
+    xl: 24,
+    2xl: 32,
+    3xl: 36
+);
+
+@function radius($radius) {
+    @if not map.has-key($borderRadius, $radius) {
+        @error "Spacing `#{$radius}` is not. found";
+    }
+
+    @return map.get($borderRadius, $radius)
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 
@@ -15,10 +16,14 @@ import ToolBar from './plugin/toolbar';
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 // import { VolkhovLight } from '@/lib/typography';
-import cn from '@/lib/utils/cn';
 import { FieldError } from 'react-hook-form';
 import { ListItemNode, ListNode } from '@lexical/list';
-import { PrimaryFont } from '@/lib/typography';
+
+
+//components
+
+//lib & hooks
+import cn from '@/lib/utils/cn';
 
 interface Props {
     label: string
@@ -34,7 +39,7 @@ interface InitialConfig {
     onError: (error: Error) => void;
 }
 
-const EditorContentHandler = ({ name, setValue }: any) => {
+const EditorContentHandler = ({ name, setValue }: {name: string, setValue: any}) => {
     const [editor] = useLexicalComposerContext();
 
     const onChange = (editorState: EditorState) => {
@@ -42,7 +47,7 @@ const EditorContentHandler = ({ name, setValue }: any) => {
             const html = $generateHtmlFromNodes(editor);
 
             setValue(name, html)
-        });
+        }, { editor});
 
     };
 
@@ -51,13 +56,15 @@ const EditorContentHandler = ({ name, setValue }: any) => {
 
 export default function ReactEditor({ label, isRequired, setValue, error, name, height }: Props) {
 
+
+    const hasError = !!error
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <label className={cn(styles.label)}>{label}</label>
                 {isRequired ? <span className={styles.isRequired}>*</span> : null}
             </div>
-            <div className={styles.body}>
+            <div className={`${styles.body} ${hasError ? styles.bodyError : ""}`}>
                 <LexicalComposer initialConfig={{
                     namespace: 'Editor',
                     onError: (error: Error) => {
@@ -67,9 +74,10 @@ export default function ReactEditor({ label, isRequired, setValue, error, name, 
                 }}>
                     <ToolBar />
                     <RichTextPlugin
-                        contentEditable={<ContentEditable className={styles.editor} style={{
+                        contentEditable={<ContentEditable className={styles.editor}
+                            style={{
                             height: `${height}px`,
-                            overflow: "auto"
+                            overflow: "auto",
                         }} />}
                         ErrorBoundary={LexicalErrorBoundary}
                     />

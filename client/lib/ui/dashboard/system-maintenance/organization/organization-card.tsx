@@ -1,9 +1,14 @@
 import React from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/organization/organization-card.module.scss';
-import Avatar from '@/components/Avatar/avatar';
-import Title from '@/lib/ui/title';
-import Button from '@/components/Button/button';
 import { TbDots, TbEdit, TbTrash } from 'react-icons/tb';
+
+
+//components
+import Avatar from '@/components/Avatar/avatar';
+
+
+//lib & hooks
+import Title from '@/lib/ui/title';
 
 
 

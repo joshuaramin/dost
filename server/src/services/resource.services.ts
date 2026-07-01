@@ -39,6 +39,9 @@ export const GetAllResource = ({
       name: true,
       slug: true,
       children: {
+        orderBy: {
+          order: "asc",
+        },
         select: {
           resource_id: true,
           name: true,

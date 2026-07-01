@@ -2,6 +2,7 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
@@ -10,7 +11,7 @@
     padding: 20px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border: 1px solid color(neutral, 200);
+    border: 1px solid color(neutral, 500);
 
     div {
         display: flex;

@@ -8,20 +8,21 @@ datasource db {
 }
 
 model User {
-  user_id         String          @id @default(cuid())
-  email           String          @unique @db.VarChar(255)
-  is_deleted      Boolean         @default(false)
-  created_at      DateTime        @default(now()) @db.Timestamp(6)
-  updated_at      DateTime        @default(now()) @updatedAt @db.Timestamp(6)
-  role_id         String?
-  organization_id String?
-  ActivityLog     ActivityLog[]
-  DeviceSession   DeviceSession[]
-  Notification    Notification[]
-  OTP             OTP[]
-  Profile         Profile?
-  organization    Organization?   @relation(fields: [organization_id], references: [organization_id])
-  role            Role?           @relation(fields: [role_id], references: [role_id])
+  user_id           String              @id @default(cuid())
+  email             String              @unique @db.VarChar(255)
+  is_deleted        Boolean             @default(false)
+  created_at        DateTime            @default(now()) @db.Timestamp(6)
+  updated_at        DateTime            @default(now()) @updatedAt @db.Timestamp(6)
+  role_id           String?
+  organization_id   String?
+  ActivityLog       ActivityLog[]
+  DeviceSession     DeviceSession[]
+  Notification      Notification[]
+  EducationResource EducationResource[]
+  OTP               OTP[]
+  Profile           Profile?
+  organization      Organization?       @relation(fields: [organization_id], references: [organization_id])
+  role              Role?               @relation(fields: [role_id], references: [role_id])
 
   @@index([role_id])
   @@index([is_deleted])
@@ -165,6 +166,142 @@ model DeviceSession {
   os                 String
   user_agent         String
   user               User?    @relation(fields: [user_id], references: [user_id])
+}
+
+model EducationResource {
+  education_resource_id String   @id @default(cuid())
+  title                 String   @db.VarChar(100)
+  category              String   @db.VarChar(50)
+  excerpt               String   @db.VarChar(300)
+  content               String   @db.Text
+  is_deleted            Boolean  @default(false)
+  created_at            DateTime @default(now()) @db.Timestamp(6)
+  updated_at            DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  user                  User?    @relation(fields: [user_id], references: [user_id])
+  user_id               String?
+}
+
+enum SurveyType {
+  SHORT_TEXT
+  LONG_TEXT
+  MULTIPLE_CHOICE
+  CHECKBOX
+}
+
+model Survey {
+  survey_id   String  @id @default(cuid())
+  title       String  @db.VarChar(100)
+  description String? @db.VarChar(300)
+
+  is_deleted Boolean @default(false)
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  questions SurveyQuestion[]
+  responses SurveyResponse[]
+}
+
+model SurveyQuestion {
+  survey_question_id String @id @default(cuid())
+  survey_id          String
+
+  text String     @db.VarChar(300)
+  type SurveyType
+
+  is_required Boolean @default(false)
+  order_index Int     @default(0)
+
+  is_deleted Boolean @default(false)
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  survey Survey @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
+
+  options QuestionOption[]
+  answers SurveyAnswer[]
+
+  @@index([survey_id])
+}
+
+model QuestionOption {
+  question_option_id String @id @default(cuid())
+  survey_question_id String
+
+  label String @db.VarChar(300)
+  value String @db.VarChar(300)
+
+  order_index Int @default(0)
+
+  is_deleted Boolean @default(false)
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  question SurveyQuestion @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
+
+  answers          SurveyAnswer[]
+  selected_options SurveyAnswerOption[]
+
+  @@index([survey_question_id])
+}
+
+model SurveyResponse {
+  response_id String @id @default(cuid())
+  survey_id   String
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+
+  survey Survey @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
+
+  answers SurveyAnswer[]
+
+  @@index([survey_id])
+}
+
+model SurveyAnswer {
+  answer_id String @id @default(cuid())
+
+  survey_response_id String
+  survey_question_id String
+
+  answer_text String? @db.Text
+
+  // Used ONLY for MULTIPLE_CHOICE (radio button)
+  answer_option_id String?
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  response SurveyResponse @relation(fields: [survey_response_id], references: [response_id], onDelete: Cascade)
+  question SurveyQuestion @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
+
+  option QuestionOption? @relation(fields: [answer_option_id], references: [question_option_id], onDelete: Cascade)
+
+  selected_options SurveyAnswerOption[]
+
+  @@index([survey_response_id])
+  @@index([survey_question_id])
+  @@index([answer_option_id])
+}
+
+model SurveyAnswerOption {
+  survey_answer_option_id String @id @default(cuid())
+
+  survey_answer_id   String
+  question_option_id String
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  answer SurveyAnswer @relation(fields: [survey_answer_id], references: [answer_id], onDelete: Cascade)
+
+  option QuestionOption @relation(fields: [question_option_id], references: [question_option_id], onDelete: Cascade)
+
+  @@unique([survey_answer_id, question_option_id])
+  @@index([survey_answer_id])
+  @@index([question_option_id])
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.

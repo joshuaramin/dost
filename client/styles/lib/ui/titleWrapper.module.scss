@@ -2,6 +2,7 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
@@ -22,7 +23,6 @@
 
     h1 {
         font-size: $fntbase;
-        font-family: "Alegreya";
         text-transform: uppercase;
 
         @include down(md) {
