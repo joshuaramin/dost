@@ -132,24 +132,39 @@ export class PrismaCRUDManager<
     });
   }
 
-  async readById(
+  async readById<TResult = T>(
     value: T[TIdKey] | string,
     key: keyof T = this.idKey,
     options?: Pick<FindFirstArgs<M>, "select" | "include">,
-  ): Promise<T | null> {
+    resolver?: (entity: T) => Promise<TResult>,
+  ): Promise<T | TResult | null> {
     if (options?.select && options?.include) {
       throw new Error("Cannot use select and include together.");
     }
 
     const where = this.hasSoftDelete
-      ? { AND: [{ [key]: value }, { is_deleted: false }] }
-      : { [key]: value };
+      ? {
+          AND: [{ [key]: value }, { is_deleted: false }],
+        }
+      : {
+          [key]: value,
+        };
 
-    return this.model.findFirst({
+    const entity = await this.model.findFirst({
       where,
       ...(options?.select && { select: options.select }),
       ...(options?.include && { include: options.include }),
     });
+
+    if (!entity) {
+      return null;
+    }
+
+    if (resolver) {
+      return resolver(entity as T);
+    }
+
+    return entity as T;
   }
 
   async update<K extends string>(

@@ -9,6 +9,41 @@
 * 🟢 You can import this file directly.
 */
 
+export const EducationResourceType = {
+  ARTICLE: 'ARTICLE',
+  VIDEO: 'VIDEO',
+  DOCUMENT: 'DOCUMENT',
+  CATALOGUE: 'CATALOGUE',
+  INFOGRAPHIC: 'INFOGRAPHIC',
+  WEBINAR: 'WEBINAR',
+  PODCAST: 'PODCAST',
+  EXTERNAL_LINK: 'EXTERNAL_LINK'
+} as const
+
+export type EducationResourceType = (typeof EducationResourceType)[keyof typeof EducationResourceType]
+
+
+export const EducationStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type EducationStatus = (typeof EducationStatus)[keyof typeof EducationStatus]
+
+
+export const AttachmentType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  PDF: 'PDF',
+  DOCUMENT: 'DOCUMENT',
+  AUDIO: 'AUDIO',
+  OTHER: 'OTHER'
+} as const
+
+export type AttachmentType = (typeof AttachmentType)[keyof typeof AttachmentType]
+
+
 export const SurveyType = {
   SHORT_TEXT: 'SHORT_TEXT',
   LONG_TEXT: 'LONG_TEXT',

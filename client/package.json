@@ -20,6 +20,7 @@
     "chart.js": "^4.5.1",
     "cookies-next": "^6.1.1",
     "date-fns": "^4.1.0",
+    "html-react-parser": "^6.1.4",
     "jsonwebtoken": "^9.0.3",
     "lexical": "^0.45.0",
     "maplibre-gl": "^4.7.1",

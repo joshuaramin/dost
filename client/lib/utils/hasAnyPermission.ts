@@ -3,7 +3,6 @@ import store from "store2";
 const getUserPermissions = () => {
   const data = store.get("data_sessions");
 
-  console.log(data);
   return data?.data?.Role.permission ?? [];
 };
 

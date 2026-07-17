@@ -1,0 +1,146 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 0 15rem;
+
+
+    
+
+    @include down(xxl) {
+        padding: 0 2rem;
+    }
+
+    @include down(lg) {
+        padding: 0 10rem;
+    }
+
+    hr {
+        height: 25px;
+    }
+
+    .option_container {
+        padding: 10px 0;
+
+        .option_button {
+            padding: 10px 0;
+        }
+
+        .option {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+
+
+
+            input {
+                height: 35px;
+                border: none;
+                border-bottom: 1px solid color(neutral, 500);
+            }
+
+            button {
+                height: 45px;
+                top: 10px;
+                border: none;
+            }
+        }
+    }
+
+
+
+    .question_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .submit_container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0;
+    }
+
+    .question_card {
+        position: relative;
+        width: 100%;
+        margin: 10px 0;
+        padding: 20px;
+        background-color: color(base, white);
+        border: 1px solid color(neutral, 500);
+        border-radius: radius(sm);
+        overflow: hidden;
+
+
+        &:nth-last-child(1) {
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                background-color: color(primary, 500);
+                border-top-left-radius: radius(sm);
+                border-bottom-left-radius: radius(sm);
+            }
+        }
+
+        .questions {
+            width: 100%;
+        }
+
+        .divider {
+            width: 100%;
+            border-bottom: 1px solid color(neutral, 500);
+        }
+
+        .col_1 {
+            width: 100%;
+            padding: 1rem 0;
+
+            .body {
+                display: flex;
+                width: 100%;
+                gap: 10px;
+            }
+
+            .choice {
+                width: 100%;
+            }
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 0;
+            gap: 10px;
+
+            button {
+                // background-color: transparent;
+                padding: 8px;
+                border: none;
+
+                &:nth-child(2) {
+                    border: 1px solid color(primary, 500);
+                }
+            }
+
+            .footer_1_col_1 {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+
+            }
+
+        }
+    }
+}

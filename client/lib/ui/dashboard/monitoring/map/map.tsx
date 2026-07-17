@@ -61,6 +61,8 @@ export default function MapUI() {
 
                     const { regions, provinces, municipalities } = json.data
 
+                    const heatmapRes = await fetch("http//localhost:4000/maintennace/nlp?")
+
                     if (!map.getSource("regions")) {
                         map.addSource("regions", {
                             type: "geojson",

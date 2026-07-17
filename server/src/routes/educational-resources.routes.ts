@@ -1,15 +1,43 @@
+import express from "express";
 import {
   createEducationResources,
+  createEducationCategory,
+  createEducationTag,
   getAllEducationResources,
+  getEducationById,
+  getAllEducationCategory,
+  getEducationTag,
 } from "@/controller/educational-resources.controller";
 import { withAuth } from "@/lib/helpers/useAuth";
-import express from "./log.routes";
+import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
+import upload from "@/lib/helpers/useMulter";
 
 const router = express.Router();
 
-router.get("/", withAuth, getAllEducationResources);
-router.post("/", withAuth, createEducationResources);
+//Get
+router.get("/tag", asyncHandler(getEducationTag));
+router.get("/category", asyncHandler(getAllEducationCategory));
+router.get("/", asyncHandler(getAllEducationResources));
+router.get("/:id", asyncHandler(getEducationById));
+
+//Post
+router.post(
+  "/",
+  withAuth,
+  upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "attachments" }]),
+  asyncHandler(createEducationResources),
+);
+router.post("/educational-tag", withAuth, asyncHandler(createEducationTag));
+router.post(
+  "/educational-category",
+  withAuth,
+  asyncHandler(createEducationCategory),
+);
+
+//Put
 router.put("/:id", withAuth);
+
+//Patch
 router.patch("/:id", withAuth);
 
 export default router;

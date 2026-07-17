@@ -11,10 +11,17 @@ import express from "express";
 
 const router = express.Router();
 
+//Get
 router.get("/", withAuth, asyncHandler(getAllRoles));
-router.post("/", withAuth, asyncHandler(createRoles));
 router.get("/:slug", withAuth, asyncHandler(getRoleBySlug));
+
+//Post
+router.post("/", withAuth, asyncHandler(createRoles));
+
+//Patch
 router.patch("/:id", withAuth, asyncHandler(softDeleteRoles));
+
+//Put
 router.put("/addRolePermission/:id", asyncHandler(addRolePermission));
 
 export default router;

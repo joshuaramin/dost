@@ -395,6 +395,10 @@ export const ModelName = {
   Notification: 'Notification',
   Organization: 'Organization',
   DeviceSession: 'DeviceSession',
+  EducationAttachment: 'EducationAttachment',
+  EducationTag: 'EducationTag',
+  EducationResourceTag: 'EducationResourceTag',
+  EducationCategory: 'EducationCategory',
   EducationResource: 'EducationResource',
   Survey: 'Survey',
   SurveyQuestion: 'SurveyQuestion',
@@ -418,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys"
+    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationAttachment" | "educationTag" | "educationResourceTag" | "educationCategory" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1236,6 +1240,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EducationAttachment: {
+      payload: Prisma.$EducationAttachmentPayload<ExtArgs>
+      fields: Prisma.EducationAttachmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EducationAttachmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EducationAttachmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        findFirst: {
+          args: Prisma.EducationAttachmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EducationAttachmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        findMany: {
+          args: Prisma.EducationAttachmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>[]
+        }
+        create: {
+          args: Prisma.EducationAttachmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        createMany: {
+          args: Prisma.EducationAttachmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EducationAttachmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>[]
+        }
+        delete: {
+          args: Prisma.EducationAttachmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        update: {
+          args: Prisma.EducationAttachmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.EducationAttachmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EducationAttachmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EducationAttachmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.EducationAttachmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationAttachmentPayload>
+        }
+        aggregate: {
+          args: Prisma.EducationAttachmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEducationAttachment>
+        }
+        groupBy: {
+          args: Prisma.EducationAttachmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationAttachmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EducationAttachmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationAttachmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    EducationTag: {
+      payload: Prisma.$EducationTagPayload<ExtArgs>
+      fields: Prisma.EducationTagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EducationTagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EducationTagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        findFirst: {
+          args: Prisma.EducationTagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EducationTagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        findMany: {
+          args: Prisma.EducationTagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>[]
+        }
+        create: {
+          args: Prisma.EducationTagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        createMany: {
+          args: Prisma.EducationTagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EducationTagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>[]
+        }
+        delete: {
+          args: Prisma.EducationTagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        update: {
+          args: Prisma.EducationTagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        deleteMany: {
+          args: Prisma.EducationTagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EducationTagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EducationTagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>[]
+        }
+        upsert: {
+          args: Prisma.EducationTagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationTagPayload>
+        }
+        aggregate: {
+          args: Prisma.EducationTagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEducationTag>
+        }
+        groupBy: {
+          args: Prisma.EducationTagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationTagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EducationTagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationTagCountAggregateOutputType> | number
+        }
+      }
+    }
+    EducationResourceTag: {
+      payload: Prisma.$EducationResourceTagPayload<ExtArgs>
+      fields: Prisma.EducationResourceTagFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EducationResourceTagFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EducationResourceTagFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        findFirst: {
+          args: Prisma.EducationResourceTagFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EducationResourceTagFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        findMany: {
+          args: Prisma.EducationResourceTagFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>[]
+        }
+        create: {
+          args: Prisma.EducationResourceTagCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        createMany: {
+          args: Prisma.EducationResourceTagCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EducationResourceTagCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>[]
+        }
+        delete: {
+          args: Prisma.EducationResourceTagDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        update: {
+          args: Prisma.EducationResourceTagUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        deleteMany: {
+          args: Prisma.EducationResourceTagDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EducationResourceTagUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EducationResourceTagUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>[]
+        }
+        upsert: {
+          args: Prisma.EducationResourceTagUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationResourceTagPayload>
+        }
+        aggregate: {
+          args: Prisma.EducationResourceTagAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEducationResourceTag>
+        }
+        groupBy: {
+          args: Prisma.EducationResourceTagGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationResourceTagGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EducationResourceTagCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationResourceTagCountAggregateOutputType> | number
+        }
+      }
+    }
+    EducationCategory: {
+      payload: Prisma.$EducationCategoryPayload<ExtArgs>
+      fields: Prisma.EducationCategoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EducationCategoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EducationCategoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        findFirst: {
+          args: Prisma.EducationCategoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EducationCategoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        findMany: {
+          args: Prisma.EducationCategoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>[]
+        }
+        create: {
+          args: Prisma.EducationCategoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        createMany: {
+          args: Prisma.EducationCategoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EducationCategoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>[]
+        }
+        delete: {
+          args: Prisma.EducationCategoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        update: {
+          args: Prisma.EducationCategoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.EducationCategoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EducationCategoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EducationCategoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.EducationCategoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EducationCategoryPayload>
+        }
+        aggregate: {
+          args: Prisma.EducationCategoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEducationCategory>
+        }
+        groupBy: {
+          args: Prisma.EducationCategoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationCategoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EducationCategoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EducationCategoryCountAggregateOutputType> | number
+        }
+      }
+    }
     EducationResource: {
       payload: Prisma.$EducationResourcePayload<ExtArgs>
       fields: Prisma.EducationResourceFieldRefs
@@ -2018,16 +2318,68 @@ export const DeviceSessionScalarFieldEnum = {
 export type DeviceSessionScalarFieldEnum = (typeof DeviceSessionScalarFieldEnum)[keyof typeof DeviceSessionScalarFieldEnum]
 
 
+export const EducationAttachmentScalarFieldEnum = {
+  education_attachment_id: 'education_attachment_id',
+  education_resource_id: 'education_resource_id',
+  type: 'type',
+  file_name: 'file_name',
+  file_url: 'file_url',
+  mime_type: 'mime_type',
+  file_size: 'file_size',
+  order_index: 'order_index',
+  created_at: 'created_at'
+} as const
+
+export type EducationAttachmentScalarFieldEnum = (typeof EducationAttachmentScalarFieldEnum)[keyof typeof EducationAttachmentScalarFieldEnum]
+
+
+export const EducationTagScalarFieldEnum = {
+  education_tag_id: 'education_tag_id',
+  name: 'name',
+  slug: 'slug'
+} as const
+
+export type EducationTagScalarFieldEnum = (typeof EducationTagScalarFieldEnum)[keyof typeof EducationTagScalarFieldEnum]
+
+
+export const EducationResourceTagScalarFieldEnum = {
+  education_resource_id: 'education_resource_id',
+  education_tag_id: 'education_tag_id'
+} as const
+
+export type EducationResourceTagScalarFieldEnum = (typeof EducationResourceTagScalarFieldEnum)[keyof typeof EducationResourceTagScalarFieldEnum]
+
+
+export const EducationCategoryScalarFieldEnum = {
+  education_category_id: 'education_category_id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  parent_id: 'parent_id',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type EducationCategoryScalarFieldEnum = (typeof EducationCategoryScalarFieldEnum)[keyof typeof EducationCategoryScalarFieldEnum]
+
+
 export const EducationResourceScalarFieldEnum = {
   education_resource_id: 'education_resource_id',
   title: 'title',
-  category: 'category',
-  excerpt: 'excerpt',
+  slug: 'slug',
+  summary: 'summary',
   content: 'content',
+  type: 'type',
+  status: 'status',
+  thumbnail: 'thumbnail',
+  is_featured: 'is_featured',
+  published_at: 'published_at',
+  category_id: 'category_id',
+  user_id: 'user_id',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at',
-  user_id: 'user_id'
+  updated_at: 'updated_at'
 } as const
 
 export type EducationResourceScalarFieldEnum = (typeof EducationResourceScalarFieldEnum)[keyof typeof EducationResourceScalarFieldEnum]
@@ -2037,7 +2389,9 @@ export const SurveyScalarFieldEnum = {
   survey_id: 'survey_id',
   title: 'title',
   description: 'description',
+  slug: 'slug',
   is_deleted: 'is_deleted',
+  is_published: 'is_published',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -2198,6 +2552,48 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'AttachmentType'
+ */
+export type EnumAttachmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentType'>
+    
+
+
+/**
+ * Reference to a field of type 'AttachmentType[]'
+ */
+export type ListEnumAttachmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EducationResourceType'
+ */
+export type EnumEducationResourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EducationResourceType'>
+    
+
+
+/**
+ * Reference to a field of type 'EducationResourceType[]'
+ */
+export type ListEnumEducationResourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EducationResourceType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EducationStatus'
+ */
+export type EnumEducationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EducationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'EducationStatus[]'
+ */
+export type ListEnumEducationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EducationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'SurveyType'
  */
 export type EnumSurveyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SurveyType'>
@@ -2330,6 +2726,10 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   organization?: Prisma.OrganizationOmit
   deviceSession?: Prisma.DeviceSessionOmit
+  educationAttachment?: Prisma.EducationAttachmentOmit
+  educationTag?: Prisma.EducationTagOmit
+  educationResourceTag?: Prisma.EducationResourceTagOmit
+  educationCategory?: Prisma.EducationCategoryOmit
   educationResource?: Prisma.EducationResourceOmit
   survey?: Prisma.SurveyOmit
   surveyQuestion?: Prisma.SurveyQuestionOmit

@@ -62,6 +62,10 @@ export const ModelName = {
   Notification: 'Notification',
   Organization: 'Organization',
   DeviceSession: 'DeviceSession',
+  EducationAttachment: 'EducationAttachment',
+  EducationTag: 'EducationTag',
+  EducationResourceTag: 'EducationResourceTag',
+  EducationCategory: 'EducationCategory',
   EducationResource: 'EducationResource',
   Survey: 'Survey',
   SurveyQuestion: 'SurveyQuestion',
@@ -239,16 +243,68 @@ export const DeviceSessionScalarFieldEnum = {
 export type DeviceSessionScalarFieldEnum = (typeof DeviceSessionScalarFieldEnum)[keyof typeof DeviceSessionScalarFieldEnum]
 
 
+export const EducationAttachmentScalarFieldEnum = {
+  education_attachment_id: 'education_attachment_id',
+  education_resource_id: 'education_resource_id',
+  type: 'type',
+  file_name: 'file_name',
+  file_url: 'file_url',
+  mime_type: 'mime_type',
+  file_size: 'file_size',
+  order_index: 'order_index',
+  created_at: 'created_at'
+} as const
+
+export type EducationAttachmentScalarFieldEnum = (typeof EducationAttachmentScalarFieldEnum)[keyof typeof EducationAttachmentScalarFieldEnum]
+
+
+export const EducationTagScalarFieldEnum = {
+  education_tag_id: 'education_tag_id',
+  name: 'name',
+  slug: 'slug'
+} as const
+
+export type EducationTagScalarFieldEnum = (typeof EducationTagScalarFieldEnum)[keyof typeof EducationTagScalarFieldEnum]
+
+
+export const EducationResourceTagScalarFieldEnum = {
+  education_resource_id: 'education_resource_id',
+  education_tag_id: 'education_tag_id'
+} as const
+
+export type EducationResourceTagScalarFieldEnum = (typeof EducationResourceTagScalarFieldEnum)[keyof typeof EducationResourceTagScalarFieldEnum]
+
+
+export const EducationCategoryScalarFieldEnum = {
+  education_category_id: 'education_category_id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  parent_id: 'parent_id',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type EducationCategoryScalarFieldEnum = (typeof EducationCategoryScalarFieldEnum)[keyof typeof EducationCategoryScalarFieldEnum]
+
+
 export const EducationResourceScalarFieldEnum = {
   education_resource_id: 'education_resource_id',
   title: 'title',
-  category: 'category',
-  excerpt: 'excerpt',
+  slug: 'slug',
+  summary: 'summary',
   content: 'content',
+  type: 'type',
+  status: 'status',
+  thumbnail: 'thumbnail',
+  is_featured: 'is_featured',
+  published_at: 'published_at',
+  category_id: 'category_id',
+  user_id: 'user_id',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at',
-  user_id: 'user_id'
+  updated_at: 'updated_at'
 } as const
 
 export type EducationResourceScalarFieldEnum = (typeof EducationResourceScalarFieldEnum)[keyof typeof EducationResourceScalarFieldEnum]
@@ -258,7 +314,9 @@ export const SurveyScalarFieldEnum = {
   survey_id: 'survey_id',
   title: 'title',
   description: 'description',
+  slug: 'slug',
   is_deleted: 'is_deleted',
+  is_published: 'is_published',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

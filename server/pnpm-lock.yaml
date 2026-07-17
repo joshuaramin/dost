@@ -56,6 +56,9 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      express-list-endpoints:
+        specifier: ^7.1.1
+        version: 7.1.1
       express-rate-limit:
         specifier: ^8.3.1
         version: 8.3.1(express@5.2.1)
@@ -1375,6 +1378,10 @@ packages:
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+
+  express-list-endpoints@7.1.1:
+    resolution: {integrity: sha512-SA6YHH1r6DrioJ4fFJNqiwu1FweGFqJZO9KBApMzwPosoSGPOX2AW0wiMepOXjojjEXDuP9whIvckomheErbJA==}
+    engines: {node: '>=18'}
 
   express-rate-limit@8.3.1:
     resolution: {integrity: sha512-D1dKN+cmyPWuvB+G2SREQDzPY1agpBIcTa9sJxOPMCNeH3gwzhqJRDWCXW3gg0y//+LQ/8j52JbMROWyrKdMdw==}
@@ -3724,6 +3731,8 @@ snapshots:
   etag@1.8.1: {}
 
   events@3.3.0: {}
+
+  express-list-endpoints@7.1.1: {}
 
   express-rate-limit@8.3.1(express@5.2.1):
     dependencies:

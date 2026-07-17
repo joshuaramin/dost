@@ -12,6 +12,7 @@ import express from "express";
 
 const router = express.Router();
 
+//Get
 router.get(
   "/",
   withAuth,
@@ -24,12 +25,16 @@ router.get(
   withPermission("user", "read"),
   asyncHandler(getUserById),
 );
+
+//Post
 router.post(
   "/",
   withAuth,
   withPermission("user", "create"),
   asyncHandler(createUser),
 );
+
+//Patch
 router.patch(
   "/:id",
   withAuth,

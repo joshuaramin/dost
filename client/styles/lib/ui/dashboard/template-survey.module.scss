@@ -1,0 +1,21 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
+.container {
+    width: 100%;
+
+    .header {
+        width: 100%;
+        padding: 2rem;
+        background-color: color(base, white);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .body {
+        padding: 10px;
+    }
+}

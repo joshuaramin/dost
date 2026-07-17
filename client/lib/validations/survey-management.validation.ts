@@ -15,48 +15,49 @@ export const QuestionOptionSchema = z.object({
   order_index: z.number().int().nonnegative().optional(),
 });
 
-export const SurveyQuestionSchema = z
-  .object({
-    text: z.string().trim().min(1, "Question is required").max(300),
+export const SurveyQuestionSchema = z.object({
+  questionnaire: z.array(
+    z
+      .object({
+        text: z.string().trim().min(1, "Question is required").max(300),
 
-    type: SurveyTypeSchema,
+        type: SurveyTypeSchema,
 
-    is_required: z.boolean().optional(),
+        is_required: z.boolean().optional(),
 
-    order_index: z.number().int().nonnegative().optional(),
+        order_index: z.number().int().nonnegative().optional().default(1),
 
-    options: z.array(QuestionOptionSchema).optional(),
-  })
-  .superRefine((data, ctx) => {
-    if (
-      (data.type === "MULTIPLE_CHOICE" || data.type === "CHECKBOX") &&
-      (!data.options || data.options.length < 2)
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["options"],
-        message: "At least two options are required.",
-      });
-    }
+        options: z.array(QuestionOptionSchema).optional(),
+      })
+      .superRefine((data, ctx) => {
+        if (
+          (data.type === "MULTIPLE_CHOICE" || data.type === "CHECKBOX") &&
+          (!data.options || data.options.length < 1)
+        ) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["options"],
+            message: "At least one options are required.",
+          });
+        }
 
-    if (
-      (data.type === "SHORT_TEXT" || data.type === "LONG_TEXT") &&
-      data.options
-    ) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["options"],
-        message: "Text questions should not contain options.",
-      });
-    }
-  });
+        if (
+          (data.type === "SHORT_TEXT" || data.type === "LONG_TEXT") &&
+          data.options
+        ) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["options"],
+            message: "Text questions should not contain options.",
+          });
+        }
+      }),
+  ),
+});
 
 export const CreateSurveySchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(100),
-
   description: z.string().trim().max(300).min(1, "Description is required"),
-
-  questions: z.array(SurveyQuestionSchema),
 });
 
 export const SurveyAnswerSchema = z.object({

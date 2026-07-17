@@ -97,13 +97,13 @@
             gap: 1rem;
 
             a {
-                color: #fff;
+                color: color(base, white);
+                font-weight: none;
+                font-size: font-size(lg);
                 text-decoration: none;
 
-                font-size: font-size(lg);
-
                 &:hover {
-                    text-decoration: 1px solid underline #fff;
+                    text-decoration: 1.5px solid underline #fff;
                 }
             }
 

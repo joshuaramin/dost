@@ -21,10 +21,9 @@ import useFormQuery from '@/lib/hooks/useQuery';
 import NoData from '@/lib/ui/no-data';
 import useFormHook from '@/lib/hooks/useFormHook';
 import useFormMutation from '@/lib/hooks/useMutation';
-import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import  headers  from '@/lib/utils/headers';
 import { CreateSurveySchema, } from '@/lib/validations/survey-management.validation';
-import { SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
+import {  SurveyIDInterface, SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
 import { CreateSurveyFormField} from '@/lib/types/survey-management';
 
 
@@ -34,18 +33,13 @@ export default function SurveyManagement() {
     const [open ,setOpen ] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
     const [page, setPage] = useState<number>(0);
+    const [after, setAfter] = useState<string>("")
 
     const { register, handleSubmit, errors } = useFormHook({
             schema: CreateSurveySchema,
             defaultValues: {
                 title: "",
                 description: "",
-                questions: [{
-                    text: "",
-                    type: "SHORT_TEXT",
-                    is_required: false,
-                    order_index: 0
-                }]
             }
         })
         const onHandleAddNew = () => { 
@@ -82,7 +76,10 @@ export default function SurveyManagement() {
                 title: data.title,
                 description: data.description,
             }, {
-                onSuccess: () => {},
+                onSuccess: (data: unknown) => {
+                    const res = data as SurveyIDInterface;
+                    router.push(`/dashboard/system-maintenance/survey-management/${res.data.slug}`)
+                },
                 onError: () => {}
 
             })
@@ -100,15 +97,7 @@ export default function SurveyManagement() {
         })
 
 
-        if(isLoading) {
-        return (
-            <div className={styles.loading}>
-                {Array.from({length: 20}).map((node, index) => (
-                    <SkeletonCard key={index} />
-                ))}
-            </div>
-        )
-    }
+    
 
         return (
             <Template title="Survey Management"
@@ -146,9 +135,9 @@ export default function SurveyManagement() {
                         onClear={onHandleClear}
                     />
                     <Grid min={350} max={"1fr"} gap={10}>
-                        {data?.data.totalCount === 0 ? < NoData text="No surveys found"/> : data?.data.edges.map(({ node }, index) => (
+                        {data?.data.totalCount === 0 ? < NoData text="surveys found"/> : data?.data.edges.map(({ node }, index) => (
                             <div key={index} className={styles.card}>
-                                <Title onClick={() => router.push(`/dashboard/survey/${node.survey_id}`  )} size="md">{node.title}</Title>
+                                <Title onClick={() => router.push(`/dashboard/system-maintenance/survey-management/${node.slug}`  )} size="md">{node.title}</Title>
                                 <Paragraph>{node.description}</Paragraph>
                                 <div className={styles.footerBtn}>
                                     <progress value={30} max={1000} />

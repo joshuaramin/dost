@@ -1,4 +1,5 @@
 import {
+  createQuestionById,
   createSurvey,
   getAllSurvey,
   getSurveyById,
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.get("/", asyncHandler(getAllSurvey));
 router.post("/", asyncHandler(createSurvey));
+router.post("/:id", asyncHandler(createQuestionById));
 router.get("/:id", asyncHandler(getSurveyById));
 
 export default router;

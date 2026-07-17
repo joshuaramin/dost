@@ -86,5 +86,5 @@ export default function Demographics() {
             </Grid>
         </div>
     </Template>
-  )
+    )
 }

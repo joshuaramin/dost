@@ -5,25 +5,39 @@ import styles from "./page.module.scss";
 
 //lib and hooks
 import Header from "@/lib/ui/header";
-import Title from '@/components/Typography/Title/title'
 import TitleWrapper from "@/lib/ui/titleWrapper";
 import Footer from "@/lib/ui/footer";
 import SurveillanceMap from "@/lib/ui/home/map";
-import Text from "@/components/Typography/Text/text";
-import Paragraph from "@/components/Typography/Paragraph/paragraph";
 import useFormQuery from "@/lib/hooks/useQuery";
+import EducationResourceCard from "@/lib/ui/educational-resource/education-reosurce-card";
 import { OrganizationResult } from "@/lib/interface/organization/organization.interface";
+import { EducationalResourceResult } from "@/lib/interface/education-resource/educational-resources.interface";
+import { Personnel } from "@/lib/utils/personel";
+
+
+//components 
+import Title from '@/components/Typography/Title/title'
 import Avatar from "@/components/Avatar/avatar";
 import Grid from "@/components/Grid/grid";
+import Text from "@/components/Typography/Text/text";
+import Paragraph from "@/components/Typography/Paragraph/paragraph";
+import SkeletonCard from "@/lib/ui/loading/SkeletonCard";
+
 
 
 export default function Home() {
 
 
-  const { data: OrganizationData, isLoading: OrganizationLoading } = useFormQuery<OrganizationResult>({ 
+  const { data: OrganizationData } = useFormQuery<OrganizationResult>({ 
     key: ["Organizations"],
     url: "maintenance/organization",
   }); 
+
+  const { data: EducationalResourceData, isLoading: EducationLoading } = useFormQuery<EducationalResourceResult>({
+    key: ["EducationalResources"],
+    url: "maintenance/educationResource",
+  });
+
   return (
     <div className={styles.container}>
       <Header />
@@ -36,18 +50,9 @@ export default function Home() {
         <h2>Geospatial AI for Public Health Surveillance</h2>
       </section>
 
+  
+
     <section>
-        <TitleWrapper title="Surveillance Map" />
-        <SurveillanceMap />
-        <div style={{
-          padding: '10px 0'
-        }}>
-          <Text size="sm" style={{ fontStyle: "italic",  color: "#808080"  }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
-
-        </div>
-      </section>
-
-      <section>
 
         <Title size="lg">Abstract</Title>
         <p className={SecondaryFont.className} style={{ textAlign: "justify" }}>
@@ -84,8 +89,34 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      <section>
+        <TitleWrapper title="Surveillance Map" />
+        <SurveillanceMap />
+        <div style={{
+          padding: '10px 0'
+        }}>
+          <Text size="sm" style={{ fontStyle: "italic",  color: "#808080"  }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
+
+        </div>
+    </section>
       <section>
         <TitleWrapper title="Educational Resources" />
+        {}
+        <Grid gap={20} max={"1fr"} min={400}>
+        {EducationLoading  ? Array.from({ length: 6}).map((node, index) => (
+          <SkeletonCard  key={index} /> 
+        )) : EducationalResourceData?.data.edges.map(({ node: { category, slug, excerpt, title}}, index) => (
+            <EducationResourceCard
+              key={index} 
+              category={category} 
+              excerpt={excerpt} 
+              slug={slug} 
+              title={title} 
+              route={`/educational-resources/${slug}`}
+              />
+          ))}
+        </Grid>
       </section>
       <section>
         <TitleWrapper title="METHODOLOGY" />
@@ -130,23 +161,38 @@ export default function Home() {
 
       <section>
         <TitleWrapper title="Organizations" />
-       <Grid max={"1fr"} min={50} gap={10}>
-          <Grid.Column>
+      <Grid max={"1fr"} min={50} gap={20}>
+          <Grid.Row max={100} min={50} gap={20}>
               {OrganizationData?.data.edges.map(({node: {logo }}, index) => (
             <div key={index}>
-              <Avatar src={logo} variant="lg"/>
+              <Avatar src={logo} variant="xl"/>
             </div>
           ))}
-          </Grid.Column>
-       </Grid>
+          </Grid.Row>
+      </Grid>
       </section>
 
       <section>
         <TitleWrapper title="The Team" />
-         <Title size="lg">Research & Advocates</Title>
+        <Title size="lg">Research & Advocates</Title>
           <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
-       Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
+          Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
         </Paragraph>
+
+        <Grid max={"1fr"}  min={300}gap={20}>
+          {Personnel.map(({name, info } ) => (
+            info.map(({name, position, url}, index) => (
+            <div className={styles.team_card} key={index}>
+              <div className={styles.avatar}></div>
+              <div className={styles.divider}></div>
+              <div className={styles.sub_team_card}>
+                <Text size="md">{name}</Text>
+                <Text size="sm">{position}</Text>
+              </div>
+          </div>
+            ))
+        ))}
+        </Grid>
         </section>
       <Footer />
     </div>

@@ -4,9 +4,15 @@ export interface SurveyInterface {
   survey_id: string;
   title: string;
   description: string;
-  is_deleted: boolean;
-  created_at: boolean;
-  updated_at: boolean;
+  slug: string;
+  is_deleted?: boolean;
+  created_at?: boolean;
+  updated_at?: boolean;
+}
+
+export interface CreateSurveyInterface {
+  title: string;
+  description: string;
 }
 
 export interface SurveyIDInterface {

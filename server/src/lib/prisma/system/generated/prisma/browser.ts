@@ -73,6 +73,26 @@ export type Organization = Prisma.OrganizationModel
  */
 export type DeviceSession = Prisma.DeviceSessionModel
 /**
+ * Model EducationAttachment
+ * 
+ */
+export type EducationAttachment = Prisma.EducationAttachmentModel
+/**
+ * Model EducationTag
+ * 
+ */
+export type EducationTag = Prisma.EducationTagModel
+/**
+ * Model EducationResourceTag
+ * 
+ */
+export type EducationResourceTag = Prisma.EducationResourceTagModel
+/**
+ * Model EducationCategory
+ * 
+ */
+export type EducationCategory = Prisma.EducationCategoryModel
+/**
  * Model EducationResource
  * 
  */

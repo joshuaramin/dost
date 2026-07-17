@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import expressRateLimiter from "express-rate-limit";
+import endpoints from "express-list-endpoints";
 
 dotenv.config();
 
@@ -74,7 +75,7 @@ app.use("/admin/queues", serverAdapter.getRouter());
 app.use(responseWrapperMiddleware);
 app.use("/maintenance/users", UserRouter);
 app.use("/maintenance/resource", ResourceRouter);
-app.use("/maintenance/educationResource", EducationResourceRouter);
+app.use("/maintenance/educational-resource", EducationResourceRouter);
 app.use("/maintenance/survey", SurveyRouter);
 app.use("/maintenance/roles", RolesRouter);
 app.use("/auth", AuthRouter);
@@ -90,6 +91,7 @@ app.get("/test-version", withAuth, (req, res) => {
 });
 app.use(errorHandler);
 
+console.log(endpoints(app));
 app.listen(4000, () => {
   console.log(`Server is running at port http://localhost:4000/`);
 });

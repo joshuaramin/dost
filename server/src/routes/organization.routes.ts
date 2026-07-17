@@ -8,9 +8,16 @@ import express from "express";
 
 const router = express.Router();
 
+//Get
 router.get("/", getAllOrganization);
+
+//Post
 router.post("/", withAuth, upload.single("logo"), createOrganization);
+
+//Put
 router.put("/:id", withAuth);
+
+//Patch
 router.patch("/:id", withAuth);
 
 export default router;

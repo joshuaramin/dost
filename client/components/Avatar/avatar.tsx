@@ -3,7 +3,7 @@ import styles from '@/styles/components/Avatar/avatar.module.scss'
 import Image from 'next/image'
 
 
-type Variant = "sm" | "md" | "lg"
+type Variant = "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl" 
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     variant: Variant

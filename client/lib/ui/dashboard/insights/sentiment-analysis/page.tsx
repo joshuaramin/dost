@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 
@@ -21,7 +22,7 @@ import useFormQuery from '@/lib/hooks/useQuery';
 export default function SentimentAnalysis() {
 
 
-   const { data, isLoading, error} = useFormQuery({
+   const { data, isLoading, error} = useFormQuery<any>({
         key: ["Regions"],
         url: "maintenance/geospatial/geom"
     })
@@ -88,5 +89,5 @@ export default function SentimentAnalysis() {
         </Grid>
         </div>
     </Template>
-  )
+    )
 }

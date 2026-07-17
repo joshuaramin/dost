@@ -5,8 +5,8 @@
 @use "@/styles/radius.module" as *;
 
 .container {
-    min-width: 330px;
-    height: 100vh;
+    min-width: 350px;
+    min-height: 100vh;
     padding: space(xl);
     border-right: 1px solid color(neutral, 500);
     background-color: color(primary, 600);

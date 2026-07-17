@@ -35,6 +35,9 @@ export default function UserManagement() {
   const [ search, setSearch ] = useState<string>("");
   const [ page, setPage ] = useState<number>(0)
 
+
+  console.log(headers)
+
   const onHandleNextPage = () => { 
     setPage(() => page + 1)
   }
@@ -61,7 +64,8 @@ export default function UserManagement() {
     params: {
       orderBy: "created_at",
       sortBy: "asc",
-      limit: 20,
+      limit: page,
+      search,
     }
   })
 

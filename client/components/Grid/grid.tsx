@@ -59,7 +59,7 @@ const Grid = Object.assign(
         children,
         min = 250,
         max = "1fr",
-        gap,
+        gap = 10,
     }: GridProps) => (
         <div
             className={styles.grid}

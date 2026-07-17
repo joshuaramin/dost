@@ -3,7 +3,6 @@
 
 import React, { ReactNode, useEffect, useState } from 'react'
 import styles from '@/styles/lib/ui/template.module.scss'
-import Title from './title'
 import { usePathname } from 'next/navigation';
 
 //components
@@ -21,6 +20,7 @@ import {
     SubmitHandler,
     UseFormHandleSubmit
 } from 'react-hook-form';
+import Title from '@/components/Typography/Title/title';
 
 type Modal<T extends FieldValues = FieldValues> = {
     modalTitle?: string
@@ -109,8 +109,8 @@ export default function Template<T extends FieldValues = FieldValues>({
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.header_col1}>
-                    <Title title={title} />
-                    <Text size="sm">{description}</Text>
+                <Title size="lg">{title}</Title>
+                    <Text size="md">{description}</Text>
                 </div>
 
                 <div className={styles.btns}>

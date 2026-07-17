@@ -3,6 +3,8 @@
 
 import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/enagagement/educational-resources.module.scss'
+import { usePathname } from 'next/navigation';
+import { SubmitHandler } from 'react-hook-form';
 
 
 //components
@@ -12,42 +14,43 @@ import Text from '@/components/Typography/Text/text';
 import Title from '@/components/Typography/Title/title';
 import Search from '@/components/Search/search';
 import Input from '@/components/Input/input';
+import Grid from '@/components/Grid/grid';
 import Pagination from '@/components/Pagination/pagination';
 import Textarea from '@/components/Textarea/textarea';
+import SelectArray from '@/components/Select/select-array';
 
 
 //lib and hooks
 import useFormHook from '@/lib/hooks/useFormHook';
 import Template from '@/lib/ui/template';
 import { EducationResourceSchema } from '@/lib/validations/education.validation';
-import SelectArray from '@/components/Select/select-array';
-import { sessionStore } from '@/lib/utils/sessions';
 import useFormQuery from '@/lib/hooks/useQuery';
-import { EducationalResourceInterface, EducationalResourceResult } from '@/lib/interface/education-resource/educational-resources.interface';
+import { EducationalResourceResult } from '@/lib/interface/education-resource/educational-resources.interface';
 import NoData from '../../no-data';
+import headers from '@/lib/utils/headers'
+import useFormMutation from '@/lib/hooks/useMutation';
+import { EducationResourceFormField } from '@/lib/types/education-resource.type';
+import EducationResourceCard from '../../educational-resource/education-reosurce-card';
+import SkeletonCard from '../../loading/SkeletonCard';
 
 export default function EducationResources() {
 
 
-    const token = sessionStore.getToken()
+
   const [ open, setOpen ] = useState<boolean>(false);
   const [ search, setSearch ] = useState<string>("");
   const [ page, setPage ] = useState<number>(0)
+  const pathname = usePathname();
 
-
-    const headers = {
-        "x-api-key": process.env.NEXT_PUBLIC_X_API_KEY,
-        "x-api-version": process.env.NEXT_PUBLIC_API_VERSION_KEY,
-        "Authorization": `Bearer ${token}`
-    }
 
     const { data, isLoading, error} = useFormQuery<EducationalResourceResult>({
-       key: ["EducationResource"],
+       key: ["EducationResource", search, page],
        url: "maintenance/educationResource",
        params: {
           orderBy: "created_at",
           sortBy: "asc",
-          limit: 20
+          limit: 20,
+          search
         },
        headers
     })
@@ -67,7 +70,6 @@ export default function EducationResources() {
       setSearch(e.currentTarget.value)
   }
 
-  console.log(data)
 
   const { register, errors, handleSubmit, setValue, watch } = useFormHook({
     schema: EducationResourceSchema,
@@ -79,8 +81,25 @@ export default function EducationResources() {
     }
   })
 
+  const mutation = useFormMutation({
+    key: ["CreateEducationResource"],
+    url: "maintenance/educationResource",
+    method: "POST",
+    headers
+  })
 
-  const onHandleSubmit = () => {}
+  const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
+    mutation.mutate({
+      title: data.title,
+      category: data.category,
+      content: data.content,
+      excerpt: data.excerpt
+    }, {
+      onSuccess: () => {},
+      onError: () => {}
+    })
+  }
+
   return (
      <Template 
      title="Educational Resources" 
@@ -98,17 +117,17 @@ export default function EducationResources() {
           isRequired={true}
           label="Category"
           name="category"
-          value=""
+          value={watch("category")}
           options={[
-            { label: "Prevention", value: "prevention" }, 
-            { label: "Testing", value: "testing" }, 
-            { label: "Treatment", value: "treatment" },
-            { label: "Support", value: "support" }, 
-            { label: "Awareness", value: "awareness" },
-            { label: "Research", value: "research" }
+            { label: "Prevention", value: "Prevention" }, 
+            { label: "Testing", value: "Testing" }, 
+            { label: "Treatment", value: "Treatment" },
+            { label: "Support", value: "Support" }, 
+            { label: "Awareness", value: "Awareness" },
+            { label: "Research", value: "Research" }
           ]}
         />
-        <Textarea isRequired={true} label="Excerpt" register={register} name={"excerpt"} error={errors.excerpt} style={{ height: "20px"}}/>
+        <Textarea isRequired={true} label="Excerpt" register={register} name={"excerpt"} errors={errors.excerpt} style={{ height: "20px"}}/>
         <ReactEditor 
           error={errors.content}
           height={200}
@@ -126,11 +145,14 @@ export default function EducationResources() {
     }}
     >
       <div className={styles.container}>
-      <div className={styles.filter}>
-          <Search />
+        <Grid>
+                 <Search
+            onChange={onHandleSearch}
+            value={search}
+          />
             <SelectArray 
             full={false}
-            
+            value=""
             label="Category"
             name="category"
               options={[
@@ -142,24 +164,24 @@ export default function EducationResources() {
             { label: "Research", value: "research" }
           ]}
           />
-      </div>
-      
-        {data?.data.totalCount === 0 ? <NoData text="Educational Resoucre" /> :    
-        <div className={styles.grid}>
-          {data?.data.edges.map(({ node: { category, content,  excerpt, title}}, index) => (
-            <div className={styles.card} key={index}>
-              <div className={styles.image} />
-              <Title size="md">{title}</Title>
-              <div>
-                <Text className={styles.tag} size="sm">
-                  {category}
-                </Text>
-              </div>
-              <Text size="sm">{excerpt}</Text>
-            </div>
+        </Grid>
+{/*       
+        {data?.data.totalCount === 0 ? <NoData text="Educational Resoucre" /> : 
+        <Grid max={"1fr"} min={400}>
+          {isLoading ? Array.from({ length: 6}).map((node, index) => (
+            <SkeletonCard  key={index} /> 
+          )) :data?.data.edges.map(({ node: { category, content,  excerpt, title, slug}}, index) => (
+              <EducationResourceCard
+                key={index}
+                category={category} 
+                excerpt={excerpt} 
+                title={title} 
+                slug={slug} 
+                route={`/dashboard/engagement/educational-resources/${slug}`}
+              />
           ))}
-        </div>
-        }
+        </Grid>
+        } */}
         <Pagination 
           totalItems={data?.data.totalCount || 0}
           currentCount={data?.data.edges.length || 0}
