@@ -20,7 +20,17 @@ export const getAllEducationResources = async (
   request: Request,
   response: Response,
 ) => {
-  const { sortBy, orderBy, limit, after, search } = request.query;
+  const {
+    sortBy,
+    orderBy,
+    limit,
+    after,
+    search,
+    status,
+    type,
+    resource,
+    category,
+  } = request.query;
 
   const result = await GetAllEducationResource({
     limit: limit as string,
@@ -30,6 +40,10 @@ export const getAllEducationResources = async (
       search: search as string,
       sortBy: sortBy as string,
     },
+    resource: resource as string,
+    status: status as string,
+    category: category as string,
+    type: type as string,
   });
 
   return response.status(200).json({
@@ -168,8 +182,16 @@ export const createEducationResources = async (
       });
     }
 
-    const thumbnail = request.file as Express.MulterS3.File;
-    const attachments = request.files as Express.MulterS3.File[];
+    const files =
+      (request.files as {
+        thumbnail?: Express.MulterS3.File[];
+        attachments?: Express.MulterS3.File[];
+      }) ?? {};
+
+    const thumbnail = files.thumbnail?.[0];
+    const attachments = files.attachments ?? [];
+
+    console.log("Attachments: ", attachments);
 
     const result = await CreateEducationResource({
       title: parseData.data.title,

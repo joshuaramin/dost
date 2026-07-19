@@ -117,6 +117,8 @@ export default function Page() {
 
                 cookies.setCookie("token", res.token)
 
+                console.log(res)
+
 
                 toastSuccess({
                     title: "Login Successfully",
@@ -124,7 +126,7 @@ export default function Page() {
                 })
                 const permission: string[] = [];
 
-                res.user.role.rolePermissions.map(({ Permission: { name}}) => {
+                res.user?.role.rolePermissions.map(({ Permission: { name}}) => {
                     permission.push(name)
                 })
 

@@ -47,9 +47,28 @@ export const GetAllEducationResource = ({
   after,
   filter: { orderBy, search, sortBy },
   limit,
+  resource,
+  status,
+  category,
+  type,
 }: EducationalResourceInterface) => {
+  const statusFilter = status ? (status as EducationStatus) : undefined;
+  const typeFilter = type ? (type as EducationResourceType) : undefined;
+
   let where: EducationResourceWhereInput = {
     is_deleted: false,
+    ...(typeFilter && {
+      type: typeFilter,
+    }),
+    ...(statusFilter && {
+      status: statusFilter,
+    }),
+    ...(resource && {
+      education_resource_id: resource,
+    }),
+    ...(category && {
+      category: { education_category_id: category },
+    }),
     ...(search && {
       title: { contains: search, mode: "insensitive" },
     }),
@@ -85,7 +104,6 @@ export const GetEducationByid = (data: string) => {
     "slug",
     {
       select: {
-        category: true,
         content: true,
         summary: true,
         slug: true,
@@ -97,6 +115,12 @@ export const GetEducationByid = (data: string) => {
         tags: true,
         thumbnail: true,
         type: true,
+        category: {
+          select: {
+            education_category_id: true,
+            name: true,
+          },
+        },
         user: {
           select: { email: true, Profile: true },
         },
