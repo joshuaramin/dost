@@ -27,55 +27,55 @@ export type AggregateEducationResource = {
 export type EducationResourceMinAggregateOutputType = {
   education_resource_id: string | null
   title: string | null
-  slug: string | null
-  summary: string | null
   content: string | null
-  type: $Enums.EducationResourceType | null
-  status: $Enums.EducationStatus | null
-  thumbnail: string | null
-  is_featured: boolean | null
-  published_at: Date | null
-  category_id: string | null
-  user_id: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  user_id: string | null
+  slug: string | null
+  category_id: string | null
+  is_featured: boolean | null
+  published_at: Date | null
+  status: $Enums.EducationStatus | null
+  summary: string | null
+  thumbnail: string | null
+  type: $Enums.EducationResourceType | null
 }
 
 export type EducationResourceMaxAggregateOutputType = {
   education_resource_id: string | null
   title: string | null
-  slug: string | null
-  summary: string | null
   content: string | null
-  type: $Enums.EducationResourceType | null
-  status: $Enums.EducationStatus | null
-  thumbnail: string | null
-  is_featured: boolean | null
-  published_at: Date | null
-  category_id: string | null
-  user_id: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  user_id: string | null
+  slug: string | null
+  category_id: string | null
+  is_featured: boolean | null
+  published_at: Date | null
+  status: $Enums.EducationStatus | null
+  summary: string | null
+  thumbnail: string | null
+  type: $Enums.EducationResourceType | null
 }
 
 export type EducationResourceCountAggregateOutputType = {
   education_resource_id: number
   title: number
-  slug: number
-  summary: number
   content: number
-  type: number
-  status: number
-  thumbnail: number
-  is_featured: number
-  published_at: number
-  category_id: number
-  user_id: number
   is_deleted: number
   created_at: number
   updated_at: number
+  user_id: number
+  slug: number
+  category_id: number
+  is_featured: number
+  published_at: number
+  status: number
+  summary: number
+  thumbnail: number
+  type: number
   _all: number
 }
 
@@ -83,55 +83,55 @@ export type EducationResourceCountAggregateOutputType = {
 export type EducationResourceMinAggregateInputType = {
   education_resource_id?: true
   title?: true
-  slug?: true
-  summary?: true
   content?: true
-  type?: true
-  status?: true
-  thumbnail?: true
-  is_featured?: true
-  published_at?: true
-  category_id?: true
-  user_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  user_id?: true
+  slug?: true
+  category_id?: true
+  is_featured?: true
+  published_at?: true
+  status?: true
+  summary?: true
+  thumbnail?: true
+  type?: true
 }
 
 export type EducationResourceMaxAggregateInputType = {
   education_resource_id?: true
   title?: true
-  slug?: true
-  summary?: true
   content?: true
-  type?: true
-  status?: true
-  thumbnail?: true
-  is_featured?: true
-  published_at?: true
-  category_id?: true
-  user_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  user_id?: true
+  slug?: true
+  category_id?: true
+  is_featured?: true
+  published_at?: true
+  status?: true
+  summary?: true
+  thumbnail?: true
+  type?: true
 }
 
 export type EducationResourceCountAggregateInputType = {
   education_resource_id?: true
   title?: true
-  slug?: true
-  summary?: true
   content?: true
-  type?: true
-  status?: true
-  thumbnail?: true
-  is_featured?: true
-  published_at?: true
-  category_id?: true
-  user_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  user_id?: true
+  slug?: true
+  category_id?: true
+  is_featured?: true
+  published_at?: true
+  status?: true
+  summary?: true
+  thumbnail?: true
+  type?: true
   _all?: true
 }
 
@@ -210,19 +210,19 @@ export type EducationResourceGroupByArgs<ExtArgs extends runtime.Types.Extension
 export type EducationResourceGroupByOutputType = {
   education_resource_id: string
   title: string
-  slug: string
-  summary: string | null
   content: string | null
-  type: $Enums.EducationResourceType
-  status: $Enums.EducationStatus
-  thumbnail: string | null
-  is_featured: boolean
-  published_at: Date | null
-  category_id: string
-  user_id: string | null
   is_deleted: boolean
   created_at: Date
   updated_at: Date
+  user_id: string | null
+  slug: string
+  category_id: string
+  is_featured: boolean
+  published_at: Date | null
+  status: $Enums.EducationStatus
+  summary: string | null
+  thumbnail: string | null
+  type: $Enums.EducationResourceType
   _count: EducationResourceCountAggregateOutputType | null
   _min: EducationResourceMinAggregateOutputType | null
   _max: EducationResourceMaxAggregateOutputType | null
@@ -249,44 +249,44 @@ export type EducationResourceWhereInput = {
   NOT?: Prisma.EducationResourceWhereInput | Prisma.EducationResourceWhereInput[]
   education_resource_id?: Prisma.StringFilter<"EducationResource"> | string
   title?: Prisma.StringFilter<"EducationResource"> | string
-  slug?: Prisma.StringFilter<"EducationResource"> | string
-  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   content?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
-  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
-  category_id?: Prisma.StringFilter<"EducationResource"> | string
-  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   is_deleted?: Prisma.BoolFilter<"EducationResource"> | boolean
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
+  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  slug?: Prisma.StringFilter<"EducationResource"> | string
+  category_id?: Prisma.StringFilter<"EducationResource"> | string
+  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
+  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
+  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
+  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentListRelationFilter
   category?: Prisma.XOR<Prisma.EducationCategoryScalarRelationFilter, Prisma.EducationCategoryWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  attachments?: Prisma.EducationAttachmentListRelationFilter
   tags?: Prisma.EducationResourceTagListRelationFilter
 }
 
 export type EducationResourceOrderByWithRelationInput = {
   education_resource_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  summary?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_featured?: Prisma.SortOrder
-  published_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  category_id?: Prisma.SortOrder
-  user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  slug?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
+  is_featured?: Prisma.SortOrder
+  published_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
+  type?: Prisma.SortOrder
+  attachments?: Prisma.EducationAttachmentOrderByRelationAggregateInput
   category?: Prisma.EducationCategoryOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
-  attachments?: Prisma.EducationAttachmentOrderByRelationAggregateInput
   tags?: Prisma.EducationResourceTagOrderByRelationAggregateInput
 }
 
@@ -297,40 +297,40 @@ export type EducationResourceWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.EducationResourceWhereInput[]
   NOT?: Prisma.EducationResourceWhereInput | Prisma.EducationResourceWhereInput[]
   title?: Prisma.StringFilter<"EducationResource"> | string
-  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   content?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
-  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
-  category_id?: Prisma.StringFilter<"EducationResource"> | string
-  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   is_deleted?: Prisma.BoolFilter<"EducationResource"> | boolean
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
+  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  category_id?: Prisma.StringFilter<"EducationResource"> | string
+  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
+  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
+  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
+  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentListRelationFilter
   category?: Prisma.XOR<Prisma.EducationCategoryScalarRelationFilter, Prisma.EducationCategoryWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  attachments?: Prisma.EducationAttachmentListRelationFilter
   tags?: Prisma.EducationResourceTagListRelationFilter
 }, "education_resource_id" | "slug">
 
 export type EducationResourceOrderByWithAggregationInput = {
   education_resource_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  summary?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_featured?: Prisma.SortOrder
-  published_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  category_id?: Prisma.SortOrder
-  user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  slug?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
+  is_featured?: Prisma.SortOrder
+  published_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
+  type?: Prisma.SortOrder
   _count?: Prisma.EducationResourceCountOrderByAggregateInput
   _max?: Prisma.EducationResourceMaxOrderByAggregateInput
   _min?: Prisma.EducationResourceMinOrderByAggregateInput
@@ -342,57 +342,57 @@ export type EducationResourceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.EducationResourceScalarWhereWithAggregatesInput | Prisma.EducationResourceScalarWhereWithAggregatesInput[]
   education_resource_id?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
   title?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
-  slug?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
-  summary?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
   content?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
-  type?: Prisma.EnumEducationResourceTypeWithAggregatesFilter<"EducationResource"> | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusWithAggregatesFilter<"EducationResource"> | $Enums.EducationStatus
-  thumbnail?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
-  is_featured?: Prisma.BoolWithAggregatesFilter<"EducationResource"> | boolean
-  published_at?: Prisma.DateTimeNullableWithAggregatesFilter<"EducationResource"> | Date | string | null
-  category_id?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
-  user_id?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
   is_deleted?: Prisma.BoolWithAggregatesFilter<"EducationResource"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"EducationResource"> | Date | string
+  user_id?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
+  slug?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
+  category_id?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
+  is_featured?: Prisma.BoolWithAggregatesFilter<"EducationResource"> | boolean
+  published_at?: Prisma.DateTimeNullableWithAggregatesFilter<"EducationResource"> | Date | string | null
+  status?: Prisma.EnumEducationStatusWithAggregatesFilter<"EducationResource"> | $Enums.EducationStatus
+  summary?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
+  thumbnail?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
+  type?: Prisma.EnumEducationResourceTypeWithAggregatesFilter<"EducationResource"> | $Enums.EducationResourceType
 }
 
 export type EducationResourceCreateInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
   category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
   user?: Prisma.UserCreateNestedOneWithoutEducationResourceInput
-  attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
   tags?: Prisma.EducationResourceTagCreateNestedManyWithoutResourceInput
 }
 
 export type EducationResourceUncheckedCreateInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
   tags?: Prisma.EducationResourceTagUncheckedCreateNestedManyWithoutResourceInput
 }
@@ -400,39 +400,39 @@ export type EducationResourceUncheckedCreateInput = {
 export type EducationResourceUpdateInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
   category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
   user?: Prisma.UserUpdateOneWithoutEducationResourceNestedInput
-  attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
   tags?: Prisma.EducationResourceTagUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceUncheckedUpdateInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
   tags?: Prisma.EducationResourceTagUncheckedUpdateManyWithoutResourceNestedInput
 }
@@ -440,53 +440,53 @@ export type EducationResourceUncheckedUpdateInput = {
 export type EducationResourceCreateManyInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
 }
 
 export type EducationResourceUpdateManyMutationInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
 }
 
 export type EducationResourceUncheckedUpdateManyInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
 }
 
 export type EducationResourceListRelationFilter = {
@@ -507,55 +507,55 @@ export type EducationResourceScalarRelationFilter = {
 export type EducationResourceCountOrderByAggregateInput = {
   education_resource_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  summary?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  is_featured?: Prisma.SortOrder
-  published_at?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
+  is_featured?: Prisma.SortOrder
+  published_at?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type EducationResourceMaxOrderByAggregateInput = {
   education_resource_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  summary?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  is_featured?: Prisma.SortOrder
-  published_at?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
+  is_featured?: Prisma.SortOrder
+  published_at?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type EducationResourceMinOrderByAggregateInput = {
   education_resource_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  summary?: Prisma.SortOrder
   content?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  status?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  is_featured?: Prisma.SortOrder
-  published_at?: Prisma.SortOrder
-  category_id?: Prisma.SortOrder
-  user_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  user_id?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
+  category_id?: Prisma.SortOrder
+  is_featured?: Prisma.SortOrder
+  published_at?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
+  type?: Prisma.SortOrder
 }
 
 export type EducationResourceCreateNestedManyWithoutUserInput = {
@@ -670,52 +670,52 @@ export type EducationResourceUncheckedUpdateManyWithoutCategoryNestedInput = {
   deleteMany?: Prisma.EducationResourceScalarWhereInput | Prisma.EducationResourceScalarWhereInput[]
 }
 
-export type EnumEducationResourceTypeFieldUpdateOperationsInput = {
-  set?: $Enums.EducationResourceType
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type EnumEducationStatusFieldUpdateOperationsInput = {
   set?: $Enums.EducationStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
+export type EnumEducationResourceTypeFieldUpdateOperationsInput = {
+  set?: $Enums.EducationResourceType
 }
 
 export type EducationResourceCreateWithoutUserInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
+  category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
   tags?: Prisma.EducationResourceTagCreateNestedManyWithoutResourceInput
 }
 
 export type EducationResourceUncheckedCreateWithoutUserInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
   tags?: Prisma.EducationResourceTagUncheckedCreateNestedManyWithoutResourceInput
 }
@@ -752,35 +752,35 @@ export type EducationResourceScalarWhereInput = {
   NOT?: Prisma.EducationResourceScalarWhereInput | Prisma.EducationResourceScalarWhereInput[]
   education_resource_id?: Prisma.StringFilter<"EducationResource"> | string
   title?: Prisma.StringFilter<"EducationResource"> | string
-  slug?: Prisma.StringFilter<"EducationResource"> | string
-  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   content?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
-  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
-  category_id?: Prisma.StringFilter<"EducationResource"> | string
-  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   is_deleted?: Prisma.BoolFilter<"EducationResource"> | boolean
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
+  user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  slug?: Prisma.StringFilter<"EducationResource"> | string
+  category_id?: Prisma.StringFilter<"EducationResource"> | string
+  is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
+  published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
+  status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
+  summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
 }
 
 export type EducationResourceCreateWithoutAttachmentsInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
   user?: Prisma.UserCreateNestedOneWithoutEducationResourceInput
   tags?: Prisma.EducationResourceTagCreateNestedManyWithoutResourceInput
@@ -789,19 +789,19 @@ export type EducationResourceCreateWithoutAttachmentsInput = {
 export type EducationResourceUncheckedCreateWithoutAttachmentsInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   tags?: Prisma.EducationResourceTagUncheckedCreateNestedManyWithoutResourceInput
 }
 
@@ -824,17 +824,17 @@ export type EducationResourceUpdateToOneWithWhereWithoutAttachmentsInput = {
 export type EducationResourceUpdateWithoutAttachmentsInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
   user?: Prisma.UserUpdateOneWithoutEducationResourceNestedInput
   tags?: Prisma.EducationResourceTagUpdateManyWithoutResourceNestedInput
@@ -843,57 +843,57 @@ export type EducationResourceUpdateWithoutAttachmentsInput = {
 export type EducationResourceUncheckedUpdateWithoutAttachmentsInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   tags?: Prisma.EducationResourceTagUncheckedUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceCreateWithoutTagsInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
   category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
   user?: Prisma.UserCreateNestedOneWithoutEducationResourceInput
-  attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
 }
 
 export type EducationResourceUncheckedCreateWithoutTagsInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
 }
 
@@ -916,75 +916,75 @@ export type EducationResourceUpdateToOneWithWhereWithoutTagsInput = {
 export type EducationResourceUpdateWithoutTagsInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
+  attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
   category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
   user?: Prisma.UserUpdateOneWithoutEducationResourceNestedInput
-  attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceUncheckedUpdateWithoutTagsInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceCreateWithoutCategoryInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutEducationResourceInput
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
+  user?: Prisma.UserCreateNestedOneWithoutEducationResourceInput
   tags?: Prisma.EducationResourceTagCreateNestedManyWithoutResourceInput
 }
 
 export type EducationResourceUncheckedCreateWithoutCategoryInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
   tags?: Prisma.EducationResourceTagUncheckedCreateNestedManyWithoutResourceInput
 }
@@ -1018,54 +1018,54 @@ export type EducationResourceUpdateManyWithWhereWithoutCategoryInput = {
 export type EducationResourceCreateManyUserInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  category_id: string
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
+  category_id: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
 }
 
 export type EducationResourceUpdateWithoutUserInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
+  category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
   tags?: Prisma.EducationResourceTagUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceUncheckedUpdateWithoutUserInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
   tags?: Prisma.EducationResourceTagUncheckedUpdateManyWithoutResourceNestedInput
 }
@@ -1073,71 +1073,71 @@ export type EducationResourceUncheckedUpdateWithoutUserInput = {
 export type EducationResourceUncheckedUpdateManyWithoutUserInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  category_id?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
 }
 
 export type EducationResourceCreateManyCategoryInput = {
   education_resource_id?: string
   title: string
-  slug: string
-  summary?: string | null
   content?: string | null
-  type: $Enums.EducationResourceType
-  status?: $Enums.EducationStatus
-  thumbnail?: string | null
-  is_featured?: boolean
-  published_at?: Date | string | null
-  user_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  user_id?: string | null
+  slug: string
+  is_featured?: boolean
+  published_at?: Date | string | null
+  status?: $Enums.EducationStatus
+  summary?: string | null
+  thumbnail?: string | null
+  type: $Enums.EducationResourceType
 }
 
 export type EducationResourceUpdateWithoutCategoryInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutEducationResourceNestedInput
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
+  user?: Prisma.UserUpdateOneWithoutEducationResourceNestedInput
   tags?: Prisma.EducationResourceTagUpdateManyWithoutResourceNestedInput
 }
 
 export type EducationResourceUncheckedUpdateWithoutCategoryInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
   tags?: Prisma.EducationResourceTagUncheckedUpdateManyWithoutResourceNestedInput
 }
@@ -1145,18 +1145,18 @@ export type EducationResourceUncheckedUpdateWithoutCategoryInput = {
 export type EducationResourceUncheckedUpdateManyWithoutCategoryInput = {
   education_resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
-  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
 }
 
 
@@ -1202,22 +1202,22 @@ export type EducationResourceCountOutputTypeCountTagsArgs<ExtArgs extends runtim
 export type EducationResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   education_resource_id?: boolean
   title?: boolean
-  slug?: boolean
-  summary?: boolean
   content?: boolean
-  type?: boolean
-  status?: boolean
-  thumbnail?: boolean
-  is_featured?: boolean
-  published_at?: boolean
-  category_id?: boolean
-  user_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user_id?: boolean
+  slug?: boolean
+  category_id?: boolean
+  is_featured?: boolean
+  published_at?: boolean
+  status?: boolean
+  summary?: boolean
+  thumbnail?: boolean
+  type?: boolean
+  attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.EducationResource$userArgs<ExtArgs>
-  attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   tags?: boolean | Prisma.EducationResource$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.EducationResourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["educationResource"]>
@@ -1225,19 +1225,19 @@ export type EducationResourceSelect<ExtArgs extends runtime.Types.Extensions.Int
 export type EducationResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   education_resource_id?: boolean
   title?: boolean
-  slug?: boolean
-  summary?: boolean
   content?: boolean
-  type?: boolean
-  status?: boolean
-  thumbnail?: boolean
-  is_featured?: boolean
-  published_at?: boolean
-  category_id?: boolean
-  user_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user_id?: boolean
+  slug?: boolean
+  category_id?: boolean
+  is_featured?: boolean
+  published_at?: boolean
+  status?: boolean
+  summary?: boolean
+  thumbnail?: boolean
+  type?: boolean
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.EducationResource$userArgs<ExtArgs>
 }, ExtArgs["result"]["educationResource"]>
@@ -1245,19 +1245,19 @@ export type EducationResourceSelectCreateManyAndReturn<ExtArgs extends runtime.T
 export type EducationResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   education_resource_id?: boolean
   title?: boolean
-  slug?: boolean
-  summary?: boolean
   content?: boolean
-  type?: boolean
-  status?: boolean
-  thumbnail?: boolean
-  is_featured?: boolean
-  published_at?: boolean
-  category_id?: boolean
-  user_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user_id?: boolean
+  slug?: boolean
+  category_id?: boolean
+  is_featured?: boolean
+  published_at?: boolean
+  status?: boolean
+  summary?: boolean
+  thumbnail?: boolean
+  type?: boolean
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.EducationResource$userArgs<ExtArgs>
 }, ExtArgs["result"]["educationResource"]>
@@ -1265,26 +1265,26 @@ export type EducationResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.T
 export type EducationResourceSelectScalar = {
   education_resource_id?: boolean
   title?: boolean
-  slug?: boolean
-  summary?: boolean
   content?: boolean
-  type?: boolean
-  status?: boolean
-  thumbnail?: boolean
-  is_featured?: boolean
-  published_at?: boolean
-  category_id?: boolean
-  user_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  user_id?: boolean
+  slug?: boolean
+  category_id?: boolean
+  is_featured?: boolean
+  published_at?: boolean
+  status?: boolean
+  summary?: boolean
+  thumbnail?: boolean
+  type?: boolean
 }
 
-export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "slug" | "summary" | "content" | "type" | "status" | "thumbnail" | "is_featured" | "published_at" | "category_id" | "user_id" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["educationResource"]>
+export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "content" | "is_deleted" | "created_at" | "updated_at" | "user_id" | "slug" | "category_id" | "is_featured" | "published_at" | "status" | "summary" | "thumbnail" | "type", ExtArgs["result"]["educationResource"]>
 export type EducationResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
   user?: boolean | Prisma.EducationResource$userArgs<ExtArgs>
-  attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   tags?: boolean | Prisma.EducationResource$tagsArgs<ExtArgs>
   _count?: boolean | Prisma.EducationResourceCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1300,27 +1300,27 @@ export type EducationResourceIncludeUpdateManyAndReturn<ExtArgs extends runtime.
 export type $EducationResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EducationResource"
   objects: {
+    attachments: Prisma.$EducationAttachmentPayload<ExtArgs>[]
     category: Prisma.$EducationCategoryPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs> | null
-    attachments: Prisma.$EducationAttachmentPayload<ExtArgs>[]
     tags: Prisma.$EducationResourceTagPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     education_resource_id: string
     title: string
-    slug: string
-    summary: string | null
     content: string | null
-    type: $Enums.EducationResourceType
-    status: $Enums.EducationStatus
-    thumbnail: string | null
-    is_featured: boolean
-    published_at: Date | null
-    category_id: string
-    user_id: string | null
     is_deleted: boolean
     created_at: Date
     updated_at: Date
+    user_id: string | null
+    slug: string
+    category_id: string
+    is_featured: boolean
+    published_at: Date | null
+    status: $Enums.EducationStatus
+    summary: string | null
+    thumbnail: string | null
+    type: $Enums.EducationResourceType
   }, ExtArgs["result"]["educationResource"]>
   composites: {}
 }
@@ -1715,9 +1715,9 @@ readonly fields: EducationResourceFieldRefs;
  */
 export interface Prisma__EducationResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  attachments<T extends Prisma.EducationResource$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EducationResource$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EducationAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   category<T extends Prisma.EducationCategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EducationCategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__EducationCategoryClient<runtime.Types.Result.GetResult<Prisma.$EducationCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.EducationResource$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EducationResource$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  attachments<T extends Prisma.EducationResource$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EducationResource$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EducationAttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tags<T extends Prisma.EducationResource$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EducationResource$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EducationResourceTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1750,19 +1750,19 @@ export interface Prisma__EducationResourceClient<T, Null = never, ExtArgs extend
 export interface EducationResourceFieldRefs {
   readonly education_resource_id: Prisma.FieldRef<"EducationResource", 'String'>
   readonly title: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly slug: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly summary: Prisma.FieldRef<"EducationResource", 'String'>
   readonly content: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly type: Prisma.FieldRef<"EducationResource", 'EducationResourceType'>
-  readonly status: Prisma.FieldRef<"EducationResource", 'EducationStatus'>
-  readonly thumbnail: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly is_featured: Prisma.FieldRef<"EducationResource", 'Boolean'>
-  readonly published_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
-  readonly category_id: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly user_id: Prisma.FieldRef<"EducationResource", 'String'>
   readonly is_deleted: Prisma.FieldRef<"EducationResource", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
+  readonly user_id: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly slug: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly category_id: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly is_featured: Prisma.FieldRef<"EducationResource", 'Boolean'>
+  readonly published_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
+  readonly status: Prisma.FieldRef<"EducationResource", 'EducationStatus'>
+  readonly summary: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly thumbnail: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly type: Prisma.FieldRef<"EducationResource", 'EducationResourceType'>
 }
     
 
@@ -2164,25 +2164,6 @@ export type EducationResourceDeleteManyArgs<ExtArgs extends runtime.Types.Extens
 }
 
 /**
- * EducationResource.user
- */
-export type EducationResource$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * EducationResource.attachments
  */
 export type EducationResource$attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2204,6 +2185,25 @@ export type EducationResource$attachmentsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.EducationAttachmentScalarFieldEnum | Prisma.EducationAttachmentScalarFieldEnum[]
+}
+
+/**
+ * EducationResource.user
+ */
+export type EducationResource$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

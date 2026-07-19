@@ -198,9 +198,9 @@ export type SurveyAnswerWhereInput = {
   answer_option_id?: Prisma.StringNullableFilter<"SurveyAnswer"> | string | null
   created_at?: Prisma.DateTimeFilter<"SurveyAnswer"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"SurveyAnswer"> | Date | string
-  response?: Prisma.XOR<Prisma.SurveyResponseScalarRelationFilter, Prisma.SurveyResponseWhereInput>
-  question?: Prisma.XOR<Prisma.SurveyQuestionScalarRelationFilter, Prisma.SurveyQuestionWhereInput>
   option?: Prisma.XOR<Prisma.QuestionOptionNullableScalarRelationFilter, Prisma.QuestionOptionWhereInput> | null
+  question?: Prisma.XOR<Prisma.SurveyQuestionScalarRelationFilter, Prisma.SurveyQuestionWhereInput>
+  response?: Prisma.XOR<Prisma.SurveyResponseScalarRelationFilter, Prisma.SurveyResponseWhereInput>
   selected_options?: Prisma.SurveyAnswerOptionListRelationFilter
 }
 
@@ -212,9 +212,9 @@ export type SurveyAnswerOrderByWithRelationInput = {
   answer_option_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  response?: Prisma.SurveyResponseOrderByWithRelationInput
-  question?: Prisma.SurveyQuestionOrderByWithRelationInput
   option?: Prisma.QuestionOptionOrderByWithRelationInput
+  question?: Prisma.SurveyQuestionOrderByWithRelationInput
+  response?: Prisma.SurveyResponseOrderByWithRelationInput
   selected_options?: Prisma.SurveyAnswerOptionOrderByRelationAggregateInput
 }
 
@@ -229,9 +229,9 @@ export type SurveyAnswerWhereUniqueInput = Prisma.AtLeast<{
   answer_option_id?: Prisma.StringNullableFilter<"SurveyAnswer"> | string | null
   created_at?: Prisma.DateTimeFilter<"SurveyAnswer"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"SurveyAnswer"> | Date | string
-  response?: Prisma.XOR<Prisma.SurveyResponseScalarRelationFilter, Prisma.SurveyResponseWhereInput>
-  question?: Prisma.XOR<Prisma.SurveyQuestionScalarRelationFilter, Prisma.SurveyQuestionWhereInput>
   option?: Prisma.XOR<Prisma.QuestionOptionNullableScalarRelationFilter, Prisma.QuestionOptionWhereInput> | null
+  question?: Prisma.XOR<Prisma.SurveyQuestionScalarRelationFilter, Prisma.SurveyQuestionWhereInput>
+  response?: Prisma.XOR<Prisma.SurveyResponseScalarRelationFilter, Prisma.SurveyResponseWhereInput>
   selected_options?: Prisma.SurveyAnswerOptionListRelationFilter
 }, "answer_id">
 
@@ -266,9 +266,9 @@ export type SurveyAnswerCreateInput = {
   answer_text?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
-  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
   option?: Prisma.QuestionOptionCreateNestedOneWithoutAnswersInput
+  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
+  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
   selected_options?: Prisma.SurveyAnswerOptionCreateNestedManyWithoutAnswerInput
 }
 
@@ -288,9 +288,9 @@ export type SurveyAnswerUpdateInput = {
   answer_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
-  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
   option?: Prisma.QuestionOptionUpdateOneWithoutAnswersNestedInput
+  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
+  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
   selected_options?: Prisma.SurveyAnswerOptionUpdateManyWithoutAnswerNestedInput
 }
 
@@ -522,8 +522,8 @@ export type SurveyAnswerCreateWithoutQuestionInput = {
   answer_text?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
   option?: Prisma.QuestionOptionCreateNestedOneWithoutAnswersInput
+  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
   selected_options?: Prisma.SurveyAnswerOptionCreateNestedManyWithoutAnswerInput
 }
 
@@ -581,8 +581,8 @@ export type SurveyAnswerCreateWithoutOptionInput = {
   answer_text?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
   question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
+  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
   selected_options?: Prisma.SurveyAnswerOptionCreateNestedManyWithoutAnswerInput
 }
 
@@ -627,8 +627,8 @@ export type SurveyAnswerCreateWithoutResponseInput = {
   answer_text?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
   option?: Prisma.QuestionOptionCreateNestedOneWithoutAnswersInput
+  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
   selected_options?: Prisma.SurveyAnswerOptionCreateNestedManyWithoutAnswerInput
 }
 
@@ -673,9 +673,9 @@ export type SurveyAnswerCreateWithoutSelected_optionsInput = {
   answer_text?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
-  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
   option?: Prisma.QuestionOptionCreateNestedOneWithoutAnswersInput
+  question: Prisma.SurveyQuestionCreateNestedOneWithoutAnswersInput
+  response: Prisma.SurveyResponseCreateNestedOneWithoutAnswersInput
 }
 
 export type SurveyAnswerUncheckedCreateWithoutSelected_optionsInput = {
@@ -709,9 +709,9 @@ export type SurveyAnswerUpdateWithoutSelected_optionsInput = {
   answer_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
-  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
   option?: Prisma.QuestionOptionUpdateOneWithoutAnswersNestedInput
+  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
+  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
 }
 
 export type SurveyAnswerUncheckedUpdateWithoutSelected_optionsInput = {
@@ -738,8 +738,8 @@ export type SurveyAnswerUpdateWithoutQuestionInput = {
   answer_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
   option?: Prisma.QuestionOptionUpdateOneWithoutAnswersNestedInput
+  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
   selected_options?: Prisma.SurveyAnswerOptionUpdateManyWithoutAnswerNestedInput
 }
 
@@ -776,8 +776,8 @@ export type SurveyAnswerUpdateWithoutOptionInput = {
   answer_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
   question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
+  response?: Prisma.SurveyResponseUpdateOneRequiredWithoutAnswersNestedInput
   selected_options?: Prisma.SurveyAnswerOptionUpdateManyWithoutAnswerNestedInput
 }
 
@@ -814,8 +814,8 @@ export type SurveyAnswerUpdateWithoutResponseInput = {
   answer_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
   option?: Prisma.QuestionOptionUpdateOneWithoutAnswersNestedInput
+  question?: Prisma.SurveyQuestionUpdateOneRequiredWithoutAnswersNestedInput
   selected_options?: Prisma.SurveyAnswerOptionUpdateManyWithoutAnswerNestedInput
 }
 
@@ -877,9 +877,9 @@ export type SurveyAnswerSelect<ExtArgs extends runtime.Types.Extensions.Internal
   answer_option_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
   selected_options?: boolean | Prisma.SurveyAnswer$selected_optionsArgs<ExtArgs>
   _count?: boolean | Prisma.SurveyAnswerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["surveyAnswer"]>
@@ -892,9 +892,9 @@ export type SurveyAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   answer_option_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["surveyAnswer"]>
 
 export type SurveyAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -905,9 +905,9 @@ export type SurveyAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   answer_option_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["surveyAnswer"]>
 
 export type SurveyAnswerSelectScalar = {
@@ -922,29 +922,29 @@ export type SurveyAnswerSelectScalar = {
 
 export type SurveyAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"answer_id" | "survey_response_id" | "survey_question_id" | "answer_text" | "answer_option_id" | "created_at" | "updated_at", ExtArgs["result"]["surveyAnswer"]>
 export type SurveyAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
   selected_options?: boolean | Prisma.SurveyAnswer$selected_optionsArgs<ExtArgs>
   _count?: boolean | Prisma.SurveyAnswerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SurveyAnswerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
 }
 export type SurveyAnswerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
   option?: boolean | Prisma.SurveyAnswer$optionArgs<ExtArgs>
+  question?: boolean | Prisma.SurveyQuestionDefaultArgs<ExtArgs>
+  response?: boolean | Prisma.SurveyResponseDefaultArgs<ExtArgs>
 }
 
 export type $SurveyAnswerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SurveyAnswer"
   objects: {
-    response: Prisma.$SurveyResponsePayload<ExtArgs>
-    question: Prisma.$SurveyQuestionPayload<ExtArgs>
     option: Prisma.$QuestionOptionPayload<ExtArgs> | null
+    question: Prisma.$SurveyQuestionPayload<ExtArgs>
+    response: Prisma.$SurveyResponsePayload<ExtArgs>
     selected_options: Prisma.$SurveyAnswerOptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1349,9 +1349,9 @@ readonly fields: SurveyAnswerFieldRefs;
  */
 export interface Prisma__SurveyAnswerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  response<T extends Prisma.SurveyResponseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyResponseDefaultArgs<ExtArgs>>): Prisma.Prisma__SurveyResponseClient<runtime.Types.Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  question<T extends Prisma.SurveyQuestionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyQuestionDefaultArgs<ExtArgs>>): Prisma.Prisma__SurveyQuestionClient<runtime.Types.Result.GetResult<Prisma.$SurveyQuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   option<T extends Prisma.SurveyAnswer$optionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyAnswer$optionArgs<ExtArgs>>): Prisma.Prisma__QuestionOptionClient<runtime.Types.Result.GetResult<Prisma.$QuestionOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  question<T extends Prisma.SurveyQuestionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyQuestionDefaultArgs<ExtArgs>>): Prisma.Prisma__SurveyQuestionClient<runtime.Types.Result.GetResult<Prisma.$SurveyQuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  response<T extends Prisma.SurveyResponseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyResponseDefaultArgs<ExtArgs>>): Prisma.Prisma__SurveyResponseClient<runtime.Types.Result.GetResult<Prisma.$SurveyResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   selected_options<T extends Prisma.SurveyAnswer$selected_optionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SurveyAnswer$selected_optionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SurveyAnswerOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

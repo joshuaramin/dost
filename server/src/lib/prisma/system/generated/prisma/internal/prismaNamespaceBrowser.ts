@@ -292,19 +292,19 @@ export type EducationCategoryScalarFieldEnum = (typeof EducationCategoryScalarFi
 export const EducationResourceScalarFieldEnum = {
   education_resource_id: 'education_resource_id',
   title: 'title',
-  slug: 'slug',
-  summary: 'summary',
   content: 'content',
-  type: 'type',
-  status: 'status',
-  thumbnail: 'thumbnail',
-  is_featured: 'is_featured',
-  published_at: 'published_at',
-  category_id: 'category_id',
-  user_id: 'user_id',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  user_id: 'user_id',
+  slug: 'slug',
+  category_id: 'category_id',
+  is_featured: 'is_featured',
+  published_at: 'published_at',
+  status: 'status',
+  summary: 'summary',
+  thumbnail: 'thumbnail',
+  type: 'type'
 } as const
 
 export type EducationResourceScalarFieldEnum = (typeof EducationResourceScalarFieldEnum)[keyof typeof EducationResourceScalarFieldEnum]
@@ -314,11 +314,11 @@ export const SurveyScalarFieldEnum = {
   survey_id: 'survey_id',
   title: 'title',
   description: 'description',
-  slug: 'slug',
   is_deleted: 'is_deleted',
-  is_published: 'is_published',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  slug: 'slug',
+  is_published: 'is_published'
 } as const
 
 export type SurveyScalarFieldEnum = (typeof SurveyScalarFieldEnum)[keyof typeof SurveyScalarFieldEnum]

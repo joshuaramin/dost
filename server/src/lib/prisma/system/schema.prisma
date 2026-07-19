@@ -7,32 +7,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum EducationResourceType {
-  ARTICLE
-  VIDEO
-  DOCUMENT
-  CATALOGUE
-  INFOGRAPHIC
-  WEBINAR
-  PODCAST
-  EXTERNAL_LINK
-}
-
-enum EducationStatus {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
-}
-
-enum AttachmentType {
-  IMAGE
-  VIDEO
-  PDF
-  DOCUMENT
-  AUDIO
-  OTHER
-}
-
 model User {
   user_id           String              @id @default(cuid())
   email             String              @unique @db.VarChar(255)
@@ -43,8 +17,8 @@ model User {
   organization_id   String?
   ActivityLog       ActivityLog[]
   DeviceSession     DeviceSession[]
-  Notification      Notification[]
   EducationResource EducationResource[]
+  Notification      Notification[]
   OTP               OTP[]
   Profile           Profile?
   organization      Organization?       @relation(fields: [organization_id], references: [organization_id])
@@ -195,107 +169,75 @@ model DeviceSession {
 }
 
 model EducationAttachment {
-  education_attachment_id String @id @default(cuid())
-
-  education_resource_id String
-
-  type AttachmentType
-
-  file_name String @db.VarChar(255)
-
-  file_url String
-
-  mime_type String? @db.VarChar(100)
-
-  file_size Int?
-
-  order_index Int @default(0)
-
-  resource EducationResource @relation(fields: [education_resource_id], references: [education_resource_id], onDelete: Cascade)
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
+  education_attachment_id String            @id @default(cuid())
+  education_resource_id   String
+  type                    AttachmentType
+  file_name               String            @db.VarChar(255)
+  file_url                String
+  mime_type               String?           @db.VarChar(100)
+  file_size               Int?
+  order_index             Int               @default(0)
+  created_at              DateTime          @default(now()) @db.Timestamp(6)
+  resource                EducationResource @relation(fields: [education_resource_id], references: [education_resource_id], onDelete: Cascade)
 
   @@index([education_resource_id])
 }
 
 model EducationTag {
-  education_tag_id String @id @default(cuid())
-
-  name String @unique @db.VarChar(50)
-
-  slug String @unique
-
-  resources EducationResourceTag[]
+  education_tag_id String                 @id @default(cuid())
+  name             String                 @unique @db.VarChar(50)
+  slug             String                 @unique
+  resources        EducationResourceTag[]
 
   @@index([name])
 }
 
 model EducationResourceTag {
   education_resource_id String
-
-  education_tag_id String
-
-  resource EducationResource @relation(fields: [education_resource_id], references: [education_resource_id], onDelete: Cascade)
-
-  tag EducationTag @relation(fields: [education_tag_id], references: [education_tag_id], onDelete: Cascade)
+  education_tag_id      String
+  resource              EducationResource @relation(fields: [education_resource_id], references: [education_resource_id], onDelete: Cascade)
+  tag                   EducationTag      @relation(fields: [education_tag_id], references: [education_tag_id], onDelete: Cascade)
 
   @@id([education_resource_id, education_tag_id])
 }
 
 model EducationCategory {
-  education_category_id String @id @default(cuid())
-
-  name        String  @unique @db.VarChar(100)
-  slug        String  @unique
-  description String? @db.VarChar(300)
-
-  parent_id String?
-
-  parent   EducationCategory?  @relation("EducationCategoryHierarchy", fields: [parent_id], references: [education_category_id])
-  children EducationCategory[] @relation("EducationCategoryHierarchy")
-
-  resources EducationResource[]
-
-  is_deleted Boolean @default(false)
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  education_category_id String              @id @default(cuid())
+  name                  String              @unique @db.VarChar(100)
+  slug                  String              @unique
+  description           String?             @db.VarChar(300)
+  parent_id             String?
+  is_deleted            Boolean             @default(false)
+  created_at            DateTime            @default(now()) @db.Timestamp(6)
+  updated_at            DateTime            @default(now()) @updatedAt @db.Timestamp(6)
+  parent                EducationCategory?  @relation("EducationCategoryHierarchy", fields: [parent_id], references: [education_category_id])
+  children              EducationCategory[] @relation("EducationCategoryHierarchy")
+  resources             EducationResource[]
 
   @@index([parent_id])
   @@index([is_deleted])
 }
 
 model EducationResource {
-  education_resource_id String @id @default(cuid())
-
-  title String @db.VarChar(255)
-  slug  String @unique
-
-  summary String? @db.VarChar(500)
-  content String? @db.Text
-
-  type   EducationResourceType
-  status EducationStatus       @default(DRAFT)
-
-  thumbnail String?
-
-  is_featured Boolean @default(false)
-
-  published_at DateTime?
-
-  category_id String
-  user_id     String?
-
-  category EducationCategory @relation(fields: [category_id], references: [education_category_id])
-  user     User?             @relation(fields: [user_id], references: [user_id])
-
-  attachments EducationAttachment[]
-  tags        EducationResourceTag[]
-
-  is_deleted Boolean @default(false)
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  education_resource_id String                 @id @default(cuid())
+  title                 String                 @db.VarChar(255)
+  content               String?
+  is_deleted            Boolean                @default(false)
+  created_at            DateTime               @default(now()) @db.Timestamp(6)
+  updated_at            DateTime               @default(now()) @updatedAt @db.Timestamp(6)
+  user_id               String?
+  slug                  String                 @unique
+  category_id           String
+  is_featured           Boolean                @default(false)
+  published_at          DateTime?
+  status                EducationStatus        @default(DRAFT)
+  summary               String?                @db.VarChar(500)
+  thumbnail             String?
+  type                  EducationResourceType
+  attachments           EducationAttachment[]
+  category              EducationCategory      @relation(fields: [category_id], references: [education_category_id])
+  user                  User?                  @relation(fields: [user_id], references: [user_id])
+  tags                  EducationResourceTag[]
 
   @@index([title])
   @@index([slug])
@@ -306,104 +248,74 @@ model EducationResource {
   @@index([published_at])
 }
 
-enum SurveyType {
-  SHORT_TEXT
-  LONG_TEXT
-  MULTIPLE_CHOICE
-  CHECKBOX
-}
-
 model Survey {
-  survey_id    String   @id @default(cuid())
-  title        String   @db.VarChar(100)
-  description  String?  @db.VarChar(300)
-  slug         String   @unique
-  is_deleted   Boolean  @default(false)
-  is_published Boolean  @default(false)
-  created_at   DateTime @default(now()) @db.Timestamp(6)
-  updated_at   DateTime @default(now()) @updatedAt @db.Timestamp(6)
-
-  questions SurveyQuestion[]
-  responses SurveyResponse[]
+  survey_id    String           @id @default(cuid())
+  title        String           @db.VarChar(100)
+  description  String?          @db.VarChar(300)
+  is_deleted   Boolean          @default(false)
+  created_at   DateTime         @default(now()) @db.Timestamp(6)
+  updated_at   DateTime         @default(now()) @updatedAt @db.Timestamp(6)
+  slug         String           @unique
+  is_published Boolean          @default(false)
+  questions    SurveyQuestion[]
+  responses    SurveyResponse[]
 }
 
 model SurveyQuestion {
-  survey_question_id String @id @default(cuid())
+  survey_question_id String           @id @default(cuid())
   survey_id          String
-
-  text String     @db.VarChar(300)
-  type SurveyType
-
-  is_required Boolean @default(false)
-  order_index Int     @default(0)
-
-  is_deleted Boolean @default(false)
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
-
-  survey Survey @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
-
-  options QuestionOption[]
-  answers SurveyAnswer[]
+  text               String           @db.VarChar(300)
+  type               SurveyType
+  is_required        Boolean          @default(false)
+  order_index        Int              @default(0)
+  is_deleted         Boolean          @default(false)
+  created_at         DateTime         @default(now()) @db.Timestamp(6)
+  updated_at         DateTime         @default(now()) @updatedAt @db.Timestamp(6)
+  options            QuestionOption[]
+  answers            SurveyAnswer[]
+  survey             Survey           @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
 
   @@index([survey_id])
 }
 
 model QuestionOption {
-  question_option_id String @id @default(cuid())
+  question_option_id String               @id @default(cuid())
   survey_question_id String
-
-  label String @db.VarChar(300)
-  value String @db.VarChar(300)
-
-  order_index Int @default(0)
-
-  is_deleted Boolean @default(false)
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
-
-  question SurveyQuestion @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
-
-  answers          SurveyAnswer[]
-  selected_options SurveyAnswerOption[]
+  label              String               @db.VarChar(300)
+  value              String               @db.VarChar(300)
+  order_index        Int                  @default(0)
+  is_deleted         Boolean              @default(false)
+  created_at         DateTime             @default(now()) @db.Timestamp(6)
+  updated_at         DateTime             @default(now()) @updatedAt @db.Timestamp(6)
+  question           SurveyQuestion       @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
+  answers            SurveyAnswer[]
+  selected_options   SurveyAnswerOption[]
 
   @@index([survey_question_id])
 }
 
 model SurveyResponse {
-  response_id String @id @default(cuid())
+  response_id String         @id @default(cuid())
   survey_id   String
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-
-  survey Survey @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
-
-  answers SurveyAnswer[]
+  created_at  DateTime       @default(now()) @db.Timestamp(6)
+  answers     SurveyAnswer[]
+  survey      Survey         @relation(fields: [survey_id], references: [survey_id], onDelete: Cascade)
 
   @@index([survey_id])
 }
 
 model SurveyAnswer {
-  answer_id String @id @default(cuid())
-
+  answer_id          String               @id @default(cuid())
   survey_response_id String
   survey_question_id String
-
-  answer_text String? @db.Text
-
-  answer_option_id String?
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
-
-  response SurveyResponse @relation(fields: [survey_response_id], references: [response_id], onDelete: Cascade)
-  question SurveyQuestion @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
-
-  option QuestionOption? @relation(fields: [answer_option_id], references: [question_option_id], onDelete: Cascade)
-
-  selected_options SurveyAnswerOption[]
+  answer_text        String?
+  answer_option_id   String?
+  created_at         DateTime             @default(now()) @db.Timestamp(6)
+  updated_at         DateTime             @default(now()) @updatedAt @db.Timestamp(6)
+  option             QuestionOption?      @relation(fields: [answer_option_id], references: [question_option_id], onDelete: Cascade)
+  question           SurveyQuestion       @relation(fields: [survey_question_id], references: [survey_question_id], onDelete: Cascade)
+  response           SurveyResponse       @relation(fields: [survey_response_id], references: [response_id], onDelete: Cascade)
+  selected_options   SurveyAnswerOption[]
 
   @@index([survey_response_id])
   @@index([survey_question_id])
@@ -411,17 +323,13 @@ model SurveyAnswer {
 }
 
 model SurveyAnswerOption {
-  survey_answer_option_id String @id @default(cuid())
-
-  survey_answer_id   String
-  question_option_id String
-
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
-
-  answer SurveyAnswer @relation(fields: [survey_answer_id], references: [answer_id], onDelete: Cascade)
-
-  option QuestionOption @relation(fields: [question_option_id], references: [question_option_id], onDelete: Cascade)
+  survey_answer_option_id String         @id @default(cuid())
+  survey_answer_id        String
+  question_option_id      String
+  created_at              DateTime       @default(now()) @db.Timestamp(6)
+  updated_at              DateTime       @default(now()) @updatedAt @db.Timestamp(6)
+  option                  QuestionOption @relation(fields: [question_option_id], references: [question_option_id], onDelete: Cascade)
+  answer                  SurveyAnswer   @relation(fields: [survey_answer_id], references: [answer_id], onDelete: Cascade)
 
   @@unique([survey_answer_id, question_option_id])
   @@index([survey_answer_id])
@@ -435,4 +343,37 @@ model spatial_ref_sys {
   auth_srid Int?
   srtext    String? @db.VarChar(2048)
   proj4text String? @db.VarChar(2048)
+}
+
+enum EducationResourceType {
+  ARTICLE
+  VIDEO
+  DOCUMENT
+  CATALOGUE
+  INFOGRAPHIC
+  WEBINAR
+  PODCAST
+  EXTERNAL_LINK
+}
+
+enum EducationStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum AttachmentType {
+  IMAGE
+  VIDEO
+  PDF
+  DOCUMENT
+  AUDIO
+  OTHER
+}
+
+enum SurveyType {
+  SHORT_TEXT
+  LONG_TEXT
+  MULTIPLE_CHOICE
+  CHECKBOX
 }
