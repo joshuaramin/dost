@@ -88,6 +88,13 @@ export const GetAllEducationResource = ({
       category: true,
       title: true,
       slug: true,
+      attachments: true,
+      status: true,
+      thumbnail: true,
+      tags: true,
+      type: true,
+      is_deleted: true,
+      category_id: true,
       user: {
         select: {
           email: true,

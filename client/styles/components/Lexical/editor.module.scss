@@ -5,7 +5,7 @@
 @use "@/styles/radius.module" as *;
 
 .container {
-    padding: 0 10px;
+    // padding: 0 10px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -37,7 +37,7 @@
 }
 
 .body {
-    border-radius: radius(sm);
+    // border-radius: radius(sm);
 }
 
 .bodyError {
@@ -48,8 +48,8 @@
     width: 100%;
     padding: 20px;
     border: 1px solid color(neutral, 500);
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
+    // border-bottom-right-radius: 5px;
+    // border-bottom-left-radius: 5px;
     outline: none;
 
     .error {

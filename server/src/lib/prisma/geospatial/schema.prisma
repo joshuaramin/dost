@@ -8,24 +8,108 @@ datasource db {
   schemas  = ["geo"]
 }
 
+enum TreatmentHubStatus {
+  ACTIVE
+  INACTIVE
+  CLOSED
+
+  @@schema("geo")
+}
+
+model treatment_hubs {
+  treatment_hub_id Int @id @default(autoincrement())
+
+  code String? @unique
+
+  name String
+
+  description String? @db.Text
+
+  address String?
+
+  contact_number String?
+
+  email String?
+
+  website String?
+
+  operating_hours String?
+
+  latitude Float?
+
+  longitude Float?
+
+  geom Unsupported("geometry(Point,4326)")?
+
+  region_id Int?
+
+  province_ogc_fid Int?
+
+  municipality_ogc_fid Int?
+
+  barangay_ogc_fid Int?
+
+  status TreatmentHubStatus @default(ACTIVE)
+
+  regions regions? @relation(fields: [region_id], references: [region_id])
+
+  provinces provinces? @relation(fields: [province_ogc_fid], references: [ogc_fid])
+
+  municipalities municipalities? @relation(fields: [municipality_ogc_fid], references: [ogc_fid])
+
+  barangays barangays? @relation(fields: [barangay_ogc_fid], references: [ogc_fid])
+
+  services treatment_hub_services[]
+
+  created_at DateTime @default(now())
+
+  updated_at DateTime @updatedAt
+
+  @@index([geom], type: Gist)
+  @@schema("geo")
+}
+
+model services {
+  service_id Int @id @default(autoincrement())
+
+  name String @unique
+
+  description String?
+
+  hubs treatment_hub_services[]
+
+  @@schema("geo")
+}
+
+model treatment_hub_services {
+  treatment_hub_id               String          @id @default(cuid())
+  treatmentHubs                  treatment_hubs? @relation(fields: [treatment_hubsTreatment_hub_id], references: [treatment_hub_id])
+  treatment_hubsTreatment_hub_id Int?
+  services                       services?       @relation(fields: [servicesService_id], references: [service_id])
+  servicesService_id             Int?
+
+  @@schema("geo")
+}
+
 model municipalities {
-  ogc_fid   Int                      @id @default(autoincrement())
-  geom      Unsupported("geometry")?
-  gid_2     String?                  @unique(map: "municipalities_name_unique") @db.VarChar
-  gid_0     String?                  @db.VarChar
-  country   String?                  @db.VarChar
-  gid_1     String?                  @db.VarChar
-  name_1    String?                  @db.VarChar
-  nl_name_1 String?                  @db.VarChar
-  name_2    String?                  @db.VarChar
-  varname_2 String?                  @db.VarChar
-  nl_name_2 String?                  @db.VarChar
-  type_2    String?                  @db.VarChar
-  engtype_2 String?                  @db.VarChar
-  cc_2      String?                  @db.VarChar
-  hasc_2    String?                  @db.VarChar
-  barangays barangays[]
-  provinces provinces?               @relation(fields: [name_1], references: [name_1], onDelete: Restrict, map: "fk_municipalities_province_name")
+  ogc_fid       Int                      @id @default(autoincrement())
+  geom          Unsupported("geometry")?
+  gid_2         String?                  @unique(map: "municipalities_name_unique") @db.VarChar
+  gid_0         String?                  @db.VarChar
+  country       String?                  @db.VarChar
+  gid_1         String?                  @db.VarChar
+  name_1        String?                  @db.VarChar
+  nl_name_1     String?                  @db.VarChar
+  name_2        String?                  @db.VarChar
+  varname_2     String?                  @db.VarChar
+  nl_name_2     String?                  @db.VarChar
+  type_2        String?                  @db.VarChar
+  engtype_2     String?                  @db.VarChar
+  cc_2          String?                  @db.VarChar
+  hasc_2        String?                  @db.VarChar
+  barangays     barangays[]
+  provinces     provinces?               @relation(fields: [name_1], references: [name_1], onDelete: Restrict, map: "fk_municipalities_province_name")
+  treatmentHubs treatment_hubs[]
 
   @@index([geom], map: "municipalities_geom_geom_idx", type: Gist)
   @@schema("geo")
@@ -47,6 +131,7 @@ model provinces {
   geom              Unsupported("geometry")?
   municipalities    municipalities[]
   regions_provinces regions_provinces[]
+  treatmentHubs     treatment_hubs[]
 
   @@index([geom], map: "provinces_geom_geom_idx", type: Gist)
   @@schema("geo")
@@ -58,6 +143,7 @@ model regions {
   name              String
   geom              Unsupported("geometry")?
   regions_provinces regions_provinces[]
+  treatmentHubs     treatment_hubs[]
 
   @@schema("geo")
 }
@@ -82,6 +168,7 @@ model barangays {
   cc_3           String?                  @db.VarChar
   hasc_3         String?                  @db.VarChar
   municipalities municipalities?          @relation(fields: [gid_2], references: [gid_2], onDelete: Restrict, map: "fk_barangays_municipality")
+  treatmentHubs  treatment_hubs[]
 
   @@index([geom], map: "barangays_geom_geom_idx", type: Gist)
   @@schema("geo")

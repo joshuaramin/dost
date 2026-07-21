@@ -6,7 +6,7 @@ export const AttachmentType = z.enum([
   "PDF",
   "DOCUMENT",
   "AUDIO",
-  "OTHER",
+  "OTHER", 
 ]);
 
 export const EducationResourceType = z.enum([

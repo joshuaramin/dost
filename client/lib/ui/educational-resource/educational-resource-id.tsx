@@ -32,7 +32,7 @@ export default function EducationResourceId({ id }: Props ) {
 
     const { data, isLoading } = useFormQuery<EducationResourceIdInterface>({
         key: ["EducationalResourceId", id],
-        url: `maintenance/educationResource/${id}`
+        url: `maintenance/educational-resource/${id}`
     })
 
 
@@ -47,24 +47,20 @@ export default function EducationResourceId({ id }: Props ) {
             <Title size="md">
                 {resource?.title}
             </Title>
-            <Paragraph>{resource?.excerpt}</Paragraph>
-             {resource?.created_at && (
+            <Paragraph>{resource?.summary}</Paragraph>
+            {resource?.created_at && (
                 <Text size="md">
                     {format(new Date(resource.created_at), "MMMM dd, yyyy")}
                 </Text>
                 )}
             </>
         )}
-           
-            {/* <Text size="sm">{resource.Author.Profile.first_name}</Text> */}
         </div>
-       {isLoading ? <SkeletonBody />  : (
-         <div className={styles.container_body}>
-                {/* <Paragraph> */}
-                    {parser(data?.data.content || "")}
-                {/* </Paragraph> */}
+        {isLoading ? <SkeletonBody />  : (
+        <div className={styles.container_body}>    
+            {parser(data?.data.content || "")}
         </div>
-       )}
+    )}
 
 <div className={styles.container_footer}>
     <Title size="lg">Recommended Resources</Title>   
@@ -76,9 +72,11 @@ export default function EducationResourceId({ id }: Props ) {
         : resource?.related.edges.map((node, index) => (
                     <EducationResourceCard
                         key={index}
-                        excerpt={node.node.excerpt}
+                        summary={node.node.summary}
                         slug={node.node.slug}
-                        category={node.node.category}
+                        // type={node.node.tags}
+                        type={"sads"}
+                        // ={node.node.category}
                         title={node.node.title}
                         route={`/educational-resources/${node.node.slug}`}
                     />

@@ -21,7 +21,7 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement>  {
 }
 
 export default function SelectArray({ 
-    label, full = true, labelShow, name, options, value, className = ""}: Props) {
+    label, full = true, labelShow, name, options, value, className = "", ...props}: Props) {
 
   const [ toggle, setToggle ] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export default function SelectArray({
   ].join(" ")
 
   return (
-    <div className={selectArray}>
+    <div  className={selectArray}>
         {label && labelShow && (
             <div className={styles.header}>
                 <label>{label}</label>

@@ -1,8 +1,11 @@
-import Template from '@/lib/ui/template';
+import EducationResourceID from '@/lib/ui/educational-resource/[id]/education-resource-id';
 import React from 'react'
 
-export default function Page() {
+export default async function Page({ params }: {params: Promise<{id: string}>}) {
+
+  const { id } = await params
+  
   return (
-    <Template title="who sahs" description="testing"></Template>
+        <EducationResourceID id={id} />
   )
 }
