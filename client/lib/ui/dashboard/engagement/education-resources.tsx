@@ -104,6 +104,9 @@ export default function EducationResources() {
       user_id: "",
     }
   })
+
+
+  console.log(errors)
   const mutation = useFormMutation<EducationResourceFormField>({
     key: ["CreateEducationResource"],
     url: "maintenance/educational-resource",

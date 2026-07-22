@@ -8,7 +8,7 @@ import Image from "next/image";
 import styles from "@/styles/lib/ui/education-resoucre/[id]/educational-resource.module.scss";
 import Text from "@/components/Typography/Text/text";
 import { TbCircleArrowLeft, TbCircleArrowRight } from "react-icons/tb";
-
+import parser from 'html-react-parser'
 interface Props {
     id: string;
 }
@@ -92,6 +92,10 @@ export default function EducationResource({ id }: Props) {
                       </button>
                   </div>
                     </>
+                )}
+                {data?.data.type === "ARTICLE" && (
+                    <div>{JSON.stringify(data.data.content)}</div>
+                    // parser(data.data.content)
                 )}
             </div>
         </Template>
