@@ -27,9 +27,9 @@ router.post(
   upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "attachments" }]),
   asyncHandler(createEducationResources),
 );
-router.post("/educational-tag", withAuth, asyncHandler(createEducationTag));
+router.post("/tag", withAuth, asyncHandler(createEducationTag));
 router.post(
-  "/educational-category",
+  "/category",
   withAuth,
   asyncHandler(createEducationCategory),
 );

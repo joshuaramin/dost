@@ -32,6 +32,8 @@ import useFormMutation from '@/lib/hooks/useMutation';
 import { EducationResourceFormField } from '@/lib/types/education-resource.type';
 import EducationResourceCard from '../../educational-resource/education-reosurce-card';
 import SkeletonCard from '../../loading/SkeletonCard';
+import FileUpload from '@/components/FileUpload/fileUpload';
+import { sessionStore } from '@/lib/utils/sessions';
 
 export default function EducationResources() {
 
@@ -41,6 +43,8 @@ export default function EducationResources() {
   const [ search, setSearch ] = useState<string>("");
   const [ page, setPage ] = useState<number>(0)
   const [ category, setCategory ] = useState<string>("");
+  const sessions = sessionStore.get();
+
   const pathname = usePathname();
 
 
@@ -101,12 +105,12 @@ export default function EducationResources() {
       content: "",
       summary: "",
       thumbnail: "",
-      user_id: "",
+      user_id: sessions?.data.user_id,
     }
   })
 
 
-  console.log(errors)
+  console.log("Errors:", errors)
   const mutation = useFormMutation<EducationResourceFormField>({
     key: ["CreateEducationResource"],
     url: "maintenance/educational-resource",
@@ -125,10 +129,17 @@ export default function EducationResources() {
       is_featured: data.is_featured,
       status: data.status,
       tags: data.tags,
-      type: data.type
+      type: data.type,
+      thumbnail: data.thumbnail,
+      external_link: data.external_link,
+      user_id: data.user_id
     }, {
-      onSuccess: () => {},
-      onError: () => {}
+      onSuccess: () => {
+        alert("Successs")
+      },
+      onError: () => {
+        alert("NO SUCCESS")
+      }
     })
   }
 
@@ -155,6 +166,12 @@ export default function EducationResources() {
             label="Title" 
             isRequired={true} 
             error={errors.title}
+          />
+          <FileUpload 
+            control={control}
+            name="thumbnail"
+            // accept="image/"?
+            // multipl
           />
           <Select 
             control={control}
