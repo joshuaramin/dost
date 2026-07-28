@@ -33,6 +33,12 @@
         flex-direction: column;
         gap: 20px;
 
+        .sub_paragraph {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         @include down(sm) {
             padding: 3rem 0;
         }

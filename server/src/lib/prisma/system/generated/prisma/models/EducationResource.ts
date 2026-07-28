@@ -32,6 +32,7 @@ export type EducationResourceMinAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   user_id: string | null
+  external_link: string | null
   slug: string | null
   category_id: string | null
   is_featured: boolean | null
@@ -50,6 +51,7 @@ export type EducationResourceMaxAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   user_id: string | null
+  external_link: string | null
   slug: string | null
   category_id: string | null
   is_featured: boolean | null
@@ -68,6 +70,7 @@ export type EducationResourceCountAggregateOutputType = {
   created_at: number
   updated_at: number
   user_id: number
+  external_link: number
   slug: number
   category_id: number
   is_featured: number
@@ -88,6 +91,7 @@ export type EducationResourceMinAggregateInputType = {
   created_at?: true
   updated_at?: true
   user_id?: true
+  external_link?: true
   slug?: true
   category_id?: true
   is_featured?: true
@@ -106,6 +110,7 @@ export type EducationResourceMaxAggregateInputType = {
   created_at?: true
   updated_at?: true
   user_id?: true
+  external_link?: true
   slug?: true
   category_id?: true
   is_featured?: true
@@ -124,6 +129,7 @@ export type EducationResourceCountAggregateInputType = {
   created_at?: true
   updated_at?: true
   user_id?: true
+  external_link?: true
   slug?: true
   category_id?: true
   is_featured?: true
@@ -215,6 +221,7 @@ export type EducationResourceGroupByOutputType = {
   created_at: Date
   updated_at: Date
   user_id: string | null
+  external_link: string | null
   slug: string
   category_id: string
   is_featured: boolean
@@ -254,6 +261,7 @@ export type EducationResourceWhereInput = {
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   slug?: Prisma.StringFilter<"EducationResource"> | string
   category_id?: Prisma.StringFilter<"EducationResource"> | string
   is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
@@ -276,6 +284,7 @@ export type EducationResourceOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  external_link?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   is_featured?: Prisma.SortOrder
@@ -302,6 +311,7 @@ export type EducationResourceWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   category_id?: Prisma.StringFilter<"EducationResource"> | string
   is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
   published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
@@ -323,6 +333,7 @@ export type EducationResourceOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  external_link?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   is_featured?: Prisma.SortOrder
@@ -347,6 +358,7 @@ export type EducationResourceScalarWhereWithAggregatesInput = {
   created_at?: Prisma.DateTimeWithAggregatesFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"EducationResource"> | Date | string
   user_id?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
+  external_link?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
   slug?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
   category_id?: Prisma.StringWithAggregatesFilter<"EducationResource"> | string
   is_featured?: Prisma.BoolWithAggregatesFilter<"EducationResource"> | boolean
@@ -364,6 +376,7 @@ export type EducationResourceCreateInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -385,6 +398,7 @@ export type EducationResourceUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -404,6 +418,7 @@ export type EducationResourceUpdateInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -425,6 +440,7 @@ export type EducationResourceUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -445,6 +461,7 @@ export type EducationResourceCreateManyInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -462,6 +479,7 @@ export type EducationResourceUpdateManyMutationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -479,6 +497,7 @@ export type EducationResourceUncheckedUpdateManyInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -512,6 +531,7 @@ export type EducationResourceCountOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  external_link?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   is_featured?: Prisma.SortOrder
@@ -530,6 +550,7 @@ export type EducationResourceMaxOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  external_link?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   is_featured?: Prisma.SortOrder
@@ -548,6 +569,7 @@ export type EducationResourceMinOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
+  external_link?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   category_id?: Prisma.SortOrder
   is_featured?: Prisma.SortOrder
@@ -689,6 +711,7 @@ export type EducationResourceCreateWithoutUserInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -708,6 +731,7 @@ export type EducationResourceUncheckedCreateWithoutUserInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -757,6 +781,7 @@ export type EducationResourceScalarWhereInput = {
   created_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"EducationResource"> | Date | string
   user_id?: Prisma.StringNullableFilter<"EducationResource"> | string | null
+  external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   slug?: Prisma.StringFilter<"EducationResource"> | string
   category_id?: Prisma.StringFilter<"EducationResource"> | string
   is_featured?: Prisma.BoolFilter<"EducationResource"> | boolean
@@ -774,6 +799,7 @@ export type EducationResourceCreateWithoutAttachmentsInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -794,6 +820,7 @@ export type EducationResourceUncheckedCreateWithoutAttachmentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -828,6 +855,7 @@ export type EducationResourceUpdateWithoutAttachmentsInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -848,6 +876,7 @@ export type EducationResourceUncheckedUpdateWithoutAttachmentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -866,6 +895,7 @@ export type EducationResourceCreateWithoutTagsInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -886,6 +916,7 @@ export type EducationResourceUncheckedCreateWithoutTagsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -920,6 +951,7 @@ export type EducationResourceUpdateWithoutTagsInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -940,6 +972,7 @@ export type EducationResourceUncheckedUpdateWithoutTagsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -958,6 +991,7 @@ export type EducationResourceCreateWithoutCategoryInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -978,6 +1012,7 @@ export type EducationResourceUncheckedCreateWithoutCategoryInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -1022,6 +1057,7 @@ export type EducationResourceCreateManyUserInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  external_link?: string | null
   slug: string
   category_id: string
   is_featured?: boolean
@@ -1039,6 +1075,7 @@ export type EducationResourceUpdateWithoutUserInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1058,6 +1095,7 @@ export type EducationResourceUncheckedUpdateWithoutUserInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1077,6 +1115,7 @@ export type EducationResourceUncheckedUpdateManyWithoutUserInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   category_id?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1095,6 +1134,7 @@ export type EducationResourceCreateManyCategoryInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id?: string | null
+  external_link?: string | null
   slug: string
   is_featured?: boolean
   published_at?: Date | string | null
@@ -1111,6 +1151,7 @@ export type EducationResourceUpdateWithoutCategoryInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1131,6 +1172,7 @@ export type EducationResourceUncheckedUpdateWithoutCategoryInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1150,6 +1192,7 @@ export type EducationResourceUncheckedUpdateManyWithoutCategoryInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   is_featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1207,6 +1250,7 @@ export type EducationResourceSelect<ExtArgs extends runtime.Types.Extensions.Int
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
+  external_link?: boolean
   slug?: boolean
   category_id?: boolean
   is_featured?: boolean
@@ -1230,6 +1274,7 @@ export type EducationResourceSelectCreateManyAndReturn<ExtArgs extends runtime.T
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
+  external_link?: boolean
   slug?: boolean
   category_id?: boolean
   is_featured?: boolean
@@ -1250,6 +1295,7 @@ export type EducationResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
+  external_link?: boolean
   slug?: boolean
   category_id?: boolean
   is_featured?: boolean
@@ -1270,6 +1316,7 @@ export type EducationResourceSelectScalar = {
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
+  external_link?: boolean
   slug?: boolean
   category_id?: boolean
   is_featured?: boolean
@@ -1280,7 +1327,7 @@ export type EducationResourceSelectScalar = {
   type?: boolean
 }
 
-export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "content" | "is_deleted" | "created_at" | "updated_at" | "user_id" | "slug" | "category_id" | "is_featured" | "published_at" | "status" | "summary" | "thumbnail" | "type", ExtArgs["result"]["educationResource"]>
+export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "content" | "is_deleted" | "created_at" | "updated_at" | "user_id" | "external_link" | "slug" | "category_id" | "is_featured" | "published_at" | "status" | "summary" | "thumbnail" | "type", ExtArgs["result"]["educationResource"]>
 export type EducationResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
@@ -1313,6 +1360,7 @@ export type $EducationResourcePayload<ExtArgs extends runtime.Types.Extensions.I
     created_at: Date
     updated_at: Date
     user_id: string | null
+    external_link: string | null
     slug: string
     category_id: string
     is_featured: boolean
@@ -1755,6 +1803,7 @@ export interface EducationResourceFieldRefs {
   readonly created_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
   readonly user_id: Prisma.FieldRef<"EducationResource", 'String'>
+  readonly external_link: Prisma.FieldRef<"EducationResource", 'String'>
   readonly slug: Prisma.FieldRef<"EducationResource", 'String'>
   readonly category_id: Prisma.FieldRef<"EducationResource", 'String'>
   readonly is_featured: Prisma.FieldRef<"EducationResource", 'Boolean'>

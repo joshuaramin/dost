@@ -95,6 +95,7 @@ export const GetAllEducationResource = ({
       type: true,
       is_deleted: true,
       category_id: true,
+      external_link: true,
       user: {
         select: {
           email: true,
@@ -121,6 +122,7 @@ export const GetEducationByid = (data: string) => {
         status: true,
         tags: true,
         thumbnail: true,
+        external_link: true,
         type: true,
         category: {
           select: {
@@ -202,9 +204,12 @@ export const CreateEducationResource = (
     attachments: data.attachments,
     status: data.status,
     is_featured: data.is_featured,
+    is_deleted: data.is_deleted,
     published_at: data.published_at,
     tags: data.tags,
     thumbnail: data.thumbnail,
+    external_link: data.external_link,
+    user: data.user,
   });
 };
 

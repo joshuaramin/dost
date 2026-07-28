@@ -61,6 +61,7 @@ export interface EducationalResourceInterface {
   summary: string;
   thumbnail: string;
   is_featured: string;
+  external_link: string;
   slug: string;
   content: string;
   created_at: any;

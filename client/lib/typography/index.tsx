@@ -4,7 +4,7 @@ import { Alegreya, DM_Sans, EB_Garamond, Inter, Merriweather, Playfair_Display, 
 export const PrimaryFont = Roboto({
     display: "auto",
     subsets: ["latin"],
-    weight: ["700"]
+    weight: ["500", "700", "900"]
 })
 
 export const SecondaryFont = Inter({

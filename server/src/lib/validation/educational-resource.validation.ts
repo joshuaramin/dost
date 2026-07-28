@@ -1,12 +1,12 @@
+import { booleanField } from "@/utils/booleanParser";
 import { z } from "zod";
-
 export const AttachmentType = z.enum([
   "IMAGE",
   "VIDEO",
   "PDF",
   "DOCUMENT",
   "AUDIO",
-  "OTHER", 
+  "OTHER",
 ]);
 
 export const EducationResourceType = z.enum([
@@ -64,18 +64,20 @@ export const EducationResourceSchema = z.object({
 
   summary: z
     .string()
-    .max(500, "Summary must not exceed 500 characters")
-    .optional(),
+    .min(1, "Summary is required")
+    .max(500, "Summary must not exceed 500 characters"),
 
   content: z.string().optional(),
+
+  external_link: z.string().url("Invalid URL").optional(),
 
   type: EducationResourceType,
 
   status: EducationStatus.default("DRAFT"),
 
-  thumbnail: z.string().url().optional(),
+  thumbnail: z.file().optional(),
 
-  is_featured: z.boolean().default(false),
+  is_featured: booleanField.default(false),
 
   category_id: z.string().min(1, "Category is required"),
 
@@ -85,12 +87,50 @@ export const EducationResourceSchema = z.object({
 
   tags: z.array(EducationResourceTagSchema).default([]),
 
-  attachments: z.array(EducationAttachmentSchema).default([]),
+  attachments: z.array(z.file()).default([]),
 
-  is_deleted: z.boolean().default(false),
+  is_deleted: booleanField.default(false),
 });
 
-export const CreateEducationResourceSchema = EducationResourceSchema;
+export const CreateEducationResourceSchema =
+  EducationResourceSchema.superRefine((data, ctx) => {
+    switch (data.type) {
+      case "ARTICLE":
+        if (!data.content?.trim()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["content"],
+            message: "Content is required for an article.",
+          });
+        }
+        break;
+
+      case "EXTERNAL_LINK":
+        if (!data.external_link?.trim()) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["external_link"],
+            message: "External link is required.",
+          });
+        }
+        break;
+
+      case "VIDEO":
+      case "DOCUMENT":
+      case "CATALOGUE":
+      case "INFOGRAPHIC":
+      case "WEBINAR":
+      case "PODCAST":
+        if (data.attachments.length === 0) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            path: ["attachments"],
+            message: "Please upload at least one attachment.",
+          });
+        }
+        break;
+    }
+  });
 
 export const UpdateEducationResourceSchema = EducationResourceSchema.partial();
 

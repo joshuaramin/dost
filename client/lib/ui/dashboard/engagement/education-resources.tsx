@@ -1,7 +1,7 @@
 "use client"
 
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/enagagement/educational-resources.module.scss'
 import { usePathname } from 'next/navigation';
 import { SubmitHandler, useWatch } from 'react-hook-form';
@@ -10,30 +10,28 @@ import { SubmitHandler, useWatch } from 'react-hook-form';
 //components
 import { Select } from '@/components/Select/select';
 import ReactEditor from '@/components/Lexical/editor';
-import Text from '@/components/Typography/Text/text';
-import Title from '@/components/Typography/Title/title';
 import Search from '@/components/Search/search';
 import Input from '@/components/Input/input';
 import Grid from '@/components/Grid/grid';
 import Pagination from '@/components/Pagination/pagination';
 import Textarea from '@/components/Textarea/textarea';
 import SelectArray from '@/components/Select/select-array';
+import FileUpload from '@/components/FileUpload/fileUpload';
 
 
 //lib and hooks
 import useFormHook from '@/lib/hooks/useFormHook';
 import Template from '@/lib/ui/template';
-import {  CreateEducationResourceSchema, EducationResourceType } from '@/lib/validations/education.validation';
 import useFormQuery from '@/lib/hooks/useQuery';
-import { EducationalResourceResult, EducationCategoryResult } from '@/lib/interface/education-resource/educational-resources.interface';
 import NoData from '../../no-data';
 import headers from '@/lib/utils/headers'
 import useFormMutation from '@/lib/hooks/useMutation';
-import { EducationResourceFormField } from '@/lib/types/education-resource.type';
 import EducationResourceCard from '../../educational-resource/education-reosurce-card';
 import SkeletonCard from '../../loading/SkeletonCard';
-import FileUpload from '@/components/FileUpload/fileUpload';
+import { EducationResourceFormField } from '@/lib/types/education-resource.type';
 import { sessionStore } from '@/lib/utils/sessions';
+import { EducationalResourceResult, EducationCategoryResult } from '@/lib/interface/education-resource/educational-resources.interface';
+import {  CreateEducationResourceSchema, EducationResourceType } from '@/lib/validations/education.validation';
 
 export default function EducationResources() {
 
@@ -74,7 +72,7 @@ export default function EducationResources() {
   }
 
 
-    const { data, isLoading, error } = useFormQuery<EducationalResourceResult>({
+    const { data, isLoading } = useFormQuery<EducationalResourceResult>({
       key: ["EducationResource", search, page],
       url: "maintenance/educational-resource",
       params: {
@@ -104,7 +102,7 @@ export default function EducationResources() {
       type: "ARTICLE",
       content: "",
       summary: "",
-      thumbnail: "",
+      thumbnail: "" as unknown as File,
       user_id: sessions?.data.user_id,
     }
   })
@@ -115,7 +113,8 @@ export default function EducationResources() {
     key: ["CreateEducationResource"],
     url: "maintenance/educational-resource",
     method: "POST",
-    headers
+    headers,
+    isMultipart: true
   })
 
   const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
@@ -124,21 +123,23 @@ export default function EducationResources() {
       category_id: data.category_id,
       content: data.content,
       summary: data.summary,
+      is_deleted: Boolean(false),
+      is_featured: Boolean(false),
       attachments: data.attachments,
-      is_deleted: data.is_deleted,
-      is_featured: data.is_featured,
       status: data.status,
       tags: data.tags,
       type: data.type,
       thumbnail: data.thumbnail,
       external_link: data.external_link,
       user_id: data.user_id
-    }, {
+    }, 
+    {
       onSuccess: () => {
         alert("Successs")
       },
-      onError: () => {
+      onError: (data) => {
         alert("NO SUCCESS")
+        console.log(data)
       }
     })
   }
@@ -168,10 +169,17 @@ export default function EducationResources() {
             error={errors.title}
           />
           <FileUpload 
-            control={control}
+            register={register}
             name="thumbnail"
-            // accept="image/"?
-            // multipl
+            isRequired={true}
+            // accepted={{}}
+            accepted={{
+              "image": ["jpeg", "jpg", "webp", "png"]
+            }}
+            error={errors.thumbnail}
+            label="Thumbnail"
+            setValue={setValue}
+            multiple={false}
           />
           <Select 
             control={control}
@@ -206,7 +214,7 @@ export default function EducationResources() {
               errors={errors.summary} 
               style={{ height: "100px"}}
           />
-          {type === "ARTICLE" ?  (
+          {type === "ARTICLE"  && (
               <ReactEditor
                   error={errors.content}
                   height={200}
@@ -215,7 +223,23 @@ export default function EducationResources() {
                   name="content"
                   setValue={setValue}
               />
-          ): null}
+          )}
+
+
+          {type === "CATALOGUE" && (
+            <FileUpload 
+              label="File Upload"
+              name="attachments"
+              register={register}
+              setValue={setValue}
+              accepted={{
+                "image": ["jpeg", "jpg", "webp", "png"]
+              }}
+              error={Array.isArray(errors.attachments) ? errors.attachments[0] : errors.attachments}
+              isRequired={true}
+              multiple={true}
+            />
+          )}
 
           {type === "EXTERNAL_LINK" && (
               <Input
@@ -259,14 +283,19 @@ export default function EducationResources() {
           <Grid max={"1fr"} min={400}>
             {isLoading ? Array.from({ length: 6}).map((node, index) => (
               <SkeletonCard  key={index} /> 
-            )) :data?.data.edges.map(({ node: { category,  summary, type, title, slug, }}, index) => (
-                <EducationResourceCard
+            )) :data?.data.edges.map(({ node: { external_link, thumbnail, summary, type, title, slug, }}, index) => (
+              <EducationResourceCard
                   key={index}
-                  summary={summary} 
-                  title={title} 
-                  slug={slug} 
+                  summary={summary}
+                  thumbnail={thumbnail}
+                  slug={slug}
                   type={type}
-                  route={`/dashboard/engagement/educational-resources/${slug}`}
+                  title={title}
+                  route={
+                    type === "EXTERNAL_LINK"
+                      ? external_link
+                      : `//dashboard/engagement/educational-resources/${slug}`
+                  }
                 />
             ))}
           </Grid>

@@ -21,6 +21,8 @@ import {
     UseFormHandleSubmit
 } from 'react-hook-form';
 import Title from '@/components/Typography/Title/title';
+import { TbCirclePlus, TbDownload } from 'react-icons/tb';
+import { remove } from 'next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol';
 
 type Modal<T extends FieldValues = FieldValues> = {
     modalTitle?: string
@@ -53,6 +55,21 @@ export default function Template<T extends FieldValues = FieldValues>({
         handleSubmit,
         onHandleSubmit
     } = modal;
+
+
+    const [ width, setWidth ] = useState(0);
+
+
+    useEffect(() => {
+        const handleSize = () =>  {
+            setWidth(window.innerWidth)
+        }
+
+        window.addEventListener("resize", handleSize)
+
+        return () => window.removeEventListener("resize", handleSize)
+    }, [])
+
 
     const [mounted, setMounted] = useState<boolean>(false);
 
@@ -118,19 +135,19 @@ export default function Template<T extends FieldValues = FieldValues>({
                     <div className={styles.header_col2}>
                         <Button
                             onClick={onHandleCloseToggle}
-                            size="md"
+                            size={width <= 1990 ? "sm" : "md"}
                             variant="primary"
                             type="button"
                         >
-                            <Text size="sm">Add New</Text>
+                            {width <= 1190  ? <TbCirclePlus size={23} /> : <Text size="sm">Add New</Text> }
                         </Button>
                     </div>
                 )}
 
                 {mounted && canExport && (
                     <div className={styles.header_col3}>
-                        <Button size="md" variant="secondary" type="button">
-                            <Text size="sm">Export</Text>
+                        <Button size={width <= 1990 ? "sm" : "md"} variant="secondary" type="button">
+                            {width <= 1190 ? <TbDownload size={23} /> : <Text size="sm">Export</Text>}
                         </Button>
                     </div>
                 )}

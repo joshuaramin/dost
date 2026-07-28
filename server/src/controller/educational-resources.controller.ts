@@ -192,6 +192,7 @@ export const createEducationResources = async (
     const attachments = files.attachments ?? [];
 
     console.log("Attachments: ", attachments);
+    console.log("Thumbnails: ", thumbnail);
 
     const result = await CreateEducationResource({
       title: parseData.data.title,
@@ -199,8 +200,10 @@ export const createEducationResources = async (
       slug: useSlugify(parseData.data.title),
       content: parseData.data.content,
       status: parseData.data.status,
-      is_featured: parseData.data.is_featured,
       type: parseData.data.type,
+      is_deleted: parseData.data.is_deleted,
+      external_link: parseData.data.external_link,
+      is_featured: parseData.data.is_deleted,
       ...(thumbnail && {
         thumbnail: `${process.env.CDN_URL}/${thumbnail.key}`,
       }),

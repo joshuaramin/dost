@@ -1,8 +1,9 @@
 "use client" 
 
-import React from 'react'
+import React, { useState } from 'react'
 import styles from "@/styles/lib/ui/education-resoucre/educational-resources-card.module.scss";
 import { useRouter } from 'next/navigation';
+import Image from 'next/image'
 
 
 //components
@@ -10,6 +11,9 @@ import { useRouter } from 'next/navigation';
 import Text from '@/components/Typography/Text/text';
 import Title from '@/components/Typography/Title/title';
 import Paragraph from '@/components/Typography/Paragraph/paragraph';
+import { hasAnyPermission, hasPermission } from '@/lib/utils/hasAnyPermission';
+import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
+import ModalForm from '@/components/Modal/modal-form';
 
 
 //libs & hooks
@@ -21,23 +25,80 @@ interface Props {
     summary: string
     route: string
     type: string
+    thumbnail: string
 }
 
 
-export default function EducationResourceCard({  slug, type, title, summary, route}: Props) {
+export default function EducationResourceCard({  thumbnail,  slug, type, title, summary, route}: Props) {
 
   const router = useRouter();
 
+  const [ toggle, setToggle ] = useState<boolean>(false);
+  const [ deleteToggle, setDeleteToggle ] = useState<boolean>(false);
+
+  const canDelete = hasAnyPermission([
+    "educational-resources:delete",
+    "educational-resources:update",
+  ], "/dashboard/engagement/educational-resources" )
+
+
+  const onHandleToggle = () => {{
+    setToggle((prev) => !prev)
+  }}
+
+  const onHandleDeleteToggle = () => {
+    setDeleteToggle((prev) => !prev)
+  }
+
 
   return (
-     <div className={styles.education_card}>
-            <div className={styles.header}></div>
+    <div className={styles.education_card}>
+          <div className={styles.header}>
+            {canDelete && (
+              <div className={styles.footer}>
+                <button className={styles.option_button} onClick={onHandleToggle}>
+                    <TbDots size={23} />
+                </button>
+                {toggle && (
+                  <div className={styles.toggleContainer}>
+                    <button onClick={() => router.push(`/dashboard/educational-resources/edit/${slug}`)}>
+                        <TbPencil size={23} />
+                        <Text size="sm">Edit</Text>
+                      </button>
+                      <button onClick={onHandleDeleteToggle}>
+                        <TbTrash size={23} />
+                        <Text size="sm">Delete</Text>
+                      </button>
+                  </div>
+                )}
+                {deleteToggle && (
+                  <ModalForm
+                    title="Are you sure do you want to delete this?"
+                    onHandleCloseToggle={onHandleDeleteToggle}
+                  >
+                    {/* {link} */}
+                    asds
+                  </ModalForm>
+                )}
+              </div>
+            )}
+
+              <Image style={{
+                zIndex: 1
+              }}src={thumbnail} alt={title} objectFit="contain" layout="fill" />
+            </div>
             <div className={styles.body}>
               <div className={styles.tags}>
-                <Text size="sm">{type}</Text>
+                <Text size="sm">{type.replaceAll("_", " ")}</Text>
               </div>
               <div className={styles.sub_body}>
-                <Title onClick={() => router.push(route)} size="md">{title}</Title>
+                <Title onClick={() => {
+                  // if(type === "EXTERNAL_LINK") {
+                  //   router.push(`${link}`)
+                  // }
+
+                  router.push(route)
+                }} size="md">{title.length <= 60 ? title : title.slice(0, 60)}</Title>
                 <Paragraph >{summary}</Paragraph>
               </div>
             </div>

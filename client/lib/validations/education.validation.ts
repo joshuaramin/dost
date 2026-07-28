@@ -74,7 +74,7 @@ export const EducationResourceSchema = z.object({
 
   status: EducationStatus.default("DRAFT"),
 
-  thumbnail: z.string().url().optional(),
+  thumbnail: z.file().optional(),
 
   is_featured: z.boolean().default(false),
 
@@ -86,7 +86,7 @@ export const EducationResourceSchema = z.object({
 
   tags: z.array(EducationResourceTagSchema).default([]),
 
-  attachments: z.array(EducationAttachmentSchema).default([]),
+  attachments: z.array(z.file()).default([]),
 
   is_deleted: z.boolean().default(false),
 });

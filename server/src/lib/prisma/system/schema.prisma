@@ -226,6 +226,7 @@ model EducationResource {
   created_at            DateTime               @default(now()) @db.Timestamp(6)
   updated_at            DateTime               @default(now()) @updatedAt @db.Timestamp(6)
   user_id               String?
+  external_link         String?
   slug                  String                 @unique
   category_id           String
   is_featured           Boolean                @default(false)

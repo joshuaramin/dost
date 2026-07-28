@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-
-import React from 'react'
 import styles from '@/styles/lib/ui/education-resoucre/educational-resource.module.scss'
-import parser from 'html-react-parser'
 import { format} from 'date-fns'
-
 
 //components
 import Title from '@/components/Typography/Title/title';
@@ -21,6 +17,8 @@ import Grid from '@/components/Grid/grid';
 import SkeletonCard from '../loading/SkeletonCard';
 import SkeletonTitle from '../loading/SkeletonTitle';
 import SkeletonBody from '../loading/SkeletonBody';
+import EducationCatalogue from './[id]/education-resource-catalogue/EducationCatalogue';
+import EducationArticle from './[id]/education-resource-article/EducationArticle';
 
 
 interface Props {
@@ -48,19 +46,28 @@ export default function EducationResourceId({ id }: Props ) {
                 {resource?.title}
             </Title>
             <Paragraph>{resource?.summary}</Paragraph>
-            {resource?.created_at && (
+            <div className={styles.sub_paragraph}>
+                {resource?.Author ?  <Text size="md">{resource?.Author.Profile.first_name || ""}</Text> : <Text size="md">Unknown Author</Text>}
+                {resource?.created_at && (
                 <Text size="md">
                     {format(new Date(resource.created_at), "MMMM dd, yyyy")}
                 </Text>
                 )}
+            </div>
             </>
         )}
         </div>
-        {isLoading ? <SkeletonBody />  : (
-        <div className={styles.container_body}>    
-            {parser(data?.data.content || "")}
-        </div>
-    )}
+        {isLoading ? <SkeletonBody />  : 
+            <>
+            {  data?.data.type === "CATALOGUE" && (
+                <EducationCatalogue data={data}/>
+            )
+            }
+            {data?.data.type === "ARTICLE" && (
+                <EducationArticle contents={data.data.content} />
+            )}
+            </>
+        }
 
 <div className={styles.container_footer}>
     <Title size="lg">Recommended Resources</Title>   
@@ -71,14 +78,13 @@ export default function EducationResourceId({ id }: Props ) {
             )) 
         : resource?.related.edges.map((node, index) => (
                     <EducationResourceCard
+                        thumbnail={node.node.thumbnail}
                         key={index}
                         summary={node.node.summary}
                         slug={node.node.slug}
-                        // type={node.node.tags}
-                        type={"sads"}
-                        // ={node.node.category}
+                        type={node.node.type}
                         title={node.node.title}
-                        route={`/educational-resources/${node.node.slug}`}
+                        route={node.node.type === "EXTERNAL_LINK" ? node.node.external_link :`/educational-resources/${node.node.slug}`}
                     />
                 ))}
             </Grid>

@@ -106,14 +106,19 @@ export default function Home() {
         <Grid gap={20} max={"1fr"} min={400}>
         {EducationLoading  ? Array.from({ length: 6}).map((node, index) => (
           <SkeletonCard  key={index} /> 
-        )) : EducationalResourceData?.data.edges.map(({ node: { category, slug,type, summary, title}}, index) => (
-            <EducationResourceCard
-              key={index} 
-              summary={summary} 
-              slug={slug} 
-              type={type}
-              title={title} 
-              route={`/educational-resources/${slug}`}
+        )) : EducationalResourceData?.data.edges.map(({ node: { external_link, thumbnail, slug,type, summary, title}}, index) => (
+          <EducationResourceCard
+                key={index}
+                summary={summary}
+                thumbnail={thumbnail}
+                slug={slug}
+                type={type}
+                title={title}
+                route={
+                  type === "EXTERNAL_LINK"
+                    ? external_link
+                    : `/educational-resources/${slug}`
+                }
               />
           ))}
         </Grid>

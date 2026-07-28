@@ -19,9 +19,8 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@/*": [ "src/*" ]
+      "@/*": [ "./src/*" ]
     },
-    "baseUrl": ".",
     "ignoreDeprecations": "6.0"
   },
   "include": [ "src", "src/lib/prisma/system/prisma.config.ts" ]

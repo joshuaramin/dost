@@ -1,98 +1,199 @@
 "use client"
 
-import React, { useRef, useState } from "react"
+import React, { useCallback, useState } from "react"
+import styles from "@/styles/components/Fileupload/file-upload.module.scss"
+import { PrimaryFont, SecondaryFont } from "@/lib/typography"
 import {
-  Controller,
-  Control,
-  FieldValues,
-  Path
+    TbFileUpload,
+    TbImageInPicture,
+    TbPdf,
+    TbCsv,
+    TbFile,
+    TbPictureInPicture,
+    TbTrash
+} from "react-icons/tb"
+import {
+    FieldError,
+    FieldValues,
+    Path,
+    UseFormRegister,
+    UseFormSetValue
 } from "react-hook-form"
+import { useDropzone, FileRejection } from "react-dropzone"
+import toast from "react-hot-toast"
+import cn from "@/lib/utils/cn"
 
-type FileUploadProps<T extends FieldValues> = {
-  name: Path<T>
-  control: Control<T>
-  multiple?: boolean
-  accept?: string
+type AcceptedFile = {
+    [key: string]: string[]
+}
+
+type UploadedFile = {
+    name: string
+    type: string
+    file: File
+}
+
+interface Props<T extends FieldValues> {
+    label: string
+    name: Path<T>
+    isRequired?: boolean
+    error?: FieldError | undefined
+    accepted?: AcceptedFile
+    multiple?: boolean
+    register: UseFormRegister<T>
+    setValue: UseFormSetValue<T>
+    value?: File | File[] | null
 }
 
 export default function FileUpload<T extends FieldValues>({
-  name,
-  control,
-  multiple = false,
-  accept
-}: FileUploadProps<T>) {
-  const inputRef = useRef<HTMLInputElement | null>(null)
-  const [dragActive, setDragActive] = useState(false)
+    label,
+    name,
+    isRequired = false,
+    accepted,
+    register,
+    setValue,
+    multiple = false,
+    error
+}: Props<T>) {
+    const [files, setFiles] = useState<UploadedFile[]>([])
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue={multiple ? ([] as File[]) : (null as unknown as File | null)}
-      render={({ field }) => {
-        const value = field.value as File | File[] | null
 
-        const files: File[] = Array.isArray(value)
-          ? value
-          : value
-            ? [value]
-            : []
+    const onDrop = useCallback(
+        (acceptedFiles: File[]) => {
+            if (multiple) {
+                const uploaded = acceptedFiles.map((file) => ({
+                    file,
+                    name: file.name,
+                    type: file.type
+                }))
 
-        const handleFiles = (fileList: FileList | null) => {
-          if (!fileList) return
+                setFiles((prev) => [...prev, ...uploaded])
 
-          const incoming = Array.from(fileList)
+                setValue(name, [...files.map((x) => x.file), ...acceptedFiles] as never, {
+                    shouldValidate: true
+                })
+            } else {
+                if (!acceptedFiles.length) return
 
-          if (multiple) {
-            const current = Array.isArray(field.value) ? field.value : []
-            field.onChange([...current, ...incoming])
-          } else {
-            field.onChange(incoming[0] ?? null)
-          }
+                const file = acceptedFiles[0]
+                
+                console.log(file)
+                setFiles([
+                    {
+                        file,
+                        name: file.name,
+                        type: file.type
+                    }
+                ])
+
+                setValue(name, file as never, {
+                    shouldValidate: true
+                })
+            }
+        },
+        [files, multiple, name, setValue]
+    )
+
+    const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
+        fileRejections.forEach((rejection) => {
+            rejection.errors.forEach((err) => {
+                toast.error(err.message)
+            })
+        })
+    }, [])
+
+    const removeFile = (index: number) => {
+        const updated = files.filter((_, i) => i !== index)
+
+        setFiles(updated)
+
+        if (multiple) {
+            setValue(
+                name,
+                updated.map((x) => x.file) as never,
+                {
+                    shouldValidate: true
+                }
+            )
+        } else {
+            setValue(name, null as never, {
+                shouldValidate: true
+            })
         }
+    }
 
-        return (
-          <div
-            onClick={() => inputRef.current?.click()}
-            onDragOver={(e) => {
-              e.preventDefault()
-              setDragActive(true)
-            }}
-            onDragLeave={() => setDragActive(false)}
-            onDrop={(e) => {
-              e.preventDefault()
-              setDragActive(false)
-              handleFiles(e.dataTransfer.files)
-            }}
-            style={{
-              border: dragActive ? "2px solid #2563eb" : "2px dashed #999",
-              padding: 20,
-              borderRadius: 8,
-              cursor: "pointer",
-              transition: "0.2s ease"
-            }}
-          >
-            <input
-              ref={inputRef}
-              type="file"
-              multiple={multiple}
-              accept={accept}
-              style={{ display: "none" }}
-              onChange={(e) => handleFiles(e.target.files)}
-            />
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        onDropRejected,
+        multiple,
+        accept: accepted,
+        useFsAccessApi: false
+    })
 
-            {files.length === 0 ? (
-              <div>Drop files here or click to upload</div>
-            ) : (
-              <ul style={{ margin: 0, paddingLeft: 16 }}>
-                {files.map((file, i) => (
-                  <li key={i}>{file.name}</li>
-                ))}
-              </ul>
-            )}
-          </div>
+    const getIcon = (type: string, size= 23) => {
+        if (type.startsWith("image")) return <TbPictureInPicture size={size} />
+        if (type === "application/pdf") return <TbPdf  size={size}/>
+        if (
+            type.includes("csv") ||
+            type.includes("excel") ||
+            type.includes("spreadsheet")
         )
-      }}
-    />
-  )
+            return <TbCsv  size={size}/>
+
+        return <TbFile  size={size}/>
+    }
+
+    return (
+        <div className={styles.container}>
+            <div className={styles.header}>
+                <label className={PrimaryFont.className[500]}>
+                    {label}
+                </label>
+
+                {isRequired && (
+                    <span className={styles.isRequired}>*</span>
+                )}
+            </div>
+
+            <div
+                className={error ? cn(styles.body, styles.error) : styles.body}
+                {...getRootProps()}
+            >
+                <input
+                    {...register(name)}
+                    {...getInputProps()}
+                />
+
+                <TbFileUpload size={28} />
+
+                {isDragActive ? (
+                    "Drop files here"
+                ) : (
+                    <span className={SecondaryFont.className}>
+                        Drag & Drop or Click to Upload
+                    </span>
+                )}
+            </div>
+
+            {files.map((file, index) => (
+                <div
+                    key={`${file.name}-${index}`}
+                    className={styles.fileCard}
+                >
+                    <div className={styles.col1}>
+                        {getIcon(file.type)}
+                        <span>{file.name}</span>
+                    </div>
+
+                    <button
+                        type="button"
+                        className={styles.close}
+                        onClick={() => removeFile(index)}
+                    >
+                        <TbTrash size={22}/>
+                    </button>
+                </div>
+            ))}
+        </div>
+    )
 }
