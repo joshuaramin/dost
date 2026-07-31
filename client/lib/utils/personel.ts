@@ -6,7 +6,7 @@ type PersonalOrganics = {
 type PerosonalInfo = {
   name: string;
   position: string;
-  url?: string;
+  url: string | undefined;
 };
 
 export const Personnel: PersonalOrganics[] = [
@@ -14,45 +14,44 @@ export const Personnel: PersonalOrganics[] = [
     name: "Organics Personel",
     info: [
       {
-        name: "Dr. Mideth B. Abisado",
+        name: "Dr. Mideth B. Abisado, PhD",
         position: "Program Leader",
-        url: "",
+        url: "/assets/abisado.png",
       },
       {
-        name: "Doc. Salipande, Aldrin PhD",
+        name: "Doc. Aldrin Salipande, PhD",
         position: "Project Leader",
-        url: "",
+        url: "/assets/salipande.jpg",
       },
       {
-        name: "Mariano, Vladimir, PhD",
+        name: "Doc. Vladimir Mariono, PhD",
         position: "Project Staff",
-        url: "",
+        url: "/assets/mariano.png",
       },
       {
-        name: "Calayu, Susan MSc",
+        name: "Doc. Susan Saluya MSc",
         position: "Project Staff",
-        url: "",
+        url: "/assets/caluya.png",
       },
-
       {
-        name: "Gonzales, Jemma MAEd",
+        name: "Doc. Jemma Gonazales, MAEd",
         position: "Project Staff",
-        url: "",
+        url: "/assets/gonzales.png",
       },
       {
         name: "Santos, Carla Marie LPT, PhD",
         position: "Project Staff",
-        url: "",
+        url: "/assets/santos.png",
       },
       {
         name: "Ignacio, John Trixtan MSc",
         position: "Project Staff",
-        url: "",
+        url: "/assets/ignacio.png",
       },
       {
         name: "Guinto, Roel Jr. RMT, MSMT",
         position: "Project Staff",
-        url: "",
+        url: "/assets/guinto.png",
       },
     ],
   },
@@ -62,22 +61,22 @@ export const Personnel: PersonalOrganics[] = [
       {
         name: "Rembulat, Joshua",
         position: "Project Technical Specialist ll (Web Developer)",
-        url: "",
+        url: "/assets/rembulat.png",
       },
       {
         name: "Blanco, Divine",
         position: "Project Technical Specialist ll (Mobile Developer)",
-        url: "",
+        url: "/assets/blanco.png",
       },
       {
         name: "Mendooza, John Gregorio",
         position: "Project Adminnistrator Assistant lll",
-        url: "",
+        url: "/assets/mendoza.jpg",
       },
       {
         name: "Grengia, Kenneth Franz",
         position: "Project Adminnistrator Aid V",
-        url: "",
+        url: "/assets/grengia.png",
       },
     ],
   },

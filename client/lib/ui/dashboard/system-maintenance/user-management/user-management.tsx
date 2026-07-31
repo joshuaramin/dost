@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/user-management/user-management.module.scss';
 import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 import { format } from 'date-fns'
+import { useRouter } from 'next/navigation';
+
 
 //lib & utils
-import SkeletonTable from '@/lib/ui/loading/SkeletonTable';
 import useFormHook from '@/lib/hooks/useFormHook';
 import useFormQuery from '@/lib/hooks/useQuery';
 import Template from '@/lib/ui/template';
@@ -30,13 +31,16 @@ import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
 
 export default function UserManagement() {
+  const router = useRouter();
 
   const [open, setOpen] = useState<boolean>(false);
   const [ search, setSearch ] = useState<string>("");
   const [ page, setPage ] = useState<number>(0)
+  const [ organization_id, setOrganization ] = useState<string>("");
+  const [ role_id, setRole ] = useState<string>("")
 
 
-  console.log(headers)
+
 
   const onHandleNextPage = () => { 
     setPage(() => page + 1)
@@ -58,7 +62,7 @@ export default function UserManagement() {
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
   const { data, isLoading } = useFormQuery<UserResult>({
-    key: ["UserManagement", search, page],
+    key: ["UserManagement", search, page, role_id, organization_id],
     url: "maintenance/users",
     headers,
     params: {
@@ -66,6 +70,8 @@ export default function UserManagement() {
       sortBy: "asc",
       limit: page,
       search,
+      role_id,
+      organization_id
     }
   })
 
@@ -81,7 +87,7 @@ export default function UserManagement() {
     headers
   })
 
-  const { errors, handleSubmit, register, watch} = useFormHook({
+  const { errors, handleSubmit, register, watch, control} = useFormHook({
     schema: CreateUserSchema,
     defaultValues: {
       email: "",
@@ -107,14 +113,6 @@ export default function UserManagement() {
     })
   }
 
-
-  // if(isLoading) {
-  //   return (
-  //     <div className={styles.loading}>
-  //       <SkeletonTable />
-  //     </div>
-  //   )
-  // }
   return (
     <Template
       title="User Management"
@@ -132,10 +130,13 @@ export default function UserManagement() {
               <Input label="First Name" name="first_name" register={register} error={errors.first_name}  isRequired/>
               <Input label="Last Name" name="last_name" register={register} error={errors.last_name}  isRequired/>
           </div>
-           <Select 
+          <Select 
                 label="Role"
                 name="role_id"
-                register={register}
+                onChange={(val) => {
+                  setRole(val.currentTarget.value)
+                }}
+                control={control}
                 
                 error={errors.role_id} 
                 isRequired={true}
@@ -144,11 +145,13 @@ export default function UserManagement() {
                   value: node.role_id
                 }))}
           />
-           <Select 
+          <Select 
                 label="Organization"
                 name="organization_id"
-                value={watch("organization_id")}
-                register={register}
+                control={control}
+                onChange={(val) => {
+                  setOrganization(val.currentTarget.value)
+                }}
                 error={errors.organization_id} 
                 isRequired={true}
                 options={(OrganizationData?.data.edges || []).map(({node}) => ({
@@ -165,25 +168,32 @@ export default function UserManagement() {
               <Search onChange={onHandleSearch} value={search} onClear={onHandleClear}/>
       </Grid.Column>
       <Grid.Column span={1}>
-            <SelectArray
-          value=""
-            label="Organizations"
+        <SelectArray
+          value={organization_id}
+          label="Organizations"
             options={(OrganizationData?.data.edges || []).map(({node}) => ({
                   label: node.name,
                   value: node.organization_id
                 }))}
             name="email"
+            onSelect={(val) => {
+              setOrganization(val)
+            }}
         />
       </Grid.Column>
       <Grid.Column span={1}>
           <SelectArray
-            value=""
+            value={role_id}
             label="Role"
+
             options={(RoleData?.data.edges || []).map(({node}) => ({
                   label: node.name,
                   value: node.role_id
                 }))}
             name="email"
+            onSelect={(val) => {
+              setRole(val)
+            }}
         />
       </Grid.Column>
 
@@ -256,16 +266,19 @@ export default function UserManagement() {
 
                   <td>
                     <div className={styles.actionCell}>
-                      <button className={styles.actionBtn} aria-label="View user">
-                        {/* <EyeIcon /> */}
+                      <button
+                      onClick={() => router.push(`/dashboard/system-maintenance/user-managmeent/${node.user_id}`)}
+                      className={styles.actionBtn} aria-label="View user">
                         <TbEye size={23} />
                       </button>
-                      <button className={styles.actionBtn} aria-label="Edit user">
-                        {/* <EditIcon /> */}
+                      <button 
+                        onClick={() => router.push(`/dashboard/system-maintenance/user-managmeent/${node.user_id}/edit`)}
+                      className={styles.actionBtn} aria-label="Edit user">
                         <TbEdit size={23} />
                       </button>
-                      <button className={styles.actionBtn} aria-label="Delete user">
-                        {/* <TrashIcon /> */}
+                      <button 
+                      
+                      className={styles.actionBtn} aria-label="Delete user">
                         <TbTrash size={23} />
                       </button>
                     </div>

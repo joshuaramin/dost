@@ -67,7 +67,7 @@ export const GetAllEducationResource = ({
       education_resource_id: resource,
     }),
     ...(category && {
-      category: { education_category_id: category },
+      category: { name: category },
     }),
     ...(search && {
       title: { contains: search, mode: "insensitive" },

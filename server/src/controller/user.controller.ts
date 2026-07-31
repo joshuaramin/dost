@@ -9,7 +9,8 @@ import { Request, Response } from "express";
 import z from "zod";
 
 export const getAllUsers = async (request: Request, response: Response) => {
-  const { after, orderBy, search, sortBy, limit } = request.query;
+  const { after, orderBy, search, sortBy, limit, organization_id, role_id } =
+    request.query;
   const result = await GetAllUsers({
     after: after as string,
     filter: {
@@ -17,6 +18,8 @@ export const getAllUsers = async (request: Request, response: Response) => {
       search: search as string,
       sortBy: sortBy as string,
     },
+    role_id: role_id as string,
+    organization_id: organization_id as string,
     limit: limit as string,
   });
 
@@ -48,7 +51,7 @@ export const createUser = async (request: Request, response: Response) => {
       timestamp: new Date(Date.now()),
     });
   }
-  
+
   const result = await CreateUser(parsedData.data);
   return response.status(200).json({
     ...result,

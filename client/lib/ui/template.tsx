@@ -3,7 +3,7 @@
 
 import React, { ReactNode, useEffect, useState } from 'react'
 import styles from '@/styles/lib/ui/template.module.scss'
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 //components
 import ModalForm from '@/components/Modal/modal-form';
@@ -22,7 +22,6 @@ import {
 } from 'react-hook-form';
 import Title from '@/components/Typography/Title/title';
 import { TbCirclePlus, TbDownload } from 'react-icons/tb';
-import { remove } from 'next/dist/build/webpack/loaders/resolve-url-loader/lib/file-protocol';
 
 type Modal<T extends FieldValues = FieldValues> = {
     modalTitle?: string
@@ -38,6 +37,7 @@ interface Props<T extends FieldValues = FieldValues> {
     onHandleCloseToggle?: () => void | null |undefined;
     modal?: Modal<T>;
     modalChildren?: ReactNode
+    create?: string
 }
 
 export default function Template<T extends FieldValues = FieldValues>({
@@ -47,9 +47,11 @@ export default function Template<T extends FieldValues = FieldValues>({
     onModalOpenToggle,
     onHandleCloseToggle,
     modalChildren,
+    create,
     modal = {},
 }: Props<T>) {
 
+    const router = useRouter();
     const {
         modalTitle,
         handleSubmit,
@@ -59,23 +61,24 @@ export default function Template<T extends FieldValues = FieldValues>({
 
     const [ width, setWidth ] = useState(0);
 
-
     useEffect(() => {
-        const handleSize = () =>  {
-            setWidth(window.innerWidth)
-        }
+        const handleSize = () => {
+            setWidth(window.innerWidth);
+        };
 
-        window.addEventListener("resize", handleSize)
+        handleSize();
 
-        return () => window.removeEventListener("resize", handleSize)
-    }, [])
+        window.addEventListener("resize", handleSize);
+
+        return () => window.removeEventListener("resize", handleSize);
+    }, []);
 
 
     const [mounted, setMounted] = useState<boolean>(false);
 
     useEffect(() => {
         setMounted(true)
-    }, [])
+    }, [width])
 
     const pathname = usePathname();
 
@@ -134,12 +137,22 @@ export default function Template<T extends FieldValues = FieldValues>({
                     {mounted && canCreate && (
                     <div className={styles.header_col2}>
                         <Button
-                            onClick={onHandleCloseToggle}
+                            onClick={() => {
+                                onHandleCloseToggle?.();
+
+                                if (create) {
+                                    router.push(create);
+                                }
+                            }}
                             size={width <= 1990 ? "sm" : "md"}
                             variant="primary"
                             type="button"
                         >
-                            {width <= 1190  ? <TbCirclePlus size={23} /> : <Text size="sm">Add New</Text> }
+                            {width <= 1190 ? (
+                                <TbCirclePlus size={23} />
+                            ) : (
+                                <Text size="sm">Add New</Text>
+                            )}
                         </Button>
                     </div>
                 )}

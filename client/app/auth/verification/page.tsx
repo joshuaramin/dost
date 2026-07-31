@@ -115,7 +115,15 @@ export default function Page() {
 
                 const res = data.data
 
-                cookies.setCookie("token", res.token)
+           cookies.setCookie("token", res.token);
+
+            console.log("TOKEN");
+            console.log(res.token);
+
+            const payload = JSON.parse(atob(res.token.split(".")[1]));
+
+            console.log("JWT PAYLOAD");
+            console.log(payload);
 
                 console.log(res)
 

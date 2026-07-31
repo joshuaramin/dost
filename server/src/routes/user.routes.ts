@@ -16,29 +16,32 @@ const router = express.Router();
 router.get(
   "/",
   withAuth,
-  withPermission("user", "read"),
+  withPermission("user-management:read"),
   asyncHandler(getAllUsers),
 );
+
 router.get(
   "/:id",
   withAuth,
-  withPermission("user", "read"),
+  withPermission("user-management:read"),
   asyncHandler(getUserById),
 );
 
 //Post
+
 router.post(
   "/",
   withAuth,
-  withPermission("user", "create"),
+  withPermission("user-management:create"),
   asyncHandler(createUser),
 );
 
 //Patch
+
 router.patch(
   "/:id",
   withAuth,
-  withPermission("user", "update"),
+  withPermission("user-management:update"),
   asyncHandler(softDeleteUser),
 );
 

@@ -84,7 +84,7 @@ export default function Page() {
             </div>
             <Form onSubmit={handleSubmit(onHandleSubmit)}>
                 <Input
-                    name={'email'} label={'Institutional Email Address'}
+                    name={'email'} label={'Email Address'}
                     isRequired={true}
                     register={register}
                     error={errors.email}

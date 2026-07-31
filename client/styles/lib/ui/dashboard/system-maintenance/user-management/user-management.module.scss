@@ -175,23 +175,23 @@
             color: color(neutral, 600);
 
 
-            // &:hover {
-            //     background: color(neutral, 300);
-            //     color: color(primary, 500);
+            &:hover {
+                background: color(neutral, 300);
+                color: color(primary, 500);
 
-            //     &:nth-child(3) {
-            //         color: color(error, 500);
-            //     }
-            // }
+                &:nth-child(3) {
+                    color: color(error, 500);
+                }
+            }
 
-            // &:active {
-            //     transform: scale(0.96);
-            // }
+            &:active {
+                transform: scale(0.96);
+            }
 
-            // &:focus-visible {
-            //     outline: 2px solid #2563eb;
-            //     outline-offset: 2px;
-            // }
+            &:focus-visible {
+                outline: 2px solid #2563eb;
+                outline-offset: 2px;
+            }
         }
     }
 }

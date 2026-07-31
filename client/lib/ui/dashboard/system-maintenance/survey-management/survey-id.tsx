@@ -157,12 +157,10 @@ export default function SurveyID({ slug }: Props) {
 
                                             <div className={styles.choice}>
                                                 <Select
-                                                    register={register}
+                                                    control={control}
                                                     name={`questionnaire.${index}.type`}
                                                     label="Question Type"
                                                     isRequired
-                                                    value={question}
-                                                    setValue={setValue}
                                                     onChange={(value: any) =>
                                                         setValue(
                                                             `questionnaire.${index}.type`,

@@ -15,9 +15,17 @@ export const GetAllUsers = ({
   limit,
   after,
   filter: { orderBy, search, sortBy },
+  organization_id,
+  role_id,
 }: UserInterface) => {
   let where: UserWhereInput = {
     is_deleted: false,
+    ...(organization_id && {
+      organization_id,
+    }),
+    ...(role_id && {
+      role_id,
+    }),
     ...(search && {
       OR: [
         { email: { contains: search, mode: "insensitive" } },

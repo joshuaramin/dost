@@ -2,6 +2,7 @@
 
 import { PrimaryFont, SecondaryFont } from "@/lib/typography";
 import styles from "./page.module.scss";
+import Image from 'next/image'
 
 //lib and hooks
 import Header from "@/lib/ui/header";
@@ -36,7 +37,11 @@ export default function Home() {
   const { data: EducationalResourceData, isLoading: EducationLoading } = useFormQuery<EducationalResourceResult>({
     key: ["EducationalResources"],
     url: "maintenance/educational-resource",
+    params: { 
+      status: "PUBLISHED"
+    }
   });
+
 
   return (
     <div className={styles.container}>
@@ -188,10 +193,12 @@ export default function Home() {
           {Personnel.map(({name, info } ) => (
             info.map(({name, position, url}, index) => (
             <div className={styles.team_card} key={index}>
-              <div className={styles.avatar}></div>
+              <div className={styles.avatar}>
+                <Image src={url ?? ""} alt={name} layout="fill" objectFit="cover" objectPosition="center"/>
+              </div>
               <div className={styles.divider}></div>
               <div className={styles.sub_team_card}>
-                <Text size="md">{name}</Text>
+                <Text style={{ fontWeight: 900 }} size="md">{name}</Text>
                 <Text size="sm">{position}</Text>
               </div>
           </div>

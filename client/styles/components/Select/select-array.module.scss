@@ -5,7 +5,7 @@
 @use "@/styles/radius.module" as *;
 
 .full {
-    width: 12000px;
+    width: 100%;
 }
 
 .container {
@@ -31,27 +31,32 @@
     }
 
     .body {
-        display: flex;
-        align-items: center;
         width: 100%;
-        border-radius: 5px;
+        display: flex;
         padding: 0 20px;
+        border-radius: radius(sm);
 
         button {
-            height: 35px;
             width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent;
-            border-radius: 5px;
+            background: transparent;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color .2s ease;
+
+            svg {
+                transition: stroke .2s ease;
+            }
 
             &:hover {
-                background-color: color(primary, 500);
+                background: color(primary, 500);
 
                 svg {
-                    stroke: color(base, white)
+                    stroke: color(base, white);
                 }
             }
         }
@@ -62,34 +67,33 @@
         padding: 5px;
 
         .error {
-            font-size: font-size(base);
+            font-size: font-siz(base);
             color: color(error, 500);
         }
     }
 
     .select {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        position: relative;
-        z-index: 999;
+        width: 100%;
     }
 
     .selectContainer {
-
-        height: 55px;
-        appearance: none;
+        width: 100%;
+        min-height: 55px;
         padding: 10px 20px;
-        border-radius: 5px;
-        outline: none;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        background: color(base, white);
         border: 1px solid color(neutral, 500);
-        background-color: color(base, white);
+        border-radius: 5px;
+        cursor: pointer;
 
         .categoryspan {
-            font-size: font-size(sm);
+            font-size: font-siz(sm);
         }
 
         button {
@@ -98,63 +102,55 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: transparent;
+            background: transparent;
             border: none;
             cursor: pointer;
 
             svg {
                 fill: color(neutral, 500);
+                transition: fill .2s ease;
             }
 
-            &:hover {
-                svg {
-                    fill: color(primary, 500)
-                }
+            &:hover svg {
+                fill: color(primary, 500);
             }
         }
     }
 
     .optionContainer {
-        width: 100%;
-        border-bottom-left-radius: 4px;
-        border-bottom-right-radius: 4px;
-        background-color: color(base, white);
-        // border: 1px solid color(neutral, 200);
-        border-top: none;
         position: absolute;
-        border-left: 1px solid color(neutral, 500);
-        border-right: 1px solid color(neutral, 500);
-        border-bottom: 1px solid color(neutral, 500);
-        top: 50px;
+        top: calc(100% + 4px);
+        left: 0;
+        width: 100%;
+        max-height: 240px;
+        overflow-y: auto;
+        background: color(base, white);
+        border: 1px solid color(neutral, 500);
+        border-radius: 5px;
         padding: 5px;
-        // inset: 0;
+        z-index: 1000;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 
         hr {
-            border: 1px solid color(neutral, 300)
+            border: none;
+            border-top: 1px solid color(neutral, 300);
+            margin: 4px 0;
         }
 
         button {
             width: 100%;
             padding: 10px 20px;
+            background: transparent;
+            border: none;
             border-radius: 5px;
             text-align: left;
-            background-color: transparent;
-            border: none;
-            // border-bottom: 1px solid color(neutral, 200);
-            // border-right: 1px solid color(neutral, 200);
-            // border-left: 1px solid color(neutral, 200);
-
-            transition: background-color 0.15s ease, color 0.15s ease;
-
-            &:nth-child(1) {
-                border-top: 1px solid color(neutral, 200);
-            }
+            cursor: pointer;
+            transition: background-color .15s ease, color .15s ease;
 
             &:hover {
-                background-color: color(primary, 500);
+                background: color(primary, 500);
                 color: color(base, white);
             }
         }
-
     }
 }

@@ -1,35 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 
-declare global {
-  namespace Express {
-    interface Request {
-      UserPayload?: any;
-    }
-  }
-}
-
-export function checkPermission(user: any, resource: string, action: string) {
+export function checkPermission(
+  user: Express.Request["user"],
+  permission: string,
+) {
   if (!user) {
-    return { allowed: false };
+    return false;
   }
 
-  if (user.role === "admin") {
-    return { allowed: true };
+  // Super Administrator bypass
+  if (user.role === "Super Administrator") {
+    return true;
   }
 
-  const permissions = user.permissions || [];
-
-  const hasPermission = permissions.some((perm: any) => {
-    return perm.resource === resource && perm.actions.includes(action);
-  });
-
-  return { allowed: hasPermission };
+  return user.permissions.includes(permission);
 }
 
-export const withPermission = (resource: string, action: string) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const withPermission =
+  (permission: string) => (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { allowed } = checkPermission(req.user, resource, action);
+      const allowed = checkPermission(req.user, permission);
 
       if (!allowed) {
         return res.status(403).json({
@@ -41,10 +31,10 @@ export const withPermission = (resource: string, action: string) => {
       next();
     } catch (error) {
       console.error("PERMISSION ERROR:", error);
+
       return res.status(500).json({
         success: false,
         message: "Permission check failed",
       });
     }
   };
-};

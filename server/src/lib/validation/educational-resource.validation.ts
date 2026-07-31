@@ -69,7 +69,7 @@ export const EducationResourceSchema = z.object({
 
   content: z.string().optional(),
 
-  external_link: z.string().url("Invalid URL").optional(),
+  external_link: z.string().optional(),
 
   type: EducationResourceType,
 

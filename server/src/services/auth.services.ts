@@ -169,8 +169,19 @@ export const AuthVerfiy = async (
     user: { connect: { user_id: user.user_id } },
   });
 
+  const permissions = user?.role?.rolePermissions.map(
+    ({ Permission }) => Permission.name,
+  );
+
+  console.log("PERMISSIONS: ", permissions);
+
   const token = jwt.sign(
-    { email: user.email, user_id: user.user_id },
+    {
+      email: user.email,
+      user_id: user.user_id,
+      role: user?.role?.name,
+      permissions,
+    },
     (process.env.JWT_SECRET as string) || "testing",
     {
       algorithm: "HS512",

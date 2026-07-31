@@ -2,21 +2,20 @@
 
 import React, { useState } from 'react'
 import styles from "@/styles/lib/ui/education-resoucre/educational-resources-card.module.scss";
-import { useRouter } from 'next/navigation';
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
+import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 
 
 //components
-
 import Text from '@/components/Typography/Text/text';
 import Title from '@/components/Typography/Title/title';
 import Paragraph from '@/components/Typography/Paragraph/paragraph';
-import { hasAnyPermission, hasPermission } from '@/lib/utils/hasAnyPermission';
-import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 import ModalForm from '@/components/Modal/modal-form';
 
 
 //libs & hooks
+import { hasAnyPermission } from '@/lib/utils/hasAnyPermission';
 
 
 interface Props {
@@ -61,7 +60,7 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
                 </button>
                 {toggle && (
                   <div className={styles.toggleContainer}>
-                    <button onClick={() => router.push(`/dashboard/educational-resources/edit/${slug}`)}>
+                    <button onClick={() => router.push(`/dashboard/engagement/educational-resources/edit/${slug}`)}>
                         <TbPencil size={23} />
                         <Text size="sm">Edit</Text>
                       </button>
@@ -76,16 +75,13 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
                     title="Are you sure do you want to delete this?"
                     onHandleCloseToggle={onHandleDeleteToggle}
                   >
-                    {/* {link} */}
                     asds
                   </ModalForm>
                 )}
               </div>
             )}
 
-              <Image style={{
-                zIndex: 1
-              }}src={thumbnail} alt={title} objectFit="contain" layout="fill" />
+            <Image src={thumbnail} alt={title} objectFit="cover" layout="fill" />
             </div>
             <div className={styles.body}>
               <div className={styles.tags}>
@@ -93,10 +89,6 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
               </div>
               <div className={styles.sub_body}>
                 <Title onClick={() => {
-                  // if(type === "EXTERNAL_LINK") {
-                  //   router.push(`${link}`)
-                  // }
-
                   router.push(route)
                 }} size="md">{title.length <= 60 ? title : title.slice(0, 60)}</Title>
                 <Paragraph >{summary}</Paragraph>
