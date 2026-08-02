@@ -13,7 +13,6 @@ import Textarea from '@/components/Textarea/textarea';
 //lib & hooks
 import Template from '@/lib/ui/template';
 import useFormHook from '@/lib/hooks/useFormHook';
-import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import useFormQuery from '@/lib/hooks/useQuery';
 import headers  from '@/lib/utils/headers';
 import useFormMutation from '@/lib/hooks/useMutation';

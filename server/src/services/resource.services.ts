@@ -60,8 +60,10 @@ export const GetAllResource = ({
   });
 };
 
-export const GetResourceBySlug = (data: any) => {
-  return ResourceManage.readById(data.key, "slug");
+export const GetResourceBySlug = (data: string) => {
+  return ResourceManage.readById(data, "slug", {
+    include: { children: true },
+  });
 };
 
 export const UpdateResourceById = async (id: string, data: any) => {

@@ -17,11 +17,12 @@ enum TreatmentHubStatus {
 }
 
 model treatment_hubs {
-  treatment_hub_id Int @id @default(autoincrement())
+  treatment_hub_id String @id @default(cuid())
 
   code String? @unique
 
   name String
+  slug String @unique
 
   description String? @db.Text
 
@@ -48,6 +49,8 @@ model treatment_hubs {
   municipality_ogc_fid Int?
 
   barangay_ogc_fid Int?
+
+  is_deleted Boolean @default(false)
 
   status TreatmentHubStatus @default(ACTIVE)
 
@@ -82,11 +85,11 @@ model services {
 }
 
 model treatment_hub_services {
-  treatment_hub_id               String          @id @default(cuid())
-  treatmentHubs                  treatment_hubs? @relation(fields: [treatment_hubsTreatment_hub_id], references: [treatment_hub_id])
-  treatment_hubsTreatment_hub_id Int?
-  services                       services?       @relation(fields: [servicesService_id], references: [service_id])
-  servicesService_id             Int?
+  treatment_hub_services_id String          @id @default(cuid())
+  treatmentHubs             treatment_hubs? @relation(fields: [treatment_hubs_id], references: [treatment_hub_id])
+  treatment_hubs_id         String?
+  services                  services?       @relation(fields: [servicesService_id], references: [service_id])
+  servicesService_id        Int?
 
   @@schema("geo")
 }

@@ -100,7 +100,7 @@ model Permission {
   resource_id     String?
   name            String           @db.VarChar(100)
   slug            String
-  resource        Resource?        @relation(fields: [resource_id], references: [resource_id])
+  resource        Resource?        @relation(fields: [resource_id], references: [resource_id], onDelete: Cascade)
   rolePermissions RolePermission[]
 
   @@index([is_deleted])
@@ -111,7 +111,7 @@ model RolePermission {
   role_permission_id String     @id @default(cuid())
   role_id            String
   permission_id      String
-  Permission         Permission @relation(fields: [permission_id], references: [permission_id])
+  Permission         Permission @relation(fields: [permission_id], references: [permission_id], onDelete: Cascade)
   role               Role       @relation(fields: [role_id], references: [role_id])
 
   @@unique([role_id, permission_id])

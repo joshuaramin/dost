@@ -43,7 +43,9 @@ export const GetAllUsers = ({
   return UserManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

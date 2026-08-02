@@ -17,6 +17,7 @@ import useFormQuery from "@/lib/hooks/useQuery";
 import { ResourceResult } from "@/lib/interface/resource/resource.interface";
 import { PrimaryFont } from "@/lib/typography";
 import TemplateLoading from "./template-loading";
+import headers from '@/lib/utils/headers'
 
 export default function DashboardSidebar() {
 
@@ -28,6 +29,7 @@ export default function DashboardSidebar() {
             orderBy: "order",
             sortBy: "asc",
         },
+        headers
     })
 
     const edges = data?.data.edges ?? []

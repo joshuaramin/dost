@@ -6,6 +6,7 @@ import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import styles from "@/styles/lib/ui/home/surveillance.module.scss"
 import { raw } from "next/dist/build/webpack/loaders/next-image-loader";
+import useFormQuery from "@/lib/hooks/useQuery";
 
 type Province = {
     code: string
@@ -26,6 +27,14 @@ export default function SurveillanceMap() {
 
     const [regions, setRegions] = useState<Region[]>([])
     const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
+
+    const { data: GeomData, isLoading } = useFormQuery({
+        key: ["GetAllGeom"],
+        url: "maintenance/geospatial/geom"
+    })
+
+
+    console.log("GeoData: ", GeomData)
 
     useEffect(() => {
         if (!mapRef.current || mapInstance.current) return
@@ -50,12 +59,13 @@ export default function SurveillanceMap() {
             if (map.getLayer(layer.id)) return
             map.addLayer(layer)
         }
+        
+          map.on("load", async () => {
+            // const res = await fetch("http://localhost:4000/maintenance/geospatial/geom")
+            // const json = await res.json()
 
-        map.on("load", async () => {
-            const res = await fetch("http://localhost:4000/maintenance/geospatial/geom")
-            const json = await res.json()
 
-            const { regions, provinces, municipalities } = json.data
+            const { regions, provinces, municipalities } = GeomData?.data
 
             map.addSource("regions", {
                 type: "geojson",
@@ -72,7 +82,6 @@ export default function SurveillanceMap() {
                 data: { type: "FeatureCollection", features: municipalities.features },
             })
 
-            // ---------------- REGIONS ----------------
             addLayerSafe(map, {
                 id: "regions-fill",
                 type: "fill",
@@ -164,7 +173,6 @@ export default function SurveillanceMap() {
                 filter: ["==", ["get", "code"], ""],
             })
 
-            // ✅ ONLY ONE LABEL LAYER (FIXED DUPLICATE BUG)
             addLayerSafe(map, {
                 id: "municipality-labels",
                 type: "symbol",

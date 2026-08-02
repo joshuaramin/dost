@@ -8,39 +8,18 @@ interface TokenPayload extends JwtPayload {
   permissions: string[];
 }
 
-const routePermissions: Record<string, string> = {
-  "/dashboard/main/overview": "overview:read",
+function getRequiredPermission(pathname: string): string | null {
+  const segments = pathname.split("/").filter(Boolean);
 
-  "/dashboard/users": "user-management:read",
+  if (segments.length < 2) {
+    return null;
+  }
 
-  "/dashboard/roles": "roles-and-permissions:read",
+  if (segments[0] !== "dashboard") {
+    return null;
+  }
 
-  "/dashboard/organizations": "organization-management:read",
-
-  "/dashboard/educational-resources": "resource-management:read",
-
-  "/dashboard/surveys": "survey-management:read",
-
-  "/dashboard/reports": "generate-reports:read",
-
-  "/dashboard/trends-and-topics": "trends-and-topics:read",
-
-  "/dashboard/sentiment-analysis": "sentiment-analysis:read",
-
-  "/dashboard/predictions": "predictions:read",
-
-  "/dashboard/demographics": "demographics:read",
-
-  "/dashboard/risk-zones": "risk-zones:read",
-
-  "/dashboard/maps": "map:read",
-};
-
-function hasPermission(
-  permissions: string[] = [],
-  permission: string,
-): boolean {
-  return permissions.includes(permission);
+  return `${segments[1]}:read`;
 }
 
 export function proxy(req: NextRequest) {
@@ -59,11 +38,8 @@ export function proxy(req: NextRequest) {
   }
 
   const token =
-    req.cookies.get("token")?.value ||
+    req.cookies.get("token")?.value ??
     req.headers.get("authorization")?.replace("Bearer ", "");
-
-  console.log("COOKIE TOKEN");
-  console.log(req.cookies.get("token")?.value);
 
   if (!token) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
@@ -80,58 +56,47 @@ export function proxy(req: NextRequest) {
       algorithms: ["HS512"],
     }) as TokenPayload;
 
-    console.log("DECODED TOKEN");
-    console.log(decoded);
-
-    console.log("JWT:", decoded);
-
     const now = Math.floor(Date.now() / 1000);
 
     if (!decoded.exp || decoded.exp < now) {
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      const response = NextResponse.redirect(new URL("/auth/login", req.url));
+
+      response.cookies.delete("token");
+
+      return response;
     }
 
     if (!decoded.permissions) {
-      console.error("JWT has no permissions");
+      const response = NextResponse.redirect(new URL("/auth/login", req.url));
 
-      return NextResponse.redirect(new URL("/auth/login", req.url));
+      response.cookies.delete("token");
+
+      return response;
     }
 
+    // Super Admin bypass
     if (decoded.role === "Super Administrator") {
       return NextResponse.next();
     }
 
-    const matchedRoute = Object.entries(routePermissions).find(([route]) =>
-      pathname.startsWith(route),
-    );
+    const requiredPermission = getRequiredPermission(pathname);
 
-    if (!matchedRoute) {
-      return NextResponse.next();
-    }
-
-    const [, requiredPermission] = matchedRoute;
-
-    console.log({
-      pathname,
-      role: decoded.role,
-      requiredPermission,
-      permissions: decoded.permissions,
-    });
-
-    if (!hasPermission(decoded.permissions, requiredPermission)) {
-      console.warn("Permission denied");
-
+    if (
+      requiredPermission &&
+      !decoded.permissions.includes(requiredPermission)
+    ) {
       return NextResponse.redirect(new URL("/403", req.url));
     }
 
     return NextResponse.next();
   } catch (error) {
-    console.error("JWT VERIFY ERROR");
-    console.error(error);
+    console.error("JWT VERIFY ERROR:", error);
 
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    const response = NextResponse.redirect(new URL("/auth/login", req.url));
 
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    response.cookies.delete("token");
+
+    return response;
   }
 }
 

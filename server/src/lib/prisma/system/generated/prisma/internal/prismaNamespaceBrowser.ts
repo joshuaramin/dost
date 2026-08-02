@@ -99,7 +99,8 @@ export const UserScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   role_id: 'role_id',
-  organization_id: 'organization_id'
+  organization_id: 'organization_id',
+  is_active: 'is_active'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -297,7 +298,6 @@ export const EducationResourceScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   user_id: 'user_id',
-  external_link: 'external_link',
   slug: 'slug',
   category_id: 'category_id',
   is_featured: 'is_featured',
@@ -305,7 +305,8 @@ export const EducationResourceScalarFieldEnum = {
   status: 'status',
   summary: 'summary',
   thumbnail: 'thumbnail',
-  type: 'type'
+  type: 'type',
+  external_link: 'external_link'
 } as const
 
 export type EducationResourceScalarFieldEnum = (typeof EducationResourceScalarFieldEnum)[keyof typeof EducationResourceScalarFieldEnum]

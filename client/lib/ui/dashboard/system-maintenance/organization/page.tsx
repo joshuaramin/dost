@@ -63,7 +63,7 @@ export default function Organization() {
     })
 
 
-    const { register, errors, handleSubmit, control } = useFormHook({
+    const { register, errors, handleSubmit, setValue } = useFormHook({
         schema: OrganizationSchema,
         defaultValues: {
             logo: File as unknown as never,
@@ -99,19 +99,9 @@ export default function Organization() {
         })
     }
 
-    // if(isLoading) {
-    //     return (
-    //     <div className={styles.loading}>
-    //         {Array.from({length: 20}).map((node, index) => (
-    //             <SkeletonCard  key={index}/>
-    //         ))}
-    //     </div>
-    //     )
-    // }
-
     return (
         <Template
-            title="Organizations"
+            title="Organization Management"
             modal={{
                 modalTitle: "Add new Organization",
                 handleSubmit,
@@ -119,7 +109,14 @@ export default function Organization() {
             }}
             modalChildren={
                 <div style={{display: "flex", gap: 10, flexDirection: "column"}}>
-                    <FileUpload control={control} name={"logo"} multiple={false} />
+                    <FileUpload 
+                    register={register} label=""  
+                    setValue={setValue}  
+                    accepted={{
+                        "image": ["jpeg", "jpg", "png", "webp"]
+                    }}
+                    isRequired={true}
+                    name={"logo"} multiple={false} />
                     <Input register={register} name={"name"} error={errors.name} label="Name" />
                     <Input register={register} name={"address"} error={errors.address} label="Address" />
                     <Input register={register} name={"contact"} error={errors.contact} label="Tel/Phone number" />

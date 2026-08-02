@@ -32,6 +32,7 @@ export type UserMinAggregateOutputType = {
   updated_at: Date | null
   role_id: string | null
   organization_id: string | null
+  is_active: boolean | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -42,6 +43,7 @@ export type UserMaxAggregateOutputType = {
   updated_at: Date | null
   role_id: string | null
   organization_id: string | null
+  is_active: boolean | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -52,6 +54,7 @@ export type UserCountAggregateOutputType = {
   updated_at: number
   role_id: number
   organization_id: number
+  is_active: number
   _all: number
 }
 
@@ -64,6 +67,7 @@ export type UserMinAggregateInputType = {
   updated_at?: true
   role_id?: true
   organization_id?: true
+  is_active?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -74,6 +78,7 @@ export type UserMaxAggregateInputType = {
   updated_at?: true
   role_id?: true
   organization_id?: true
+  is_active?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -84,6 +89,7 @@ export type UserCountAggregateInputType = {
   updated_at?: true
   role_id?: true
   organization_id?: true
+  is_active?: true
   _all?: true
 }
 
@@ -167,6 +173,7 @@ export type UserGroupByOutputType = {
   updated_at: Date
   role_id: string | null
   organization_id: string | null
+  is_active: boolean
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -198,6 +205,7 @@ export type UserWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableFilter<"User"> | string | null
+  is_active?: Prisma.BoolFilter<"User"> | boolean
   ActivityLog?: Prisma.ActivityLogListRelationFilter
   DeviceSession?: Prisma.DeviceSessionListRelationFilter
   EducationResource?: Prisma.EducationResourceListRelationFilter
@@ -216,6 +224,7 @@ export type UserOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
   ActivityLog?: Prisma.ActivityLogOrderByRelationAggregateInput
   DeviceSession?: Prisma.DeviceSessionOrderByRelationAggregateInput
   EducationResource?: Prisma.EducationResourceOrderByRelationAggregateInput
@@ -237,6 +246,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableFilter<"User"> | string | null
+  is_active?: Prisma.BoolFilter<"User"> | boolean
   ActivityLog?: Prisma.ActivityLogListRelationFilter
   DeviceSession?: Prisma.DeviceSessionListRelationFilter
   EducationResource?: Prisma.EducationResourceListRelationFilter
@@ -255,6 +265,7 @@ export type UserOrderByWithAggregationInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -271,6 +282,7 @@ export type UserScalarWhereWithAggregatesInput = {
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  is_active?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
 }
 
 export type UserCreateInput = {
@@ -279,6 +291,7 @@ export type UserCreateInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -297,6 +310,7 @@ export type UserUncheckedCreateInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -311,6 +325,7 @@ export type UserUpdateInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -329,6 +344,7 @@ export type UserUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -345,6 +361,7 @@ export type UserCreateManyInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
 }
 
 export type UserUpdateManyMutationInput = {
@@ -353,6 +370,7 @@ export type UserUpdateManyMutationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -363,6 +381,7 @@ export type UserUncheckedUpdateManyInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -373,6 +392,7 @@ export type UserCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -383,6 +403,7 @@ export type UserMaxOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -393,6 +414,7 @@ export type UserMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   role_id?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -615,6 +637,7 @@ export type UserCreateWithoutOTPInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -632,6 +655,7 @@ export type UserUncheckedCreateWithoutOTPInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -661,6 +685,7 @@ export type UserUpdateWithoutOTPInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -678,6 +703,7 @@ export type UserUncheckedUpdateWithoutOTPInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -691,6 +717,7 @@ export type UserCreateWithoutProfileInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -708,6 +735,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -737,6 +765,7 @@ export type UserUpdateWithoutProfileInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -754,6 +783,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -767,6 +797,7 @@ export type UserCreateWithoutRoleInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -783,6 +814,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   created_at?: Date | string
   updated_at?: Date | string
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -828,6 +860,7 @@ export type UserScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   role_id?: Prisma.StringNullableFilter<"User"> | string | null
   organization_id?: Prisma.StringNullableFilter<"User"> | string | null
+  is_active?: Prisma.BoolFilter<"User"> | boolean
 }
 
 export type UserCreateWithoutActivityLogInput = {
@@ -836,6 +869,7 @@ export type UserCreateWithoutActivityLogInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -853,6 +887,7 @@ export type UserUncheckedCreateWithoutActivityLogInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -882,6 +917,7 @@ export type UserUpdateWithoutActivityLogInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -899,6 +935,7 @@ export type UserUncheckedUpdateWithoutActivityLogInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -912,6 +949,7 @@ export type UserCreateWithoutNotificationInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -929,6 +967,7 @@ export type UserUncheckedCreateWithoutNotificationInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -958,6 +997,7 @@ export type UserUpdateWithoutNotificationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -975,6 +1015,7 @@ export type UserUncheckedUpdateWithoutNotificationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -988,6 +1029,7 @@ export type UserCreateWithoutOrganizationInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
@@ -1004,6 +1046,7 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   created_at?: Date | string
   updated_at?: Date | string
   role_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
@@ -1044,6 +1087,7 @@ export type UserCreateWithoutDeviceSessionInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -1061,6 +1105,7 @@ export type UserUncheckedCreateWithoutDeviceSessionInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -1090,6 +1135,7 @@ export type UserUpdateWithoutDeviceSessionInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -1107,6 +1153,7 @@ export type UserUncheckedUpdateWithoutDeviceSessionInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1120,6 +1167,7 @@ export type UserCreateWithoutEducationResourceInput = {
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
@@ -1137,6 +1185,7 @@ export type UserUncheckedCreateWithoutEducationResourceInput = {
   updated_at?: Date | string
   role_id?: string | null
   organization_id?: string | null
+  is_active?: boolean
   ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
@@ -1166,6 +1215,7 @@ export type UserUpdateWithoutEducationResourceInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
@@ -1183,6 +1233,7 @@ export type UserUncheckedUpdateWithoutEducationResourceInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
@@ -1197,6 +1248,7 @@ export type UserCreateManyRoleInput = {
   created_at?: Date | string
   updated_at?: Date | string
   organization_id?: string | null
+  is_active?: boolean
 }
 
 export type UserUpdateWithoutRoleInput = {
@@ -1205,6 +1257,7 @@ export type UserUpdateWithoutRoleInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -1221,6 +1274,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -1236,6 +1290,7 @@ export type UserUncheckedUpdateManyWithoutRoleInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserCreateManyOrganizationInput = {
@@ -1245,6 +1300,7 @@ export type UserCreateManyOrganizationInput = {
   created_at?: Date | string
   updated_at?: Date | string
   role_id?: string | null
+  is_active?: boolean
 }
 
 export type UserUpdateWithoutOrganizationInput = {
@@ -1253,6 +1309,7 @@ export type UserUpdateWithoutOrganizationInput = {
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
@@ -1269,6 +1326,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
@@ -1284,6 +1342,7 @@ export type UserUncheckedUpdateManyWithoutOrganizationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -1361,6 +1420,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updated_at?: boolean
   role_id?: boolean
   organization_id?: boolean
+  is_active?: boolean
   ActivityLog?: boolean | Prisma.User$ActivityLogArgs<ExtArgs>
   DeviceSession?: boolean | Prisma.User$DeviceSessionArgs<ExtArgs>
   EducationResource?: boolean | Prisma.User$EducationResourceArgs<ExtArgs>
@@ -1380,6 +1440,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updated_at?: boolean
   role_id?: boolean
   organization_id?: boolean
+  is_active?: boolean
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1392,6 +1453,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updated_at?: boolean
   role_id?: boolean
   organization_id?: boolean
+  is_active?: boolean
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1404,9 +1466,10 @@ export type UserSelectScalar = {
   updated_at?: boolean
   role_id?: boolean
   organization_id?: boolean
+  is_active?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "email" | "is_deleted" | "created_at" | "updated_at" | "role_id" | "organization_id", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"user_id" | "email" | "is_deleted" | "created_at" | "updated_at" | "role_id" | "organization_id" | "is_active", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ActivityLog?: boolean | Prisma.User$ActivityLogArgs<ExtArgs>
   DeviceSession?: boolean | Prisma.User$DeviceSessionArgs<ExtArgs>
@@ -1447,6 +1510,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updated_at: Date
     role_id: string | null
     organization_id: string | null
+    is_active: boolean
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1885,6 +1949,7 @@ export interface UserFieldRefs {
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly role_id: Prisma.FieldRef<"User", 'String'>
   readonly organization_id: Prisma.FieldRef<"User", 'String'>
+  readonly is_active: Prisma.FieldRef<"User", 'Boolean'>
 }
     
 

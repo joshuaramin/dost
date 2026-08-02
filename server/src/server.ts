@@ -10,6 +10,7 @@ dotenv.config();
 import { createApiVersionMiddleware } from "@/lib/common/middleware.ts/api.middleware";
 import { responseWrapperMiddleware } from "@/lib/common/middleware.ts/reponse.middleware";
 import { withAuth } from "@/lib/helpers/useAuth";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
 
 // routers
 import RolesRouter from "@/routes/roles.routes";
@@ -21,7 +22,7 @@ import NlpRouter from "@/routes/nlp.routes";
 import OrganizationRouter from "@/routes/organization.routes";
 import EducationResourceRouter from "@/routes/educational-resources.routes";
 import SurveyRouter from "@/routes/survey.routes";
-import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
+import TreatmentHubRouter from "@/routes/treatmenthub.routes";
 
 //bullmq
 import { createBullBoard } from "@bull-board/api";
@@ -82,6 +83,7 @@ app.use("/auth", AuthRouter);
 app.use("/maintenance/geospatial", RegionRouter);
 app.use("/maintenance/nlp", NlpRouter);
 app.use("/maintenance/organization", OrganizationRouter);
+app.use("/maintenance/treatment-hub", TreatmentHubRouter);
 
 app.get("/test-version", withAuth, (req, res) => {
   res.json({

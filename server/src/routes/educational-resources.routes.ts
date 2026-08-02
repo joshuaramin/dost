@@ -11,6 +11,7 @@ import {
 import { withAuth } from "@/lib/helpers/useAuth";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import upload from "@/lib/helpers/useMulter";
+import { withPermission } from "@/lib/helpers/usePermission";
 
 const router = express.Router();
 
@@ -24,20 +25,27 @@ router.get("/:id", asyncHandler(getEducationById));
 router.post(
   "/",
   withAuth,
+  withPermission("educational-resource:create"),
   upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "attachments" }]),
   asyncHandler(createEducationResources),
 );
-router.post("/tag", withAuth, asyncHandler(createEducationTag));
+router.post(
+  "/tag",
+  withAuth,
+  withPermission("educational-resource:create"),
+  asyncHandler(createEducationTag),
+);
 router.post(
   "/category",
   withAuth,
+  withPermission("educational-resource:create"),
   asyncHandler(createEducationCategory),
 );
 
 //Put
-router.put("/:id", withAuth);
+router.put("/:id", withAuth, withPermission("educational-resource:update"));
 
 //Patch
-router.patch("/:id", withAuth);
+router.patch("/:id", withAuth, withPermission("educational-resources:update"));
 
 export default router;

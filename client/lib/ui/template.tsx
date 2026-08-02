@@ -89,7 +89,8 @@ export default function Template<T extends FieldValues = FieldValues>({
             "roles-and-permissions:create",
             "organization-management:create",
             "education-resources:create",
-            "survey:create"
+            "survey:create",
+            "treatment-hub-management:create"
         ],
         pathname,
         [
@@ -99,7 +100,9 @@ export default function Template<T extends FieldValues = FieldValues>({
             "/dashboard/system-maintenance/user-management",
             "/dashboard/system-maintenance/roles-and-permissions",
             "/dashboard/system-maintenance/organization-management",
-            "/dashboard/system-maintenance/survey-management"
+            "/dashboard/system-maintenance/survey-management",
+            "/dashboard/system-maintenance/treatment-hub-management"
+            
         ]
     )
 
@@ -110,7 +113,8 @@ export default function Template<T extends FieldValues = FieldValues>({
         "organization-management:create",
         "education-resources:create",
         "survey:export",
-        "generate-reports:export"
+        "generate-reports:export",
+        "treatment-hub-management:export"
     ], pathname, [  
         "/dashboard/products",
         "/dashboard/booking",  
@@ -120,7 +124,8 @@ export default function Template<T extends FieldValues = FieldValues>({
         "/dashboard/system-maintenance/organization",
         "/dashboard/system-maintenance/organization-management",
         "/dashboard/system-maintenance/survey",
-        "/dashboard/insights/generate-reports"
+        "/dashboard/insights/generate-reports",
+        "/dashboard/system-maintenance/treatment-hub-management"
     ])
 
     if (!mounted) return null;
