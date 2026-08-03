@@ -19,7 +19,7 @@ export const EducationResourceType = z.enum([
   "EXTERNAL_LINK",
 ]);
 
-export const EducationStatus = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
+export const EducationStatus = z.enum(["DRAFT", "PUBLISHED"]);
 
 export const EducationTagSchema = z.object({
   education_tag_id: z.string().optional(),

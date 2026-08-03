@@ -27,6 +27,7 @@ export interface SurveyResponse {
       cursor: string;
     }[];
     pageInfo: {
+      startCursor: string;
       endCursor: string;
       hasNextPage: boolean;
       hasPrevPage: boolean;

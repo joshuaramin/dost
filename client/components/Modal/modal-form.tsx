@@ -3,7 +3,7 @@
 import React, { ReactNode } from 'react'
 import styles from '@/styles/components/Modal/modal-form.module.scss';
 import { TbX } from 'react-icons/tb';
-import Title from '@/lib/ui/title';
+import Title from '@/components/Typography/Title/title';
 import Text from '../Typography/Text/text';
 import Button from '../Button/button';
 
@@ -21,7 +21,7 @@ export default function ModalForm({ children, title, width, height, onHandleClos
     <div className={styles.container}>
       <div className={styles.sub_container}>
         <div className={styles.sub_container_header}>
-          <Title title={title} />
+          <Title size="md">{title}</Title>
           <button onClick={onHandleCloseToggle}>
             <TbX size={18} />
           </button>

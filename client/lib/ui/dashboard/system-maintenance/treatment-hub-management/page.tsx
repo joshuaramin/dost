@@ -17,18 +17,31 @@ import Template from '@/lib/ui/template';
 import useFormQuery from '@/lib/hooks/useQuery';
 import { TreatmentHubResult } from '@/lib/interface/treatment-hub/treatment-hub.interface';
 import { LocationHierarchyResult } from '@/lib/interface/geom/country.interface';
+import Pagination from '@/components/Pagination/pagination';
 
 export default function TreatmentHub() {
 
 
   const [ search, setSearch ] = useState<string>("");
   const [ region, setRegions ] = useState<string>("")
+  const [ endCursor, setEndCursor ] = useState<string>("")
+  const [ startCursor, setStartCursor ] = useState<string>("")
+
+  const onHandleNextPage = () => { 
+    setEndCursor(() => endCursor)
+  }
+
+  const onHandlePrevPage = () => {
+    setStartCursor(() => startCursor)
+  }
 
   const { data } = useFormQuery<LocationHierarchyResult>({
     key: ["GetAllRegions"],
     url: "maintenance/geospatial/hierarchy",
     headers
   })
+
+  
 
   console.log("Region Data: ", data) 
 
@@ -71,6 +84,15 @@ export default function TreatmentHub() {
           />
         </Grid>
         {JSON.stringify(treatmentHubData?.data.edges)}
+
+        <Pagination
+                totalItems={treatmentHubData?.data.totalCount ?? 0}
+                currentItems={treatmentHubData?.data.totalCount ?? 0}
+                hasNextPage={treatmentHubData?.data.pageInfo.hasNextPage ?? false}
+                hasPrevPage={treatmentHubData?.data.pageInfo.hasPrevPage ?? false}
+                onNext={onHandleNextPage}
+                onPrev={onHandlePrevPage}
+            />
       </div>
     </Template>
   )

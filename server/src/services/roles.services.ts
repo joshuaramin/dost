@@ -4,15 +4,19 @@ import { RoleInterface } from "@/lib/interface/roles.interface";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, Role } from "@/lib/prisma/system/generated/prisma/client";
 
+// Manage
+
 const RoleManage = new PrismaCRUDManager<Role, "role_id", typeof prisma.role>(
   prisma.role,
   "role_id",
 );
 
+// Functions
 export const GetAllRoles = ({
   limit,
   filter: { orderBy, search, sortBy },
   after,
+  before,
 }: RoleInterface) => {
   let where: Prisma.RoleWhereInput = {
     is_deleted: false,
@@ -26,6 +30,9 @@ export const GetAllRoles = ({
     limit,
     ...(after && {
       cursor: after,
+    }),
+    ...(before && {
+      cursor: before,
     }),
     orderBy: {
       [orderBy]: sortBy,

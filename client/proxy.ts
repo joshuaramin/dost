@@ -8,20 +8,6 @@ interface TokenPayload extends JwtPayload {
   permissions: string[];
 }
 
-function getRequiredPermission(pathname: string): string | null {
-  const segments = pathname.split("/").filter(Boolean);
-
-  if (segments.length < 2) {
-    return null;
-  }
-
-  if (segments[0] !== "dashboard") {
-    return null;
-  }
-
-  return `${segments[1]}:read`;
-}
-
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
@@ -37,6 +23,7 @@ export function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // Step 1: Check if token exists
   const token =
     req.cookies.get("token")?.value ??
     req.headers.get("authorization")?.replace("Bearer ", "");
@@ -66,6 +53,7 @@ export function proxy(req: NextRequest) {
       return response;
     }
 
+    // Step 4: Ensure permissions exist
     if (!decoded.permissions) {
       const response = NextResponse.redirect(new URL("/auth/login", req.url));
 
@@ -74,20 +62,7 @@ export function proxy(req: NextRequest) {
       return response;
     }
 
-    // Super Admin bypass
-    if (decoded.role === "Super Administrator") {
-      return NextResponse.next();
-    }
-
-    const requiredPermission = getRequiredPermission(pathname);
-
-    if (
-      requiredPermission &&
-      !decoded.permissions.includes(requiredPermission)
-    ) {
-      return NextResponse.redirect(new URL("/403", req.url));
-    }
-
+    // Step 5: Allow request
     return NextResponse.next();
   } catch (error) {
     console.error("JWT VERIFY ERROR:", error);

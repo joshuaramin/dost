@@ -14,6 +14,7 @@ export type SessionData = {
     };
     Role: {
       name: string;
+      permission: [];
     };
     Organization: {
       name: string;

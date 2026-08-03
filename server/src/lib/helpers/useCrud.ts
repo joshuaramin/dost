@@ -33,6 +33,7 @@ type ReadOptions<M extends PrismaDelegate, TCursor> = {
 interface Result<TNode, TCursor = unknown> {
   edges: { node: TNode; cursor: TCursor }[];
   pageInfo: {
+    startCursor: TCursor | null;
     endCursor: TCursor | null;
     hasNextPage: boolean;
     hasPrevPage: boolean;
@@ -51,7 +52,7 @@ export class PrismaCRUDManager<
   constructor(
     private model: M,
     private idKey: TIdKey,
-    private hasSoftDelete: boolean = true, // ✅ NEW FLAG
+    private hasSoftDelete: boolean = true,
   ) {}
 
   private buildWhere(where?: any) {
@@ -88,34 +89,50 @@ export class PrismaCRUDManager<
   async read(
     options: ReadOptions<M, T[TIdKey]> = {},
   ): Promise<Result<T, T[TIdKey]>> {
-    const { cursor, limit, select, include, where, orderBy, sortBy } = options;
+    const {
+      cursor,
+      limit = 10,
+      select,
+      include,
+      where,
+      orderBy,
+      sortBy,
+    } = options;
 
     if (select && include) {
       throw new Error("Cannot use select and include together.");
     }
 
+    const take = Number(limit);
+
     const mergedWhere = this.buildWhere(where);
 
     const query: FindManyArgs<M> = {
       where: mergedWhere,
-      orderBy: orderBy ?? { [this.idKey]: sortBy ?? "asc" },
-      take: Number(limit) || 10,
+      orderBy: orderBy ?? {
+        [this.idKey]: sortBy ?? "asc",
+      },
+      take: take + 1, // Fetch one extra record to determine if there is a next page
       ...(select && { select }),
       ...(include && { include }),
     };
 
     if (cursor) {
-      (query as any).cursor = { [this.idKey]: cursor };
+      (query as any).cursor = {
+        [this.idKey]: cursor,
+      };
       (query as any).skip = 1;
     }
 
-    const items = await this.model.findMany(query);
+    const results = await this.model.findMany(query);
+
+    const hasNextPage = results.length > take;
+
+    const items = hasNextPage ? results.slice(0, take) : results;
 
     const totalCount = await this.model.count({
       where: mergedWhere,
     });
-
-    const hasNextPage = items.length >= (Number(limit) || 10);
 
     return ResultFn({
       edges: items.map((item: any) => ({
@@ -123,7 +140,9 @@ export class PrismaCRUDManager<
         cursor: item[this.idKey],
       })),
       pageInfo: {
-        endCursor: items.length ? items[items.length - 1][this.idKey] : null,
+        startCursor: items.length > 0 ? items[0][this.idKey] : null,
+        endCursor:
+          items.length > 0 ? items[items.length - 1][this.idKey] : null,
         hasNextPage,
         hasPrevPage: Boolean(cursor),
       },
@@ -131,7 +150,6 @@ export class PrismaCRUDManager<
       totalCount,
     });
   }
-
   async readById<TResult = T>(
     value: T[TIdKey] | string,
     key: keyof T = this.idKey,

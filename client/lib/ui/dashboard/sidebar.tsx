@@ -18,8 +18,12 @@ import { ResourceResult } from "@/lib/interface/resource/resource.interface";
 import { PrimaryFont } from "@/lib/typography";
 import TemplateLoading from "./template-loading";
 import headers from '@/lib/utils/headers'
+import { sessionStore } from "@/lib/utils/sessions";
 
 export default function DashboardSidebar() {
+
+
+    const sessions = sessionStore.get()
 
     const { data, isLoading, error } = useFormQuery<ResourceResult>({
         key: ["Resources"],
@@ -46,24 +50,51 @@ export default function DashboardSidebar() {
                     <Text size="sm">Advocacy Program</Text>
                 </div>
             </div>
-
             <div className={styles.body}>
-                {edges.map((edge, index) => (
-                    <div className={styles.card} key={index}>
-                        <div className={styles.body_header_container}>
-                            <h3 className={PrimaryFont.className}>
-                                {edge.node.name}
-                            </h3>
-                        </div>
-                        {edge.node.children?.map((child) => (
-                            <div className={styles.body_body_container} key={child.resource_id}>
-                                <Link href={`/dashboard/${edge.node.slug}/${child.slug}`}>
-                                    {child.name}
-                                </Link>
-                            </div>
-                        ))}
+            {edges
+                .filter((edge) => {
+                const userPermissions = sessions?.data?.Role?.permission ?? [];
+
+                const childPermissions =
+                    edge.node.children?.flatMap((child) => child.permissions ?? []) ?? [];
+
+                return childPermissions.some((permission) =>
+                    userPermissions.includes(permission.name as string as never )
+                );
+                })
+                .map((edge) => {
+                const userPermissions = sessions?.data?.Role?.permission ?? [];
+
+                const visibleChildren =
+                    edge.node.children?.filter((child) =>
+                    (child.permissions ?? []).some((permission) =>
+                        userPermissions.includes(permission.name as string as never)
+                    )
+                    ) ?? [];
+
+                if (visibleChildren.length === 0) return null;
+
+                return (
+                    <div className={styles.card} key={edge.node.resource_id}>
+                    <div className={styles.body_header_container}>
+                        <h3 className={PrimaryFont.className}>
+                        {edge.node.name}
+                        </h3>
                     </div>
-                ))}
+
+                    {visibleChildren.map((child) => (
+                        <div
+                        className={styles.body_body_container}
+                        key={child.resource_id}
+                        >
+                        <Link href={`/dashboard/${edge.node.slug}/${child.slug}`}>
+                            {child.name}
+                        </Link>
+                        </div>
+                    ))}
+                    </div>
+                );
+                })}
             </div>
             <Profile />
         </aside>

@@ -84,6 +84,7 @@ export default function EducationResourceId({ id }: Props ) {
                         slug={node.node.slug}
                         type={node.node.type}
                         title={node.node.title}
+                        educational_resource_id={node.node.education_resource_id}
                         route={node.node.type === "EXTERNAL_LINK" ? node.node.external_link :`/educational-resources/${node.node.slug}`}
                     />
                 ))}

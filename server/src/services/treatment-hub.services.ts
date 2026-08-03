@@ -17,6 +17,7 @@ const TreatmentHubManage = new PrismaCRUDManager<
 export const GetAllTreatmentHub = async ({
   limit,
   after,
+  before,
   filter: { orderBy, search, sortBy },
 }: TreatmentHubInterface) => {
   let where: treatment_hubsWhereInput = {
@@ -31,6 +32,9 @@ export const GetAllTreatmentHub = async ({
     limit,
     ...(after && {
       cursor: after,
+    }),
+    ...(before && {
+      cursor: before,
     }),
     orderBy: {
       [orderBy]: sortBy,

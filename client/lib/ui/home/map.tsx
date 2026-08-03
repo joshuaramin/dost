@@ -29,7 +29,7 @@ export default function SurveillanceMap() {
     const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
 
     const { data: GeomData, isLoading } = useFormQuery({
-        key: ["GetAllGeom"],
+        key: ["GetAllGeom", regions, selectedProvince],
         url: "maintenance/geospatial/geom"
     })
 
@@ -248,7 +248,7 @@ export default function SurveillanceMap() {
             map.remove()
             mapInstance.current = null
         }
-    }, [])
+    }, [GeomData?.data])
 
     useEffect(() => {
         const load = async () => {

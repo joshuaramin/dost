@@ -6,20 +6,24 @@ import { Prisma, Resource } from "@/lib/prisma/system/generated/prisma/client";
 
 const defaultActions = ["create", "read", "update", "delete", "deny", "export"];
 
+// Manage
 const ResourceManage = new PrismaCRUDManager<
   Resource,
   "resource_id",
   typeof prisma.resource
 >(prisma.resource, "resource_id");
 
+// Functions
+
 export const GetAllResource = ({
   limit,
   after,
+  before,
   filter: { orderBy, search, sortBy },
 }: ResourceInterface) => {
   let where: Prisma.ResourceWhereInput = {
     is_deleted: false,
-    parent: null,
+    parent_id: null,
     ...(search && {
       name: { contains: search, mode: "insensitive" },
     }),
@@ -31,6 +35,9 @@ export const GetAllResource = ({
     ...(after && {
       cursor: after,
     }),
+    ...(before && {
+      cursor: before,
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },
@@ -39,6 +46,7 @@ export const GetAllResource = ({
       name: true,
       slug: true,
       children: {
+        where: { is_deleted: false },
         orderBy: {
           order: "asc",
         },
@@ -123,7 +131,7 @@ export const CreateResource = async (data: any[]) => {
 };
 
 export const SoftDeleteResource = async (data: any) => {
-  return ResourceManage.delete(data.resource_id);
+  return ResourceManage.delete(data);
 };
 
 export const AddSubResources = async (id: string, data: any) => {

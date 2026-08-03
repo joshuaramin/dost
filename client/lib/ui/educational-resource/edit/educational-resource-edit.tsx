@@ -87,34 +87,40 @@ export default function EducationalResourceEdit({ id}: Props) {
         isMultipart: true
     })
 
- 
 
-        const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
-            mutation.mutate({
-            title: data.title,
-            category_id: data.category_id,
-            content: data.content,
-            summary: data.summary,
-            is_deleted: Boolean(false),
-            is_featured: Boolean(false),
-            attachments: data.attachments,
-            status: data.status,
-            tags: data.tags,
-            type: data.type,
-            thumbnail: data.thumbnail,
-            external_link: data.external_link,
-            user_id: data.user_id
-        }, 
-        {
-        onSuccess: () => {
-            alert("Successs")
-        },
-        onError: (data) => {
-            alert("NO SUCCESS")
-            console.log(data)
-        }
-        })
+
+    const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
+        mutation.mutate({
+        title: data.title,
+        category_id: data.category_id,
+        content: data.content,
+        summary: data.summary,
+        is_deleted: Boolean(false),
+        is_featured: Boolean(false),
+        attachments: data.attachments,
+        status: data.status,
+        tags: data.tags,
+        type: data.type,
+        thumbnail: data.thumbnail,
+        external_link: data.external_link,
+        user_id: data.user_id
+    }, 
+    {
+    onSuccess: () => {
+        alert("Successs")
+    },
+    onError: (data) => {
+        alert("NO SUCCESS")
+        console.log(data)
     }
+    })
+    }
+
+    const status = useWatch({
+        control,
+        name: "status",
+        exact: true,
+    });
 
     const type = useWatch({
         control,
@@ -221,6 +227,34 @@ export default function EducationalResourceEdit({ id}: Props) {
                 )}
 
         <div className={styles.footer}>
+            <div className={styles.statusContainer}>
+                <Text size="sm" weight="medium">
+                    Status
+                </Text>
+
+                <button
+                    type="button"
+                    className={`${styles.statusToggle} ${
+                        status === "PUBLISHED" ? styles.active : ""
+                    }`}
+                    onClick={() =>
+                        setValue(
+                            "status",
+                            status === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
+                            {
+                                shouldDirty: true,
+                                shouldValidate: true,
+                            }
+                        )
+                    }
+                >
+                    <span className={styles.thumb} />
+                </button>
+
+                <Text size="sm">
+                    {status === "PUBLISHED" ? "Published" : "Draft"}
+                </Text>
+            </div>
             <Button
                 variant="primary"
                 size="md"

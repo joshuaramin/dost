@@ -119,8 +119,8 @@ export const AuthVerfiy = async (
     is_used: true,
   });
 
-  let user = await prisma.user.findFirst({
-    where: { email: data.email },
+  let user = await prisma.user.findUnique({
+    where: { email },
     select: {
       user_id: true,
       email: true,

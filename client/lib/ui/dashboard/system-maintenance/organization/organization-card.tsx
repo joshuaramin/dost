@@ -1,4 +1,7 @@
-import React from 'react'
+"use client"
+
+
+import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/organization/organization-card.module.scss';
 import { TbDots, TbEdit, TbTrash } from 'react-icons/tb';
 
@@ -9,6 +12,7 @@ import Avatar from '@/components/Avatar/avatar';
 
 //lib & hooks
 import Title from '@/lib/ui/title';
+import { hasAnyPermission } from '@/lib/utils/hasAnyPermission';
 
 
 
@@ -20,14 +24,29 @@ interface Props {
 }
 
 export default function OrganizationCard({ logo, address, contact, name }: Props) {
+
+    const [ toggle, setToggle ] = useState<boolean>(false);
+
+    const onHandleToggle = () => {
+        setToggle(() => !toggle)
+    }
+
+    const canDelete = hasAnyPermission([
+        "organization-management:delete",
+        "organization-management:update"
+    ], "/dashboard/system-maintenance/organization")
+
+    
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.header_col1}>
                     <Avatar variant='lg' src={logo} />
-                    <button>
-                        <TbDots size={18} />
-                    </button>
+                    {canDelete && (
+                        <button onClick={onHandleToggle}>
+                            <TbDots size={18} />
+                        </button>
+                    )}
                 </div>
                 <Title title={name} />
             </div>
@@ -38,14 +57,6 @@ export default function OrganizationCard({ logo, address, contact, name }: Props
                 <span>Contact No: {" "}</span>
                 <span>{contact}</span>
             </div>
-            {/* <div className={styles.footer}>
-                <Button size="md" variant='danger' types="outline">
-                    <TbTrash size={18} />
-                </Button>
-                <Button size="md" variant='primary' types="outline">
-                    <TbEdit size={18} />
-                </Button>
-            </div> */}
         </div >
     )
 }

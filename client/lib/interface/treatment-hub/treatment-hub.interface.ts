@@ -91,6 +91,7 @@ export interface TreatmentHubResult {
       cursor: string;
     }[];
     pageInfo: {
+      startCursor: string;
       endCursor: string;
       hasNextPage: boolean;
       hasPrevPage: boolean;

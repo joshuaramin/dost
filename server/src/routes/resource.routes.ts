@@ -16,13 +16,13 @@ const router = express.Router();
 router.get(
   "/",
   withAuth,
-  withPermission("resource:read"),
+  // withPermission("resource:read"),
   asyncHandler(getAllResource),
 );
 router.get(
   "/:id",
   withAuth,
-  withPermission("resource:read"),
+  // withPermission("resource:read"),
   asyncHandler(getResourceById),
 );
 

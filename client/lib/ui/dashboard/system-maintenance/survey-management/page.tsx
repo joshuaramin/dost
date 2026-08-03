@@ -32,8 +32,9 @@ export default function SurveyManagement() {
     const router = useRouter();
     const [open ,setOpen ] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
-    const [page, setPage] = useState<number>(0);
-    const [after, setAfter] = useState<string>("")
+    const [ endCursor, setEndCursor ] = useState<string>("")
+    const [ startCursor, setStartCursor ] = useState<string>("")
+
 
     const { register, handleSubmit, errors } = useFormHook({
             schema: CreateSurveySchema,
@@ -46,11 +47,11 @@ export default function SurveyManagement() {
             setOpen((prev) => !prev)
         }
         const onHandleNextPage = () => { 
-            setPage(() => page + 1)
+            setEndCursor(() => endCursor)
         }
 
         const onHandlePrevPage = () => {
-            setPage(() =>page - 1)
+            setStartCursor(() => startCursor)
         }
 
         const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,12 +88,13 @@ export default function SurveyManagement() {
 
 
         const { data, isLoading } = useFormQuery<SurveyResponse>({
-            key: ["SurveyManagement", search, page],
+            key: ["SurveyManagement", search, endCursor, startCursor],
             url: "maintenance/survey",
             headers,
             params: {
                 search,
-                page
+                after: endCursor,
+                before: startCursor
             }
         })
 
@@ -156,11 +158,11 @@ export default function SurveyManagement() {
                             </div>
                         ))}
                     </Grid>
-                <Pagination 
-                    totalItems={data?.data.totalCount || 0}
-                    currentCount={data?.data.edges.length || 0}
-                    hasNextPage={data?.data.pageInfo.hasNextPage || false}
-                    hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+                <Pagination
+                    totalItems={data?.data.totalCount ?? 0}
+                    currentItems={data?.data.totalCount ?? 0}
+                    hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
+                    hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
                     onNext={onHandleNextPage}
                     onPrev={onHandlePrevPage}
                 />

@@ -20,7 +20,7 @@ export default function Overview() {
       title='Overview'
       description='Get a comprehensive overview of the HIV/AIDS situation in the Philippines, including key metrics, trends, and insights to inform your advocacy efforts.'
     >
-      <div className={styles.col1}>
+      {/* <div className={styles.col1}>
         {[
           { title: 'Total Mentions', value: '395' },
           { title: 'Overall Sentiments', value: '1,234' },
@@ -92,7 +92,7 @@ export default function Overview() {
               </div>
             </div>
         ))}
-        </div>
+        </div> */}
         <TitleWrapper title="Geospatial Intelligence"/>
         <SurveillanceMap />
         <TitleWrapper title="Barangay Intelligence"/>

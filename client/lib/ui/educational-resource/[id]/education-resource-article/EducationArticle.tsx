@@ -9,8 +9,8 @@ interface Props {
 
 export default function EducationArticle({ contents }: Props) {
   return (
-    <div className={styles.container_body}>
-        {parser(contents)}
+      <div className={styles.container_body}>
+            {parser(contents)}
     </div>
   )
 }

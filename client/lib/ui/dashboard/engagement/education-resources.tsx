@@ -20,21 +20,23 @@ import headers from '@/lib/utils/headers'
 import EducationResourceCard from '@/lib/ui/educational-resource/education-reosurce-card';
 import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import { EducationalResourceResult, EducationCategoryResult } from '@/lib/interface/education-resource/educational-resources.interface';
-import { EducationResourceType } from '@/lib/validations/education.validation';
+import { EducationResourceType, EducationStatus } from '@/lib/validations/education.validation';
 
 export default function EducationResources() {
 
   const [ search, setSearch ] = useState<string>("");
-  const [ page, setPage ] = useState<number>(0)
+  const [ endCursor, setEndCursor ] = useState<string>("");
+  const [ startCursor, setStartCursor ] = useState<string>("");
   const [ category, setCategory ] = useState<string>("");
   const [ type, setType ] = useState<string>("");
+  const [ status, setStatus  ] = useState<string>("")
 
   const onHandleNextPage = () => { 
-    setPage(() => page + 1)
+    setEndCursor(() => endCursor)
   }
 
   const onHandlePrevPage = () => {
-    setPage(() =>page - 1)
+    setStartCursor(() => startCursor)
   }
 
 
@@ -47,7 +49,7 @@ export default function EducationResources() {
   }
 
     const { data, isLoading } = useFormQuery<EducationalResourceResult>({
-      key: ["EducationResource", search, page, category, type],
+      key: ["EducationResource", search, endCursor, startCursor, category, type, status],
       url: "maintenance/educational-resource",
       params: {
           orderBy: "created_at",
@@ -55,7 +57,10 @@ export default function EducationResources() {
           limit: 20,
           search,
           category,
-          type
+          type,
+          after: endCursor,
+          before: startCursor,
+          status
         },
       headers
     })
@@ -105,12 +110,25 @@ export default function EducationResources() {
                   value: type,
               }))}
             />
+            <SelectArray
+              onSelect={(val) => {
+                setStatus(val)
+              }}
+              full={false}
+              value={status}
+              label="Status"
+              name="status"
+              options={(EducationStatus?.options || []).map((type) => ({
+                  label: type,
+                  value: type,
+              }))}
+            />
         </Grid>
           {data?.data.totalCount === 0 ? <NoData text="Educational Resoucre" /> : 
           <Grid max={"1fr"} min={400}>
             {isLoading ? Array.from({ length: 6}).map((node, index) => (
               <SkeletonCard  key={index} /> 
-            )) :data?.data.edges.map(({ node: { external_link, thumbnail, summary, type, title, slug, }}, index) => (
+            )) :data?.data.edges.map(({ node: { education_resource_id, external_link, thumbnail, summary, type, title, slug, }}, index) => (
               <EducationResourceCard
                   key={index}
                   summary={summary}
@@ -118,6 +136,7 @@ export default function EducationResources() {
                   slug={slug}
                   type={type}
                   title={title}
+                  educational_resource_id={education_resource_id}
                   route={
                     type === "EXTERNAL_LINK"
                       ? external_link
@@ -127,14 +146,14 @@ export default function EducationResources() {
             ))}
           </Grid>
           }
-          <Pagination 
-            totalItems={data?.data.totalCount || 0}
-            currentCount={data?.data.edges.length || 0}
-            hasNextPage={data?.data.pageInfo.hasNextpage || false}
-            hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+          <Pagination
+            totalItems={data?.data.totalCount ?? 0}
+            currentItems={data?.data.totalCount ?? 0}
+            hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
+            hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
             onNext={onHandleNextPage}
             onPrev={onHandlePrevPage}
-          />
+        />
         </div>
       </Template>
   )

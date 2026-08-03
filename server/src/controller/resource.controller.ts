@@ -14,10 +14,11 @@ import {
 } from "@/lib/validation/resource.validation";
 
 export const getAllResource = async (request: Request, response: Response) => {
-  const { limit, after, orderBy, sortBy, search } = request.query;
+  const { limit, after, orderBy, sortBy, search, before } = request.query;
 
   const result = await GetAllResource({
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,
@@ -75,11 +76,12 @@ export const updateResource = async (request: Request, response: Response) => {
 };
 
 export const softDeleteResource = async (
-  response: Response,
   request: Request,
+  response: Response,
 ) => {
   const id = String(request.params.id);
-
+  // console.log("soft delete resource controller", request.params.id);
+  console.log("soft delete resource controller", id);
   const result = await SoftDeleteResource(id);
   return response.status(200).json({
     ...result,

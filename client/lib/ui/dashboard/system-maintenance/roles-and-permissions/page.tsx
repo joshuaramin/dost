@@ -28,18 +28,19 @@ export default function RolesPermissions() {
 
     const [ open, setOpen ] = useState<boolean>(false);
     const [ search, setSearch ] = useState<string>("");
-    const [ page, setPage ] = useState<number>(1);
+    const [ endCursor, setEndCursor ] = useState<string>("")
+    const [ startCursor, setStartCursor ] = useState<string>("")
 
     const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.currentTarget.value)
     }
 
     const onHandleNextPage = () => { 
-        setPage(() => page + 1)
+        setEndCursor(() => endCursor)
     }
 
     const onHandlePrevPage = () => {
-        setPage(() =>page - 1)
+        setStartCursor(() => startCursor)
     }
 
 
@@ -48,11 +49,13 @@ export default function RolesPermissions() {
     }
 
     const { data, isLoading } = useFormQuery<RolesAndPermissionResponse>({
-        key: ["RolesandPermissions",  search, page],
+        key: ["RolesandPermissions",  search, endCursor, startCursor],
         url: "maintenance/roles",
         headers,
         params: {
-            search, limit: 20, orderBy: "created_at", sortBy: "desc"
+            search, limit: 20, orderBy: "created_at", sortBy: "desc",
+            after: endCursor,
+            before: startCursor
         }
     })
 
@@ -110,14 +113,14 @@ export default function RolesPermissions() {
                     ))}
                 </Grid>
             )}
-        <Pagination 
-            totalItems={data?.data.totalCount || 0}
-            currentCount={data?.data.edges.length || 0}
-            hasNextPage={data?.data.pageInfo.hasNextpage || false}
-            hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
-            onNext={onHandleNextPage}
-            onPrev={onHandlePrevPage}
-        />
+         <Pagination
+                totalItems={data?.data.totalCount ?? 0}
+                currentItems={data?.data.totalCount ?? 0}
+                hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
+                hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
+                onNext={onHandleNextPage}
+                onPrev={onHandlePrevPage}
+            />
         </div>
         </Template>
     )

@@ -6,9 +6,7 @@ import {
 } from "@/lib/interface/education-resources.interface";
 import {
   EducationResource,
-  EducationAttachment,
   EducationCategory,
-  EducationResourceTag,
   EducationResourceType,
   EducationStatus,
   EducationTag,
@@ -51,6 +49,7 @@ export const GetAllEducationResource = ({
   status,
   category,
   type,
+  before,
 }: EducationalResourceInterface) => {
   const statusFilter = status ? (status as EducationStatus) : undefined;
   const typeFilter = type ? (type as EducationResourceType) : undefined;
@@ -77,7 +76,12 @@ export const GetAllEducationResource = ({
   return EducationResourceManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+    }),
+    ...(before && {
+      cursor: before,
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },
@@ -227,4 +231,8 @@ export const CreateEducationCategory = (
     name: data.name,
     slug: data.slug,
   });
+};
+
+export const SoftDeleteEducationResource = (data: any) => {
+  return EducationResourceManage.delete(data);
 };

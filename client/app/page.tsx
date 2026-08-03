@@ -107,7 +107,6 @@ export default function Home() {
     </section>
       <section>
         <TitleWrapper title="Educational Resources" />
-        {}
         <Grid gap={20} max={"1fr"} min={400}>
         {EducationLoading  ? Array.from({ length: 6}).map((node, index) => (
           <SkeletonCard  key={index} /> 

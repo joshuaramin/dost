@@ -19,14 +19,15 @@
     .header {
         width: 100%;
         display: flex;
-        // flex-direction: column;
         justify-content: center;
         justify-content: space-between;
         gap: 5px;
-        // margin: 20px 0;
 
         .header_col1 {
             width: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
 

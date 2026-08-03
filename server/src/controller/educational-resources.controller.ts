@@ -7,6 +7,7 @@ import {
   GetEducationCategory,
   GetEducationByid,
   GetEducationTag,
+  SoftDeleteEducationResource,
 } from "@/services/educational-resources.services";
 import {
   CreateEducationCategorySchema,
@@ -30,11 +31,13 @@ export const getAllEducationResources = async (
     type,
     resource,
     category,
+    before,
   } = request.query;
 
   const result = await GetAllEducationResource({
     limit: limit as string,
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,
@@ -71,11 +74,12 @@ export const getAllEducationCategory = async (
   request: Request,
   response: Response,
 ) => {
-  const { sortBy, orderBy, limit, after, search } = request.query;
+  const { sortBy, orderBy, limit, after, search, before } = request.query;
 
   const result = await GetEducationCategory({
     limit: limit as string,
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,
@@ -91,11 +95,12 @@ export const getAllEducationCategory = async (
 };
 
 export const getEducationTag = async (request: Request, response: Response) => {
-  const { sortBy, orderBy, limit, after, search } = request.query;
+  const { sortBy, orderBy, limit, after, search, before } = request.query;
 
   const result = await GetEducationTag({
     limit: limit as string,
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,
@@ -252,4 +257,21 @@ export const createEducationResources = async (
       timestamp: new Date(),
     });
   }
+};
+
+export const softDeleteEducationResource = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.id);
+
+  console.log("Educational Resourcre ID: ", id);
+
+  const result = await SoftDeleteEducationResource(id);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
 };

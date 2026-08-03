@@ -57,6 +57,7 @@ export interface EducationResourceTagInterface {
 }
 
 export interface EducationalResourceInterface {
+  education_resource_id: string;
   title: string;
   summary: string;
   thumbnail: string;
@@ -88,8 +89,9 @@ export interface EducationCategoryResult {
       cursor: string;
     }[];
     pageInfo: {
+      startCursor: string;
       endCursor: string;
-      hasNextpage: boolean;
+      hasNextPage: boolean;
       hasPrevPage: boolean;
     };
     totalCount: number;
@@ -106,8 +108,9 @@ export interface EducationalResourceResult {
       cursor: string;
     }[];
     pageInfo: {
+      startCursor: string;
       endCursor: string;
-      hasNextpage: boolean;
+      hasNextPage: boolean;
       hasPrevPage: boolean;
     };
     totalCount: number;

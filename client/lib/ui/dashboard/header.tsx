@@ -16,11 +16,10 @@ export default function DashboardHeader() {
                <Avatar src="/assets/logo.png" variant="lg" />
                 <div>
                     <Title size="md">HIV GEOSPATIAL SURVIELLANCE</Title>
-                    <Text>Advocacy Program</Text>
+                    <Text size="sm">Advocacy Program</Text>
                 </div>
             </div>
-            <div className={styles.col2}>
-              
+            <div className={styles.col2}>              
                 <button>
                     <TbMenu2 size={32} />
                 </button>

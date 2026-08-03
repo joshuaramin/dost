@@ -42,6 +42,7 @@
 
         th,
         td {
+            width: 300px;
             padding: space(base);
         }
 
@@ -71,10 +72,13 @@
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
             white-space: nowrap;
+            text-overflow: ellipsis;
 
             &:first-child {
                 text-align: center;
             }
+
+
 
             &:last-child {
                 white-space: nowrap;

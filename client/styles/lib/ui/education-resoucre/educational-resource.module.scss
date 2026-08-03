@@ -7,12 +7,32 @@
 .container {
     padding: 2rem 10rem;
 
+    @include up(xxl) {
+        padding: 3rem 0;
+    }
+
+    @include up(xl) {
+        padding: 3rem;
+    }
+
+    @include up(lg) {
+        padding: 3rem 0;
+    }
+
+    @include up(md) {
+        padding: 3rem;
+    }
+
+    @include up(sm) {
+        padding: 3rem 1.1rem;
+    }
+
     @include down(xxl) {
         padding: 3rem 7rem;
     }
 
     @include down(xl) {
-        padding: 3rem 5rem;
+        padding: 3rem;
     }
 
     @include down(lg) {

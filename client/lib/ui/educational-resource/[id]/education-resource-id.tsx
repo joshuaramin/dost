@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { EducationResourceIdInterface } from "@/lib/interface/education-resource/educational-resources.interface";
-import styles from "@/styles/lib/ui/education-resoucre/[id]/educational-resource.module.scss";
+import styles from "@/styles/lib/ui/education-resoucre/educational-resource.module.scss";
 
 //components
 
@@ -12,6 +12,7 @@ import EducationCatalogue from "./education-resource-catalogue/EducationCatalogu
 import Template from "../../template";
 import useFormQuery from "@/lib/hooks/useQuery";
 import EducationArticle from "./education-resource-article/EducationArticle";
+import EducationInfographics from "./education-resource-infographics/EducationInfographics";
 
 interface Props {
     id: string;
@@ -31,19 +32,20 @@ export default function EducationResource({ id }: Props) {
             title={data?.data.title || ""}
             description={data?.data.summary}
         >
-            <div className={styles.container}>
+            
                 {data?.data.type === "CATALOGUE"  && (
                 <>
                     <EducationCatalogue data={data}/>
                 </>
                 )}
                 {data?.data.type === "ARTICLE" && (
-                    <EducationArticle contents={data.data.content} />
+                    <div className={styles.container}>
+                        <EducationArticle contents={data.data.content} />
+                    </div>
                 )}
                 {data?.data.type === "INFOGRAPHIC" && (
-                    <div></div>
+                    <EducationInfographics />
                 )}
-            </div>
         </Template>
     );
 }

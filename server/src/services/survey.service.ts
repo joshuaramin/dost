@@ -24,6 +24,7 @@ const QuestionnaireManage = new PrismaCRUDManager<
 export const GetAllSurveys = ({
   limit,
   after,
+  before,
   filter: { orderBy, search, sortBy },
 }: SurveyInterface) => {
   let where: SurveyWhereInput = {
@@ -38,7 +39,12 @@ export const GetAllSurveys = ({
   return SurveyManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+    }),
+    ...(before && {
+      cursor: before,
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

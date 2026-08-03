@@ -7,10 +7,11 @@ export const getAllDeviceSesisonByUserId = async (
 ) => {
   try {
     const id = String(request.params.id);
-    const { limit, after, orderBy, sortBy, search } = request.query;
+    const { limit, after, orderBy, sortBy, search, before } = request.query;
 
     const result = await GetAllDeviceSession(id, {
       after: after as string,
+      before: before as string,
       filter: {
         orderBy: orderBy as string,
         search: search as string,

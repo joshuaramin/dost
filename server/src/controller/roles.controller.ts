@@ -9,11 +9,12 @@ import {
 import { Request, Response } from "express";
 
 export const getAllRoles = async (request: Request, response: Response) => {
-  const { sortBy, orderBy, limit, search, after } = request.query;
+  const { sortBy, orderBy, limit, search, after, before } = request.query;
 
   const result = await GetAllRoles({
     limit: limit as string,
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,

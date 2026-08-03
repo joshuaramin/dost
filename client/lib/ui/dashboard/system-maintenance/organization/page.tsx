@@ -33,16 +33,16 @@ import NoData from '@/lib/ui/no-data';
 export default function Organization() {
 
     const [ open, setOpen ]  = useState<boolean> (false);
-    const [ page, setPage ] = useState<number>(1);
     const [ search, setSearch ] = useState<string>("");
-
+    const [ endCursor, setEndCursor ] = useState<string>("")
+    const [ startCursor, setStartCursor ] = useState<string>("")
 
     const onHandleNextPage = () => { 
-        setPage(() => page + 1)
+        setEndCursor(() => endCursor)
     }
 
     const onHandlePrevPage = () => {
-        setPage(() =>page - 1)
+        setStartCursor(() => startCursor)
     }
 
     const onHandleAddNew = () => {
@@ -54,11 +54,14 @@ export default function Organization() {
   }
 
     const { data, isLoading } = useFormQuery<OrganizationResult>({
-        key: ["Organizatoin", search, page],
+        key: ["Organizatoin", search, endCursor, startCursor],
         url: "maintenance/organization",
         headers, 
         params: {
-            search, page
+            search,
+            after: endCursor,
+            before: startCursor,
+            limit: 20
         }
     })
 
@@ -137,12 +140,11 @@ export default function Organization() {
                         />
                     ))}
                 </Grid>}
-             
-            <Pagination 
-                totalItems={data?.data.totalCount || 0}
-                currentCount={data?.data.edges.length || 0}
-                hasNextPage={data?.data.pageInfo.hasNextpage || false}
-                hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+            <Pagination
+                totalItems={data?.data.totalCount ?? 0}
+                currentItems={data?.data.totalCount ?? 0}
+                hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
+                hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
                 onNext={onHandleNextPage}
                 onPrev={onHandlePrevPage}
             />

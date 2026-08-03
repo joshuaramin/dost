@@ -4,14 +4,19 @@ import { Organization } from "@/lib/prisma/system/generated/prisma/client";
 import { OrganizationWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { prisma } from "@/lib/prisma/system/prisma";
 
+// Manage
+
 const OrganizationManage = new PrismaCRUDManager<
   Organization,
   "organization_id",
   typeof prisma.organization
 >(prisma.organization, "organization_id");
 
+// Functions
+
 export const GetAllOrganization = ({
   after,
+  before,
   filter: { orderBy, search, sortBy },
   limit,
 }: OrganizationInterface) => {
@@ -25,7 +30,12 @@ export const GetAllOrganization = ({
   return OrganizationManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+    }),
+    ...(before && {
+      cursor: before,
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

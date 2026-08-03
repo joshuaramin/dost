@@ -29,13 +29,16 @@ import Pagination from '@/components/Pagination/pagination';
 import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
+import { SubmitHandler } from 'react-hook-form';
+import { UserFormFields } from '@/lib/types/user.type';
 
 export default function UserManagement() {
   const router = useRouter();
 
   const [open, setOpen] = useState<boolean>(false);
   const [ search, setSearch ] = useState<string>("");
-  const [ page, setPage ] = useState<number>(0)
+  const [ endCursor, setEndCursor ] = useState<string>("")
+  const [ startCursor, setStartCursor ] = useState<string>("")
   const [ organization_id, setOrganization ] = useState<string>("");
   const [ role_id, setRole ] = useState<string>("")
 
@@ -43,11 +46,11 @@ export default function UserManagement() {
 
 
   const onHandleNextPage = () => { 
-    setPage(() => page + 1)
+    setEndCursor(() => endCursor )
   }
 
   const onHandlePrevPage = () => {
-    setPage(() =>page - 1)
+    setStartCursor(() => startCursor)
   }
 
   const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,16 +65,18 @@ export default function UserManagement() {
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
   const { data, isLoading } = useFormQuery<UserResult>({
-    key: ["UserManagement", search, page, role_id, organization_id],
+    key: ["UserManagement", search, endCursor, startCursor, role_id, organization_id],
     url: "maintenance/users",
     headers,
     params: {
       orderBy: "created_at",
       sortBy: "asc",
-      limit: page,
+      limit: 20,
       search,
       role_id,
-      organization_id
+      organization_id,
+      after: endCursor,
+      before: startCursor
     }
   })
 
@@ -102,12 +107,18 @@ export default function UserManagement() {
   const mutation = useFormMutation({
     key:["CreateUser"],
     method: "POST",
-    url: "maintenance/user-management",
+    url: "maintenance/users",
     headers,
   })
 
-  const onHandleSubmit = () => {
-    mutation.mutateAsync({}, {
+  const onHandleSubmit: SubmitHandler< UserFormFields>= (data) => {
+    mutation.mutateAsync({
+      email: data.email,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      organization_id: data.organization_id,
+      role_id: data.role_id
+    }, {
       onSuccess: () => {},
       onError: () => {}
     })
@@ -290,8 +301,8 @@ export default function UserManagement() {
         </div>
         <Pagination 
           totalItems={data?.data.totalCount || 0}
-          currentCount={data?.data.edges.length || 0}
-          hasNextPage={data?.data.pageInfo.hasNextpage || false}
+          currentItems={data?.data.edges.length || 0}
+          hasNextPage={data?.data.pageInfo.hasNextPage || false}
           hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
           onNext={onHandleNextPage}
           onPrev={onHandlePrevPage}

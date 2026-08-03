@@ -12,10 +12,11 @@ export const getAllTreatmentHub = async (
   request: Request,
   response: Response,
 ) => {
-  const { after, orderBy, search, sortBy, limit } = request.query;
+  const { after, orderBy, search, sortBy, limit, before } = request.query;
 
   const result = await GetAllTreatmentHub({
     after: after as string,
+    before: before as string,
     limit: limit as string,
     filter: {
       orderBy: orderBy as string,

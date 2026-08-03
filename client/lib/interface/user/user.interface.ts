@@ -25,8 +25,9 @@ export interface UserResult {
       cursor: string;
     }[];
     pageInfo: {
+      startCursor: string;
       endCursor: string;
-      hasNextpage: boolean;
+      hasNextPage: boolean;
       hasPrevPage: boolean;
     };
     totalCount: number;

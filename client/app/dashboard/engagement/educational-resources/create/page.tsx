@@ -50,6 +50,7 @@ export default function Page() {
         // setType(e.currentTarget.value);
     }
 
+    
 
     const { register, errors, handleSubmit, setValue, watch,  getValues, control} = useFormHook({
         schema: CreateEducationResourceSchema,
@@ -77,9 +78,14 @@ export default function Page() {
         isMultipart: true
     })
 
- 
 
-        const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
+    const status = useWatch({
+        control,
+        name: "status",
+        exact: true,
+    });
+
+    const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
         mutation.mutate({
             title: data.title,
             category_id: data.category_id,
@@ -211,12 +217,37 @@ export default function Page() {
                 )}
 
         <div className={styles.footer}>
-            <Button
-                variant="primary"
-                size="md"
+        <div className={styles.statusContainer}>
+            <button
+                type="button"
+                className={`${styles.statusToggle} ${
+                    status === "PUBLISHED" ? styles.active : ""
+                }`}
+                onClick={() =>
+                    setValue(
+                        "status",
+                        status === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
+                        {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                        }
+                    )
+                }
             >
-                <Text size="sm">Save</Text>
-            </Button>
+                <span className={styles.thumb} />
+            </button>
+
+            <Text size="sm">
+                {status === "PUBLISHED" ? "Published" : "Draft"}
+            </Text>
+        </div>
+
+        <Button
+            variant="primary"
+            size="md"
+        >
+            <Text size="sm">Save</Text>
+        </Button>
         </div>
             </Form>
         </div>

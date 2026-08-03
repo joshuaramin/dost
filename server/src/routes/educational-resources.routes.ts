@@ -7,6 +7,7 @@ import {
   getEducationById,
   getAllEducationCategory,
   getEducationTag,
+  softDeleteEducationResource
 } from "@/controller/educational-resources.controller";
 import { withAuth } from "@/lib/helpers/useAuth";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
@@ -46,6 +47,11 @@ router.post(
 router.put("/:id", withAuth, withPermission("educational-resource:update"));
 
 //Patch
-router.patch("/:id", withAuth, withPermission("educational-resources:update"));
+router.patch(
+  "/:id",
+  withAuth,
+  withPermission("educational-resources:update"),
+  asyncHandler(softDeleteEducationResource),
+);
 
 export default router;

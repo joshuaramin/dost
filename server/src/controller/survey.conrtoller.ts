@@ -10,10 +10,11 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 export const getAllSurvey = async (request: Request, response: Response) => {
-  const { after, orderBy, search, sortBy, limit } = request.query;
+  const { after, orderBy, search, sortBy, limit, before } = request.query;
 
   const result = await GetAllSurveys({
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,

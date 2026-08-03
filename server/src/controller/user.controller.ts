@@ -9,10 +9,19 @@ import { Request, Response } from "express";
 import z from "zod";
 
 export const getAllUsers = async (request: Request, response: Response) => {
-  const { after, orderBy, search, sortBy, limit, organization_id, role_id } =
-    request.query;
+  const {
+    after,
+    orderBy,
+    search,
+    sortBy,
+    limit,
+    organization_id,
+    role_id,
+    before,
+  } = request.query;
   const result = await GetAllUsers({
     after: after as string,
+    before: before as string,
     filter: {
       orderBy: orderBy as string,
       search: search as string,
