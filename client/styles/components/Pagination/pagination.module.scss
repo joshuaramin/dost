@@ -31,7 +31,11 @@
             }
 
             &:disabled {
-                background: color(error, 500);
+                background: color(neutral, 100);
+
+                svg {
+                    color: color(neutral, 500)
+                }
             }
 
         }

@@ -1,0 +1,18 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    width: 100%;
+    height: auto;
+    border: 1px solid color(neutral, 500);
+    border-radius: radius(sm);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #fff;
+}

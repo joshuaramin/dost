@@ -104,3 +104,65 @@ export const GetRegionHierarchy = async () => {
 
   return rows;
 };
+
+export const GetRegions = async () => {
+  return await geodb.$queryRawUnsafe(`
+    SELECT
+      psgc_code AS code,
+      name,
+      ST_AsGeoJSON(ST_Envelope(geom))::json AS bounds
+    FROM geo.regions
+    ORDER BY name;
+  `);
+};
+
+export const GetProvinces = async (regionCode: string) => {
+  return await geodb.$queryRawUnsafe(
+    `
+    SELECT
+      p.gid_1 AS code,
+      p.name_1 AS name,
+      ST_AsGeoJSON(ST_Envelope(p.geom))::json AS bounds
+    FROM geo.provinces p
+    INNER JOIN geo.regions_provinces rp
+      ON rp.province_ogc_fid = p.ogc_fid
+    WHERE rp.region_psgc_code = $1
+    ORDER BY p.name_1;
+    `,
+    regionCode,
+  );
+};
+
+export const GetMunicipalities = async (provinceCode: string) => {
+  return await geodb.$queryRawUnsafe(
+    `
+    SELECT
+      m.gid_2 AS code,
+      m.name_2 AS name,
+      ST_AsGeoJSON(ST_Envelope(m.geom))::json AS bounds
+    FROM geo.municipalities m
+    INNER JOIN geo.provinces p
+      ON ST_Within(m.geom, p.geom)
+    WHERE p.gid_1 = $1
+    ORDER BY m.name_2;
+    `,
+    provinceCode,
+  );
+};
+
+export const GetBarangays = async (municipalityCode: string) => {
+  return await geodb.$queryRawUnsafe(
+    `
+    SELECT
+      b.gid_3 AS code,
+      b.name_3 AS name,
+      ST_AsGeoJSON(ST_Envelope(b.geom))::json AS bounds
+    FROM geo.barangays b
+    INNER JOIN geo.municipalities m
+      ON ST_Within(b.geom, m.geom)
+    WHERE m.gid_2 = $1
+    ORDER BY b.name_3;
+    `,
+    municipalityCode,
+  );
+};

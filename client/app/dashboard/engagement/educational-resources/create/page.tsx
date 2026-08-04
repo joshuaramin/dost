@@ -27,6 +27,7 @@ import { EducationCategoryResult } from '@/lib/interface/education-resource/educ
 import { EducationResourceFormField } from '@/lib/types/education-resource.type';
 import useFormMutation from '@/lib/hooks/useMutation';
 import headers from '@/lib/utils/headers'
+import ButtonToggle from '@/components/Toggle/buttonToggle';
 
 
 export default function Page() {
@@ -77,13 +78,6 @@ export default function Page() {
         headers,
         isMultipart: true
     })
-
-
-    const status = useWatch({
-        control,
-        name: "status",
-        exact: true,
-    });
 
     const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
         mutation.mutate({
@@ -217,30 +211,14 @@ export default function Page() {
                 )}
 
         <div className={styles.footer}>
-        <div className={styles.statusContainer}>
-            <button
-                type="button"
-                className={`${styles.statusToggle} ${
-                    status === "PUBLISHED" ? styles.active : ""
-                }`}
-                onClick={() =>
-                    setValue(
-                        "status",
-                        status === "PUBLISHED" ? "DRAFT" : "PUBLISHED",
-                        {
-                            shouldDirty: true,
-                            shouldValidate: true,
-                        }
-                    )
-                }
-            >
-                <span className={styles.thumb} />
-            </button>
-
-            <Text size="sm">
-                {status === "PUBLISHED" ? "Published" : "Draft"}
-            </Text>
-        </div>
+        <ButtonToggle 
+            falseName={"DRAFT"}
+            trueName={"PUBLISHED"}
+            label={""}
+            control={control}
+            name="status"
+            setValue={setValue}
+        />
 
         <Button
             variant="primary"
