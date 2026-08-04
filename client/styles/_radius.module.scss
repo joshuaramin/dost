@@ -7,7 +7,8 @@ $borderRadius: (
     lg: 16,
     xl: 24,
     2xl: 32,
-    3xl: 36
+    3xl: 36,
+    full: 100px
 );
 
 @function radius($radius) {

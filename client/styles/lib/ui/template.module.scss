@@ -5,8 +5,12 @@
 @use "@/styles/radius.module" as *;
 
 .container {
-    padding: 3rem 2rem;
     height: 100vh;
+    padding: 3rem 2rem;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
     @include down(md) {
         padding: 3rem 1rem;
@@ -14,40 +18,51 @@
 
     p {
         width: 100%;
+        margin: 0;
     }
 
     .header {
-        width: 100%;
         display: flex;
-        justify-content: center;
+        align-items: flex-start;
         justify-content: space-between;
-        gap: 5px;
+        gap: space(base);
+        flex-wrap: wrap;
+        margin-bottom: space(lg);
 
         .header_col1 {
-            width: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: space(sm);
+            flex: 1;
+            min-width: 250px;
         }
-
 
         .btns {
             display: flex;
-            gap: 10px;
-
-
+            align-items: center;
+            gap: space(sm);
+            flex-wrap: wrap;
         }
     }
 
-    .model_footer {
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px 0;
-        gap: 5px;
+    .body {
+        flex: 1;
+        overflow-y: auto;
+        padding: space(base) 0;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+        scrollbar-width: none;
     }
 
-    .body {
-        padding: 10px 0;
-        height: 100vh;
+    .modal_footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: space(sm);
+        padding-top: space(base);
+        border-top: 1px solid color(neutral, 500);
     }
 }

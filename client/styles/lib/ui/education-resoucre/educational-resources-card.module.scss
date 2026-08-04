@@ -1,4 +1,4 @@
-@use "@/styles/mixins.module" as *;
+// @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
@@ -11,10 +11,10 @@
     border-radius: radius(sm);
     overflow: hidden;
     position: relative;
+    padding: 2rem;
 
     .header {
         width: 100%;
-        height: 200px;
         border-top-left-radius: radius(sm);
         border-top-right-radius: radius(sm);
         position: relative;
@@ -24,16 +24,12 @@
         padding: 25px 0;
 
         span {
-            background-color: color(primary, 100);
-            padding: 10px;
+            // background-color: color(primary, 100);
+            // padding: 10px;
             border-radius: radius(sm);
             color: color(primary, 500);
             font-weight: 700;
         }
-    }
-
-    .body {
-        padding: 1rem;
     }
 
     .sub_body {
@@ -41,17 +37,17 @@
         flex-direction: column;
         gap: 10px;
 
-        h1 {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: color 0.2s ease;
+        // h1 {
+        //     overflow: hidden;
+        //     text-overflow: ellipsis;
+        //     white-space: nowrap;
+        //     cursor: pointer;
+        //     transition: color 0.2s ease;
 
-            &:hover {
-                text-decoration: underline;
-            }
-        }
+        //     &:hover {
+        //         text-decoration: underline;
+        //     }
+        // }
 
         p {
             line-height: 1.6;
@@ -65,76 +61,91 @@
     .footer {
         position: relative;
         display: flex;
-        justify-content: flex-end;
+        // justify-content: flex-end;
         align-items: center;
-        padding: 1rem;
-        border-top: 1px solid color(neutral, 500);
+        margin-top: 15px;
 
-        .model_footer {
-            display: flex;
-            justify-content: flex-end;
-            padding: 1rem 0;
-            gap: 5px;
-        }
-
-        .option_button {
+        a {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 5px;
-            border: none;
-            border-radius: 999px;
-            background-color: color(neutral, 200);
-            color: color(neutral, 900);
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            color: color(error, 500);
+            text-decoration: none;
+            gap: 5px;
 
             &:hover {
-                background-color: color(neutral, 900);
-                color: color(base, white);
+                text-decoration: underline;
             }
         }
 
-        .toggleContainer {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 1rem;
-
-            width: 200px;
-            background-color: color(base, white);
-            border: 1px solid color(neutral, 500);
-            border-radius: radius(tiny);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            z-index: 100;
-
-            button {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                padding: 0.75rem;
-                border: none;
-                background: transparent;
-                cursor: pointer;
-                transition: background-color 0.2s ease, color 0.2s ease;
-
-                &:first-child {
-                    &:hover {
-                        background-color: color(primary, 500);
-                        color: color(base, white);
-                    }
-                }
-
-                &:last-child {
-                    &:hover {
-                        background-color: color(error, 500);
-                        color: color(base, white);
-                    }
-                }
-            }
+        svg {
+            color: color(error, 500)
         }
+
+        // .model_footer {
+        //     display: flex;
+        //     justify-content: flex-end;
+        //     padding: 1rem 0;
+        //     gap: 5px;
+        // }
+
+        // .option_button {
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     padding: 5px;
+        //     border: none;
+        //     border-radius: 999px;
+        //     background-color: color(neutral, 200);
+        //     color: color(neutral, 900);
+        //     cursor: pointer;
+        //     transition: background-color 0.2s ease, color 0.2s ease;
+
+        //     &:hover {
+        //         background-color: color(neutral, 900);
+        //         color: color(base, white);
+        //     }
+        // }
+
+        // .toggleContainer {
+        //     position: absolute;
+        //     top: calc(100% + 8px);
+        //     right: 1rem;
+
+        //     width: 200px;
+        //     background-color: color(base, white);
+        //     border: 1px solid color(neutral, 500);
+        //     border-radius: radius(tiny);
+        //     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        //     overflow: hidden;
+        //     display: flex;
+        //     flex-direction: column;
+        //     z-index: 100;
+
+        //     button {
+        //         width: 100%;
+        //         display: flex;
+        //         align-items: center;
+        //         gap: 8px;
+        //         padding: 0.75rem;
+        //         border: none;
+        //         background: transparent;
+        //         cursor: pointer;
+        //         transition: background-color 0.2s ease, color 0.2s ease;
+
+        //         &:first-child {
+        //             &:hover {
+        //                 background-color: color(primary, 500);
+        //                 color: color(base, white);
+        //             }
+        //         }
+
+        //         &:last-child {
+        //             &:hover {
+        //                 background-color: color(error, 500);
+        //                 color: color(base, white);
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

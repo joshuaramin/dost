@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react"
 import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import styles from "@/styles/lib/ui/home/surveillance.module.scss"
-import { raw } from "next/dist/build/webpack/loaders/next-image-loader";
 import useFormQuery from "@/lib/hooks/useQuery";
 
 type Province = {
@@ -283,7 +282,7 @@ export default function SurveillanceMap() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.col1}>
+            {/* <div className={styles.col1}>
                 {regions.map((region) => (
                     <div key={region.region_code}>
                         <div
@@ -311,7 +310,7 @@ export default function SurveillanceMap() {
                         ))}
                     </div>
                 ))}
-            </div>
+            </div> */}
 
             <div ref={mapRef} className={styles.col2} />
         </div>

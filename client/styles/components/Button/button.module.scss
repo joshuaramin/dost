@@ -5,129 +5,139 @@
 @use "@/styles/radius.module" as *;
 
 .btn {
-    padding: 12px 24px;
-    border-radius: radius(sm);
-    border: 1px solid transparent;
-    cursor: pointer;
-    color: #fff;
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
+    gap: space(sm);
+
+    border: 1px solid transparent;
+    border-radius: radius(sm);
+
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+
     font-weight: 600;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    box-sizing: border-box;
-}
+    line-height: 1;
 
-.full {
-    width: 100%;
-}
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
 
-.disabled {
-    background-color: color(neutral, 300);
-    color: color(base, black);
-
-    &.outline {
-        background-color: transparent;
-        color: color(neutral, 700);
-        border-color: color(neutral, 700);
-
-        &:hover {
-            background-color: color(neutral, 700);
-            color: color(base, white);
-        }
+    &:active:not(.disabled) {
+        transform: scale(0.98);
     }
 
-    &.filled {
-        background-color: color(neutral, 500);
+    &:focus-visible {
+        outline: 2px solid color(secondary, 500);
+        outline-offset: 2px;
     }
+
+    &.full {
+        width: 100%;
+    }
+
+    &.disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+}
+
+.sm {
+    min-height: 36px;
+    padding: 0 space(base);
+    font-size: font-size(sm);
+}
+
+.md {
+    min-height: 44px;
+    padding: 0 space(lg);
+    font-size: font-size(base);
+}
+
+.lg {
+    min-height: 52px;
+    padding: 0 space(xl);
+    font-size: font-size(lg);
 }
 
 .primary {
-    background-color: color(primary, 500);
-    color: color(base, white);
     border-color: color(primary, 500);
 
-    &.outline {
-        background-color: transparent;
-        color: color(primary, 500);
-        border-color: color(primary, 500);
+    &.filled {
+        background: color(primary, 500);
+        color: color(base, white);
 
-        &:hover {
-            background-color: color(primary, 500);
-            color: color(base, white);
+        &:hover:not(.disabled) {
+            background: color(primary, 600);
+            border-color: color(primary, 600);
         }
     }
 
-    &.filled {
-        background-color: color(primary, 500);
-        color: color(base, white);
-        border-color: color(primary, 500);
+    &.outline {
+        background: transparent;
+        color: color(primary, 500);
 
-        &:hover {
-            background: transparent;
-            color: color(primary, 500);
+        &:hover:not(.disabled) {
+            background: color(primary, 500);
+            color: color(base, white);
         }
     }
 }
 
 .secondary {
-    background-color: color(secondary, 500);
-    color: #000;
     border-color: color(secondary, 500);
 
-    &.outline {
-        background-color: transparent;
-        border-color: color(secondary, 500);
-        color: #000;
+    &.filled {
+        background: color(secondary, 500);
+        color: color(base, black);
 
-        &:hover {
-            background-color: color(secondary, 500);
+        &:hover:not(.disabled) {
+            background: color(secondary, 600);
+            border-color: color(secondary, 600);
         }
     }
 
-    &.filled {
-        background-color: color(secondary, 500);
-        color: #000;
-        border-color: color(secondary, 500);
+    &.outline {
+        background: transparent;
+        color: color(secondary, 500);
+
+        &:hover:not(.disabled) {
+            background: color(secondary, 500);
+            color: color(base, black);
+        }
     }
 }
 
 .danger {
-    background: color(error, 500);
-    color: #fff;
     border-color: color(error, 500);
 
+    &.filled {
+        background: color(error, 500);
+        color: color(base, white);
+
+        &:hover:not(.disabled) {
+            background: color(error, 600);
+            border-color: color(error, 600);
+        }
+    }
+
     &.outline {
-        background-color: transparent;
-        border-color: color(error, 500);
+        background: transparent;
         color: color(error, 500);
 
-        &:hover {
-            background-color: color(error, 500);
-            color: #fff;
-        }
-    }
-
-    &.filled {
-        background-color: color(error, 500);
-        color: #fff;
-        border-color: color(error, 500);
-
-        &:hover {
-            background-color: transparent;
-            color: color(error, 500);
+        &:hover:not(.disabled) {
+            background: color(error, 500);
+            color: color(base, white);
         }
     }
 }
 
-.sm {
-    padding: 8px 16px;
-}
-
-.md {
-    padding: 12px 24px;
-}
-
-.lg {
-    padding: 16px 32px;
+.disabled {
+    background: color(neutral, 300) !important;
+    border-color: color(neutral, 300) !important;
+    color: color(neutral, 700) !important;
 }

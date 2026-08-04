@@ -3,7 +3,7 @@
 import React from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/roles-and-permissions-card.module.scss';
-import { TbDots, TbEdit, TbExternalLink, TbTrash } from 'react-icons/tb';
+import { TbArrowRight, TbDots, TbEdit, TbExternalLink, TbTrash } from 'react-icons/tb';
 
 
 // components
@@ -57,10 +57,12 @@ export default function RolesAndPermissionsCard({ name, description, slug }: Pro
             </Paragraph>
         </div>
         <div className={styles.footer}>
-            <Button onClick={onHandleRoute} full={false} variant="primary" types="outline" size="md">
+            <Button
+            onClick={onHandleRoute} full={false} variant="primary" types="outline" size="md">
                 <Text size="md" style={{
-                    fontSize: 14
-                }}>Go to Settings</Text>
+                    fontSize: 14,
+                    display: "flex", alignItems: "center", gap: 5
+                }}>Go to Settings <TbArrowRight size={23} /></Text>
             </Button>
         </div>
         </div>

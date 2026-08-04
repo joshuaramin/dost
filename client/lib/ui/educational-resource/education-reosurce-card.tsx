@@ -5,7 +5,7 @@ import styles from "@/styles/lib/ui/education-resoucre/educational-resources-car
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { TbDots, TbPencil, TbTrash } from 'react-icons/tb';
+import { TbArrowRight, TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 
 
 //components
@@ -21,6 +21,7 @@ import Button from '@/components/Button/button';
 import { hasAnyPermission } from '@/lib/utils/hasAnyPermission';
 import useFormMutation from '@/lib/hooks/useMutation';
 import headers from '@/lib/utils/headers'
+import Link from 'next/link';
 
 interface Props {
     title: string
@@ -73,7 +74,7 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
 
   return (
     <div className={styles.education_card}>
-      {canDelete && (
+            {/* {canDelete && (
               <div className={styles.footer}>
                 <button className={styles.option_button} onClick={onHandleToggle}>
                     <TbDots size={23} />
@@ -113,20 +114,21 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
                   </ModalForm>
                 )}
               </div>
-            )}
+            )} */}
           <div className={styles.header}>
-            <Image src={thumbnail} alt={title} objectFit="cover" layout="fill" />
+            {/* <Image src={thumbnail} alt={title} objectFit="cover" layout="fill" /> */}
             </div>
             <div className={styles.body}>
-              <div className={styles.tags}>
-                <Text size="sm">{type.replaceAll("_", " ")}</Text>
-              </div>
               <div className={styles.sub_body}>
                 <Title onClick={() => {
                   router.push(route)
                 }} size="md">{title.length <= 60 ? title : title.slice(0, 60)}</Title>
                 <Paragraph >{summary}</Paragraph>
               </div>
+            </div>
+            <div className={styles.footer}>
+              <Link href={route}>Visit Site  <TbArrowRight size={18} /></Link>
+  
             </div>
           </div>
   )

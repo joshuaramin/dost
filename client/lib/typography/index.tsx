@@ -1,4 +1,4 @@
-import { Alegreya, DM_Sans, EB_Garamond, Inter, Merriweather, Playfair_Display, Roboto } from "next/font/google";
+import { Alegreya, DM_Sans, EB_Garamond, Inter, Merriweather, Playfair_Display, Roboto, } from "next/font/google";
 
 
 export const PrimaryFont = Roboto({
