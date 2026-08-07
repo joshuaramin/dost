@@ -5,11 +5,14 @@ import {
   getProvinces,
   getMunicipalities,
   getBarangays,
+  getRegionsHierachy,
 } from "@/controller/geom.controller";
 
 const router = express.Router();
 
 router.get("/geom", getAllGeom);
+
+router.get("/hierarchy", getRegionsHierachy);
 
 router.get("/regions", getRegions);
 

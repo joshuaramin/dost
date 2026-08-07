@@ -97,10 +97,10 @@ export default function Home() {
       <section>
         <TitleWrapper title="METHODOLOGY" />
 
-        <Title size="lg">A Four-Stage of Intelligence Pipeline</Title>
+        {/* <Title size="md">A Four-Stage of Intelligence Pipeline</Title>
         <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
         From raw digital signal to targeted field deployment — each stage is designed for rigor, reproducibility, and ethical compliance.
-        </Paragraph>
+        </Paragraph> */}
         <div className={styles.gridContainer}>
           {
           [
@@ -131,7 +131,7 @@ export default function Home() {
               <div>
                 <span className={PrimaryFont.className}>Stage 0{index + 1}</span>
                 <br/>
-                <Title className={PrimaryFont.className} size="lg">{item.name}</Title>
+                <Title className={PrimaryFont.className} size="sm">{item.name}</Title>
               </div>
               <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
                 {item.description}
@@ -142,8 +142,8 @@ export default function Home() {
       </section>
 
       <section>
-        <TitleWrapper title="Organizations" />
-      <Grid max={400} min={330}>
+        <TitleWrapper title="Research Partners" />
+      <Grid max={50} min={100}>
               {OrganizationData?.data.edges.map(({node: {logo }}, index) => (
             <div key={index}>
               <Avatar src={logo} variant="xl"/>

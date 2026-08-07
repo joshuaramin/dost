@@ -4,6 +4,7 @@ import {
   GetRegions,
   GetProvinces,
   GetMunicipalities,
+  GetRegionHierarchy,
   GetBarangays,
 } from "@/services/geom.services";
 
@@ -134,5 +135,24 @@ export const getBarangays = async (req: Request, res: Response) => {
       message: "Internal Server Error",
       timestamp: new Date().toISOString(),
     });
+  }
+};
+
+export const getRegionsHierachy = async (
+  request: Request,
+  response: Response,
+) => {
+  try {
+    const data = await GetRegionHierarchy();
+
+    return response.status(200).json({
+      success: true,
+      data,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.log(error);
+
+    return response.status(500).json({});
   }
 };

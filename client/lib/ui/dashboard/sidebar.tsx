@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styles from "@/styles/lib/ui/dashboard/sidebar.module.scss";
 import Title from "@/components/Typography/Title/title";
 import Link from "next/link";
@@ -19,11 +19,21 @@ import { PrimaryFont } from "@/lib/typography";
 import TemplateLoading from "./template-loading";
 import headers from '@/lib/utils/headers'
 import { sessionStore } from "@/lib/utils/sessions";
+import { TbChevronDown, TbChevronRight } from "react-icons/tb";
 
 export default function DashboardSidebar() {
 
 
     const sessions = sessionStore.get()
+
+    const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+
+    const onHandleDropDown = (id: string) =>{
+        setOpenMenus((prev) => ({
+            ...prev,
+            [id]: !prev[id],
+        }));
+    }
 
     const { data, isLoading, error } = useFormQuery<ResourceResult>({
         key: ["Resources"],
@@ -74,26 +84,43 @@ export default function DashboardSidebar() {
 
                 if (visibleChildren.length === 0) return null;
 
-                return (
-                    <div className={styles.card} key={edge.node.resource_id}>
+            return (
+                <div className={styles.card} key={edge.node.resource_id}>
                     <div className={styles.body_header_container}>
                         <h3 className={PrimaryFont.className}>
-                        {edge.node.name}
+                            {edge.node.name}
                         </h3>
+
+                        <button
+                            type="button"
+                            onClick={() => onHandleDropDown(edge.node.resource_id)}
+                        >
+                            {openMenus[edge.node.resource_id] ? (
+                                <TbChevronDown size={18} />
+                            ) : (
+                                <TbChevronRight size={18} />
+                            )}
+                        </button>
                     </div>
 
-                    {visibleChildren.map((child) => (
-                        <div
-                        className={styles.body_body_container}
-                        key={child.resource_id}
-                        >
-                        <Link href={`/dashboard/${edge.node.slug}/${child.slug}`}>
-                            {child.name}
-                        </Link>
+                    {!openMenus[edge.node.resource_id] && (
+                        <div className={styles.child}>
+                            {visibleChildren.map((child) => (
+                                <div
+                                    className={styles.body_body_container}
+                                    key={child.resource_id}
+                                >
+                                    <Link
+                                        href={`/dashboard/${edge.node.slug}/${child.slug}`}
+                                    >
+                                        {child.name}
+                                    </Link>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                    </div>
-                );
+                    )}
+                </div>
+            );
                 })}
             </div>
             <Profile />

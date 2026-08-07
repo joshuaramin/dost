@@ -3,12 +3,6 @@ import { geodb } from "@/lib/prisma/geospatial/prisma";
 import { formatMultiAdminToGeoJSON } from "@/lib/common/formatRegionToGeoJSON";
 import { regions } from "@/lib/prisma/geospatial/generated/prisma/client";
 
-const RegionManage = new PrismaCRUDManager<regions, "id", typeof geodb.regions>(
-  geodb.regions,
-  "id",
-  false,
-);
-
 export const GetAllAdminGeo = async () => {
   const rows = await geodb.$queryRawUnsafe<any[]>(`
     SELECT 

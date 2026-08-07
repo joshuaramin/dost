@@ -36,29 +36,23 @@
         }
 
         button {
-            height: 35px;
             width: 40px;
-            border-radius: 100px;
-            border: none;
-            display: flex;
+            height: 35px;
+            display: none;
             justify-content: center;
             align-items: center;
-            background-color: transparent;
+            border: none;
+            border-radius: 100px;
+            background: transparent;
+            cursor: pointer;
 
             svg {
                 stroke: #fff;
             }
 
-            @include up(xxl) {
-                display: none;
-            }
-
-
             @include down(xl) {
-                display: block;
+                display: flex;
             }
-
-
         }
 
         header {
@@ -93,23 +87,25 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            font-size: font-size(base);
             gap: 1rem;
+            font-size: font-size(base);
+
+
+            @include down(xl) {
+                display: none;
+            }
 
             a {
-                color: color(base, white);
-                font-weight: none;
+                color: color(neutral, 600);
                 font-size: font-size(lg);
+                font-weight: 400;
                 text-decoration: none;
 
                 &:hover {
-                    text-decoration: 1.5px solid underline #fff;
+                    color: #e4e8f0;
+                    text-decoration: underline;
+                    text-decoration-thickness: 1.5px;
                 }
-            }
-
-
-            @include down(xxl) {
-                display: none;
             }
         }
     }
@@ -121,6 +117,9 @@
     .sub {
         width: 100%;
         height: 10px;
-        background-color: color(secondary, 500);
+        // background-color: color(secondary, 500);
+        background: linear-gradient(90deg,
+                color(primary, 500),
+                color(secondary, 500));
     }
 }

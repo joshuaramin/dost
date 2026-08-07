@@ -6,6 +6,8 @@ import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import styles from "@/styles/lib/ui/home/surveillance.module.scss"
 import useFormQuery from "@/lib/hooks/useQuery";
+import Title from "../title";
+import Text from "@/components/Typography/Text/text";
 
 type Province = {
     code: string
@@ -20,16 +22,30 @@ type Region = {
     provinces: Province[]
 }
 
+const legends = [
+  { label: "Low", color: "success" },
+  { label: "Medium", color: "warning" },
+  { label: "High", color: "danger" },
+];
+
+
 export default function SurveillanceMap() {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInstance = useRef<maplibregl.Map | null>(null)
 
     const [regions, setRegions] = useState<Region[]>([])
     const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
+    const [region, setRegion] = useState<string| null> ("");
 
     const { data: GeomData, isLoading } = useFormQuery({
-        key: ["GetAllGeom", regions, selectedProvince],
+        key: ["GetAllGeom"],
         url: "maintenance/geospatial/geom"
+    })
+
+
+    const { data: RegionData, isLoading: RegionLoading } = useFormQuery({
+        key: ["GetAllRegions"],
+        url: "maintenance/geospatial/hierarchy"
     })
 
 
@@ -43,7 +59,7 @@ export default function SurveillanceMap() {
             container: mapRef.current,
             style: `https://maps.geo.${process.env.NEXT_PUBLIC_AWS_MAP_REGION}.amazonaws.com/v2/styles/Standard/descriptor?key=${process.env.NEXT_PUBLIC_AWS_MAP_API}`,
             center: [121.774, 12.9],
-            zoom: 4.5,
+            zoom: 4.9,
             scrollZoom: false,
         })
 
@@ -59,10 +75,7 @@ export default function SurveillanceMap() {
             map.addLayer(layer)
         }
         
-          map.on("load", async () => {
-            // const res = await fetch("http://localhost:4000/maintenance/geospatial/geom")
-            // const json = await res.json()
-
+        map.on("load", async () => {
 
             const { regions, provinces, municipalities } = GeomData?.data
 
@@ -249,15 +262,7 @@ export default function SurveillanceMap() {
         }
     }, [GeomData?.data])
 
-    useEffect(() => {
-        const load = async () => {
-            const res = await fetch("http://localhost:4000/maintenance/geospatial/hierarchy")
-            const json = await res.json()
-            setRegions(json.data.data)
-        }
-        load()
-    }, [])
-
+    // console.log("Regions: ", regions)
     const zoomToBounds = (bounds: any, code?: string) => {
         const map = mapInstance.current
         if (!map || !bounds) return
@@ -271,7 +276,7 @@ export default function SurveillanceMap() {
                 [Math.min(...lngs), Math.min(...lats)],
                 [Math.max(...lngs), Math.max(...lats)],
             ],
-            { padding: 40, duration: 800 }
+            { padding: 10, duration: 1000 }
         )
 
         if (code) {
@@ -282,37 +287,52 @@ export default function SurveillanceMap() {
 
     return (
         <div className={styles.container}>
-            {/* <div className={styles.col1}>
-                {regions.map((region) => (
-                    <div key={region.region_code}>
-                        <div
-                            style={{ fontWeight: "bold", padding: 8, cursor: "pointer" }}
-                            onClick={() => zoomToBounds(region.bounds)}
-                        >
-                            {region.region_name}
-                        </div>
-
-                        {region.provinces?.map((p) => (
+            <div className={styles.col1}>
+                <Title title="Administrative Hierarchy" />
+                <div className={styles.regions}>
+                     {RegionLoading ? "" : RegionData?.data.data.map((region) => (
+                    <div key={region.region_ocde}>
                             <div
-                                key={p.code}
-                                style={{
-                                    padding: 10,
-                                    paddingLeft: 25,
-                                    cursor: "pointer",
-                                    borderRadius: 5,
-                                    color: selectedProvince === p.code ? "white" : "black",
-                                    background: selectedProvince === p.code ? "#35408E" : "transparent",
-                                }}
-                                onClick={() => zoomToBounds(p.bounds, p.code)}
+                                style={{ fontWeight: "700", padding: 8, cursor: "pointer" }}
+                                onClick={() => zoomToBounds(region.bounds)}
                             >
-                                {p.name}
+                                {region.region_name}
                             </div>
-                        ))}
-                    </div>
-                ))}
-            </div> */}
 
+                            {region.provinces?.map((p) => (
+                                <div
+                                    key={p.code}
+                                    style={{
+                                        padding: 10,
+                                        paddingLeft: 25,
+                                        cursor: "pointer",
+                                        borderRadius: 5,
+                                        color: selectedProvince === p.code ? "white" : "black",
+                                        background: selectedProvince === p.code ? "rgb(25, 27, 162)" : "transparent",
+                                        opacity: 0.4,
+                                    }}
+                                    onClick={() => zoomToBounds(p.bounds, p.code)}
+                                >
+                                    {p.name}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
             <div ref={mapRef} className={styles.col2} />
+
+        <div className={styles.legends}>
+  {legends.map((legend) => (
+    <div className={styles.legends_card} key={legend.label}>
+      <div
+        className={`${styles.indicator} ${styles[legend.color]}`}
+      />
+      <Text size="sm">{legend.label}</Text>
+    </div>
+  ))}
+</div>
+            {/* {isLoading ? "" : <div ref={mapRef} className={styles.col2} /> } */}
         </div>
     )
 }
