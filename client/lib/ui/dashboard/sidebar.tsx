@@ -103,7 +103,8 @@ export default function DashboardSidebar() {
                         </button>
                     </div>
 
-                    {!openMenus[edge.node.resource_id] && (
+                    <div className={styles.body_child_container}>
+                    {openMenus[edge.node.resource_id] && (
                         <div className={styles.child}>
                             {visibleChildren.map((child) => (
                                 <div
@@ -119,6 +120,7 @@ export default function DashboardSidebar() {
                             ))}
                         </div>
                     )}
+                    </div>
                 </div>
             );
                 })}

@@ -111,7 +111,7 @@ export default function UserManagement() {
     headers,
   })
 
-  const onHandleSubmit: SubmitHandler< UserFormFields>= (data) => {
+  const onHandleSubmit: SubmitHandler<UserFormFields>= (data) => {
     mutation.mutateAsync({
       email: data.email,
       first_name: data.first_name,
@@ -144,9 +144,7 @@ export default function UserManagement() {
           <Select 
                 label="Role"
                 name="role_id"
-                onChange={(val) => {
-                  setRole(val.currentTarget.value)
-                }}
+             
                 control={control}
                 
                 error={errors.role_id} 
@@ -160,9 +158,6 @@ export default function UserManagement() {
                 label="Organization"
                 name="organization_id"
                 control={control}
-                onChange={(val) => {
-                  setOrganization(val.currentTarget.value)
-                }}
                 error={errors.organization_id} 
                 isRequired={true}
                 options={(OrganizationData?.data.edges || []).map(({node}) => ({
@@ -278,12 +273,12 @@ export default function UserManagement() {
                   <td>
                     <div className={styles.actionCell}>
                       <button
-                      onClick={() => router.push(`/dashboard/system-maintenance/user-managmeent/${node.user_id}`)}
+                      onClick={() => router.push(`/dashboard/system-maintenance/user-management/${node.user_id}`)}
                       className={styles.actionBtn} aria-label="View user">
                         <TbEye size={23} />
                       </button>
                       <button 
-                        onClick={() => router.push(`/dashboard/system-maintenance/user-managmeent/${node.user_id}/edit`)}
+                        onClick={() => router.push(`/dashboard/system-maintenance/user-management/${node.user_id}/edit`)}
                       className={styles.actionBtn} aria-label="Edit user">
                         <TbEdit size={23} />
                       </button>

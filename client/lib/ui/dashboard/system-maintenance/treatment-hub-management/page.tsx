@@ -18,6 +18,7 @@ import useFormQuery from '@/lib/hooks/useQuery';
 import { TreatmentHubResult } from '@/lib/interface/treatment-hub/treatment-hub.interface';
 import { LocationHierarchyResult } from '@/lib/interface/geom/country.interface';
 import Pagination from '@/components/Pagination/pagination';
+import { RegionsInterface, RegionsInterfaceResult } from '@/lib/interface/geom/regions.interface';
 
 export default function TreatmentHub() {
 
@@ -35,25 +36,28 @@ export default function TreatmentHub() {
     setStartCursor(() => startCursor)
   }
 
-  const { data } = useFormQuery<LocationHierarchyResult>({
+  const { data } = useFormQuery<RegionsInterfaceResult>({
     key: ["GetAllRegions"],
-    url: "maintenance/geospatial/hierarchy",
+    url: "maintenance/geospatial/regions",
     headers
   })
 
-  
 
-  console.log("Region Data: ", data) 
 
-  const { data: treatmentHubData } = useFormQuery<TreatmentHubResult>({
-    key: ["GetAllTreatmentHub"],
+  const { data: treatmentHubData  } = useFormQuery<TreatmentHubResult>({
+    key: ["GetAllTreatmentHub", endCursor, startCursor, search, region],
     url: "maintenance/treatment-hub",
     headers,
+    params:  {
+      limit: 20, 
+      after: endCursor,
+      before: startCursor,
+      search,
+      psgc_code: region
+    }
     
   })
 
-
-  console.log("Treatment Hub: ", treatmentHubData)
   const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.currentTarget.value)
   }
@@ -73,17 +77,14 @@ export default function TreatmentHub() {
             <SelectArray
             value={region}
             label="Region"
-              options={(data?.data.data || []).map(({  region_code, region_name}) => ({
-                value: region_code,
-                label: region_name
-              }))}
-              name="email"
+              options={( data?.data.data || []).map(({code, name }) => ({label: `${name} ${code}`, value: code}))}
+              name="region"
               onSelect={(val) => {
                 setRegions(val)
               }}
           />
         </Grid>
-        {JSON.stringify(treatmentHubData?.data.edges)}
+        {JSON.stringify(treatmentHubData?.data.edges, null, 20)}
 
         <Pagination
                 totalItems={treatmentHubData?.data.totalCount ?? 0}

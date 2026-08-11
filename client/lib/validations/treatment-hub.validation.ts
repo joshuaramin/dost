@@ -6,6 +6,8 @@ const optionalString = z
   .transform((value) => (value === "" ? undefined : value))
   .optional();
 
+const optionalNumber = z.number().int().positive().optional();
+
 export const TreatmentHubSchema = z.object({
   treatment_hub_id: z.string().uuid().optional(),
 
@@ -19,13 +21,13 @@ export const TreatmentHubSchema = z.object({
 
   address: optionalString,
 
-  barangay: optionalString,
+  region_ogc_fid: optionalNumber,
 
-  city: optionalString,
+  province_ogc_fid: optionalNumber,
 
-  province: optionalString,
+  municipality_ogc_fid: optionalNumber,
 
-  region: optionalString,
+  barangay_ogc_fid: optionalNumber,
 
   postal_code: optionalString,
 
@@ -65,23 +67,9 @@ export const TreatmentHubSchema = z.object({
     .enum(["ACTIVE", "INACTIVE", "TEMPORARILY_CLOSED"])
     .default("ACTIVE"),
 
-  is_doh_accredited: z.boolean().default(true),
-
   accepts_walk_in: z.boolean().default(true),
 
   appointment_required: z.boolean().default(false),
-
-  has_prep: z.boolean().default(false),
-
-  has_pep: z.boolean().default(false),
-
-  has_art: z.boolean().default(true),
-
-  has_hiv_testing: z.boolean().default(true),
-
-  has_cd4_testing: z.boolean().default(false),
-
-  has_viral_load_testing: z.boolean().default(false),
 });
 
 export const CreateTreatmentHubSchema = TreatmentHubSchema;

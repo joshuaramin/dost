@@ -52,15 +52,7 @@ export const getProvinces = async (req: Request, res: Response) => {
   try {
     const { region_code } = req.query;
 
-    if (!region_code || typeof region_code !== "string") {
-      return res.status(400).json({
-        success: false,
-        message: "region_code is required.",
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    const data = await GetProvinces(region_code);
+    const data = await GetProvinces(Number(region_code));
 
     return res.status(200).json({
       success: true,
@@ -112,15 +104,7 @@ export const getBarangays = async (req: Request, res: Response) => {
   try {
     const { municipality_code } = req.query;
 
-    if (!municipality_code || typeof municipality_code !== "string") {
-      return res.status(400).json({
-        success: false,
-        message: "municipality_code is required.",
-        timestamp: new Date().toISOString(),
-      });
-    }
-
-    const data = await GetBarangays(municipality_code);
+    const data = await GetBarangays(Number(municipality_code));
 
     return res.status(200).json({
       success: true,

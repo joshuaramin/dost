@@ -59,6 +59,16 @@ export const Personnel: PersonalOrganics[] = [
     name: "Non-Organics Personel",
     info: [
       {
+        name: "Sinapilo, Abdel Jalai",
+        position: "Geospatial Data Scientist",
+        url: "/assets/abdel.png",
+      },
+      {
+        name: "Sinapilo, Abdel Jalai",
+        position: "Senior Data Sciencetist",
+        url: "/assets/abdel.png",
+      },
+      {
         name: "Rembulat, Joshua",
         position: "Project Technical Specialist ll (Web Developer)",
         url: "/assets/rembulat.png",

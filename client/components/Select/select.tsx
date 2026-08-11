@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useMemo, useState } from "react";
 import styles from "@/styles/components/Select/select.module.scss";
 import {
     Control,
@@ -13,7 +13,7 @@ import { TbCaretDownFilled, TbCaretUpFilled } from "react-icons/tb";
 import Text from "../Typography/Text/text";
 
 type Option = {
-    value: string;
+    value: string | number | null | undefined;
     label: string;
 };
 
@@ -24,7 +24,6 @@ interface Props<T extends FieldValues> {
     isRequired: boolean;
     error?: FieldError;
     options: Option[];
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export function Select<T extends FieldValues>({
@@ -34,99 +33,119 @@ export function Select<T extends FieldValues>({
     isRequired,
     error,
     options,
-    onChange,
-    ...props
 }: Props<T>) {
     const [toggle, setToggle] = useState(false);
+    const [search, setSearch] = useState("");
+
+    const filteredOptions = useMemo(() => {
+        const query = search.trim().toLowerCase();
+
+        if (!query) {
+            return options;
+        }
+
+        return options.filter((option) =>
+            option.label.toLowerCase().includes(query)
+        );
+    }, [options, search]);
 
     return (
         <Controller
             control={control}
             name={name}
-            render={({ field }) => (
-                <div {...props} className={styles.container}>
-                    <div className={styles.header}>
-                        <label>{label}</label>
-                        {isRequired && (
-                            <span className={styles.isRequired}>*</span>
-                        )}
-                    </div>
+            render={({ field }) => {
+                const selectedOption = options.find(
+                    (option) => option.value === field.value
+                );
 
-                    <div className={styles.select}>
-                        <div
-                            className={
-                                error
-                                    ? styles.selectError
-                                    : styles.selectContainer
-                            }
-                        >
-                            <Text size="sm">
-                                {options.find(
-                                    (option) => option.value === field.value
-                                )?.label ??
-                                    `Please select a ${label.toLowerCase()}`}
-                            </Text>
+                return (
+                    <div className={styles.container}>
+                        <div className={styles.header}>
+                            <label>{label}</label>
 
-                            <button
-                                type="button"
-                                onClick={() => setToggle((prev) => !prev)}
-                            >
-                                {toggle ? (
-                                    <TbCaretUpFilled size={23} />
-                                ) : (
-                                    <TbCaretDownFilled size={23} />
-                                )}
-                            </button>
+                            {isRequired && (
+                                <span className={styles.isRequired}>*</span>
+                            )}
                         </div>
 
-                        {toggle && (
+                        <div className={styles.select}>
                             <div
                                 className={
                                     error
-                                        ? styles.optionContainerError
-                                        : styles.optionContainer
+                                        ? styles.selectError
+                                        : styles.selectContainer
                                 }
                             >
-                                <input
-                                    type="text"
-                                    placeholder="Search here"
-                                    onChange={onChange}
-                                />
+                                <Text size="sm">
+                                    {selectedOption?.label ??
+                                        `Please select a ${label.toLowerCase()}`}
+                                </Text>
 
-                                <div className={styles.option}>
-                                    {options.map((option) => (
-                                        <button
-                                            key={option.value}
-                                            type="button"
-                                            className={styles.option}
-                                            onClick={() => {
-                                                console.log("Before:", field.value);
-                                                console.log("Setting:", option.value);
-
-                                                field.onChange(option.value);
-
-                                                setTimeout(() => {
-                                                    console.log("After:", field.value);
-                                                }, 0);
-
-                                                setToggle(false);
-                                            }}
-                                        >
-                                            {option.label}
-                                        </button>
-                                    ))}
-                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setToggle((previous) => !previous);
+                                        setSearch("");
+                                    }}
+                                >
+                                    {toggle ? (
+                                        <TbCaretUpFilled size={23} />
+                                    ) : (
+                                        <TbCaretDownFilled size={23} />
+                                    )}
+                                </button>
                             </div>
-                        )}
-                    </div>
 
-                    <div className={styles.errorBody}>
-                        <span className={styles.error}>
-                            {error?.message}
-                        </span>
+                            {toggle && (
+                                <div
+                                    className={
+                                        error
+                                            ? styles.optionContainerError
+                                            : styles.optionContainer
+                                    }
+                                >
+                                    <input
+                                        type="text"
+                                        value={search}
+                                        placeholder="Search here"
+                                        onChange={(
+                                            event: ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                            setSearch(event.target.value);
+                                        }}
+                                    />
+
+                                    <div className={styles.option}>
+                                        {filteredOptions.map((option) => (
+                                            <button
+                                                key={option.value}
+                                                type="button"
+                                                className={styles.option}
+                                                onClick={() => {
+                                                    field.onChange(
+                                                        option.value
+                                                    );
+
+                                                    setToggle(false);
+                                                    setSearch("");
+                                                }}
+                                            >
+                                                {option.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className={styles.errorBody}>
+                            <span className={styles.error}>
+                                {error?.message}
+                            </span>
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            }}
         />
     );
 }

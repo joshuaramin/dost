@@ -26,12 +26,9 @@
             border: none;
             cursor: pointer;
 
-            svg {
-                color: color(neutral, 400)
-            }
 
             &:disabled {
-                background: color(neutral, 100);
+                // background: color(neutral, 100);
 
                 svg {
                     color: color(neutral, 500)

@@ -101,28 +101,36 @@ export const GetRegionHierarchy = async () => {
 
 export const GetRegions = async () => {
   return await geodb.$queryRawUnsafe(`
-    SELECT
-      psgc_code AS code,
-      name,
-      ST_AsGeoJSON(ST_Envelope(geom))::json AS bounds
-    FROM geo.regions
-    ORDER BY name;
-  `);
+        SELECT
+            r.region_id AS id,
+            r.psgc_code AS code,
+            r.name,
+            ST_AsGeoJSON(
+                ST_Envelope(r.geom)
+            )::json AS bounds
+        FROM geo.regions r
+        ORDER BY r.name;
+    `);
 };
 
-export const GetProvinces = async (regionCode: string) => {
+export const GetProvinces = async (regionCode: number) => {
   return await geodb.$queryRawUnsafe(
     `
-    SELECT
-      p.gid_1 AS code,
-      p.name_1 AS name,
-      ST_AsGeoJSON(ST_Envelope(p.geom))::json AS bounds
-    FROM geo.provinces p
-    INNER JOIN geo.regions_provinces rp
-      ON rp.province_ogc_fid = p.ogc_fid
-    WHERE rp.region_psgc_code = $1
-    ORDER BY p.name_1;
-    `,
+        SELECT
+            p.ogc_fid AS id,
+            p.gid_1 AS code,
+            p.name_1 AS name,
+            ST_AsGeoJSON(
+                ST_Envelope(p.geom)
+            )::json AS bounds
+        FROM geo.regions r
+        INNER JOIN geo.regions_provinces rp
+            ON rp.region_psgc_code = r.psgc_code
+        INNER JOIN geo.provinces p
+            ON p.ogc_fid = rp.province_ogc_fid
+        WHERE r.region_id = $1
+        ORDER BY p.name_1;
+        `,
     regionCode,
   );
 };
@@ -130,33 +138,42 @@ export const GetProvinces = async (regionCode: string) => {
 export const GetMunicipalities = async (provinceCode: string) => {
   return await geodb.$queryRawUnsafe(
     `
-    SELECT
-      m.gid_2 AS code,
-      m.name_2 AS name,
-      ST_AsGeoJSON(ST_Envelope(m.geom))::json AS bounds
-    FROM geo.municipalities m
-    INNER JOIN geo.provinces p
-      ON ST_Within(m.geom, p.geom)
-    WHERE p.gid_1 = $1
-    ORDER BY m.name_2;
-    `,
+       SELECT
+            m.ogc_fid AS id,
+            m.gid_2 AS code,
+            m.name_2 AS name,
+            ST_AsGeoJSON(
+                ST_Envelope(m.geom)
+            )::json AS bounds
+        FROM geo.municipalities m
+        WHERE m.gid_1 = (
+            SELECT p.gid_1
+            FROM geo.provinces p
+            WHERE p.ogc_fid = $1
+        )
+        ORDER BY m.name_2;
+        `,
     provinceCode,
   );
 };
 
-export const GetBarangays = async (municipalityCode: string) => {
+export const GetBarangays = async (municipalityId: number) => {
   return await geodb.$queryRawUnsafe(
     `
-    SELECT
-      b.gid_3 AS code,
-      b.name_3 AS name,
-      ST_AsGeoJSON(ST_Envelope(b.geom))::json AS bounds
-    FROM geo.barangays b
-    INNER JOIN geo.municipalities m
-      ON ST_Within(b.geom, m.geom)
-    WHERE m.gid_2 = $1
-    ORDER BY b.name_3;
-    `,
-    municipalityCode,
+        SELECT
+            b.ogc_fid AS id,
+            b.gid_3 AS code,
+            b.name_3 AS name,
+            b.gid_2 AS municipality_code,
+            ST_AsGeoJSON(
+                ST_Envelope(b.geom)
+            )::json AS bounds
+        FROM geo.barangays b
+        INNER JOIN geo.municipalities m
+            ON m.gid_2 = b.gid_2
+        WHERE m.ogc_fid = $1
+        ORDER BY b.name_3;
+        `,
+    municipalityId,
   );
 };
