@@ -66,17 +66,6 @@ export interface TreatmentHubInterface {
 
   status: TreatmentHubStatus;
 
-  is_doh_accredited: boolean;
-  accepts_walk_in: boolean;
-  appointment_required: boolean;
-
-  has_hiv_testing: boolean;
-  has_art: boolean;
-  has_prep: boolean;
-  has_pep: boolean;
-  has_cd4_testing: boolean;
-  has_viral_load_testing: boolean;
-
   is_deleted: boolean;
 
   created_at: string;

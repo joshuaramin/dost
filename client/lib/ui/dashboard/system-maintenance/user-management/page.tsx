@@ -31,6 +31,7 @@ import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
 import { SubmitHandler } from 'react-hook-form';
 import { UserFormFields } from '@/lib/types/user.type';
+import Table from '@/components/Table/table';
 
 export default function UserManagement() {
   const router = useRouter();
@@ -206,7 +207,7 @@ export default function UserManagement() {
   
       </Grid>
 
-        <div className={styles.tableWrapper}>
+        {/* <div className={styles.tableWrapper}>
           <table>
             <thead>
               <tr>
@@ -240,7 +241,6 @@ export default function UserManagement() {
               {!isLoading && data?.data.edges.map(({ node, cursor }) => (
                 <tr key={cursor}>
                   <td>
-                    <Checkbox />
                   </td>
 
                   <td>
@@ -293,7 +293,52 @@ export default function UserManagement() {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>
+                  <Checkbox />
+              </Table.Head>
+              <Table.Head>
+                Name
+              </Table.Head>
+                <Table.Head>
+                Email
+              </Table.Head>
+              <Table.Head>
+                Organization
+              </Table.Head>
+              <Table.Head>
+                Actions
+              </Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {data?.data.edges.map(({node: { user_id, email, Profile: {first_name, last_name }, organization: { name } }}) => (
+              <Table.Row key={user_id}>
+                  <Table.Cell>
+                        <Checkbox />
+                  </Table.Cell>
+                  <Table.Cell>
+                    {first_name} {last_name}</Table.Cell>
+                  <Table.Cell>{email}</Table.Cell>
+                  <Table.Cell>{name}</Table.Cell>
+                  <Table.Cell>
+                    <button>
+                      <TbEye size={18} />
+                    </button>
+                    <button>
+                      <TbEdit size={18} />
+                    </button>
+                    <button>
+                      <TbTrash size={18} />
+                    </button>
+                  </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
         <Pagination 
           totalItems={data?.data.totalCount || 0}
           currentItems={data?.data.edges.length || 0}
