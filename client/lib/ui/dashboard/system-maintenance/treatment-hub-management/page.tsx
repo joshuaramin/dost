@@ -87,12 +87,14 @@ export default function TreatmentHub() {
         </Grid>
           <Table size="lg" variant="bordered">
             <Table.Header>
-              <Table.Head>Name</Table.Head>
-              <Table.Head>Address</Table.Head>
-              <Table.Head>Contact Number</Table.Head>
-              <Table.Head>Status</Table.Head>
-              <Table.Head>Region/Province/Municipalities/Barangays</Table.Head>
-              <Table.Head>Actions</Table.Head>
+                <Table.Row>
+                    <Table.Head>Name</Table.Head>
+                    <Table.Head>Address</Table.Head>
+                    <Table.Head>Contact Number</Table.Head>
+                    <Table.Head>Status</Table.Head>
+                    <Table.Head>Region/Province/Municipalities/Barangays</Table.Head>
+                    <Table.Head>Actions</Table.Head>
+                </Table.Row>
             </Table.Header>
             <Table.Body>
               {treatmentHubData?.data.edges.map(({node: { treatment_hub_id, code, name, address, contact_number, status, region_name, barangay_name, province_name, municipality_name,  }}) => (

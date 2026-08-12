@@ -52,6 +52,8 @@ export const GetAllUsers = ({
     select: {
       user_id: true,
       email: true,
+      is_active: true,
+      is_deleted: true,
       Profile: {
         select: { first_name: true, last_name: true },
       },
@@ -63,7 +65,17 @@ export const GetAllUsers = ({
 };
 
 export const GetUserById = async (data: any) => {
-  return UserManage.readById(data.key, "user_id");
+  return UserManage.readById(data, "user_id", {
+    select: {
+      email: true,
+      role: true,
+      organization: true,
+      is_active: true,
+      Profile: true,
+      ActivityLog: true,
+      DeviceSession: true,
+    },
+  });
 };
 
 export const CreateUser = async (data: any) => {

@@ -2,6 +2,8 @@ import z from "zod";
 
 export const UserSchema = z.object({
   email: z.string().min(1, "Email Address is required"),
+  is_active: z.boolean().optional(),
+  is_deleted: z.boolean().optional(),
 });
 
 export const ProfileSchema = z.object({

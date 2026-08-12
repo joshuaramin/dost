@@ -1,5 +1,6 @@
 import { booleanField } from "@/utils/booleanParser";
 import { z } from "zod";
+
 export const AttachmentType = z.enum([
   "IMAGE",
   "VIDEO",
@@ -92,6 +93,39 @@ export const EducationResourceSchema = z.object({
   is_deleted: booleanField.default(false),
 });
 
+/**
+ * Schema for multipart/form-data request.body.
+ *
+ * Uploaded files are intentionally NOT included here.
+ * Multer puts them into request.files.
+ */
+export const CreateEducationResourceBodySchema = z.object({
+  title: z.string().min(1, "Title is required").max(255),
+
+  summary: z
+    .string()
+    .min(1, "Summary is required")
+    .max(500, "Summary must not exceed 500 characters"),
+
+  content: z.string().optional(),
+
+  external_link: z.string().optional(),
+
+  type: EducationResourceType,
+
+  status: EducationStatus.default("DRAFT"),
+
+  category_id: z.string().min(1, "Category is required"),
+
+  user_id: z.string().optional(),
+
+  is_featured: booleanField.default(false),
+
+  is_deleted: booleanField.default(false),
+
+  tags: z.string().optional(),
+});
+
 export const CreateEducationResourceSchema =
   EducationResourceSchema.superRefine((data, ctx) => {
     switch (data.type) {
@@ -103,6 +137,7 @@ export const CreateEducationResourceSchema =
             message: "Content is required for an article.",
           });
         }
+
         break;
 
       case "EXTERNAL_LINK":
@@ -111,21 +146,6 @@ export const CreateEducationResourceSchema =
             code: z.ZodIssueCode.custom,
             path: ["external_link"],
             message: "External link is required.",
-          });
-        }
-        break;
-
-      case "VIDEO":
-      case "DOCUMENT":
-      case "CATALOGUE":
-      case "INFOGRAPHIC":
-      case "WEBINAR":
-      case "PODCAST":
-        if (data.attachments.length === 0) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["attachments"],
-            message: "Please upload at least one attachment.",
           });
         }
         break;
@@ -144,6 +164,10 @@ export const UpdateEducationTagSchema = EducationTagSchema.partial();
 
 export type CreateEducationResource = z.infer<
   typeof CreateEducationResourceSchema
+>;
+
+export type CreateEducationResourceBody = z.infer<
+  typeof CreateEducationResourceBodySchema
 >;
 
 export type UpdateEducationResource = z.infer<

@@ -100,6 +100,8 @@ export const GetAllEducationResource = ({
       is_deleted: true,
       category_id: true,
       external_link: true,
+      published_at: true,
+      created_at: true,
       user: {
         select: {
           email: true,

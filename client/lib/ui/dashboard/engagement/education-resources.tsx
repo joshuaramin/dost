@@ -15,15 +15,17 @@ import SelectArray from '@/components/Select/select-array';
 //lib and hooks
 import Template from '@/lib/ui/template';
 import useFormQuery from '@/lib/hooks/useQuery';
-import NoData from '@/lib/ui/no-data';
 import headers from '@/lib/utils/headers'
-import EducationResourceCard from '@/lib/ui/educational-resource/education-reosurce-card';
-import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import { EducationalResourceResult, EducationCategoryResult } from '@/lib/interface/education-resource/educational-resources.interface';
 import { EducationResourceType, EducationStatus } from '@/lib/validations/education.validation';
+import Table from '@/components/Table/table';
+import { format } from 'date-fns';
+import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
+import { useRouter } from 'next/navigation';
 
 export default function EducationResources() {
 
+  const router = useRouter()
   const [ search, setSearch ] = useState<string>("");
   const [ endCursor, setEndCursor ] = useState<string>("");
   const [ startCursor, setStartCursor ] = useState<string>("");
@@ -124,28 +126,45 @@ export default function EducationResources() {
               }))}
             />
         </Grid>
-          {data?.data.totalCount === 0 ? <NoData text="Educational Resoucre" /> : 
-          <Grid max={"1fr"} min={400}>
-            {isLoading ? Array.from({ length: 6}).map((node, index) => (
-              <SkeletonCard  key={index} /> 
-            )) :data?.data.edges.map(({ node: { education_resource_id, external_link, thumbnail, summary, type, title, slug, }}, index) => (
-              <EducationResourceCard
-                  key={index}
-                  summary={summary}
-                  thumbnail={thumbnail}
-                  slug={slug}
-                  type={type}
-                  title={title}
-                  educational_resource_id={education_resource_id}
-                  route={
-                    type === "EXTERNAL_LINK"
-                      ? external_link
-                      : `/dashboard/engagement/educational-resources/${slug}`
-                  }
-                />
-            ))}
-          </Grid>
-          }
+
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>Title</Table.Head>
+                  <Table.Head>Summary</Table.Head>
+                  <Table.Head>Category</Table.Head>
+                  <Table.Head>Type</Table.Head>
+                  <Table.Head>Status</Table.Head>
+                  <Table.Head>Date Publushed</Table.Head>
+                  <Table.Head>Actions</Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {data?.data.edges.map(({ node: { education_resource_id, category, type, slug, status, created_at, title, summary }}) => (
+                  <Table.Row key={education_resource_id}>
+                    <Table.Cell>{title}</Table.Cell>
+                    <Table.Cell style={{ textAlign: "justify"}}>{summary.slice(0, 100)}</Table.Cell>
+                    <Table.Cell>{category.name}</Table.Cell>
+                    <Table.Cell>{type}</Table.Cell>
+                    <Table.Cell>{status}</Table.Cell>
+                    <Table.Cell>
+                      {format(new Date(created_at), "MMMM dd, yyyy")}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <button onClick={() => router.push("/")}>
+                        <TbEye size={18} />
+                      </button>
+                        <button onClick={() => router.push(`/dashboard/engagement/educational-resources/edit/${slug}`)}>
+                        <TbEdit size={18} />
+                      </button>
+                        <button>
+                        <TbTrash size={18} />
+                      </button>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
           <Pagination
             totalItems={data?.data.totalCount ?? 0}
             currentItems={data?.data.totalCount ?? 0}

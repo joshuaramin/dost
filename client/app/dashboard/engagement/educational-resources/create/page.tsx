@@ -131,7 +131,6 @@ export default function Page() {
                     register={register}
                     name="thumbnail"
                     isRequired={true}
-                    // accepted={{}}
                     accepted={{
                         "image": ["jpeg", "jpg", "webp", "png"]
                     }}
@@ -143,7 +142,6 @@ export default function Page() {
                 <Select 
                     control={control}
                     error={errors.category_id}
-                    onChange={onHandleCategorySearch}
                     isRequired={true}
                     label="Category"
                     name="category_id"
@@ -159,7 +157,6 @@ export default function Page() {
                     label="Type"
                     isRequired
                     error={errors.type}
-                    onChange={onHandleTypeSearch}
                     options={EducationResourceType.options.map((type) => ({
                         label: type.replace("_", " "),
                         value: type,
@@ -187,7 +184,7 @@ export default function Page() {
 
                 {type === "CATALOGUE" && (
                     <FileUpload 
-                    label="File Upload"
+                    label="Attachments"
                     name="attachments"
                     register={register}
                     setValue={setValue}

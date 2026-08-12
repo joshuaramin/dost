@@ -10,16 +10,12 @@ export const AttachmentType = z.enum([
 
 export const EducationResourceType = z.enum([
   "ARTICLE",
-  "VIDEO",
-  "DOCUMENT",
   "CATALOGUE",
   "INFOGRAPHIC",
-  "WEBINAR",
-  "PODCAST",
   "EXTERNAL_LINK",
 ]);
 
-export const EducationStatus = z.enum(["DRAFT", "PUBLISHED"]);
+export const EducationStatus = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
 
 export const EducationTagSchema = z.object({
   education_tag_id: z.string().optional(),
@@ -113,21 +109,8 @@ export const CreateEducationResourceSchema =
           });
         }
         break;
-
-      case "VIDEO":
-      case "DOCUMENT":
       case "CATALOGUE":
       case "INFOGRAPHIC":
-      case "WEBINAR":
-      case "PODCAST":
-        if (data.attachments.length === 0) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            path: ["attachments"],
-            message: "Please upload at least one attachment.",
-          });
-        }
-        break;
     }
   });
 

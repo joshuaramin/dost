@@ -21,15 +21,13 @@ import  headers from '@/lib/utils/headers';
 
 //components
 import Input from '@/components/Input/input';
-import Avatar from '@/components/Avatar/avatar';
 import Checkbox from '@/components/Input/checkbox';
-import Text from '@/components/Typography/Text/text';
 import Search from '@/components/Search/search';
 import Pagination from '@/components/Pagination/pagination';
 import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
-import { SubmitHandler } from 'react-hook-form';
+import { SubmitHandler, useWatch } from 'react-hook-form';
 import { UserFormFields } from '@/lib/types/user.type';
 import Table from '@/components/Table/table';
 
@@ -98,6 +96,7 @@ export default function UserManagement() {
     defaultValues: {
       email: "",
       first_name: "",
+      is_active: false,
       last_name: "",
       organization_id: "",
       role_id: ""
@@ -125,6 +124,12 @@ export default function UserManagement() {
     })
   }
 
+
+  const status = useWatch({
+    control,
+    name: "is_active"
+  })
+
   return (
     <Template
       title="User Management"
@@ -145,7 +150,6 @@ export default function UserManagement() {
           <Select 
                 label="Role"
                 name="role_id"
-             
                 control={control}
                 
                 error={errors.role_id} 
@@ -202,98 +206,8 @@ export default function UserManagement() {
               setRole(val)
             }}
         />
-      </Grid.Column>
-
-  
+      </Grid.Column>  
       </Grid>
-
-        {/* <div className={styles.tableWrapper}>
-          <table>
-            <thead>
-              <tr>
-                <th><Checkbox /></th>
-                <th>Full name</th>
-                <th>Email address</th>
-                <th>Organization</th>
-                <th>Role</th>
-                <th>Joined date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {isLoading && (
-                <tr>
-                  <td colSpan={7} className={styles.stateCell}>
-                    <Text size="sm">Loading...</Text>
-                  </td>
-                </tr>
-              )}
-
-              {!isLoading && !data?.data.edges.length && (
-                <tr>
-                  <td colSpan={7} className={styles.stateCell}>
-                    <Text size="sm">No users found.</Text>
-                  </td>
-                </tr>
-              )}
-
-              {!isLoading && data?.data.edges.map(({ node, cursor }) => (
-                <tr key={cursor}>
-                  <td>
-                  </td>
-
-                  <td>
-                    <div className={styles.nameCell}>
-                      <Avatar variant="md" />
-                      <Text size="sm">
-                        {node.Profile.first_name} {node.Profile.last_name}
-                      </Text>
-                    </div>
-                  </td>
-
-                  <td>
-                    <Text size="sm">{node.email}</Text>
-                  </td>
-
-                  <td>
-                    <Text size="sm">{node.organization.name}</Text>
-                  </td>
-
-                  <td>
-                    <Text size="sm">{node.role.name}</Text>
-                  </td>
-
-                  <td>
-                    <Text size="sm">
-                      {format(new Date(node.created_at), "MMMM dd, yyyy")}
-                    </Text>
-                  </td>
-
-                  <td>
-                    <div className={styles.actionCell}>
-                      <button
-                      onClick={() => router.push(`/dashboard/system-maintenance/user-management/${node.user_id}`)}
-                      className={styles.actionBtn} aria-label="View user">
-                        <TbEye size={23} />
-                      </button>
-                      <button 
-                        onClick={() => router.push(`/dashboard/system-maintenance/user-management/${node.user_id}/edit`)}
-                      className={styles.actionBtn} aria-label="Edit user">
-                        <TbEdit size={23} />
-                      </button>
-                      <button 
-                      
-                      className={styles.actionBtn} aria-label="Delete user">
-                        <TbTrash size={23} />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div> */}
         <Table>
           <Table.Header>
             <Table.Row>
@@ -307,6 +221,9 @@ export default function UserManagement() {
                 Email
               </Table.Head>
               <Table.Head>
+                Status
+              </Table.Head>
+              <Table.Head>
                 Organization
               </Table.Head>
               <Table.Head>
@@ -315,17 +232,18 @@ export default function UserManagement() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {data?.data.edges.map(({node: { user_id, email, Profile: {first_name, last_name }, organization: { name } }}) => (
+            {data?.data.edges.map(({node: { user_id, email, Profile: {first_name, last_name }, is_active, organization: { name } }}) => (
               <Table.Row key={user_id}>
                   <Table.Cell>
-                        <Checkbox />
+                      <Checkbox />
                   </Table.Cell>
                   <Table.Cell>
                     {first_name} {last_name}</Table.Cell>
                   <Table.Cell>{email}</Table.Cell>
+                  <Table.Cell>{is_active ? "Active" : "Inactive"}</Table.Cell>
                   <Table.Cell>{name}</Table.Cell>
                   <Table.Cell>
-                    <button>
+                    <button onClick={() => router.push(`/dashboard/system-maintenance/user-management/${user_id}`)}>
                       <TbEye size={18} />
                     </button>
                     <button>

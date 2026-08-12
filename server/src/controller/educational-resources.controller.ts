@@ -11,6 +11,7 @@ import {
 } from "@/services/educational-resources.services";
 import {
   CreateEducationCategorySchema,
+  CreateEducationResourceBodySchema,
   CreateEducationResourceSchema,
   CreateEducationTagSchema,
 } from "@/lib/validation/educational-resource.validation";
@@ -177,7 +178,21 @@ export const createEducationResources = async (
   try {
     const body = request.body;
 
-    const parseData = CreateEducationResourceSchema.safeParse(body);
+    const files =
+      (request.files as {
+        thumbnail?: Express.MulterS3.File[];
+        attachments?: Express.MulterS3.File[];
+      }) ?? {};
+
+    const thumbnail = files.thumbnail?.[0];
+
+    const attachments = files.attachments ?? [];
+
+    console.log("BODY:", body);
+    console.log("ATTACHMENTS:", attachments);
+    console.log("THUMBNAIL:", thumbnail);
+
+    const parseData = CreateEducationResourceBodySchema.safeParse(body);
 
     if (!parseData.success) {
       return response.status(400).json({
@@ -187,61 +202,126 @@ export const createEducationResources = async (
       });
     }
 
-    const files =
-      (request.files as {
-        thumbnail?: Express.MulterS3.File[];
-        attachments?: Express.MulterS3.File[];
-      }) ?? {};
+    const data = parseData.data;
 
-    const thumbnail = files.thumbnail?.[0];
-    const attachments = files.attachments ?? [];
+    if (data.type === "ARTICLE" && !data.content?.trim()) {
+      return response.status(400).json({
+        message: "Invalid Schema",
+        schema: {
+          content: ["Content is required for an article."],
+        },
+        timestamp: new Date(),
+      });
+    }
 
-    console.log("Attachments: ", attachments);
-    console.log("Thumbnails: ", thumbnail);
+    if (data.type === "EXTERNAL_LINK" && !data.external_link?.trim()) {
+      return response.status(400).json({
+        message: "Invalid Schema",
+        schema: {
+          external_link: ["External link is required."],
+        },
+        timestamp: new Date(),
+      });
+    }
+
+    if (data.type === "CATALOGUE" && attachments.length === 0) {
+      return response.status(400).json({
+        message: "Invalid Schema",
+        schema: {
+          attachments: ["Please upload at least one attachment."],
+        },
+        timestamp: new Date(),
+      });
+    }
+
+    let tags = [];
+
+    if (data.tags) {
+      try {
+        const parsedTags = JSON.parse(data.tags);
+
+        if (Array.isArray(parsedTags)) {
+          tags = parsedTags;
+        }
+      } catch {
+        tags = [];
+      }
+    }
 
     const result = await CreateEducationResource({
-      title: parseData.data.title,
-      summary: parseData.data.summary,
-      slug: useSlugify(parseData.data.title),
-      content: parseData.data.content,
-      status: parseData.data.status,
-      type: parseData.data.type,
-      is_deleted: parseData.data.is_deleted,
-      external_link: parseData.data.external_link,
-      is_featured: parseData.data.is_deleted,
-      ...(thumbnail && {
-        thumbnail: `${process.env.CDN_URL}/${thumbnail.key}`,
-      }),
+      title: data.title,
 
-      ...(attachments?.length && {
-        attachments: {
-          create: attachments.map((file, index) => ({
-            type: getAttachmentType(file.mimetype),
-            file_name: file.originalname,
-            file_url: `${process.env.CDN_URL}/${file.key}`,
-            mime_type: file.mimetype,
-            file_size: file.size,
-            order_index: index,
-          })),
-        },
-      }),
+      summary: data.summary,
 
-      ...(parseData.data.tags?.length && {
-        EducationResourceTag: {
-          create: parseData.data.tags.map((tag) => ({
-            tag: {
-              connect: {
-                education_tag_id: tag.education_tag_id,
-              },
+      slug: useSlugify(data.title),
+
+      content: data.content,
+
+      status: data.status,
+
+      type: data.type,
+
+      is_deleted: data.is_deleted,
+
+      external_link: data.external_link,
+
+      is_featured: data.is_featured,
+
+      ...(thumbnail
+        ? {
+            thumbnail: `${process.env.CDN_URL}/${thumbnail.key}`,
+          }
+        : {}),
+
+      ...(attachments.length > 0
+        ? {
+            attachments: {
+              create: attachments.map((file, index) => ({
+                type: getAttachmentType(file.mimetype),
+
+                file_name: file.originalname,
+
+                file_url: `${process.env.CDN_URL}/${file.key}`,
+
+                mime_type: file.mimetype,
+
+                file_size: file.size,
+
+                order_index: index,
+              })),
             },
-          })),
-        },
-      }),
+          }
+        : {}),
+
+      ...(tags.length > 0
+        ? {
+            EducationResourceTag: {
+              create: tags.map((tag) => ({
+                tag: {
+                  connect: {
+                    education_tag_id: tag.education_tag_id,
+                  },
+                },
+              })),
+            },
+          }
+        : {}),
 
       category: {
-        connect: { education_category_id: parseData.data.category_id },
+        connect: {
+          education_category_id: data.category_id,
+        },
       },
-      user: { connect: { user_id: parseData.data.user_id } },
+
+      ...(data.user_id
+        ? {
+            user: {
+              connect: {
+                user_id: data.user_id,
+              },
+            },
+          }
+        : {}),
     });
 
     return response.status(200).json({
@@ -250,7 +330,7 @@ export const createEducationResources = async (
       timestamp: new Date(),
     });
   } catch (error) {
-    console.error(error);
+    console.error("CREATE EDUCATION RESOURCE ERROR:", error);
 
     return response.status(500).json({
       message: "Something went wrong",
