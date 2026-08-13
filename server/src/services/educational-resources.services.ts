@@ -78,9 +78,11 @@ export const GetAllEducationResource = ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
     }),
     ...(before && {
       cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

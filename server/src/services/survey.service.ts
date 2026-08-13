@@ -41,9 +41,11 @@ export const GetAllSurveys = ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
     }),
     ...(before && {
       cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

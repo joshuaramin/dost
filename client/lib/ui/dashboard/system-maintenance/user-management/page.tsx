@@ -17,6 +17,7 @@ import { OrganizationResult } from '@/lib/interface/organization/organization.in
 import { UserResult } from '@/lib/interface/user/user.interface';
 import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
 import  headers from '@/lib/utils/headers';
+import { UserFormFields } from '@/lib/types/user.type';
 
 
 //components
@@ -28,38 +29,19 @@ import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
 import { SubmitHandler, useWatch } from 'react-hook-form';
-import { UserFormFields } from '@/lib/types/user.type';
 import Table from '@/components/Table/table';
 
 export default function UserManagement() {
   const router = useRouter();
 
+  const limit = 20;
+  const [ currentPage, setCurrentPage ] = useState<number>( 1)
   const [open, setOpen] = useState<boolean>(false);
   const [ search, setSearch ] = useState<string>("");
   const [ endCursor, setEndCursor ] = useState<string>("")
   const [ startCursor, setStartCursor ] = useState<string>("")
   const [ organization_id, setOrganization ] = useState<string>("");
   const [ role_id, setRole ] = useState<string>("")
-
-
-
-
-  const onHandleNextPage = () => { 
-    setEndCursor(() => endCursor )
-  }
-
-  const onHandlePrevPage = () => {
-    setStartCursor(() => startCursor)
-  }
-
-  const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.currentTarget.value)
-  }
-
-
-  const onHandleClear = () => {
-      setSearch('')
-  }
 
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
@@ -70,7 +52,7 @@ export default function UserManagement() {
     params: {
       orderBy: "created_at",
       sortBy: "asc",
-      limit: 20,
+      limit,
       search,
       role_id,
       organization_id,
@@ -124,6 +106,54 @@ export default function UserManagement() {
     })
   }
 
+    const onHandleNextPage = () => { 
+       const pageInfo = data?.data.pageInfo;
+
+        if (
+            !pageInfo?.hasNextPage ||
+            !pageInfo.endCursor
+        ) {
+            return;
+        }
+
+        setStartCursor("");
+        setEndCursor(pageInfo.endCursor);
+
+        setCurrentPage((prev) => prev + 1);
+    }
+
+    const onHandlePrevPage = () => {
+      const pageInfo = data?.data.pageInfo;
+
+        if (
+            !pageInfo?.hasPrevPage ||
+            !pageInfo.startCursor
+        ) {
+            return;
+        }
+
+        setEndCursor("");
+        setStartCursor(pageInfo.startCursor);
+
+        setCurrentPage((prev) =>
+            Math.max(prev - 1, 1)
+        );
+    }
+
+    const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.currentTarget.value);
+        setCurrentPage(1);
+        setEndCursor("");
+        setStartCursor("");
+    }
+
+
+    const onHandleClear = () => {
+        setSearch("");
+        setCurrentPage(1);
+        setEndCursor("");
+        setStartCursor("");
+    }
 
   const status = useWatch({
     control,
@@ -258,13 +288,14 @@ export default function UserManagement() {
           </Table.Body>
         </Table>
         <Pagination 
-          totalItems={data?.data.totalCount || 0}
-          currentItems={data?.data.edges.length || 0}
-          hasNextPage={data?.data.pageInfo.hasNextPage || false}
-          hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
-          onNext={onHandleNextPage}
-          onPrev={onHandlePrevPage}
-          
+            pageSize={limit}
+            currentPage={currentPage}
+            totalItems={data?.data.totalCount || 0}
+            currentItems={data?.data.edges.length || 0}
+            hasNextPage={data?.data.pageInfo.hasNextPage || false}
+            hasPrevPage={data?.data.pageInfo.hasPrevPage || false}
+            onNext={onHandleNextPage}
+            onPrev={onHandlePrevPage}
         />
       </div>
     </Template>

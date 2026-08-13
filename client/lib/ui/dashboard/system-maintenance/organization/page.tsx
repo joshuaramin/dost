@@ -16,7 +16,6 @@ import Search from '@/components/Search/search';
 //lib && hooks
 import OrganizationCard from './organization-card';
 import useFormHook from '@/lib/hooks/useFormHook';
-import SkeletonCard from '@/lib/ui/loading/SkeletonCard';
 import Template from '@/lib/ui/template';
 import headers  from '@/lib/utils/headers';
 import useFormMutation from '@/lib/hooks/useMutation';
@@ -32,26 +31,12 @@ import NoData from '@/lib/ui/no-data';
 
 export default function Organization() {
 
+    const limit = 20;
+    const [ currentPage, setCurrentPage ] = useState<number>(1);
     const [ open, setOpen ]  = useState<boolean> (false);
     const [ search, setSearch ] = useState<string>("");
     const [ endCursor, setEndCursor ] = useState<string>("")
     const [ startCursor, setStartCursor ] = useState<string>("")
-
-    const onHandleNextPage = () => { 
-        setEndCursor(() => endCursor)
-    }
-
-    const onHandlePrevPage = () => {
-        setStartCursor(() => startCursor)
-    }
-
-    const onHandleAddNew = () => {
-        setOpen((prev) => !prev)
-    }
-
-  const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.currentTarget.value)
-  }
 
     const { data, isLoading } = useFormQuery<OrganizationResult>({
         key: ["Organizatoin", search, endCursor, startCursor],
@@ -102,6 +87,50 @@ export default function Organization() {
         })
     }
 
+    const onHandleNextPage = () => { 
+        const pageInfo = data?.data.pageInfo;
+
+        if (
+            !pageInfo?.hasNextPage ||
+            !pageInfo.endCursor
+        ) {
+            return;
+        }
+
+        setStartCursor("");
+        setEndCursor(pageInfo.endCursor);
+
+        setCurrentPage((prev) => prev + 1);
+    }
+
+    const onHandlePrevPage = () => {
+        setStartCursor(() => startCursor)
+    }
+
+    const onHandleAddNew = () => {
+        const pageInfo = data?.data.pageInfo;
+
+        if (
+            !pageInfo?.hasPrevPage ||
+            !pageInfo.startCursor
+        ) {
+            return;
+        }
+
+        setEndCursor("");
+        setStartCursor(pageInfo.startCursor);
+
+        setCurrentPage((prev) =>
+            Math.max(prev - 1, 1)
+        );
+    }
+
+    const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.currentTarget.value);
+        setCurrentPage(1);
+        setEndCursor("");
+        setStartCursor("");
+    }
     return (
         <Template
             title="Organization Management"
@@ -141,6 +170,8 @@ export default function Organization() {
                     ))}
                 </Grid>}
             <Pagination
+                currentPage={currentPage}
+                pageSize={limit}
                 totalItems={data?.data.totalCount ?? 0}
                 currentItems={data?.data.totalCount ?? 0}
                 hasNextPage={data?.data.pageInfo.hasNextPage ?? false}

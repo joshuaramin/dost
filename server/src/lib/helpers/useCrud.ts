@@ -28,6 +28,7 @@ type ReadOptions<M extends PrismaDelegate, TCursor> = {
   include?: FindManyArgs<M>["include"];
   where?: FindManyArgs<M>["where"];
   orderBy?: FindManyArgs<M>["orderBy"];
+  direction?: "forward" | "backward";
 };
 
 interface Result<TNode, TCursor = unknown> {
@@ -97,22 +98,25 @@ export class PrismaCRUDManager<
       where,
       orderBy,
       sortBy,
+      direction = "forward",
     } = options;
 
     if (select && include) {
       throw new Error("Cannot use select and include together.");
     }
 
-    const take = Number(limit);
+    const take = Math.abs(Number(limit));
 
     const mergedWhere = this.buildWhere(where);
+
+    const isBackward = direction === "backward";
 
     const query: FindManyArgs<M> = {
       where: mergedWhere,
       orderBy: orderBy ?? {
         [this.idKey]: sortBy ?? "asc",
       },
-      take: take + 1, // Fetch one extra record to determine if there is a next page
+      take: isBackward ? -(take + 1) : take + 1,
       ...(select && { select }),
       ...(include && { include }),
     };
@@ -121,30 +125,46 @@ export class PrismaCRUDManager<
       (query as any).cursor = {
         [this.idKey]: cursor,
       };
+
       (query as any).skip = 1;
     }
 
-    const results = await this.model.findMany(query);
+    let results = await this.model.findMany(query);
 
-    const hasNextPage = results.length > take;
+    const hasMore = results.length > take;
 
-    const items = hasNextPage ? results.slice(0, take) : results;
+    if (isBackward) {
+      results = results.slice(0, take);
+
+      results.reverse();
+    } else {
+      results = hasMore ? results.slice(0, take) : results;
+    }
 
     const totalCount = await this.model.count({
       where: mergedWhere,
     });
+
+    const items = results;
+
+    const hasNextPage = isBackward ? Boolean(cursor) : hasMore;
+
+    const hasPrevPage = isBackward ? hasMore : Boolean(cursor);
 
     return ResultFn({
       edges: items.map((item: any) => ({
         node: item,
         cursor: item[this.idKey],
       })),
+
       pageInfo: {
         startCursor: items.length > 0 ? items[0][this.idKey] : null,
+
         endCursor:
           items.length > 0 ? items[items.length - 1][this.idKey] : null,
+
         hasNextPage,
-        hasPrevPage: Boolean(cursor),
+        hasPrevPage,
       },
 
       totalCount,

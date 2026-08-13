@@ -6,7 +6,7 @@ const optionalString = z
   .transform((value) => (value === "" ? undefined : value))
   .optional();
 
-const optionalNumber = z.number().int().positive().optional();
+const optionalNumber = z.number().int().optional();
 
 export const TreatmentHubSchema = z.object({
   treatment_hub_id: z.string().uuid().optional(),

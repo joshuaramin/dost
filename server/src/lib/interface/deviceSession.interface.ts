@@ -1,3 +1,5 @@
 import { BasicArgs } from "./basicargs";
 
-export interface DeviceSessionInterface extends BasicArgs {}
+export interface DeviceSessionInterface extends BasicArgs {
+    
+}

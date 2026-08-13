@@ -30,7 +30,9 @@ import { CreateSurveyFormField} from '@/lib/types/survey-management';
 export default function SurveyManagement() {
 
     const router = useRouter();
+    const limit = 20;
     const [open ,setOpen ] = useState<boolean>(false);
+    const [ currentPage, setCurrentPage ] = useState<number>(1)
     const [search, setSearch] = useState<string>("");
     const [ endCursor, setEndCursor ] = useState<string>("")
     const [ startCursor, setStartCursor ] = useState<string>("")
@@ -43,25 +45,13 @@ export default function SurveyManagement() {
                 description: "",
             }
         })
-        const onHandleAddNew = () => { 
-            setOpen((prev) => !prev)
-        }
-        const onHandleNextPage = () => { 
-            setEndCursor(() => endCursor)
-        }
-
-        const onHandlePrevPage = () => {
-            setStartCursor(() => startCursor)
-        }
-
-        const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-            setSearch(e.currentTarget.value)
-        }
-
 
     
         const onHandleClear = () => {
             setSearch('')
+            setCurrentPage(1);
+            setEndCursor("");
+            setStartCursor("");
         }   
 
 
@@ -88,18 +78,47 @@ export default function SurveyManagement() {
 
 
         const { data, isLoading } = useFormQuery<SurveyResponse>({
-            key: ["SurveyManagement", search, endCursor, startCursor],
+            key: ["SurveyManagement", search, endCursor, startCursor, currentPage],
             url: "maintenance/survey",
             headers,
             params: {
                 search,
-                after: endCursor,
-                before: startCursor
+                limit,
+                after: endCursor || undefined,
+                before: startCursor || undefined
             }
         })
 
 
-    
+        const onHandleAddNew = () => { 
+            setOpen((prev) => !prev)
+        }
+        const onHandleNextPage = () => { 
+            const pageInfo = data?.data.pageInfo
+
+            if(!pageInfo?.hasNextPage || !pageInfo.endCursor) {
+                return;
+            }
+
+            setStartCursor("");
+            setEndCursor(pageInfo.endCursor)
+        }
+
+        const onHandlePrevPage = () => {
+            const pageInfo = data?.data.pageInfo
+
+            if(!pageInfo?.hasNextPage || !pageInfo.endCursor) {
+                return;
+            }
+
+            setStartCursor("");
+            setEndCursor(pageInfo.endCursor)
+        }
+
+        const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setSearch(e.currentTarget.value)
+        }
+
 
         return (
             <Template title="Survey Management"
@@ -159,6 +178,8 @@ export default function SurveyManagement() {
                         ))}
                     </Grid>
                 <Pagination
+                currentPage={currentPage}
+                    pageSize={limit}
                     totalItems={data?.data.totalCount ?? 0}
                     currentItems={data?.data.totalCount ?? 0}
                     hasNextPage={data?.data.pageInfo.hasNextPage ?? false}

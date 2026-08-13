@@ -28,7 +28,9 @@ export const GetAllTreatmentHub = async ({
       name: { contains: search, mode: "insensitive" },
     }),
     ...(psgc_code && {
-      regions: { psgc_code: { contains: psgc_code, mode: "insensitive" } },
+      regions: {
+        psgc_code: { contains: psgc_code, mode: "insensitive" },
+      },
     }),
   };
 
@@ -37,9 +39,11 @@ export const GetAllTreatmentHub = async ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
     }),
     ...(before && {
       cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

@@ -24,9 +24,11 @@ export const GetAllActivityLogs = async (
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
     }),
     ...(before && {
       cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

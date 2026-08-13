@@ -6,12 +6,17 @@
 
 .wrapper {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
 .table {
-    width: auto;
+    width: max-content;
+    min-width: 100%;
+    table-layout: auto;
     border-collapse: separate;
     border-spacing: 0;
     font-size: 0.875rem;
@@ -25,8 +30,10 @@
 
     th,
     td {
+        min-width: 120px;
         padding: 0.875rem 1rem;
         vertical-align: middle;
+        white-space: nowrap;
     }
 }
 
@@ -55,15 +62,32 @@
         border-top: 1px solid #e2e8f0;
 
         button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
             background-color: transparent;
-            padding: 8px;
             border: none;
             cursor: pointer;
             border-radius: 100px;
             vertical-align: middle;
+            transition:
+                background-color 150ms ease,
+                transform 150ms ease;
 
             &:hover {
                 background-color: color(neutral, 200);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            &:focus-visible {
+                outline: 2px solid #2563eb;
+                outline-offset: 2px;
             }
         }
     }
@@ -131,14 +155,11 @@
 .variant-minimal {
     .header {
         background-color: transparent;
-
-
     }
 
     .body {
         .cell {
             border-top: 0;
-
         }
 
         .row {
@@ -170,47 +191,62 @@
 }
 
 .size-sm {
+    font-size: 0.8125rem;
 
     th,
     td {
+        min-width: 100px;
         padding: 0.5rem 0.75rem;
     }
-
-    font-size: 0.8125rem;
 }
 
 .size-md {
+    font-size: 0.875rem;
 
     th,
     td {
+        min-width: 120px;
         padding: 0.75rem 1rem;
     }
-
-    font-size: 0.875rem;
 }
 
 .size-lg {
+    font-size: 0.9375rem;
 
     th,
     td {
+        min-width: 140px;
         padding: 1rem 1.25rem;
     }
-
-    font-size: 0.9375rem;
 }
 
 @media (max-width: 768px) {
-    .table {
-        min-width: 640px;
+    .wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
     }
 
-    .wrapper {
-        border-radius: 0.5rem;
+    .table {
+        min-width: max-content;
+
+        th,
+        td {
+            white-space: nowrap;
+        }
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .row {
         transition: none;
+    }
+
+    .body {
+        .cell {
+            button {
+                transition: none;
+            }
+        }
     }
 }

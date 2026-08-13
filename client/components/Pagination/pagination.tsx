@@ -8,6 +8,8 @@ import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 interface Props {
     totalItems: number;
     currentItems: number;
+    currentPage: number;
+    pageSize: number;
     hasNextPage: boolean;
     hasPrevPage: boolean;
     onNext: () => void;
@@ -17,13 +19,23 @@ interface Props {
 export default function Pagination({
     totalItems,
     currentItems,
+    currentPage,
+    pageSize,
     hasNextPage,
     hasPrevPage,
     onNext,
     onPrev,
 }: Props) {
-    const showingFrom = totalItems === 0 ? 0 : 1;
-    const showingTo = Math.min(currentItems, totalItems);
+    const showingFrom =
+        totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+
+    const showingTo =
+        totalItems === 0
+            ? 0
+            : Math.min(
+                  (currentPage - 1) * pageSize + currentItems,
+                  totalItems
+              );
 
     return (
         <div className={styles.container}>
@@ -38,18 +50,20 @@ export default function Pagination({
                     type="button"
                     disabled={!hasPrevPage}
                     onClick={onPrev}
+                    aria-label="Previous page"
                 >
                     <TbChevronLeft size={20} />
                 </button>
 
                 <Text size="md">
-                    {showingTo} / {totalItems}
+                    {showingFrom}-{showingTo} / {totalItems}
                 </Text>
 
                 <button
                     type="button"
                     disabled={!hasNextPage}
                     onClick={onNext}
+                    aria-label="Next page"
                 >
                     <TbChevronRight size={20} />
                 </button>

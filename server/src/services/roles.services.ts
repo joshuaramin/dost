@@ -30,9 +30,11 @@ export const GetAllRoles = ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
     }),
     ...(before && {
       cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

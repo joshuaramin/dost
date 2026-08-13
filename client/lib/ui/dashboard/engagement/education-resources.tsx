@@ -1,7 +1,7 @@
 "use client"
 
 
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/enagagement/educational-resources.module.scss'
 
 
@@ -26,43 +26,30 @@ import { useRouter } from 'next/navigation';
 export default function EducationResources() {
 
   const router = useRouter()
+  const limit = 20;
   const [ search, setSearch ] = useState<string>("");
   const [ endCursor, setEndCursor ] = useState<string>("");
   const [ startCursor, setStartCursor ] = useState<string>("");
   const [ category, setCategory ] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1)
   const [ type, setType ] = useState<string>("");
   const [ status, setStatus  ] = useState<string>("")
 
-  const onHandleNextPage = () => { 
-    setEndCursor(() => endCursor)
-  }
-
-  const onHandlePrevPage = () => {
-    setStartCursor(() => startCursor)
-  }
-
-
-  const onHandleClear = () => {
-    setSearch("")
-  }
-
-  const onHandleSearch = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value)
-  }
 
     const { data, isLoading } = useFormQuery<EducationalResourceResult>({
-      key: ["EducationResource", search, endCursor, startCursor, category, type, status],
+      key: ["EducationResource", limit, search, endCursor, startCursor, category, type, status],
       url: "maintenance/educational-resource",
       params: {
           orderBy: "created_at",
           sortBy: "asc",
-          limit: 20,
+          limit,
           search,
           category,
           type,
-          after: endCursor,
-          before: startCursor,
-          status
+          after: endCursor || undefined,
+          before: startCursor || undefined,
+          status,
+          currentPage
         },
       headers
     })
@@ -71,6 +58,53 @@ export default function EducationResources() {
     key: ["EducationCategory", category],
     url: `maintenance/educational-resource/category`
   })
+
+    const onHandleNextPage = () => { 
+      const pageInfo = data?.data.pageInfo;
+
+       if (
+            !pageInfo?.hasNextPage ||
+            !pageInfo.endCursor
+        ) {
+            return;
+        }
+
+        setStartCursor("");
+        setEndCursor(pageInfo.endCursor);
+
+        setCurrentPage((prev) => prev + 1);
+    }
+
+    const onHandlePrevPage = () => {
+      const pageInfo = data?.data.pageInfo;
+
+       if (
+            !pageInfo?.hasNextPage ||
+            !pageInfo.endCursor
+        ) {
+            return;
+        }
+
+        setStartCursor("");
+        setEndCursor(pageInfo.endCursor);
+
+        setCurrentPage((prev) => prev  - 1);
+    }
+
+
+    const onHandleClear = () => {
+        setSearch("");
+        setCurrentPage(1);
+        setEndCursor("");
+        setStartCursor("");
+    };
+
+    const onHandleSearch = (e: React.SyntheticEvent<HTMLInputElement>) => {
+      setSearch(e.currentTarget.value)
+      setCurrentPage(1);
+      setEndCursor("");
+      setStartCursor("");
+    }
 
   return (
       <Template 
@@ -166,12 +200,14 @@ export default function EducationResources() {
               </Table.Body>
             </Table>
           <Pagination
-            totalItems={data?.data.totalCount ?? 0}
-            currentItems={data?.data.totalCount ?? 0}
-            hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
-            hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
-            onNext={onHandleNextPage}
-            onPrev={onHandlePrevPage}
+              currentPage={currentPage}
+              pageSize={limit}
+              totalItems={data?.data.totalCount ?? 0}
+              currentItems={data?.data.totalCount ?? 0}
+              hasNextPage={data?.data.pageInfo.hasNextPage ?? false}
+              hasPrevPage={data?.data.pageInfo.hasPrevPage ?? false}
+              onNext={onHandleNextPage}
+              onPrev={onHandlePrevPage}
         />
         </div>
       </Template>

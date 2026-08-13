@@ -12,7 +12,8 @@ export const getAllTreatmentHub = async (
   request: Request,
   response: Response,
 ) => {
-  const { after, orderBy, search, sortBy, limit, before } = request.query;
+  const { after, orderBy, search, sortBy, limit, before, psgc_code } =
+    request.query;
 
   const result = await GetAllTreatmentHub({
     after: after as string,
@@ -23,6 +24,7 @@ export const getAllTreatmentHub = async (
       search: search as string,
       sortBy: sortBy as string,
     },
+    psgc_code: psgc_code as string,
   });
 
   return response.status(200).json({

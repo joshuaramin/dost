@@ -1,3 +1,7 @@
+import { BarangyasPropereties } from "../geom/barangay.interface";
+import { MunicipalitiesProperties } from "../geom/municipalities.interface";
+import { ProvicneProperties } from "../geom/provinces.interface";
+import { RegionProperties } from "../geom/regions.interface";
 import { MetaInterface } from "../meta.interface";
 
 export type TreatmentHubStatus = "ACTIVE" | "INACTIVE" | "TEMPORARILY_CLOSED";
@@ -48,6 +52,11 @@ export interface TreatmentHubInterface {
   barangay_name: string;
 
   postal_code?: string;
+
+  municipalities: MunicipalitiesProperties;
+  regions: RegionProperties;
+  provinces: ProvicneProperties;
+  barangays: BarangyasPropereties;
 
   contact_number?: string;
   telephone?: string;
