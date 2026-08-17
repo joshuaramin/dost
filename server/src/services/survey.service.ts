@@ -72,7 +72,9 @@ export const GetSurveyById = async (data: any) => {
       survey_id: true,
       title: true,
       description: true,
-      questions: true,
+      questions: {
+        include: { options: true },
+      },
       created_at: true,
       updated_at: true,
       is_published: true,

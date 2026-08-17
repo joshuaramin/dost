@@ -30,7 +30,7 @@ router.post(
 );
 router.get(
   "/:id",
-  withPermission("survey-management:update"),
+  // withPermission("survey-management:update"),
   asyncHandler(getSurveyById),
 );
 

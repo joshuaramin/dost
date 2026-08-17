@@ -38,73 +38,119 @@ export default function QuestionOptionCard<T extends FieldValues>({
         remove: removeOption,
     } = useFieldArray({
         control,
-        name: (`questionnaire.${index}.options` as unknown) as ArrayPath<T>,
+        name: `questionnaire.${index}.options` as ArrayPath<T>,
     });
 
+    const toOptionValue = (label: string) => {
+        return label
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "_")
+            .replace(/[^\w]/g, "");
+    };
 
-    const toOptionValue = (label: string) =>
-    label
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, "_")
-        .replace(/[^\w]/g, "");
+    const handleOptionChange = (
+        optionIndex: number,
+        label: string
+    ) => {
+        const labelPath =
+            `questionnaire.${index}.options.${optionIndex}.label` as Path<T>;
 
+        const valuePath =
+            `questionnaire.${index}.options.${optionIndex}.value` as Path<T>;
+
+        setValue(
+            labelPath,
+            label as never,
+            {
+                shouldDirty: true,
+                shouldValidate: true,
+            }
+        );
+
+        setValue(
+            valuePath,
+            toOptionValue(label) as never,
+            {
+                shouldDirty: true,
+                shouldValidate: true,
+            }
+        );
+    };
+
+    const handleAddOption = () => {
+        appendOption({
+            label: "",
+            value: "",
+            order_index: optionFields.length + 1,
+        } as never);
+    };
+
+    const handleRemoveOption = (
+        optionIndex: number
+    ) => {
+        if (optionFields.length <= 1) {
+            return;
+        }
+
+        removeOption(optionIndex);
+    };
 
     return (
         <div className={styles.option_container}>
-            {optionFields.map((option, optionIndex) => (
-                <div key={option.id} className={styles.option}>
-                    <Input
-                        label=""
-                        register={register}
-                        name={
-                            `questionnaire.${index}.options.${optionIndex}.label` as Path<T>
-                        }
-                        placeholder={`Option ${optionIndex + 1}`}
-                        onChange={(e) => {
-                            const label = e.target.value;
+            {optionFields.map((option, optionIndex) => {
+                const labelPath =
+                    `questionnaire.${index}.options.${optionIndex}.label` as Path<T>;
 
-                            setValue(
-                                `questionnaire.${index}.options.${optionIndex}.label` as Path<T>,
-                                label as never
-                            );
-
-                            setValue(
-                                `questionnaire.${index}.options.${optionIndex}.value` as Path<T>,
-                                toOptionValue(label) as never
-                            );
-                        }}
-                    />
-                    <Button
-                        type="button"
-                        types="outline"
-                        size="sm"
-                        variant={
-                            optionFields.length <= 1
-                                ? "disabled"
-                                : "danger"
-                        }
-                        disabled={optionFields.length <= 1}
-                        onClick={() => removeOption(optionIndex)}
+                return (
+                    <div
+                        key={option.id}
+                        className={styles.option}
                     >
-                        <TbX />
-                    </Button>
-                </div>
-            ))}
+                        <Input
+                            label=""
+                            register={register}
+                            name={labelPath}
+                            placeholder={`Option ${optionIndex + 1}`}
+                            onChange={(event) => {
+                                handleOptionChange(
+                                    optionIndex,
+                                    event.currentTarget.value
+                                );
+                            }}
+                        />
 
-        <div className={styles.option_button}>
+                        <Button
+                            type="button"
+                            types="outline"
+                            size="sm"
+                            variant={
+                                optionFields.length <= 1
+                                    ? "disabled"
+                                    : "danger"
+                            }
+                            disabled={
+                                optionFields.length <= 1
+                            }
+                            onClick={() =>
+                                handleRemoveOption(
+                                    optionIndex
+                                )
+                            }
+                        >
+                            <TbX />
+                        </Button>
+                    </div>
+                );
+            })}
+
+            <div className={styles.option_button}>
                 <Button
                     type="button"
                     types="outline"
                     size="sm"
                     variant="primary"
-                    onClick={() =>
-                        appendOption({
-                            label: "",
-                            value: "",
-                            order_index: optionFields.length + 1,
-                        } as never)
-                    }
+                    onClick={handleAddOption}
                 >
                     <TbPlus />
                     Add Option

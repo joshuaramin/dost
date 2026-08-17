@@ -1,265 +1,396 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from "react";
-import { SubmitHandler, useFieldArray, useWatch } from "react-hook-form";
-import { TbPlus, TbTrash } from "react-icons/tb";
+import React, { useEffect } from "react";
+import {
+    SubmitHandler,
+    useFieldArray,
+} from "react-hook-form";
+
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/survey-management/questionnaire-card.module.scss";
 
-// components
-import Input from "@/components/Input/input";
-import Text from "@/components/Typography/Text/text";
 import Button from "@/components/Button/button";
-import InputReadOnly from "@/components/Input/input-readonly";
 import Form from "@/components/Form/form";
-import TextareaReadOnly from "@/components/Textarea/textarea-readonly";
-import { Select } from "@/components/Select/select";
 
-// lib & hooks
 import useFormHook from "@/lib/hooks/useFormHook";
 import TemplateSurvey from "@/lib/ui/dashboard/template-survey";
-import QuestionOptionCard from "./question-option-card";
-import { SurveyQuestionSchema } from "@/lib/validations/survey-management.validation";
-import { SurveyQuestionField } from "@/lib/types/survey-management";
+
+import {
+    SurveyQuestionFormSchema,
+} from "@/lib/validations/survey-management.validation";
+
+import {
+    SurveyQuestionFormField,
+    SurveyQuestionField,
+} from "@/lib/types/survey-management";
+
 import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
 
+import headers from "@/lib/utils/headers";
+
+import {
+    SurveyIDInterface,
+} from "@/lib/interface/survey-management/survey.interface";
+
+import QuestionCard from "./question-card";
 
 interface Props {
-    slug: string
+    slug: string;
 }
 
-export default function SurveyID({ slug }: Props) {
-
-
-    const { data, isLoading } = useFormQuery({
+export default function SurveyID({
+    slug,
+}: Props) {
+    const {
+        data,
+        isLoading,
+    } = useFormQuery<SurveyIDInterface>({
         key: ["Survey", slug],
         url: `maintenance/survey/${slug}`,
-    })
-    type QuestionType =
-        | "SHORT_TEXT"
-        | "LONG_TEXT"
-        | "MULTIPLE_CHOICE"
-        | "CHECKBOX";
+        headers,
+    });
+
     const {
         register,
         control,
         handleSubmit,
         errors,
         setValue,
+        reset,
+    } = useFormHook<typeof SurveyQuestionFormSchema>({
+        schema: SurveyQuestionFormSchema,
 
-    } = useFormHook({
-        schema: SurveyQuestionSchema,
         defaultValues: {
             questionnaire: [
                 {
+                    survey_question_id: undefined,
                     text: "",
                     type: "SHORT_TEXT",
                     order_index: 1,
                     is_required: true,
+                    options: [],
                 },
             ],
         },
     });
 
-    const { fields, append, remove } = useFieldArray({
+    const {
+        fields,
+        append,
+        remove,
+    } = useFieldArray({
         control,
         name: "questionnaire",
     });
 
+    useEffect(() => {
+        const questions =
+            data?.data?.questions ?? [];
 
-      const questionnaire = useWatch({
-            name: "questionnaire",
-            control
+        if (!questions.length) {
+            reset({
+                questionnaire: [
+                    {
+                        survey_question_id: undefined,
+                        text: "",
+                        type: "SHORT_TEXT",
+                        order_index: 1,
+                        is_required: true,
+                        options: [],
+                    },
+                ],
+            });
+
+            return;
         }
-    );
 
+        const mappedQuestions: SurveyQuestionField[] =
+            questions
+                .filter(
+                    (question) =>
+                        !question.is_deleted
+                )
+                .sort((a, b) => {
+                    if (
+                        a.order_index !==
+                        b.order_index
+                    ) {
+                        return (
+                            a.order_index -
+                            b.order_index
+                        );
+                    }
 
-    const mutation = useFormMutation({
-        key: ["CreateSurveyQuestions", slug],
-        method: "POST",
-        url: `maintenance/survey/${slug}`
-    })
+                    return (
+                        new Date(
+                            a.created_at
+                        ).getTime() -
+                        new Date(
+                            b.created_at
+                        ).getTime()
+                    );
+                })
+                .map(
+                    (
+                        question,
+                        questionIndex
+                    ) => {
+                        const mappedOptions =
+                            (
+                                question.options ??
+                                []
+                            )
+                                .filter(
+                                    (option) =>
+                                        !option.is_deleted
+                                )
+                                .sort(
+                                    (a, b) => {
+                                        if (
+                                            a.order_index !==
+                                            b.order_index
+                                        ) {
+                                            return (
+                                                a.order_index -
+                                                b.order_index
+                                            );
+                                        }
 
+                                        return (
+                                            new Date(
+                                                a.created_at
+                                            ).getTime() -
+                                            new Date(
+                                                b.created_at
+                                            ).getTime()
+                                        );
+                                    }
+                                )
+                                .map(
+                                    (
+                                        option,
+                                        optionIndex
+                                    ) => ({
+                                        question_option_id:
+                                            option.question_option_id,
 
-    const onHandleSubmit: SubmitHandler<SurveyQuestionField> = (data) => {
-        console.log(data);
-        mutation.mutate(data, {
-            onSuccess: () => {},
-            onError: () => {}
-        })
-    };
+                                        label:
+                                            option.label,
+
+                                        value:
+                                            option.value,
+
+                                        order_index:
+                                            optionIndex +
+                                            1,
+                                    })
+                                );
+
+                        return {
+                            survey_question_id:
+                                question.survey_question_id,
+
+                            text:
+                                question.text,
+
+                            type:
+                                question.type,
+
+                            is_required:
+                                question.is_required,
+
+                            order_index:
+                                questionIndex +
+                                1,
+
+                            options:
+                                mappedOptions,
+                        };
+                    }
+                );
+
+        reset({
+            questionnaire:
+                mappedQuestions,
+        });
+    }, [
+        data,
+        reset,
+    ]);
+
+    const mutation =
+        useFormMutation({
+            key: [
+                "UpdateSurveyQuestions",
+                slug,
+            ],
+
+            method: "POST",
+
+            url: `maintenance/survey/${slug}`,
+
+            headers,
+        });
+
+    const handleAddQuestion =
+        () => {
+            append({
+                survey_question_id:
+                    undefined,
+
+                text: "",
+
+                type: "SHORT_TEXT",
+
+                order_index:
+                    fields.length + 1,
+
+                is_required: false,
+
+                options: [],
+            });
+        };
+
+    const handleRemoveQuestion =
+        (
+            index: number
+        ) => {
+            if (
+                fields.length <= 1
+            ) {
+                return;
+            }
+
+            remove(index);
+        };
+
+    const onHandleSubmit:
+        SubmitHandler<
+            SurveyQuestionFormField
+        > = (
+            formData
+        ) => {
+            const questionnaire =
+                formData.questionnaire.map(
+                    (
+                        question,
+                        questionIndex
+                    ) => ({
+                        ...question,
+
+                        order_index:
+                            questionIndex +
+                            1,
+
+                        options:
+                            (
+                                question.options ??
+                                []
+                            ).map(
+                                (
+                                    option,
+                                    optionIndex
+                                ) => ({
+                                    ...option,
+
+                                    order_index:
+                                        optionIndex +
+                                        1,
+                                })
+                            ),
+                    })
+                );
+
+            mutation.mutate({
+                questionnaire,
+            });
+        };
+
+    if (isLoading) {
+        return (
+            <TemplateSurvey
+                title={slug}
+            >
+                <div
+                    className={
+                        styles.container
+                    }
+                >
+                    Loading...
+                </div>
+            </TemplateSurvey>
+        );
+    }
 
     return (
-        <TemplateSurvey title={slug}>
-                <div className={styles.container}>
-                    <Form onSubmit={handleSubmit(onHandleSubmit)}>
-                <div className={styles.question_container}>
-                        {fields.map(({ id }, index) => {
-                            const question = questionnaire?.[index]?.type;
-                            return (
-                                <div
-                                    className={styles.question_card}
-                                    key={id}
-                                >
-                                    <div className={styles.col_1}>
-                                        <div className={styles.body}>
-                                            <div className={styles.questions}>
-                                                <Input
-                                                    type="text"
-                                                    label="Question"
-                                                    register={register}
-                                                    name={`questionnaire.${index}.text`}
-                                                    placeholder="Enter your question"
-                                                    error={errors.questionnaire?.[index]?.text}
-                                                    isRequired
-                                                />
-
-                                                {question ===
-                                                    "SHORT_TEXT" && (
-                                                        <InputReadOnly readOnly placeholder="Short Answer" />
-                                                )}
-
-                                                {question ===
-                                                    "LONG_TEXT" && (
-                                                    <TextareaReadOnly
-                                                        placeholder="Long Answer"
-                                                        readOnly
-                                                    />
-                                                )}
-
-                                                {question ===
-                                                    "MULTIPLE_CHOICE" && (
-                                                    <>
-                                                    <QuestionOptionCard
-                                                            index={index}
-                                                            control={control}
-                                                            register={register}
-                                                            errors={errors}
-                                                            setValue={setValue}
-                                                        />
-                                                    </>
-                                                )}
-
-                                                {question ===
-                                                    "CHECKBOX" && (
-                                                    <>
-                                                        <QuestionOptionCard
-                                                            index={index}
-                                                            control={control}
-                                                            register={register}
-                                                            errors={errors}
-                                                            setValue={setValue}
-                                                        />
-                                                    </>
-                                                )}
-                                            </div>
-
-                                            <div className={styles.choice}>
-                                                <Select
-                                                    control={control}
-                                                    name={`questionnaire.${index}.type`}
-                                                    label="Question Type"
-                                                    isRequired
-                                                    onChange={(value: any) =>
-                                                        setValue(
-                                                            `questionnaire.${index}.type`,
-                                                            (value?.target?.value ?? value) as QuestionType
-                                                        )
-                                                    }
-                                                    options={[
-                                                        {
-                                                            label: "Short Text",
-                                                            value: "SHORT_TEXT",
-                                                        },
-                                                        {
-                                                            label: "Long Text",
-                                                            value: "LONG_TEXT",
-                                                        },
-                                                        {
-                                                            label:
-                                                                "Multiple Choice",
-                                                            value:
-                                                                "MULTIPLE_CHOICE",
-                                                        },
-                                                        {
-                                                            label: "Checkbox",
-                                                            value: "CHECKBOX",
-                                                        },
-                                                    ]}
-                                                    error={
-                                                        errors.questionnaire?.[
-                                                            index
-                                                        ]?.type
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.divider} />
-
-                                    <div className={styles.footer}>
-                                        <div>
-                                        {index === fields.length - 1 && (
-                                            <Button
-                                                type="button"
-                                                types="outline"
-                                                size="sm"
-                                                variant="primary"
-                                                onClick={() => append({
-                                                        text: "",
-                                                        type: "SHORT_TEXT",
-                                                        order_index:
-                                                            fields.length + 1,
-                                                        is_required: false,
-                                                })}
-                                            >
-                                                <TbPlus size={23} />
-                                            </Button>
-                                        )}
-                                        </div>
-                                        <div
-                                            className={
-                                                styles.footer_1_col_1
-                                            }
-                                        >
-                                        <Button
-                                            types="outline"
-                                            size="sm"
-                                            variant={fields.length === 1 ? "disabled" : "primary"}
-                                            type="button"
-                                            onClick={() => remove(index)}
-                                            disabled={fields.length === 1}
-                                        >
-                                            <TbTrash size={23} />
-                                        </Button>
-                                        <hr />
-                                        <div>
-                                                <Text size="sm">
-                                                    Required
-                                                </Text>
-                                            </div>
-                                        </div>
-                                    </div>                                 
-                                </div>
-                            );
-                        })}
+        <TemplateSurvey
+            title={slug}
+        >
+            <div
+                className={
+                    styles.container
+                }
+            >
+                <Form
+                    onSubmit={handleSubmit(
+                        onHandleSubmit
+                    )}
+                >
+                    <div
+                        className={
+                            styles.question_container
+                        }
+                    >
+                        {fields.map(
+                            (
+                                field,
+                                index
+                            ) => (
+                                <QuestionCard
+                                    key={field.id}
+                                    control={control}
+                                    errors={errors}
+                                    fieldId={field.id}
+                                    index={index}
+                                    register={register}
+                                    options={field.options}
+                                    setValue={setValue}
+                                    onRemove={
+                                        handleRemoveQuestion
+                                    }
+                                    onAdd={
+                                        handleAddQuestion
+                                    }
+                                    isLast={
+                                        index ===
+                                        fields.length -
+                                            1
+                                    }
+                                    isOnlyQuestion={
+                                        fields.length ===
+                                        1
+                                    }
+                                />
+                            )
+                        )}
                     </div>
 
-                    <div className={styles.submit_container}>
+                    <div
+                        className={
+                            styles.submit_container
+                        }
+                    >
                         <Button
                             type="submit"
                             types="filled"
                             size="md"
                             variant="primary"
-                            onClick={() => handleSubmit(onHandleSubmit)}
                         >
                             Submit
                         </Button>
                     </div>
-                    </Form>
-                </div>
+                </Form>
+            </div>
         </TemplateSurvey>
     );
 }

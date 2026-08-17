@@ -9,7 +9,7 @@
     padding: 0 15rem;
 
 
-    
+
 
     @include down(xxl) {
         padding: 0 2rem;
@@ -134,13 +134,30 @@
             }
 
             .footer_1_col_1 {
+                width: 100%;
                 display: flex;
                 align-items: center;
+                justify-content: flex-end;
                 gap: 10px;
 
 
             }
 
+
+        }
+
+        .add {
+            width: 100%;
+            border-top: 1px solid color(neutral, 200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0 0 0;
+
+            button {
+                border: 1px solid color(primary, 200);
+                background-color: transparent;
+            }
         }
     }
 }
