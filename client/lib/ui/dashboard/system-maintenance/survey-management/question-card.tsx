@@ -22,52 +22,103 @@ import Text from "@/components/Typography/Text/text";
 
 import QuestionOptionCard from "./question-option-card";
 
-import {
-    SurveyQuestionFormField,
-} from "@/lib/types/survey-management";
+import { SurveyQuestionFormField } from "@/lib/types/survey-management";
+import useFormMutation from "@/lib/hooks/useMutation";
+import headers from "@/lib/utils/headers";
+import { toastSuccess } from "@/lib/ui/toast";
 
 interface Props {
+    slug: string;
     index: number;
     fieldId: string;
+    survey_question_id?: string
     control: Control<SurveyQuestionFormField>;
     register: UseFormRegister<SurveyQuestionFormField>;
     errors: FieldErrors<SurveyQuestionFormField>;
     setValue: UseFormSetValue<SurveyQuestionFormField>;
     onRemove: (index: number) => void;
-    onAdd: () => void;
+    onAdd: (question: SurveyQuestionFormField["questions"][number]) => void;
     isLast: boolean;
     isOnlyQuestion: boolean;
 }
 
 export default function QuestionCard({
+    slug,
     index,
     fieldId,
     control,
     register,
     errors,
     setValue,
-    onRemove,
-    onAdd,
+    onRemove,survey_question_id,
     isLast,
     isOnlyQuestion,
-
 }: Props) {
     const questionType = useWatch({
         control,
-        name: `questionnaire.${index}.type`,
+        name: `questions.${index}.type`,
     });
 
-    const questionOptions = questionnaire?.[index].options
-
-
-    console.log("QUESITON OPTIONS", questionOptions)
-    const questionErrors =
-        errors.questionnaire?.[index];
+    const questionErrors = errors.questions?.[index];
 
     const isChoiceQuestion =
         questionType === "MULTIPLE_CHOICE" ||
         questionType === "CHECKBOX";
 
+    const addMoreMutation =
+        useFormMutation<SurveyQuestionFormField["questions"][number]>({
+            key: ["AddMore", slug],
+            method: "POST",
+            url: `maintenance/survey/${slug}`,
+            headers,
+        });
+
+        const onDeleteSingleCard = useFormMutation({
+            key: ["SoftDelete", survey_question_id],
+            method: "PATCH",
+            url: `maintenance/survey/${survey_question_id}`,
+            headers
+        })
+
+    const handleAddMore = () => {
+        addMoreMutation.mutate(
+            {
+                text: "",
+                type: "SHORT_TEXT",
+                order_index: index + 2,
+                is_required: false,
+                options: [],
+            },
+            {
+                onSuccess: (response) => {
+                    
+                },
+                onError: (error) => {
+                    console.error(
+                        "Failed to create survey question:",
+                        error
+                    );
+                },
+            }
+        );
+    };
+
+    const onDeleteCard = () => {
+            onDeleteSingleCard.mutate(null, {
+                onSuccess: () => {
+                    toastSuccess({
+                        title: "Deleted Successfully",
+                        body: "The item has been successfully deleted."
+                    })
+                },
+                onError: (error) => {
+                     console.error(
+                        "Failed to create survey question:",
+                        error
+                    );
+                }
+            })
+    }
     return (
         <div
             className={styles.question_card}
@@ -80,7 +131,7 @@ export default function QuestionCard({
                             type="text"
                             label="Question"
                             register={register}
-                            name={`questionnaire.${index}.text`}
+                            name={`questions.${index}.text`}
                             placeholder="Enter your question"
                             error={questionErrors?.text}
                             isRequired
@@ -114,7 +165,7 @@ export default function QuestionCard({
                     <div className={styles.choice}>
                         <Select
                             control={control}
-                            name={`questionnaire.${index}.type`}
+                            name={`questions.${index}.type`}
                             label="Question Type"
                             isRequired
                             options={[
@@ -138,11 +189,7 @@ export default function QuestionCard({
                             error={questionErrors?.type}
                         />
                     </div>
-                    
                 </div>
-                {(questionOptions || []).map(({label, value, order_index, question_option_id }) => (
-                    <Text size="sm" key={index}>{label}</Text>
-                ))}
             </div>
 
             <div className={styles.divider} />
@@ -158,21 +205,25 @@ export default function QuestionCard({
                                 : "danger"
                         }
                         type="button"
-                        onClick={() => onRemove(index)}
+                        onClick={() => {
+                            onDeleteCard()
+                        }}
                         disabled={isOnlyQuestion}
                     >
-                        <TbTrash size={23} />
+                        <TbTrash size={20} />
                     </Button>
 
                     <hr />
 
                     <ButtonToggle
-                        control={control}
-                        falseName="Not Required"
+                        falseValue={false}
+                        trueValue={true}
+                        trueLabel="Required"
+                        falseLabel="Not Required"
                         label=""
-                        name={`questionnaire.${index}.is_required`}
+                        name={`questions.${index}.is_required`}
                         setValue={setValue}
-                        trueName="Required"
+                        control={control}
                     />
                 </div>
             </div>
@@ -184,10 +235,13 @@ export default function QuestionCard({
                         types="outline"
                         size="sm"
                         variant="primary"
-                        onClick={onAdd}
+                        onClick={handleAddMore}
+                        disabled={addMoreMutation.isPending}
                     >
                         <Text size="sm">
-                            ADD MORE
+                            {addMoreMutation.isPending
+                                ? "CREATING..."
+                                : "ADD MORE"}
                         </Text>
                     </Button>
                 </div>

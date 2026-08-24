@@ -4,12 +4,11 @@
 @use "@/styles/spacing.module" as *;
 @use "@/styles/radius.module" as *;
 
-
 .loading {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 20;
+    gap: 20px;
     padding: 20px;
     overflow-y: auto;
 }
@@ -42,7 +41,6 @@
         .sub {
             margin: 10px 0;
             display: flex;
-
             gap: 10px;
 
             span {
@@ -51,12 +49,11 @@
                 background-color: color(primary, 100);
                 color: color(primary, 500);
                 font-weight: 700;
-                font-size: font-size(tiny)
+                font-size: font-size(tiny);
             }
         }
 
         .footerBtn {
-            // margin: 10px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -90,7 +87,6 @@
                 justify-content: center;
                 gap: 5px;
 
-
                 button {
                     padding: 10px;
                     border-radius: radius(sm);
@@ -98,7 +94,6 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-
                     background-color: color(neutral, 100);
 
                     svg {

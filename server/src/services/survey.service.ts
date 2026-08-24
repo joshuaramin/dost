@@ -58,6 +58,9 @@ export const GetAllSurveys = ({
       description: true,
       created_at: true,
       questions: {
+        where: {
+          is_deleted: false,
+        },
         include: {
           options: true,
         },
@@ -94,53 +97,45 @@ export const CreateSurvey = async (data: Prisma.SurveyCreateInput) => {
     title: data.title,
     description: data.description,
     slug: data.slug,
+    questions: {
+      create: [
+        {
+          text: "Testing questionnaire",
+          type: "SHORT_TEXT",
+          is_required: false,
+          order_index: 1,
+        },
+      ],
+    },
   });
 };
 export const CreateSurveyQuestion = async (id: string, data: any) => {
-  console.log(data, id);
-  return Promise.all(
-    data.questionnaire.map(
-      ({
-        text,
-        type,
-        is_required,
-        order_index,
-        options,
-      }: {
-        text: string;
-        type: "SHORT_TEXT" | "LONG_TEXT" | "MULTIPLE_CHOICE" | "CHECKBOX";
-        is_required: boolean;
-        order_index: number;
-        options?: {
-          label: string;
-          value: string;
-        }[];
-      }) =>
-        QuestionnaireManage.create({
-          text,
-          type,
-          is_required,
-          order_index,
-          survey: {
-            connect: {
-              slug: id,
-            },
-          },
-          ...(options?.length
-            ? {
-                options: {
-                  create: options,
-                },
-              }
-            : {}),
-        }),
-    ),
-  );
+  return QuestionnaireManage.create({
+    text: "",
+    type: "SHORT_TEXT",
+    is_deleted: false,
+    order_index: data.index,
+    survey: {
+      connect: { slug: id },
+    },
+  });
 };
+
+export const DeleteSurveytQuestion = async (data: any) => {
+  console.log(data);
+  return QuestionnaireManage.delete(data);
+};
+
 export const UpdateSurvey = async (data: any) => {
   return SurveyManage.update("survey_id", data.key, data);
 };
 
 export const DeleteSurvey = async (data: any) => {
   return SurveyManage.delete(data.survey_id);
+};
+
+export const UpdateSurveyPublished = async (id: string, data: boolean) => {
+  return SurveyManage.update("slug", id, {
+    is_published: data,
+  });
 };

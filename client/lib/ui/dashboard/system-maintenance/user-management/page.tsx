@@ -155,11 +155,6 @@ export default function UserManagement() {
         setStartCursor("");
     }
 
-  const status = useWatch({
-    control,
-    name: "is_active"
-  })
-
   return (
     <Template
       title="User Management"

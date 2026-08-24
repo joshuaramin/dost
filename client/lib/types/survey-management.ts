@@ -9,7 +9,6 @@ export type CreateSurveyFormField = z.infer<typeof CreateSurveySchema>;
 
 export type SurveyQuestionFormField = z.infer<typeof SurveyQuestionFormSchema>;
 
-export type SurveyQuestionField =
-  SurveyQuestionFormField["questionnaire"][number];
+export type SurveyQuestionField = SurveyQuestionFormField["questions"][number];
 
 export type QuestionOptionField = SurveyQuestionField["options"][number];

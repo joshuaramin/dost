@@ -8,43 +8,24 @@ import {
 
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/survey-management/questionnaire-card.module.scss";
 
-import Button from "@/components/Button/button";
 import Form from "@/components/Form/form";
 
 import useFormHook from "@/lib/hooks/useFormHook";
 import TemplateSurvey from "@/lib/ui/dashboard/template-survey";
-
-import {
-    SurveyQuestionFormSchema,
-} from "@/lib/validations/survey-management.validation";
-
-import {
-    SurveyQuestionFormField,
-    SurveyQuestionField,
-} from "@/lib/types/survey-management";
-
+import { SurveyQuestionFormSchema } from "@/lib/validations/survey-management.validation";
+import { SurveyQuestionFormField, SurveyQuestionField } from "@/lib/types/survey-management";
 import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
-
 import headers from "@/lib/utils/headers";
-
-import {
-    SurveyIDInterface,
-} from "@/lib/interface/survey-management/survey.interface";
-
+import { SurveyIDInterface } from "@/lib/interface/survey-management/survey.interface";
 import QuestionCard from "./question-card";
 
 interface Props {
     slug: string;
 }
 
-export default function SurveyID({
-    slug,
-}: Props) {
-    const {
-        data,
-        isLoading,
-    } = useFormQuery<SurveyIDInterface>({
+export default function SurveyID({ slug }: Props) {
+    const { data, isLoading } = useFormQuery<SurveyIDInterface>({
         key: ["Survey", slug],
         url: `maintenance/survey/${slug}`,
         headers,
@@ -59,9 +40,8 @@ export default function SurveyID({
         reset,
     } = useFormHook<typeof SurveyQuestionFormSchema>({
         schema: SurveyQuestionFormSchema,
-
         defaultValues: {
-            questionnaire: [
+            questions: [
                 {
                     survey_question_id: undefined,
                     text: "",
@@ -80,16 +60,19 @@ export default function SurveyID({
         remove,
     } = useFieldArray({
         control,
-        name: "questionnaire",
+        name: "questions",
     });
 
     useEffect(() => {
-        const questions =
-            data?.data?.questions ?? [];
+        if (!data?.data) {
+            return;
+        }
+
+        const questions = data.data.questions ?? [];
 
         if (!questions.length) {
             reset({
-                questionnaire: [
+                questions: [
                     {
                         survey_question_id: undefined,
                         text: "",
@@ -173,194 +156,105 @@ export default function SurveyID({
                                     ) => ({
                                         question_option_id:
                                             option.question_option_id,
-
                                         label:
                                             option.label,
-
                                         value:
                                             option.value,
-
                                         order_index:
-                                            optionIndex +
-                                            1,
+                                            optionIndex + 1,
                                     })
                                 );
 
                         return {
                             survey_question_id:
                                 question.survey_question_id,
-
-                            text:
-                                question.text,
-
-                            type:
-                                question.type,
-
+                            text: question.text,
+                            type: question.type,
                             is_required:
                                 question.is_required,
-
                             order_index:
-                                questionIndex +
-                                1,
-
-                            options:
-                                mappedOptions,
+                                questionIndex + 1,
+                            options: mappedOptions,
                         };
                     }
                 );
 
         reset({
-            questionnaire:
-                mappedQuestions,
+            questions: mappedQuestions,
         });
-    }, [
-        data,
-        reset,
-    ]);
+    }, [data, reset]);
 
     const mutation =
-        useFormMutation({
+        useFormMutation<SurveyQuestionFormField>({
             key: [
                 "UpdateSurveyQuestions",
                 slug,
             ],
-
             method: "POST",
-
             url: `maintenance/survey/${slug}`,
-
             headers,
         });
 
-    const handleAddQuestion =
-        () => {
-            append({
-                survey_question_id:
-                    undefined,
+    const handleAddQuestion = () => {
+        append({
+            survey_question_id: undefined,
+            text: "",
+            type: "SHORT_TEXT",
+            order_index: fields.length + 1,
+            is_required: false,
+            options: [],
+        });
+    };
 
-                text: "",
+    const handleRemoveQuestion = (index: number) => {
+        if (fields.length <= 1) {
+            return;
+        }
 
-                type: "SHORT_TEXT",
+        remove(index);
+    };
 
-                order_index:
-                    fields.length + 1,
+    const onHandleSubmit: SubmitHandler<
+        SurveyQuestionFormField
+    > = (formData) => {
+        console.log("SUBMIT DATA", formData);
 
-                is_required: false,
-
-                options: [],
-            });
-        };
-
-    const handleRemoveQuestion =
-        (
-            index: number
-        ) => {
-            if (
-                fields.length <= 1
-            ) {
-                return;
-            }
-
-            remove(index);
-        };
-
-    const onHandleSubmit:
-        SubmitHandler<
-            SurveyQuestionFormField
-        > = (
-            formData
-        ) => {
-            const questionnaire =
-                formData.questionnaire.map(
-                    (
-                        question,
-                        questionIndex
-                    ) => ({
-                        ...question,
-
-                        order_index:
-                            questionIndex +
-                            1,
-
-                        options:
-                            (
-                                question.options ??
-                                []
-                            ).map(
-                                (
-                                    option,
-                                    optionIndex
-                                ) => ({
-                                    ...option,
-
-                                    order_index:
-                                        optionIndex +
-                                        1,
-                                })
-                            ),
-                    })
-                );
-
-            mutation.mutate({
-                questionnaire,
-            });
-        };
-
-    if (isLoading) {
-        return (
-            <TemplateSurvey
-                title={slug}
-            >
-                <div
-                    className={
-                        styles.container
-                    }
-                >
-                    Loading...
-                </div>
-            </TemplateSurvey>
-        );
-    }
+        mutation.mutate(formData, {
+            onSuccess: (response) => {
+                alert("SUCCESS");
+                console.log(response);
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        });
+    };
 
     return (
         <TemplateSurvey
-            title={slug}
+            title={data?.data.title ?? ""}
         >
-            <div
-                className={
-                    styles.container
-                }
-            >
+            <div className={styles.container}>
                 <Form
                     onSubmit={handleSubmit(
                         onHandleSubmit
                     )}
                 >
-                    <div
-                        className={
-                            styles.question_container
-                        }
-                    >
+                    <div className={styles.question_container}>
                         {fields.map(
-                            (
-                                field,
-                                index
-                            ) => (
+                            (field, index) => (
                                 <QuestionCard
+                                    slug={slug}
                                     key={field.id}
                                     control={control}
                                     errors={errors}
                                     fieldId={field.id}
                                     index={index}
                                     register={register}
-                                    options={field.options}
                                     setValue={setValue}
-                                    onRemove={
-                                        handleRemoveQuestion
-                                    }
-                                    onAdd={
-                                        handleAddQuestion
-                                    }
+                                    onRemove={handleRemoveQuestion}
+                                    survey_question_id={field.survey_question_id}
+                                    onAdd={handleAddQuestion}
                                     isLast={
                                         index ===
                                         fields.length -
@@ -373,21 +267,6 @@ export default function SurveyID({
                                 />
                             )
                         )}
-                    </div>
-
-                    <div
-                        className={
-                            styles.submit_container
-                        }
-                    >
-                        <Button
-                            type="submit"
-                            types="filled"
-                            size="md"
-                            variant="primary"
-                        >
-                            Submit
-                        </Button>
                     </div>
                 </Form>
             </div>

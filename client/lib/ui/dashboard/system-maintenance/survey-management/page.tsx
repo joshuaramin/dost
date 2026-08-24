@@ -3,22 +3,20 @@
 import Template from '@/lib/ui/template';
 import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/survey-management/survey-mangement.module.scss'
-import { TbChartBar, TbDots, TbEdit } from 'react-icons/tb';
-import { useRouter } from 'next/navigation';
+import { TbEye, TbTrash } from 'react-icons/tb';
+import { usePathname, useRouter } from 'next/navigation';
 import { SubmitHandler } from 'react-hook-form';
+import { format } from 'date-fns'
 
 //components
-import Grid from '@/components/Grid/grid';
 import Search from '@/components/Search/search';
-import Title from '@/components/Typography/Title/title';
-import Paragraph from '@/components/Typography/Paragraph/paragraph';
 import Pagination from '@/components/Pagination/pagination';
 import Input from '@/components/Input/input';
 import Textarea from '@/components/Textarea/textarea';
+import Table from '@/components/Table/table';
 
 //lib & hooks
 import useFormQuery from '@/lib/hooks/useQuery';
-import NoData from '@/lib/ui/no-data';
 import useFormHook from '@/lib/hooks/useFormHook';
 import useFormMutation from '@/lib/hooks/useMutation';
 import  headers  from '@/lib/utils/headers';
@@ -29,6 +27,7 @@ import { CreateSurveyFormField} from '@/lib/types/survey-management';
 
 export default function SurveyManagement() {
 
+    const pathname = usePathname()
     const router = useRouter();
     const limit = 20;
     const [open ,setOpen ] = useState<boolean>(false);
@@ -69,7 +68,7 @@ export default function SurveyManagement() {
             }, {
                 onSuccess: (data: unknown) => {
                     const res = data as SurveyIDInterface;
-                    router.push(`/dashboard/system-maintenance/survey-management/${res.data.slug}`)
+                    router.push(`${pathname}/${res.data.slug}`)
                 },
                 onError: () => {}
 
@@ -155,28 +154,39 @@ export default function SurveyManagement() {
                         value={search}
                         onClear={onHandleClear}
                     />
-                    <Grid min={350} max={"1fr"} gap={10}>
-                        {data?.data.totalCount === 0 ? < NoData text="surveys found"/> : data?.data.edges.map(({ node }, index) => (
-                            <div key={index} className={styles.card}>
-                                <Title onClick={() => router.push(`/dashboard/system-maintenance/survey-management/${node.slug}`  )} size="md">{node.title}</Title>
-                                <Paragraph>{node.description}</Paragraph>
-                                <div className={styles.footerBtn}>
-                                    <progress value={30} max={1000} />
-                                <div>
-                                    <button onClick={() => router.push(`/dashboard/system-maintenance/survey-management/${node.survey_id}`  )}>
-                                        <TbEdit size={20} />
+                    <Table size="sm" variant="bordered">
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.Head>Title</Table.Head>
+                                <Table.Head>Description</Table.Head>
+                                <Table.Head>Total No. of Questions</Table.Head>
+                                <Table.Head>Total No. of Respondents</Table.Head>
+                                <Table.Head>Status</Table.Head>
+                                <Table.Head>Date Created</Table.Head>
+                                <Table.Head>Actions</Table.Head>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                        {data?.data.edges.map(({node: {survey_id, slug, title, questions, created_at, description, is_published, _count}}) => (
+                            <Table.Row key={survey_id}>
+                                <Table.Cell>{title}</Table.Cell>
+                                <Table.Cell>{description}</Table.Cell>
+                                <Table.Cell>{questions.length}</Table.Cell>
+                                <Table.Cell>{_count?.responses ?? 0}</Table.Cell>
+                                <Table.Cell>{is_published ? "PUBLISHED" : "DRAFT"}</Table.Cell>
+                                <Table.Cell>{format(new Date(created_at),  "MMMM dd, yyyy")}</Table.Cell>
+                                <Table.Cell>
+                                    <button onClick={() => router.push(`${pathname}/${slug}`)}>
+                                        <TbEye size={23} />
                                     </button>
                                     <button>
-                                        <TbChartBar size={20} />
+                                        <TbTrash size={20} />
                                     </button>
-                                    <button>
-                                        <TbDots size={20} />
-                                    </button>
-                                    </div>
-                                </div>
-                            </div>
+                                </Table.Cell>
+                            </Table.Row>
                         ))}
-                    </Grid>
+                        </Table.Body>
+                    </Table>
                 <Pagination
                 currentPage={currentPage}
                     pageSize={limit}

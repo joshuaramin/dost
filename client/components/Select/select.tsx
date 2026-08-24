@@ -9,7 +9,10 @@ import {
     FieldPath,
     FieldValues,
 } from "react-hook-form";
-import { TbCaretDownFilled, TbCaretUpFilled } from "react-icons/tb";
+import {
+    TbCaretDownFilled,
+    TbCaretUpFilled,
+} from "react-icons/tb";
 import Text from "../Typography/Text/text";
 
 type Option = {
@@ -64,7 +67,9 @@ export function Select<T extends FieldValues>({
                             <label>{label}</label>
 
                             {isRequired && (
-                                <span className={styles.isRequired}>*</span>
+                                <span className={styles.isRequired}>
+                                    *
+                                </span>
                             )}
                         </div>
 
@@ -75,6 +80,10 @@ export function Select<T extends FieldValues>({
                                         ? styles.selectError
                                         : styles.selectContainer
                                 }
+                                onClick={() => {
+                                    setToggle((previous) => !previous);
+                                    setSearch("");
+                                }}
                             >
                                 <Text size="sm">
                                     {selectedOption?.label ??
@@ -83,8 +92,13 @@ export function Select<T extends FieldValues>({
 
                                 <button
                                     type="button"
-                                    onClick={() => {
-                                        setToggle((previous) => !previous);
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+
+                                        setToggle(
+                                            (previous) => !previous
+                                        );
+
                                         setSearch("");
                                     }}
                                 >
@@ -111,28 +125,41 @@ export function Select<T extends FieldValues>({
                                         onChange={(
                                             event: ChangeEvent<HTMLInputElement>
                                         ) => {
-                                            setSearch(event.target.value);
+                                            setSearch(
+                                                event.target.value
+                                            );
                                         }}
                                     />
 
                                     <div className={styles.option}>
-                                        {filteredOptions.map((option) => (
-                                            <button
-                                                key={option.value}
-                                                type="button"
-                                                className={styles.option}
-                                                onClick={() => {
-                                                    field.onChange(
+                                        {filteredOptions.map(
+                                            (option) => (
+                                                <button
+                                                    key={String(
                                                         option.value
-                                                    );
+                                                    )}
+                                                    type="button"
+                                                    className={
+                                                        styles.option
+                                                    }
+                                                    onClick={() => {
+                                                        field.onChange(
+                                                            option.value
+                                                        );
 
-                                                    setToggle(false);
-                                                    setSearch("");
-                                                }}
-                                            >
-                                                {option.label}
-                                            </button>
-                                        ))}
+                                                        field.onBlur();
+
+                                                        setToggle(
+                                                            false
+                                                        );
+
+                                                        setSearch("");
+                                                    }}
+                                                >
+                                                    {option.label}
+                                                </button>
+                                            )
+                                        )}
                                     </div>
                                 </div>
                             )}

@@ -3,10 +3,13 @@ import { CreateSurveySchema } from "@/lib/validation/survey.validation";
 import {
   CreateSurvey,
   CreateSurveyQuestion,
+  DeleteSurveytQuestion,
   GetAllSurveys,
   GetSurveyById,
+  UpdateSurveyPublished,
 } from "@/services/survey.service";
 import { Request, Response } from "express";
+import { request } from "http";
 import { z } from "zod";
 
 export const getAllSurvey = async (request: Request, response: Response) => {
@@ -63,7 +66,22 @@ export const createQuestionById = async (
 
   const result = await CreateSurveyQuestion(id, body);
 
-  console.log(result);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const deleteSurveyQuestionBytId = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.id);
+
+  console.log("ID: ", id);
+
+  const result = await DeleteSurveytQuestion(id);
 
   return response.status(200).json({
     ...result,
@@ -88,3 +106,16 @@ export const updateSurvey = (request: Request, response: Response) => {
 };
 
 export const softDeleteSurvey = (request: Request, response: Response) => {};
+
+const surveyPublished = async (request: Request, response: Response) => {
+  const id = String(request.params.id);
+  const body = request.body;
+
+  const result = await UpdateSurveyPublished(id, body.is_published);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};

@@ -190,8 +190,8 @@ export default function Template<T extends FieldValues = FieldValues>({
                     >
                         {modalChildren}
 
-                        <div className={styles.model_footer}>
-                            <Button onClick={onHandleCloseToggle} size="md" variant="disabled" types="outline">
+                        <div className={styles.modal_footer}>
+                            <Button onClick={  onHandleCloseToggle ?? (() => {})} size="md" variant="disabled" types="outline">
                                 <Text size="md">Cancel</Text>
                             </Button>
                             <Button size="md" variant="primary">

@@ -2,6 +2,7 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
@@ -13,9 +14,82 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: relative;
+
+        .btngroup {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+
+            button {
+                cursor: pointer;
+                border: none;
+                background-color: color(primary, 500);
+                color: color(base, white);
+
+                span {
+                    color: color(base, white);
+                }
+
+                &:nth-child(1) {
+                    padding: 14px 20px;
+                    border-top-left-radius: radius(tiny);
+                    border-bottom-left-radius: radius(tiny);
+                }
+
+                &:nth-child(2) {
+                    padding: 11px 10px;
+                    border-top-right-radius: radius(tiny);
+                    border-bottom-right-radius: radius(tiny);
+
+                    svg {
+                        color: color(base, white);
+                        fill: color(base, white);
+                    }
+                }
+            }
+        }
+
+        .url {
+            position: absolute;
+            top: calc(50% + 35px);
+            right: 20px;
+            z-index: 999;
+
+            width: 250px;
+            min-height: 60px;
+            padding: 10px;
+
+            background-color: color(base, white);
+            border: 1px solid color(neutral, 200);
+            border-radius: radius(tiny);
+
+            box-sizing: border-box;
+
+            button {
+                width: 100%;
+                min-height: 40px;
+
+                display: flex;
+                align-items: center;
+                gap: 8px;
+
+                padding: 5px 10px;
+
+                background-color: transparent;
+                border: none;
+                border-radius: radius(sm);
+
+                cursor: pointer;
+
+                &:hover {
+                    background-color: color(neutral, 200);
+                }
+            }
+        }
     }
 
     .body {
-        padding: 10px;
+        width: 100%;
     }
 }

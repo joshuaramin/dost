@@ -38,7 +38,7 @@ export default function QuestionOptionCard<T extends FieldValues>({
         remove: removeOption,
     } = useFieldArray({
         control,
-        name: `questionnaire.${index}.options` as ArrayPath<T>,
+        name: `questions.${index}.options` as ArrayPath<T>,
     });
 
     const toOptionValue = (label: string) => {
@@ -54,10 +54,10 @@ export default function QuestionOptionCard<T extends FieldValues>({
         label: string
     ) => {
         const labelPath =
-            `questionnaire.${index}.options.${optionIndex}.label` as Path<T>;
+            `questions.${index}.options.${optionIndex}.label` as Path<T>;
 
         const valuePath =
-            `questionnaire.${index}.options.${optionIndex}.value` as Path<T>;
+            `questions.${index}.options.${optionIndex}.value` as Path<T>;
 
         setValue(
             labelPath,
@@ -100,7 +100,7 @@ export default function QuestionOptionCard<T extends FieldValues>({
         <div className={styles.option_container}>
             {optionFields.map((option, optionIndex) => {
                 const labelPath =
-                    `questionnaire.${index}.options.${optionIndex}.label` as Path<T>;
+                    `questions.${index}.options.${optionIndex}.label` as Path<T>;
 
                 return (
                     <div

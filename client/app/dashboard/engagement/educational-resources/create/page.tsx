@@ -19,7 +19,7 @@ import Form from '@/components/Form/form';
 
 
 //lib & hooks
-import { CreateEducationResourceSchema, EducationCategory, EducationResourceType } from '@/lib/validations/education.validation';
+import { CreateEducationResourceSchema, EducationResourceType } from '@/lib/validations/education.validation';
 import useFormHook from '@/lib/hooks/useFormHook';
 import { sessionStore } from '@/lib/utils/sessions';
 import useFormQuery from '@/lib/hooks/useQuery';
@@ -36,20 +36,10 @@ export default function Page() {
     const [category, setCategory] = useState<string>("")
     const sessions = sessionStore.get();
 
-
-
-    const onHandleCategorySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCategory(e.currentTarget.value)
-    }
-
     const { data: EducationCategory } = useFormQuery<EducationCategoryResult>({
         key: ["EducationCategory", category],
         url: `maintenance/educational-resource/category?search=${category}`
     })
-
-    const onHandleTypeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // setType(e.currentTarget.value);
-    }
 
     
 
@@ -209,9 +199,10 @@ export default function Page() {
 
         <div className={styles.footer}>
         <ButtonToggle 
-            falseName={"DRAFT"}
-            trueName={"PUBLISHED"}
-            label={""}
+            trueValue={"PUBLISH"}
+            trueLabel={"PUBLISH"}
+            falseLabel={"DRAFT"}
+            falseValue={"DRAFT"}
             control={control}
             name="status"
             setValue={setValue}

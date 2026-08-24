@@ -37,7 +37,7 @@ export const SurveyQuestionSchema = z
 
     type: SurveyTypeSchema,
 
-    is_required: z.boolean(),
+    is_required: z.boolean().optional(),
 
     order_index: z.number().int().nonnegative().optional(),
 
@@ -65,7 +65,7 @@ export const SurveyQuestionSchema = z
   });
 
 export const SurveyQuestionFormSchema = z.object({
-  questionnaire: z
+  questions: z
     .array(SurveyQuestionSchema)
     .min(1, "At least one question is required."),
 });
