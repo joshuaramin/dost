@@ -23,6 +23,7 @@ import OrganizationRouter from "@/routes/organization.routes";
 import EducationResourceRouter from "@/routes/educational-resources.routes";
 import SurveyRouter from "@/routes/survey.routes";
 import TreatmentHubRouter from "@/routes/treatmenthub.routes";
+import ServiceRouter from "@/routes/services.routes";
 
 //bullmq
 import { createBullBoard } from "@bull-board/api";
@@ -81,6 +82,7 @@ app.use("/maintenance/survey", SurveyRouter);
 app.use("/maintenance/roles", RolesRouter);
 app.use("/auth", AuthRouter);
 app.use("/maintenance/geospatial", RegionRouter);
+app.use("/maintenance/services", ServiceRouter);
 app.use("/maintenance/nlp", NlpRouter);
 app.use("/maintenance/organization", OrganizationRouter);
 app.use("/maintenance/treatment-hub", TreatmentHubRouter);

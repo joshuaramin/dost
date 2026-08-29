@@ -185,7 +185,7 @@ export default function EducationResources() {
                       {format(new Date(created_at), "MMMM dd, yyyy")}
                     </Table.Cell>
                     <Table.Cell>
-                      <button onClick={() => router.push("/")}>
+                      <button onClick={() => router.push(`/dashboard/engagement/educational-resources/${slug}`)}>
                         <TbEye size={18} />
                       </button>
                         <button onClick={() => router.push(`/dashboard/engagement/educational-resources/edit/${slug}`)}>

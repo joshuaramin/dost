@@ -33,17 +33,15 @@ export default function SurveillanceMap() {
     const mapRef = useRef<HTMLDivElement>(null)
     const mapInstance = useRef<maplibregl.Map | null>(null)
 
-    const [regions, setRegions] = useState<Region[]>([])
     const [selectedProvince, setSelectedProvince] = useState<string | null>(null)
-    const [region, setRegion] = useState<string| null> ("");
 
-    const { data: GeomData, isLoading } = useFormQuery({
+    const { data: GeomData, isLoading } = useFormQuery<any>({
         key: ["GetAllGeom"],
         url: "maintenance/geospatial/geom"
     })
 
 
-    const { data: RegionData, isLoading: RegionLoading } = useFormQuery({
+    const { data: RegionData, isLoading: RegionLoading } = useFormQuery<any>({
         key: ["GetAllRegions"],
         url: "maintenance/geospatial/hierarchy"
     })
@@ -290,7 +288,7 @@ export default function SurveillanceMap() {
             <div className={styles.col1}>
                 <Title title="Administrative Hierarchy" />
                 <div className={styles.regions}>
-                     {RegionLoading ? "" : RegionData?.data.data.map((region) => (
+                     {RegionLoading ? "" : RegionData?.data.data.map((region: any) => (
                     <div key={region.region_ocde}>
                             <div
                                 style={{ fontWeight: "700", padding: 8, cursor: "pointer" }}
@@ -299,7 +297,7 @@ export default function SurveillanceMap() {
                                 {region.region_name}
                             </div>
 
-                            {region.provinces?.map((p) => (
+                            {region.provinces?.map((p: any) => (
                                 <div
                                     key={p.code}
                                     style={{

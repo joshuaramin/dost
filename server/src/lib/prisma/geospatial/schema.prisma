@@ -73,11 +73,12 @@ model treatment_hubs {
 }
 
 model services {
-  service_id Int @id @default(autoincrement())
+  service_id String @id @default(cuid())
 
   name String @unique
 
   description String?
+  is_deleted  Boolean @default(false) @db.Boolean
 
   hubs treatment_hub_services[]
 
@@ -88,8 +89,8 @@ model treatment_hub_services {
   treatment_hub_services_id String          @id @default(cuid())
   treatmentHubs             treatment_hubs? @relation(fields: [treatment_hubs_id], references: [treatment_hub_id])
   treatment_hubs_id         String?
-  services                  services?       @relation(fields: [servicesService_id], references: [service_id])
-  servicesService_id        Int?
+  services                  services?       @relation(fields: [service_id], references: [service_id])
+  service_id                String?
 
   @@schema("geo")
 }

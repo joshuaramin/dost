@@ -19,7 +19,6 @@ import { RegionsInterfaceResult } from "@/lib/interface/geom/regions.interface";
 import { ProvinceInterfaceResult } from "@/lib/interface/geom/provinces.interface";
 import { BarangayInterfaceResult } from "@/lib/interface/geom/barangay.interface";
 import { CreateTreatmentHubSchema } from "@/lib/validations/treatment-hub.validation";
-import { booleanFields } from "@/lib/utils/treatment-hub";
 
 import useFormHook from "@/lib/hooks/useFormHook";
 import TitleWrapper from "@/lib/ui/titleWrapper";
@@ -27,6 +26,7 @@ import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
 import { TreatmentHubFields } from "@/lib/types/treatment-hub.type";
+import { TreatmenetHubServiceResult } from "@/lib/interface/services/service.interface";
 
 export default function CreateTreatmentHub() {
     const {
@@ -111,6 +111,12 @@ export default function CreateTreatmentHub() {
                 municipality_code: municipality
             }
         });
+
+    const { data: TreatmentHubServicesData } = useFormQuery<TreatmenetHubServiceResult>({
+        key: ["GetAllTreatmentHubServices"],
+        url: "maintenance/services",
+        headers
+    })
 
     const mutation = useFormMutation({
         key: ["CreateTreatmentHub"],
@@ -229,11 +235,14 @@ export default function CreateTreatmentHub() {
                     </Grid>
 
                     <MultiSelect
-                      control={control}
-                      isRequired={true}
-                      label="Services"
-                      name="services"
-                      options={[]}
+                        control={control}
+                        isRequired={true}
+                        label="Services"
+                        name="services"
+                        options={(TreatmentHubServicesData?.data.edges || []).map(({cusor, node}) => ({
+                            label: node.name,
+                            value: node.service_id
+                        }))}
                     />
 
                     <TitleWrapper title="Contact information" />
