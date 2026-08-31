@@ -4,7 +4,9 @@ import {
   deleteSurveyQuestionBytId,
   getAllSurvey,
   getSurveyById,
+  updateSurveyQuestionById,
 } from "@/controller/survey.conrtoller";
+
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import { withAuth } from "@/lib/helpers/useAuth";
 import { withPermission } from "@/lib/helpers/usePermission";
@@ -24,17 +26,13 @@ router.post(
   withPermission("survey-management:create"),
   asyncHandler(createSurvey),
 );
-router.post(
-  "/:id",
-  // withPermission("survey-management:update"),
-  asyncHandler(createQuestionById),
-);
+
+router.post("/:id", asyncHandler(createQuestionById));
+
+router.patch("/question/:id", withAuth, asyncHandler(updateSurveyQuestionById));
 
 router.patch("/:id", withAuth, asyncHandler(deleteSurveyQuestionBytId));
-router.get(
-  "/:id",
-  // withPermission("survey-management:update"),
-  asyncHandler(getSurveyById),
-);
+
+router.get("/:id", asyncHandler(getSurveyById));
 
 export default router;

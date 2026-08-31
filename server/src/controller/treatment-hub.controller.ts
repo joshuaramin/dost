@@ -3,7 +3,6 @@ import {
   CreateTreatmentHub,
   GetAllTreatmentHub,
   GetTreatmentHubBySlug,
-  UpdateTreatmentHubById,
 } from "@/services/treatment-hub.services";
 import { CreateTreatmentHubSchema } from "@/lib/validation/treatment-hub.validation";
 import { z } from "zod";

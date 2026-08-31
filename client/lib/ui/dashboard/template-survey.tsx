@@ -24,7 +24,7 @@ export default function TemplateSurvey({ children, title }: Props) {
     };
 
     const handleCopyLink = async () => {
-        await navigator.clipboard.writeText(window.location.href);
+        await navigator.clipboard.writeText(`http://localhost:3000/survey/${title}`);
         toastSuccess({
             title: "Link Copied",
             body: "The survey link has been successfully copied to your clipboard.",

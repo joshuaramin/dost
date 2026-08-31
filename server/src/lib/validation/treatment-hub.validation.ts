@@ -59,7 +59,7 @@ export const TreatmentHubSchema = z.object({
 
   longitude: z.number().min(-180).max(180).optional(),
 
-  services: z.array(z.string()).default([]),
+  service_id: z.string().min(1, "Service is required"),
 
   populations_served: z.array(z.string()).default([]),
 

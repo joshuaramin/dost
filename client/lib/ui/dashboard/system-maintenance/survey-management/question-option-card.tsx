@@ -4,158 +4,163 @@ import React from "react";
 import {
     Control,
     FieldErrors,
-    FieldValues,
-    Path,
-    ArrayPath,
     UseFormRegister,
     UseFormSetValue,
     useFieldArray,
+    useWatch,
 } from "react-hook-form";
-import { TbPlus, TbX } from "react-icons/tb";
 
-import Button from "@/components/Button/button";
-import Input from "@/components/Input/input";
+import { TbTrash } from "react-icons/tb";
 
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/survey-management/questionnaire-card.module.scss";
 
-interface Props<T extends FieldValues> {
-    index: number;
-    control: Control<T>;
-    register: UseFormRegister<T>;
-    errors: FieldErrors<T>;
-    setValue: UseFormSetValue<T>;
+import Input from "@/components/Input/input";
+import Button from "@/components/Button/button";
+import ButtonToggle from "@/components/Toggle/buttonToggle";
+import Text from "@/components/Typography/Text/text";
+
+import { SurveyQuestionFormField } from "@/lib/types/survey-management";
+
+interface Props {
+    questionIndex: number;
+    control: Control<SurveyQuestionFormField>;
+    register: UseFormRegister<SurveyQuestionFormField>;
+    errors: FieldErrors<SurveyQuestionFormField>;
+    setValue: UseFormSetValue<SurveyQuestionFormField>;
 }
 
-export default function QuestionOptionCard<T extends FieldValues>({
-    index,
+export default function QuestionOptionCard({
+    questionIndex,
     control,
     register,
+    errors,
     setValue,
-}: Props<T>) {
-    const {
-        fields: optionFields,
-        append: appendOption,
-        remove: removeOption,
-    } = useFieldArray({
+}: Props) {
+    const question = useWatch({
         control,
-        name: `questions.${index}.options` as ArrayPath<T>,
+        name: `questions.${questionIndex}`,
     });
 
-    const toOptionValue = (label: string) => {
-        return label
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, "_")
-            .replace(/[^\w]/g, "");
-    };
+    const questionErrors =
+        errors.questions?.[questionIndex];
 
-    const handleOptionChange = (
-        optionIndex: number,
-        label: string
-    ) => {
-        const labelPath =
-            `questions.${index}.options.${optionIndex}.label` as Path<T>;
+    const options = question?.options ?? [];
 
-        const valuePath =
-            `questions.${index}.options.${optionIndex}.value` as Path<T>;
-
-        setValue(
-            labelPath,
-            label as never,
-            {
-                shouldDirty: true,
-                shouldValidate: true,
-            }
-        );
-
-        setValue(
-            valuePath,
-            toOptionValue(label) as never,
-            {
-                shouldDirty: true,
-                shouldValidate: true,
-            }
-        );
-    };
+    const {
+        fields,
+        append,
+        remove,
+    } = useFieldArray({
+        control,
+        name: `questions.${questionIndex}.options`,
+    });
 
     const handleAddOption = () => {
-        appendOption({
+        append({
+            question_option_id: undefined,
             label: "",
             value: "",
-            order_index: optionFields.length + 1,
-        } as never);
+            order_index: fields.length + 1,
+        });
     };
 
-    const handleRemoveOption = (
-        optionIndex: number
-    ) => {
-        if (optionFields.length <= 1) {
+    const handleRemoveOption = (optionIndex: number) => {
+        if (fields.length <= 1) {
             return;
         }
 
-        removeOption(optionIndex);
+        remove(optionIndex);
     };
 
     return (
         <div className={styles.option_container}>
-            {optionFields.map((option, optionIndex) => {
-                const labelPath =
-                    `questions.${index}.options.${optionIndex}.label` as Path<T>;
+            {fields.map((field, optionIndex) => {
+                const optionError =
+                    questionErrors?.options?.[
+                        optionIndex
+                    ];
 
                 return (
                     <div
-                        key={option.id}
-                        className={styles.option}
+                        key={field.id}
+                        className={styles.option_card}
                     >
-                        <Input
-                            label=""
-                            register={register}
-                            name={labelPath}
-                            placeholder={`Option ${optionIndex + 1}`}
-                            onChange={(event) => {
-                                handleOptionChange(
-                                    optionIndex,
-                                    event.currentTarget.value
-                                );
-                            }}
-                        />
-
-                        <Button
-                            type="button"
-                            types="outline"
-                            size="sm"
-                            variant={
-                                optionFields.length <= 1
-                                    ? "disabled"
-                                    : "danger"
-                            }
-                            disabled={
-                                optionFields.length <= 1
-                            }
-                            onClick={() =>
-                                handleRemoveOption(
-                                    optionIndex
-                                )
+                        <div
+                            className={
+                                styles.option_header
                             }
                         >
-                            <TbX />
-                        </Button>
+                            <Text size="sm">
+                                Option{" "}
+                                {optionIndex + 1}
+                            </Text>
+
+                            <Button
+                                type="button"
+                                types="outline"
+                                size="sm"
+                                variant="danger"
+                                onClick={() =>
+                                    handleRemoveOption(
+                                        optionIndex
+                                    )
+                                }
+                                disabled={
+                                    fields.length <= 1
+                                }
+                            >
+                                <TbTrash size={18} />
+                            </Button>
+                        </div>
+
+                        <Input
+                            type="text"
+                            label="Label"
+                            register={register}
+                            name={`questions.${questionIndex}.options.${optionIndex}.label`}
+                            placeholder="Enter option label"
+                            error={
+                                optionError?.label
+                            }
+                            isRequired
+                        />
+
+                        <Input
+                            type="text"
+                            label="Value"
+                            register={register}
+                            name={`questions.${questionIndex}.options.${optionIndex}.value`}
+                            placeholder="Enter option value"
+                            error={
+                                optionError?.value
+                            }
+                            isRequired
+                        />
+
+                        <input
+                            type="hidden"
+                            {...register(
+                                `questions.${questionIndex}.options.${optionIndex}.order_index`,
+                                {
+                                    valueAsNumber: true,
+                                }
+                            )}
+                        />
                     </div>
                 );
             })}
 
-            <div className={styles.option_button}>
-                <Button
-                    type="button"
-                    types="outline"
-                    size="sm"
-                    variant="primary"
-                    onClick={handleAddOption}
-                >
-                    <TbPlus />
-                    Add Option
-                </Button>
-            </div>
+            <Button
+                type="button"
+                types="outline"
+                size="sm"
+                variant="primary"
+                onClick={handleAddOption}
+            >
+                <Text size="sm">
+                    ADD OPTION
+                </Text>
+            </Button>
         </div>
     );
 }

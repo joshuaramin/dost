@@ -66,7 +66,11 @@ export const GetAllTreatmentHub = async ({
       contact_number: true,
       municipalities: true,
       regions: true,
-      services: true,
+      services: {
+        select: {
+          services: { select: { name: true } },
+        },
+      },
       website: true,
       operating_hours: true,
       region_id: true,
@@ -96,7 +100,7 @@ export const CreateTreatmentHub = async (data: any) => {
     address: data.address,
     region_id: data.region_id,
     status: data.status,
-
+    website: data.website,
     code: data.code,
     contact_number: data.contact_number,
     email: data.email,
@@ -104,43 +108,44 @@ export const CreateTreatmentHub = async (data: any) => {
     latitude: data.latitude,
     longitude: data.longitude,
 
-    ...(data.region_ogc_fid
-      ? {
-          regions: {
-            connect: { region_id: data.region_ogc_fid },
-          },
-        }
-      : {}),
+    ...(data.region_ogc_fid && {
+      regions: {
+        connect: { region_id: data.region_ogc_fid },
+      },
+    }),
+    ...(data.barangay_ogc_fid && {
+      barangays: {
+        connect: {
+          ogc_fid: data.barangay_ogc_fid,
+        },
+      },
+    }),
+    ...(data.municipality_ogc_fid && {
+      municipalities: {
+        connect: {
+          ogc_fid: data.municipality_ogc_fid,
+        },
+      },
+    }),
+    ...(data.province_ogc_fid && {
+      provinces: {
+        connect: {
+          ogc_fid: data.province_ogc_fid,
+        },
+      },
+    }),
 
-    ...(data.barangay_ogc_fid
-      ? {
-          barangays: {
+    ...(data.service_id && {
+      services: {
+        create: {
+          services: {
             connect: {
-              ogc_fid: data.barangay_ogc_fid,
+              service_id: data.service_id,
             },
           },
-        }
-      : {}),
-
-    ...(data.municipality_ogc_fid
-      ? {
-          municipalities: {
-            connect: {
-              ogc_fid: data.municipality_ogc_fid,
-            },
-          },
-        }
-      : {}),
-
-    ...(data.province_ogc_fid
-      ? {
-          provinces: {
-            connect: {
-              ogc_fid: data.province_ogc_fid,
-            },
-          },
-        }
-      : {}),
+        },
+      },
+    }),
   });
 };
 

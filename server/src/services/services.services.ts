@@ -8,7 +8,7 @@ const ServiceManage = new PrismaCRUDManager<
   services,
   "service_id",
   typeof geodb.services
->(geodb.services, "service_id");
+>(geodb.services, "service_id", false);
 
 export const GetAllTreatmentHubService = ({
   after,

@@ -6,29 +6,12 @@ import { MetaInterface } from "../meta.interface";
 
 export type TreatmentHubStatus = "ACTIVE" | "INACTIVE" | "TEMPORARILY_CLOSED";
 
-export type TreatmentHubService =
-  | "HIV_TESTING"
-  | "ART"
-  | "PREP"
-  | "PEP"
-  | "TB_SCREENING"
-  | "STI_SCREENING"
-  | "CD4_TESTING"
-  | "VIRAL_LOAD_TESTING"
-  | "COUNSELING"
-  | "CASE_MANAGEMENT"
-  | "PMTCT";
-
-export type PopulationServed =
-  | "GENERAL_POPULATION"
-  | "MSM"
-  | "TGW"
-  | "PWID"
-  | "FSW"
-  | "ADOLESCENTS"
-  | "PREGNANT_WOMEN"
-  | "CHILDREN";
-
+export interface TreatmentHubService {
+  services: {
+    name: string;
+    description: string;
+  };
+}
 export interface TreatmentHubInterface {
   treatment_hub_id: string;
   code: string;
@@ -70,9 +53,6 @@ export interface TreatmentHubInterface {
   longitude: number;
 
   services: TreatmentHubService[];
-
-  populations_served: PopulationServed[];
-
   status: TreatmentHubStatus;
 
   is_deleted: boolean;

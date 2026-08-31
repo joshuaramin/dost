@@ -1,5 +1,7 @@
 import useSlugify from "@/lib/helpers/useSlugify";
+
 import { CreateSurveySchema } from "@/lib/validation/survey.validation";
+
 import {
   CreateSurvey,
   CreateSurveyQuestion,
@@ -7,9 +9,11 @@ import {
   GetAllSurveys,
   GetSurveyById,
   UpdateSurveyPublished,
+  UpdateSurveyQuestion,
 } from "@/services/survey.service";
+
 import { Request, Response } from "express";
-import { request } from "http";
+
 import { z } from "zod";
 
 export const getAllSurvey = async (request: Request, response: Response) => {
@@ -62,9 +66,27 @@ export const createQuestionById = async (
   response: Response,
 ) => {
   const id = String(request.params.id);
+
   const body = request.body;
 
   const result = await CreateSurveyQuestion(id, body);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const updateSurveyQuestionById = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.id);
+
+  const body = request.body;
+
+  const result = await UpdateSurveyQuestion(id, body);
 
   return response.status(200).json({
     ...result,
@@ -92,6 +114,7 @@ export const deleteSurveyQuestionBytId = async (
 
 export const getSurveyById = async (request: Request, response: Response) => {
   const id = String(request.params.id);
+
   const result = await GetSurveyById(id);
 
   return response.status(200).json({
@@ -109,6 +132,7 @@ export const softDeleteSurvey = (request: Request, response: Response) => {};
 
 const surveyPublished = async (request: Request, response: Response) => {
   const id = String(request.params.id);
+
   const body = request.body;
 
   const result = await UpdateSurveyPublished(id, body.is_published);

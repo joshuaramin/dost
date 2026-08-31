@@ -13,7 +13,7 @@ import Form from "@/components/Form/form";
 import useFormHook from "@/lib/hooks/useFormHook";
 import TemplateSurvey from "@/lib/ui/dashboard/template-survey";
 import { SurveyQuestionFormSchema } from "@/lib/validations/survey-management.validation";
-import { SurveyQuestionFormField, SurveyQuestionField } from "@/lib/types/survey-management";
+import { SurveyQuestionFormField } from "@/lib/types/survey-management";
 import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
@@ -25,11 +25,12 @@ interface Props {
 }
 
 export default function SurveyID({ slug }: Props) {
-    const { data, isLoading } = useFormQuery<SurveyIDInterface>({
-        key: ["Survey", slug],
-        url: `maintenance/survey/${slug}`,
-        headers,
-    });
+    const { data, isLoading } =
+        useFormQuery<SurveyIDInterface>({
+            key: ["Survey", slug],
+            url: `maintenance/survey/${slug}`,
+            headers,
+        });
 
     const {
         register,
@@ -38,19 +39,11 @@ export default function SurveyID({ slug }: Props) {
         errors,
         setValue,
         reset,
+        getValues,
     } = useFormHook<typeof SurveyQuestionFormSchema>({
         schema: SurveyQuestionFormSchema,
         defaultValues: {
-            questions: [
-                {
-                    survey_question_id: undefined,
-                    text: "",
-                    type: "SHORT_TEXT",
-                    order_index: 1,
-                    is_required: true,
-                    options: [],
-                },
-            ],
+            questions: [],
         },
     });
 
@@ -70,15 +63,42 @@ export default function SurveyID({ slug }: Props) {
 
         const questions = data.data.questions ?? [];
 
-        if (!questions.length) {
+        const activeQuestions = questions
+            .filter(
+                (question) =>
+                    question.is_deleted === false
+            )
+            .sort((a, b) => {
+                if (
+                    a.order_index !==
+                    b.order_index
+                ) {
+                    return (
+                        a.order_index -
+                        b.order_index
+                    );
+                }
+
+                return (
+                    new Date(
+                        a.created_at
+                    ).getTime() -
+                    new Date(
+                        b.created_at
+                    ).getTime()
+                );
+            });
+
+        if (activeQuestions.length === 0) {
             reset({
                 questions: [
                     {
-                        survey_question_id: undefined,
+                        survey_question_id:
+                            undefined,
                         text: "",
                         type: "SHORT_TEXT",
                         order_index: 1,
-                        is_required: true,
+                        is_required: false,
                         options: [],
                     },
                 ],
@@ -87,101 +107,97 @@ export default function SurveyID({ slug }: Props) {
             return;
         }
 
-        const mappedQuestions: SurveyQuestionField[] =
-            questions
-                .filter(
-                    (question) =>
-                        !question.is_deleted
-                )
-                .sort((a, b) => {
-                    if (
-                        a.order_index !==
-                        b.order_index
-                    ) {
-                        return (
-                            a.order_index -
-                            b.order_index
-                        );
-                    }
-
-                    return (
-                        new Date(
-                            a.created_at
-                        ).getTime() -
-                        new Date(
-                            b.created_at
-                        ).getTime()
-                    );
-                })
-                .map(
-                    (
-                        question,
-                        questionIndex
-                    ) => {
-                        const mappedOptions =
-                            (
-                                question.options ??
-                                []
+        const mappedQuestions =
+            activeQuestions.map(
+                (
+                    question,
+                    questionIndex
+                ) => {
+                    const mappedOptions =
+                        [
+                            ...(question.options ??
+                                []),
+                        ]
+                            .filter(
+                                (option) =>
+                                    option.is_deleted ===
+                                    false
                             )
-                                .filter(
-                                    (option) =>
-                                        !option.is_deleted
-                                )
-                                .sort(
-                                    (a, b) => {
-                                        if (
-                                            a.order_index !==
-                                            b.order_index
-                                        ) {
-                                            return (
-                                                a.order_index -
-                                                b.order_index
-                                            );
-                                        }
+                            .sort((a, b) => {
+                                if (
+                                    a.order_index !==
+                                    b.order_index
+                                ) {
+                                    return (
+                                        a.order_index -
+                                        b.order_index
+                                    );
+                                }
 
-                                        return (
-                                            new Date(
-                                                a.created_at
-                                            ).getTime() -
-                                            new Date(
-                                                b.created_at
-                                            ).getTime()
-                                        );
-                                    }
-                                )
-                                .map(
-                                    (
-                                        option,
-                                        optionIndex
-                                    ) => ({
-                                        question_option_id:
-                                            option.question_option_id,
-                                        label:
-                                            option.label,
-                                        value:
-                                            option.value,
-                                        order_index:
-                                            optionIndex + 1,
-                                    })
+                                return (
+                                    new Date(
+                                        a.created_at
+                                    ).getTime() -
+                                    new Date(
+                                        b.created_at
+                                    ).getTime()
                                 );
+                            })
+                            .map(
+                                (
+                                    option,
+                                    optionIndex
+                                ) => ({
+                                    question_option_id:
+                                        option.question_option_id,
+                                    label:
+                                        option.label ??
+                                        "",
+                                    value:
+                                        option.value ??
+                                        "",
+                                    order_index:
+                                        option.order_index ??
+                                        optionIndex +
+                                            1,
+                                })
+                            );
 
-                        return {
-                            survey_question_id:
-                                question.survey_question_id,
-                            text: question.text,
-                            type: question.type,
-                            is_required:
-                                question.is_required,
-                            order_index:
-                                questionIndex + 1,
-                            options: mappedOptions,
-                        };
-                    }
-                );
+                    return {
+                        survey_question_id:
+                            question.survey_question_id,
 
-        reset({
-            questions: mappedQuestions,
-        });
+                        text:
+                            question.text ??
+                            "",
+
+                        type:
+                            question.type,
+
+                        order_index:
+                            question.order_index ??
+                            questionIndex + 1,
+
+                        is_required:
+                            question.is_required ===
+                            true,
+
+                        options:
+                            mappedOptions,
+                    };
+                }
+            );
+
+        reset(
+            {
+                questions:
+                    mappedQuestions,
+            },
+            {
+                keepDefaultValues:
+                    false,
+            }
+        );
     }, [data, reset]);
 
     const mutation =
@@ -196,17 +212,24 @@ export default function SurveyID({ slug }: Props) {
         });
 
     const handleAddQuestion = () => {
+        const questions =
+            getValues("questions");
+
         append({
-            survey_question_id: undefined,
+            survey_question_id:
+                undefined,
             text: "",
             type: "SHORT_TEXT",
-            order_index: fields.length + 1,
+            order_index:
+                questions.length + 1,
             is_required: false,
             options: [],
         });
     };
 
-    const handleRemoveQuestion = (index: number) => {
+    const handleRemoveQuestion = (
+        index: number
+    ) => {
         if (fields.length <= 1) {
             return;
         }
@@ -214,47 +237,98 @@ export default function SurveyID({ slug }: Props) {
         remove(index);
     };
 
-    const onHandleSubmit: SubmitHandler<
-        SurveyQuestionFormField
-    > = (formData) => {
-        console.log("SUBMIT DATA", formData);
+    const onHandleSubmit:
+        SubmitHandler<
+            SurveyQuestionFormField
+        > = (formData) => {
+            mutation.mutate(formData, {
+                onSuccess: (response) => {
+                    console.log(
+                        "SUCCESS",
+                        response
+                    );
+                },
+                onError: (error) => {
+                    console.error(
+                        "Failed to update survey questions:",
+                        error
+                    );
+                },
+            });
+        };
 
-        mutation.mutate(formData, {
-            onSuccess: (response) => {
-                alert("SUCCESS");
-                console.log(response);
-            },
-            onError: (error) => {
-                console.error(error);
-            },
-        });
-    };
+    if (isLoading) {
+        return (
+            <TemplateSurvey title="">
+                <div
+                    className={
+                        styles.container
+                    }
+                >
+                    <div
+                        className={
+                            styles.question_container
+                        }
+                    >
+                        Loading...
+                    </div>
+                </div>
+            </TemplateSurvey>
+        );
+    }
 
     return (
         <TemplateSurvey
-            title={data?.data.title ?? ""}
+            title={
+                data?.data.title ?? ""
+            }
         >
-            <div className={styles.container}>
+            <div
+                className={
+                    styles.container
+                }
+            >
                 <Form
                     onSubmit={handleSubmit(
                         onHandleSubmit
                     )}
                 >
-                    <div className={styles.question_container}>
+                    <div
+                        className={
+                            styles.question_container
+                        }
+                    >
                         {fields.map(
-                            (field, index) => (
+                            (
+                                field,
+                                index
+                            ) => (
                                 <QuestionCard
                                     slug={slug}
                                     key={field.id}
-                                    control={control}
-                                    errors={errors}
-                                    fieldId={field.id}
-                                    index={index}
-                                    register={register}
-                                    setValue={setValue}
-                                    onRemove={handleRemoveQuestion}
+                                    control={
+                                        control
+                                    }
+                                    getValues={
+                                        getValues
+                                    }
+                                    errors={
+                                        errors
+                                    }
+                                    fieldId={
+                                        field.id
+                                    }
+                                    index={
+                                        index
+                                    }
+                                    register={
+                                        register
+                                    }
+                                    setValue={
+                                        setValue
+                                    }
                                     survey_question_id={field.survey_question_id}
-                                    onAdd={handleAddQuestion}
+                                
                                     isLast={
                                         index ===
                                         fields.length -

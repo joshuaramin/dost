@@ -13,7 +13,7 @@ import styles from '@/styles/components/Input/input.module.scss'
 interface InputProps<T extends FieldValues>
     extends React.InputHTMLAttributes<HTMLInputElement> {
     name: Path<T>
-    label: string
+    label?: string
     isRequired?: boolean
     register: UseFormRegister<T>
     rules?: RegisterOptions<T, Path<T>>

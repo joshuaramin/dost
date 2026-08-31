@@ -4,9 +4,11 @@ type PrismaDelegate = {
   findMany: (args?: any) => Promise<any[]>;
   findFirst: (args?: any) => Promise<any | null>;
   create: (args: any) => Promise<any>;
+  createMany: (args: any) => Promise<any>;
   findUnique: (args: any) => Promise<any | null>;
   update: (args: any) => Promise<any>;
   count: (args?: any) => Promise<number>;
+  deleteMany: (args?: any) => Promise<any>;
 };
 
 type FindManyArgs<M extends PrismaDelegate> = NonNullable<
@@ -18,6 +20,11 @@ type FindFirstArgs<M extends PrismaDelegate> = NonNullable<
 >;
 
 type CreateArgs<M extends PrismaDelegate> = Parameters<M["create"]>[0];
+
+type CreateManyArgs<M extends PrismaDelegate> = Parameters<M["createMany"]>[0];
+
+type DeleteManyArgs<M extends PrismaDelegate> = Parameters<M["deleteMany"]>[0];
+
 type UpdateArgs<M extends PrismaDelegate> = Parameters<M["update"]>[0];
 
 type ReadOptions<M extends PrismaDelegate, TCursor> = {
@@ -32,13 +39,18 @@ type ReadOptions<M extends PrismaDelegate, TCursor> = {
 };
 
 interface Result<TNode, TCursor = unknown> {
-  edges: { node: TNode; cursor: TCursor }[];
+  edges: {
+    node: TNode;
+    cursor: TCursor;
+  }[];
+
   pageInfo: {
     startCursor: TCursor | null;
     endCursor: TCursor | null;
     hasNextPage: boolean;
     hasPrevPage: boolean;
   };
+
   totalCount: number;
 }
 
@@ -57,10 +69,17 @@ export class PrismaCRUDManager<
   ) {}
 
   private buildWhere(where?: any) {
-    if (!this.hasSoftDelete) return where || {};
+    if (!this.hasSoftDelete) {
+      return where || {};
+    }
 
     return {
-      AND: [{ is_deleted: false }, ...(where ? [where] : [])],
+      AND: [
+        {
+          is_deleted: false,
+        },
+        ...(where ? [where] : []),
+      ],
     };
   }
 
@@ -76,15 +95,54 @@ export class PrismaCRUDManager<
     } & Omit<Args, "where" | "select" | "include">,
   ): Promise<ReturnType<M["findUnique"]>> {
     return this.model.findUnique({
-      where: { [key]: value } as any,
+      where: {
+        [key]: value,
+      } as any,
       select: options?.select,
       include: options?.include,
       ...(options as any),
     });
   }
 
+  async findFirst(
+    options?: FindFirstArgs<M>,
+  ): Promise<Awaited<ReturnType<M["findFirst"]>>> {
+    if (!options) {
+      return this.model.findFirst({
+        where: this.buildWhere(),
+      });
+    }
+
+    return this.model.findFirst({
+      ...options,
+      where: this.buildWhere(options.where),
+    });
+  }
+
   async create(data: CreateArgs<M>["data"]): Promise<T> {
-    return this.model.create({ data });
+    return this.model.create({
+      data,
+    });
+  }
+
+  async createMany(data: CreateManyArgs<M>["data"]): Promise<
+    CreateManyArgs<M> extends {
+      data: infer D;
+    }
+      ? any
+      : any
+  > {
+    return this.model.createMany({
+      data,
+    });
+  }
+
+  async deleteMany(
+    where?: DeleteManyArgs<M>["where"],
+  ): Promise<Awaited<ReturnType<M["deleteMany"]>>> {
+    return this.model.deleteMany({
+      where,
+    });
   }
 
   async read(
@@ -92,7 +150,7 @@ export class PrismaCRUDManager<
   ): Promise<Result<T, T[TIdKey]>> {
     const {
       cursor,
-      limit = 10,
+      limit = "10",
       select,
       include,
       where,
@@ -113,12 +171,20 @@ export class PrismaCRUDManager<
 
     const query: FindManyArgs<M> = {
       where: mergedWhere,
+
       orderBy: orderBy ?? {
         [this.idKey]: sortBy ?? "asc",
       },
+
       take: isBackward ? -(take + 1) : take + 1,
-      ...(select && { select }),
-      ...(include && { include }),
+
+      ...(select && {
+        select,
+      }),
+
+      ...(include && {
+        include,
+      }),
     };
 
     if (cursor) {
@@ -170,10 +236,14 @@ export class PrismaCRUDManager<
       totalCount,
     });
   }
+
   async readById<TResult = T>(
     value: T[TIdKey] | string,
+
     key: keyof T = this.idKey,
+
     options?: Pick<FindFirstArgs<M>, "select" | "include">,
+
     resolver?: (entity: T) => Promise<TResult>,
   ): Promise<T | TResult | null> {
     if (options?.select && options?.include) {
@@ -182,7 +252,14 @@ export class PrismaCRUDManager<
 
     const where = this.hasSoftDelete
       ? {
-          AND: [{ [key]: value }, { is_deleted: false }],
+          AND: [
+            {
+              [key]: value,
+            },
+            {
+              is_deleted: false,
+            },
+          ],
         }
       : {
           [key]: value,
@@ -190,8 +267,14 @@ export class PrismaCRUDManager<
 
     const entity = await this.model.findFirst({
       where,
-      ...(options?.select && { select: options.select }),
-      ...(options?.include && { include: options.include }),
+
+      ...(options?.select && {
+        select: options.select,
+      }),
+
+      ...(options?.include && {
+        include: options.include,
+      }),
     });
 
     if (!entity) {
@@ -207,11 +290,16 @@ export class PrismaCRUDManager<
 
   async update<K extends string>(
     key: keyof T = this.idKey,
+
     value: T[TIdKey] | string,
+
     data: UpdateArgs<M>["data"],
   ): Promise<T> {
     return this.model.update({
-      where: { [key]: value },
+      where: {
+        [key]: value,
+      },
+
       data,
     });
   }
@@ -222,8 +310,13 @@ export class PrismaCRUDManager<
     }
 
     return this.model.update({
-      where: { [this.idKey]: id },
-      data: { is_deleted: true },
+      where: {
+        [this.idKey]: id,
+      },
+
+      data: {
+        is_deleted: true,
+      },
     });
   }
 
@@ -233,8 +326,13 @@ export class PrismaCRUDManager<
     }
 
     return this.model.update({
-      where: { [this.idKey]: id },
-      data: { is_deleted: false },
+      where: {
+        [this.idKey]: id,
+      },
+
+      data: {
+        is_deleted: false,
+      },
     });
   }
 }

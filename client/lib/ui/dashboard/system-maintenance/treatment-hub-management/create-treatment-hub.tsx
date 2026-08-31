@@ -1,9 +1,11 @@
 "use client";
 
-import Template from "@/lib/ui/template";
+import React, { useEffect } from "react";
 import { SubmitHandler, useWatch } from "react-hook-form";
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/treatment-hub-management/create-treatment-hub.module.scss";
 
+
+//components
 import { Select } from "@/components/Select/select";
 import Textarea from "@/components/Textarea/textarea";
 import Grid from "@/components/Grid/grid";
@@ -12,14 +14,14 @@ import ButtonToggle from "@/components/Toggle/buttonToggle";
 import Button from "@/components/Button/button";
 import Text from "@/components/Typography/Text/text";
 import Form from "@/components/Form/form";
-import  MultiSelect from "@/components/Select/multi-select-arry";
+import MultiSelect from "@/components/Select/multi-select-arry";
 
-
+//lib & hooks
+import Template from "@/lib/ui/template";
 import { RegionsInterfaceResult } from "@/lib/interface/geom/regions.interface";
 import { ProvinceInterfaceResult } from "@/lib/interface/geom/provinces.interface";
 import { BarangayInterfaceResult } from "@/lib/interface/geom/barangay.interface";
 import { CreateTreatmentHubSchema } from "@/lib/validations/treatment-hub.validation";
-
 import useFormHook from "@/lib/hooks/useFormHook";
 import TitleWrapper from "@/lib/ui/titleWrapper";
 import useFormQuery from "@/lib/hooks/useQuery";
@@ -27,6 +29,7 @@ import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
 import { TreatmentHubFields } from "@/lib/types/treatment-hub.type";
 import { TreatmenetHubServiceResult } from "@/lib/interface/services/service.interface";
+import { toastSuccess } from "@/lib/ui/toast";
 
 export default function CreateTreatmentHub() {
     const {
@@ -35,6 +38,7 @@ export default function CreateTreatmentHub() {
         control,
         errors,
         handleSubmit,
+        reset,
     } = useFormHook({
         schema: CreateTreatmentHubSchema,
         defaultValues: {
@@ -42,21 +46,21 @@ export default function CreateTreatmentHub() {
             accepts_walk_in: true,
             appointment_required: true,
             populations_served: [],
-            services: [],
+            service_id: "",
             status: "ACTIVE",
             address: "",
-            barangay_ogc_fid:  0,
+            barangay_ogc_fid: undefined,
             code: "",
             contact_number: "",
             description: "",
             email: "",
             facebook: "",
             operating_hours: "",
-            latitude: 0,
-            longitude: 0,
-            municipality_ogc_fid: 0,
-            province_ogc_fid: 0,
-            region_ogc_fid: 0,
+            latitude: undefined,
+            longitude: undefined,
+            municipality_ogc_fid: undefined,
+            province_ogc_fid: undefined,
+            region_ogc_fid: undefined,
             telephone: "",
             website: "",
             postal_code: "",
@@ -78,45 +82,49 @@ export default function CreateTreatmentHub() {
         name: "municipality_ogc_fid",
     });
 
-    const municipalityDataEnabled = Boolean(province);
-    const barangayDataEnabled = Boolean(municipality);
-
     const { data: RegionalData } =
         useFormQuery<RegionsInterfaceResult>({
             key: ["GetAllRegions"],
             url: "maintenance/geospatial/regions",
+            headers,
         });
 
     const { data: ProvincesData } =
         useFormQuery<ProvinceInterfaceResult>({
             key: ["GetAllProvinces", region],
-            url: `maintenance/geospatial/provinces`,
+            url: "maintenance/geospatial/provinces",
             params: {
-                region_code: region
+                region_code: region,
             },
+            enabled: Boolean(region),
         });
 
     const { data: MunicipalitiesData } =
         useFormQuery<ProvinceInterfaceResult>({
             key: ["GetAllMunicipalities", province],
-            url: `maintenance/geospatial/municipalities?province_code=${province}`,
-            enabled: !!province
+            url: "maintenance/geospatial/municipalities",
+            params: {
+                province_code: province,
+            },
+            enabled: Boolean(province),
         });
 
     const { data: BarangayData } =
         useFormQuery<BarangayInterfaceResult>({
             key: ["GetAllBarangays", municipality],
-            url: `maintenance/geospatial/barangays`,
+            url: "maintenance/geospatial/barangays",
             params: {
-                municipality_code: municipality
-            }
+                municipality_code: municipality,
+            },
+            enabled: Boolean(municipality),
         });
 
-    const { data: TreatmentHubServicesData } = useFormQuery<TreatmenetHubServiceResult>({
-        key: ["GetAllTreatmentHubServices"],
-        url: "maintenance/services",
-        headers
-    })
+    const { data: TreatmentHubServicesData } =
+        useFormQuery<TreatmenetHubServiceResult>({
+            key: ["GetAllTreatmentHubServices"],
+            url: "maintenance/services",
+            headers,
+        });
 
     const mutation = useFormMutation({
         key: ["CreateTreatmentHub"],
@@ -125,22 +133,26 @@ export default function CreateTreatmentHub() {
         headers,
     });
 
-    const onHandleSubmit: SubmitHandler<TreatmentHubFields> = (data) => {
+  
 
+    const onHandleSubmit: SubmitHandler<TreatmentHubFields> = (data) => {
         mutation.mutate(data, {
-            onSuccess: (data) => {
-                console.log("Data: ", data)
+            onSuccess: () => {
+                toastSuccess({
+                    title: "Treatment Hub Created Successfully",
+                    body: "The new treatment hub has been added and is now available in the system.",
+                });
+
+                reset();
             },
             onError: (error) => {
-                console.error("Error: ", error)
+                console.error("Error: ", error);
             },
         });
     };
-    
 
     return (
         <Template title="Create new Treatment Hub">
-            {JSON.stringify(`Data: ${municipality}`, null, 2)}
             <Form onSubmit={handleSubmit(onHandleSubmit)}>
                 <div className={styles.container}>
                     <TitleWrapper title="Basic Information" />
@@ -160,9 +172,7 @@ export default function CreateTreatmentHub() {
                     />
 
                     <TitleWrapper title="Location" />
-
-                    <Grid>
-                        <Grid.Column>
+                    
                             <Input
                                 register={register}
                                 label="Address"
@@ -177,7 +187,7 @@ export default function CreateTreatmentHub() {
                                 name="region_ogc_fid"
                                 options={(
                                     RegionalData?.data.data || []
-                                ).map(({ id, name, code }) => ({
+                                ).map(({ id, name }) => ({
                                     label: name,
                                     value: id,
                                 }))}
@@ -192,7 +202,7 @@ export default function CreateTreatmentHub() {
                                     name="province_ogc_fid"
                                     options={(
                                         ProvincesData?.data.data || []
-                                    ).map(({ id,  name, code }) => ({
+                                    ).map(({ id, name }) => ({
                                         label: name,
                                         value: id,
                                     }))}
@@ -200,7 +210,7 @@ export default function CreateTreatmentHub() {
                                 />
                             )}
 
-                            {municipalityDataEnabled && (
+                            {province && (
                                 <Select
                                     control={control}
                                     isRequired={true}
@@ -208,7 +218,7 @@ export default function CreateTreatmentHub() {
                                     name="municipality_ogc_fid"
                                     options={(
                                         MunicipalitiesData?.data.data || []
-                                    ).map(({ id,  name, code }) => ({
+                                    ).map(({ id, name }) => ({
                                         label: name,
                                         value: id,
                                     }))}
@@ -216,32 +226,32 @@ export default function CreateTreatmentHub() {
                                 />
                             )}
 
-                            {barangayDataEnabled && (
-                                <Select
-                                    control={control}
-                                    isRequired={true}
-                                    label="Barangay"
-                                    name="barangay_ogc_fid"
-                                    options={(
-                                        BarangayData?.data.data || []
-                                    ).map(({ id, name, code }) => ({
-                                        label: name,
-                                        value: id,
-                                    }))}
-                                    error={errors.barangay_ogc_fid}
-                                />
-                            )}
-                        </Grid.Column>
-                    </Grid>
-
-                    <MultiSelect
+                    {municipality && (
+                        <Select
+                            control={control}
+                            isRequired={true}
+                            label="Barangay"
+                            name="barangay_ogc_fid"
+                                options={(
+                                    BarangayData?.data.data || []
+                                ).map(({ id, name }) => ({
+                                    label: name,
+                                    value: id,
+                                }))}
+                            error={errors.barangay_ogc_fid}
+                        />
+                        )}
+                    <Select
                         control={control}
                         isRequired={true}
                         label="Services"
-                        name="services"
-                        options={(TreatmentHubServicesData?.data.edges || []).map(({cusor, node}) => ({
+                        name="service_id"
+                        error={errors.service_id}
+                        options={(
+                            TreatmentHubServicesData?.data.edges || []
+                        ).map(({ node }) => ({
                             label: node.name,
-                            value: node.service_id
+                            value: node.service_id,
                         }))}
                     />
 
@@ -275,13 +285,15 @@ export default function CreateTreatmentHub() {
                         error={errors.website}
                     />
 
-                    <ButtonToggle 
-                        control={control}
+                    <ButtonToggle
                         name="status"
-                        falseName="INACTIVE" 
-                        label="Status"
+                        control={control}
+                        falseValue="INACTIVE"
+                        trueValue="ACTIVE"
                         setValue={setValue}
-                        trueName="ACTIVE"
+                        falseLabel="INACTIVE"
+                        label="Status"
+                        trueLabel="ACTIVE"
                     />
 
                     <div className={styles.footer}>

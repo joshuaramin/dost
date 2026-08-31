@@ -23,7 +23,7 @@ import { RegionsInterfaceResult } from "@/lib/interface/geom/regions.interface";
 export default function TreatmentHub() {
     const router = useRouter();
 
-    const limit = 4;
+    const limit = 20;
 
     const [search, setSearch] = useState("");
     const [region, setRegions] = useState("");
@@ -160,6 +160,10 @@ export default function TreatmentHub() {
                             </Table.Head>
 
                             <Table.Head>
+                                Service
+                            </Table.Head>
+
+                            <Table.Head>
                                 Contact Number
                             </Table.Head>
 
@@ -203,6 +207,7 @@ export default function TreatmentHub() {
                                     provinces,
                                     municipalities,
                                     barangays,
+                                    services
                                 },
                             }) => (
                                 <Table.Row
@@ -214,6 +219,10 @@ export default function TreatmentHub() {
 
                                     <Table.Cell>
                                         {address}
+                                    </Table.Cell>
+
+                                    <Table.Cell>
+                                        {services[0].services.name}
                                     </Table.Cell>
 
                                     <Table.Cell>
@@ -233,11 +242,11 @@ export default function TreatmentHub() {
                                     </Table.Cell>
 
                                     <Table.Cell>
-                                        {municipalities.name_2}
+                                        {municipalities.name_2 ?? ""}
                                     </Table.Cell>
 
                                     <Table.Cell>
-                                        {barangays?.name_1 ?? ""}
+                                        {barangays?.name_3 ?? ""}
                                     </Table.Cell>
 
                                     <Table.Cell colSpan={4}>

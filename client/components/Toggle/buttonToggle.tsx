@@ -3,116 +3,108 @@
 import React from "react";
 import {
     Control,
+    Controller,
+    FieldPathValue,
     FieldValues,
     Path,
-    UseFormSetValue,
-    useWatch,
 } from "react-hook-form";
 
 import Text from "@/components/Typography/Text/text";
 import styles from "@/styles/components/Toggle/buttonToggle.module.scss";
 
 interface ButtonToggleProps<
-    T extends FieldValues,
-    TrueValue = unknown,
-    FalseValue = unknown
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>,
 > {
-    name: Path<T>;
-    control: Control<T>;
-    setValue: UseFormSetValue<T>;
-
-    trueValue: TrueValue;
-    falseValue: FalseValue;
-
+    name: TName;
+    control: Control<TFieldValues>;
+    trueValue: FieldPathValue<TFieldValues, TName>;
+    falseValue: FieldPathValue<TFieldValues, TName>;
     trueLabel?: React.ReactNode;
     falseLabel?: React.ReactNode;
-
     label?: React.ReactNode;
-
     disabled?: boolean;
-
-    shouldDirty?: boolean;
-    shouldValidate?: boolean;
-    shouldTouch?: boolean;
-
     className?: string;
 }
 
 export default function ButtonToggle<
-    T extends FieldValues,
-    TrueValue = unknown,
-    FalseValue = unknown
+    TFieldValues extends FieldValues,
+    TName extends Path<TFieldValues>,
 >({
     name,
     control,
-    setValue,
-
     trueValue,
     falseValue,
-
     trueLabel,
     falseLabel,
-
     label,
-
     disabled = false,
-
-    shouldDirty = true,
-    shouldValidate = true,
-    shouldTouch = false,
-
     className,
-}: ButtonToggleProps<T, TrueValue, FalseValue>) {
-    const value = useWatch({
-        control,
-        name,
-    });
-
-    const isTrue = Object.is(value, trueValue);
-
-    const currentLabel = isTrue
-        ? (trueLabel ?? String(trueValue))
-        : (falseLabel ?? String(falseValue));
-
-    const handleToggle = () => {
-        if (disabled) {
-            return;
-        }
-
-        const nextValue = isTrue ? falseValue : trueValue;
-
-        setValue(
-            name,
-            nextValue as T[Path<T>],
-            {
-                shouldDirty,
-                shouldValidate,
-                shouldTouch,
-            }
-        );
-    };
-
+}: ButtonToggleProps<TFieldValues, TName>) {
     return (
-        <div className={`${styles.statusContainer} ${className ?? ""}`}>
-            {label && <label>{label}</label>}
+        <Controller
+            name={name}
+            control={control}
+            render={({ field }) => {
+                const isTrue = Object.is(
+                    field.value,
+                    trueValue
+                );
 
-            <div className={styles.col2}>
-                <button
-                    type="button"
-                    disabled={disabled}
-                    aria-pressed={isTrue}
-                    className={`${styles.statusToggle} ${
-                        isTrue ? styles.active : ""
-                    }`}
-                    onClick={handleToggle}
-                >
-                    <span className={styles.thumb} />
-                </button>
+                const currentLabel = isTrue
+                    ? trueLabel ?? String(trueValue)
+                    : falseLabel ?? String(falseValue);
 
-                <Text size="sm">
-                    {currentLabel}
-                </Text>
-            </div>
-        </div>
+                const handleToggle = () => {
+                    if (disabled) {
+                        return;
+                    }
+
+                    field.onChange(
+                        isTrue
+                            ? falseValue
+                            : trueValue
+                    );
+                };
+
+                return (
+                    <div
+                        className={`${styles.statusContainer} ${
+                            className ?? ""
+                        }`}
+                    >
+                        {label && (
+                            <label>
+                                {label}
+                            </label>
+                        )}
+
+                        <div className={styles.col2}>
+                            <button
+                                type="button"
+                                disabled={disabled}
+                                aria-pressed={isTrue}
+                                className={`${styles.statusToggle} ${
+                                    isTrue
+                                        ? styles.active
+                                        : ""
+                                }`}
+                                onClick={handleToggle}
+                            >
+                                <span
+                                    className={
+                                        styles.thumb
+                                    }
+                                />
+                            </button>
+
+                            <Text size="sm">
+                                {currentLabel}
+                            </Text>
+                        </div>
+                    </div>
+                );
+            }}
+        />
     );
 }

@@ -199,13 +199,12 @@ export default function Page() {
 
         <div className={styles.footer}>
         <ButtonToggle 
-            trueValue={"PUBLISH"}
-            trueLabel={"PUBLISH"}
-            falseLabel={"DRAFT"}
             falseValue={"DRAFT"}
+            falseLabel={"DRAFT"}
+            trueLabel={"PUBLISH"}
+            trueValue={"PUBLISHED"}
             control={control}
             name="status"
-            setValue={setValue}
         />
 
         <Button

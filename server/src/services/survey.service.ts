@@ -5,9 +5,11 @@ import {
   Prisma,
   Survey,
   SurveyQuestion,
+  QuestionOption,
 } from "@/lib/prisma/system/generated/prisma/client";
 import { SurveyWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
+import useSlugify from "@/lib/helpers/useSlugify";
 
 const SurveyManage = new PrismaCRUDManager<
   Survey,
@@ -20,6 +22,12 @@ const QuestionnaireManage = new PrismaCRUDManager<
   "survey_question_id",
   typeof prisma.surveyQuestion
 >(prisma.surveyQuestion, "survey_question_id");
+
+const QuestionOptionManage = new PrismaCRUDManager<
+  QuestionOption,
+  "question_option_id",
+  typeof prisma.questionOption
+>(prisma.questionOption, "question_option_id");
 
 export const GetAllSurveys = ({
   limit,
@@ -36,6 +44,7 @@ export const GetAllSurveys = ({
       ],
     }),
   };
+
   return SurveyManage.read({
     where,
     limit,
@@ -76,7 +85,12 @@ export const GetSurveyById = async (data: any) => {
       title: true,
       description: true,
       questions: {
-        include: { options: true },
+        orderBy: {
+          created_at: "asc",
+        },
+        include: {
+          options: true,
+        },
       },
       created_at: true,
       updated_at: true,
@@ -100,30 +114,133 @@ export const CreateSurvey = async (data: Prisma.SurveyCreateInput) => {
     questions: {
       create: [
         {
-          text: "Testing questionnaire",
+          text: "",
           type: "SHORT_TEXT",
-          is_required: false,
+          is_required: true,
           order_index: 1,
         },
       ],
     },
   });
 };
-export const CreateSurveyQuestion = async (id: string, data: any) => {
+
+export const CreateSurveyQuestion = async (
+  slug: string,
+  data: Prisma.SurveyQuestionCreateInput,
+) => {
+  const survey = await SurveyManage.unique("slug", slug, {
+    select: {
+      survey_id: true,
+    },
+  });
+
+  if (!survey) {
+    throw new AppError("Survey not found", 404);
+  }
+
+  const latestQuestion = await QuestionnaireManage.findFirst({
+    where: {
+      survey_id: survey.survey_id,
+      is_deleted: false,
+    },
+    orderBy: {
+      order_index: "desc",
+    },
+    select: {
+      order_index: true,
+    },
+  });
+
+  const nextOrderIndex = (latestQuestion?.order_index ?? 0) + 1;
+
   return QuestionnaireManage.create({
-    text: "",
-    type: "SHORT_TEXT",
+    text: data.text ?? "",
+    type: data.type ?? "SHORT_TEXT",
+    is_required: false,
     is_deleted: false,
-    order_index: data.index,
+    order_index: nextOrderIndex,
     survey: {
-      connect: { slug: id },
+      connect: {
+        survey_id: survey.survey_id,
+      },
     },
   });
 };
 
 export const DeleteSurveytQuestion = async (data: any) => {
-  console.log(data);
   return QuestionnaireManage.delete(data);
+};
+
+export const UpdateSurveyQuestion = async (id: string, data: any) => {
+  const question = await QuestionnaireManage.readById(id, "survey_question_id");
+
+  if (!question) {
+    throw new AppError("Survey question not found", 404);
+  }
+
+  return prisma.$transaction(async (tx) => {
+    const updatedQuestion = await tx.surveyQuestion.update({
+      where: {
+        survey_question_id: id,
+      },
+      data: {
+        ...(data.text !== undefined && {
+          text: data.text,
+        }),
+        ...(data.type !== undefined && {
+          type: data.type,
+        }),
+        ...(data.is_required !== undefined && {
+          is_required: data.is_required,
+        }),
+        ...(data.order_index !== undefined && {
+          order_index: data.order_index,
+        }),
+      },
+    });
+
+    const isChoiceQuestion =
+      updatedQuestion.type === "MULTIPLE_CHOICE" ||
+      updatedQuestion.type === "CHECKBOX";
+
+    if (isChoiceQuestion) {
+      await tx.questionOption.deleteMany({
+        where: {
+          survey_question_id: id,
+        },
+      });
+
+      if (Array.isArray(data.options) && data.options.length > 0) {
+        await tx.questionOption.createMany({
+          data: data.options.map((option: any, index: number) => ({
+            survey_question_id: id,
+            label: option.label,
+            value: useSlugify(option.label),
+            order_index: option.order_index ?? index + 1,
+          })),
+        });
+      }
+    } else {
+      await tx.questionOption.deleteMany({
+        where: {
+          survey_question_id: id,
+        },
+      });
+    }
+
+    return tx.surveyQuestion.findUnique({
+      where: {
+        survey_question_id: id,
+      },
+      include: {
+        options: {
+          orderBy: {
+            order_index: "asc",
+          },
+        },
+      },
+    });
+  });
 };
 
 export const UpdateSurvey = async (data: any) => {
