@@ -1,0 +1,79 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.book {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    // background: #5d4037;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
+}
+
+.page {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 8.5 / 11;
+    background: white;
+    overflow: hidden;
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, .08),
+        0 5px 15px rgba(0, 0, 0, .2);
+}
+
+.page:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.page:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.page:first-child::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: rgba(0, 0, 0, .08);
+}
+
+.blank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #999;
+    font-size: 2rem;
+}
+
+.controller {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative;
+
+    button {
+        width: 45px;
+        height: 45px;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        background-color: transparent;
+
+    }
+
+}

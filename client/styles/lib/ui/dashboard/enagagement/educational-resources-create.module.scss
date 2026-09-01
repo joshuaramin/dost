@@ -1,0 +1,27 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    padding: 20px;
+    background-color: color(base, white);
+    border-radius: radius(sm);
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+
+
+    .footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+        // position: absolute;
+    }
+}

@@ -1,0 +1,62 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: radius(sm);
+    border: 1px solid color(neutral, 500);
+    gap: 20px;
+    background-color: color(base, white);
+
+    .header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        h1 {
+            font-size: font-size(lg);
+        }
+    }
+
+    .header_col1 {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        button {
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 100px;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: color(neutral, 200);
+            }
+        }
+    }
+
+    .body {
+        padding: 0.8rem 0;
+        // height: 120px;
+
+        span {
+            color: color(neutral, 700);
+            padding: 10px 0;
+        }
+    }
+
+    .footer {
+        display: flex;
+        gap: 10px;
+    }
+}

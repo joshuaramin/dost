@@ -1,6 +1,8 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
@@ -8,6 +10,7 @@
     gap: 10px;
     display: flex;
     align-items: center;
+    transition: all 0.2s ease;
 
     hr {
         width: 80px;
@@ -20,7 +23,6 @@
 
     h1 {
         font-size: $fntbase;
-        font-family: "Alegreya";
         text-transform: uppercase;
 
         @include down(md) {

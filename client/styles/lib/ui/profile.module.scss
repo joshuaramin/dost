@@ -1,0 +1,115 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.footer {
+    width: 100%;
+    min-height: 80px;
+    padding-top: space(base);
+    border-top: 1px solid color(primary, 500);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: space(base);
+
+    .col1 {
+        display: flex;
+        align-items: center;
+        gap: space(base);
+        flex: 1;
+        // min-width: 0;
+
+        h2 {
+            margin: 0;
+            color: color(neutral, 100);
+            font-size: font-size(lg);
+            font-weight: 700;
+            line-height: 1.2;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        span {
+            display: block;
+            margin-top: 2px;
+            color: color(secondary, 500);
+            font-size: font-size(tiny);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .col2 {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: space(sm);
+
+        button {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: none;
+            border-radius: radius(full);
+            background: transparent;
+            cursor: pointer;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.15s ease;
+
+            svg {
+                color: color(neutral, 100);
+                stroke-width: 1.8px;
+                transition: color 0.2s ease;
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            &:focus-visible {
+                outline: 2px solid color(secondary, 500);
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    @include down(sm) {
+        padding-top: space(sm);
+
+        .col1 {
+            h2 {
+                font-size: font-size(base);
+            }
+
+            span {
+                font-size: font-size(sm);
+            }
+        }
+
+        .col2 {
+            button {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    }
+}

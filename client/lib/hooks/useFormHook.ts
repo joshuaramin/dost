@@ -36,6 +36,7 @@ export default function useFormHook<TSchema extends ZodType<any, any>>({
   } = useForm<FormValues>({
     resolver: zodResolver(schema) as never,
     defaultValues: defaultValues as FormValues,
+    shouldUnregister: true,
   });
 
   return {

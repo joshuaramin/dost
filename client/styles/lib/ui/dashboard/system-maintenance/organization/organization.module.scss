@@ -1,0 +1,46 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px 0px color(neutral, 500);
+
+    .grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+
+
+        @include down(xl) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include down(lg) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @include down(sm) {
+            grid-template-columns: repeat(1, 1fr);
+        }
+    }
+}
+
+.loading {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20;
+    padding: 20;
+    overflow-y: auto;
+}

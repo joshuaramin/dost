@@ -1,0 +1,63 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    // padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .isRequired {
+            color: color(error, 500);
+        }
+
+        label {
+            font-size: font-size(base);
+        }
+    }
+
+    .errorBody {
+        width: 100%;
+        padding: 5px;
+
+        .error {
+            font-size: font-size(base);
+            color: color(error, 500);
+        }
+    }
+
+}
+
+.body {
+    // border-radius: radius(sm);
+}
+
+.bodyError {
+    border: 1px solid color(error, 500)
+}
+
+.editor {
+    width: 100%;
+    padding: 20px;
+    border: 1px solid color(neutral, 500);
+    // border-bottom-right-radius: 5px;
+    // border-bottom-left-radius: 5px;
+    outline: none;
+
+    .error {
+        border: 1px solid color(error, 500)
+    }
+
+    ul,
+    ol {
+        padding: 5px 40px;
+    }
+}

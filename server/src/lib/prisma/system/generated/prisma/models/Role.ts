@@ -27,31 +27,31 @@ export type AggregateRole = {
 export type RoleMinAggregateOutputType = {
   role_id: string | null
   name: string | null
-  slug: string | null
   description: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  slug: string | null
 }
 
 export type RoleMaxAggregateOutputType = {
   role_id: string | null
   name: string | null
-  slug: string | null
   description: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  slug: string | null
 }
 
 export type RoleCountAggregateOutputType = {
   role_id: number
   name: number
-  slug: number
   description: number
   is_deleted: number
   created_at: number
   updated_at: number
+  slug: number
   _all: number
 }
 
@@ -59,31 +59,31 @@ export type RoleCountAggregateOutputType = {
 export type RoleMinAggregateInputType = {
   role_id?: true
   name?: true
-  slug?: true
   description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  slug?: true
 }
 
 export type RoleMaxAggregateInputType = {
   role_id?: true
   name?: true
-  slug?: true
   description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  slug?: true
 }
 
 export type RoleCountAggregateInputType = {
   role_id?: true
   name?: true
-  slug?: true
   description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  slug?: true
   _all?: true
 }
 
@@ -162,11 +162,11 @@ export type RoleGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type RoleGroupByOutputType = {
   role_id: string
   name: string
-  slug: string
   description: string | null
   is_deleted: boolean
   created_at: Date
   updated_at: Date
+  slug: string
   _count: RoleCountAggregateOutputType | null
   _min: RoleMinAggregateOutputType | null
   _max: RoleMaxAggregateOutputType | null
@@ -193,11 +193,11 @@ export type RoleWhereInput = {
   NOT?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   role_id?: Prisma.StringFilter<"Role"> | string
   name?: Prisma.StringFilter<"Role"> | string
-  slug?: Prisma.StringFilter<"Role"> | string
   description?: Prisma.StringNullableFilter<"Role"> | string | null
   is_deleted?: Prisma.BoolFilter<"Role"> | boolean
   created_at?: Prisma.DateTimeFilter<"Role"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Role"> | Date | string
+  slug?: Prisma.StringFilter<"Role"> | string
   rolePermissions?: Prisma.RolePermissionListRelationFilter
   users?: Prisma.UserListRelationFilter
 }
@@ -205,11 +205,11 @@ export type RoleWhereInput = {
 export type RoleOrderByWithRelationInput = {
   role_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   rolePermissions?: Prisma.RolePermissionOrderByRelationAggregateInput
   users?: Prisma.UserOrderByRelationAggregateInput
 }
@@ -217,26 +217,26 @@ export type RoleOrderByWithRelationInput = {
 export type RoleWhereUniqueInput = Prisma.AtLeast<{
   role_id?: string
   name?: string
+  slug?: string
   AND?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
   OR?: Prisma.RoleWhereInput[]
   NOT?: Prisma.RoleWhereInput | Prisma.RoleWhereInput[]
-  slug?: Prisma.StringFilter<"Role"> | string
   description?: Prisma.StringNullableFilter<"Role"> | string | null
   is_deleted?: Prisma.BoolFilter<"Role"> | boolean
   created_at?: Prisma.DateTimeFilter<"Role"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Role"> | Date | string
   rolePermissions?: Prisma.RolePermissionListRelationFilter
   users?: Prisma.UserListRelationFilter
-}, "role_id" | "name">
+}, "role_id" | "name" | "slug">
 
 export type RoleOrderByWithAggregationInput = {
   role_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   _count?: Prisma.RoleCountOrderByAggregateInput
   _max?: Prisma.RoleMaxOrderByAggregateInput
   _min?: Prisma.RoleMinOrderByAggregateInput
@@ -248,21 +248,21 @@ export type RoleScalarWhereWithAggregatesInput = {
   NOT?: Prisma.RoleScalarWhereWithAggregatesInput | Prisma.RoleScalarWhereWithAggregatesInput[]
   role_id?: Prisma.StringWithAggregatesFilter<"Role"> | string
   name?: Prisma.StringWithAggregatesFilter<"Role"> | string
-  slug?: Prisma.StringWithAggregatesFilter<"Role"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Role"> | string | null
   is_deleted?: Prisma.BoolWithAggregatesFilter<"Role"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Role"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Role"> | Date | string
+  slug?: Prisma.StringWithAggregatesFilter<"Role"> | string
 }
 
 export type RoleCreateInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   rolePermissions?: Prisma.RolePermissionCreateNestedManyWithoutRoleInput
   users?: Prisma.UserCreateNestedManyWithoutRoleInput
 }
@@ -270,11 +270,11 @@ export type RoleCreateInput = {
 export type RoleUncheckedCreateInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   rolePermissions?: Prisma.RolePermissionUncheckedCreateNestedManyWithoutRoleInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutRoleInput
 }
@@ -282,11 +282,11 @@ export type RoleUncheckedCreateInput = {
 export type RoleUpdateInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   rolePermissions?: Prisma.RolePermissionUpdateManyWithoutRoleNestedInput
   users?: Prisma.UserUpdateManyWithoutRoleNestedInput
 }
@@ -294,11 +294,11 @@ export type RoleUpdateInput = {
 export type RoleUncheckedUpdateInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   rolePermissions?: Prisma.RolePermissionUncheckedUpdateManyWithoutRoleNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutRoleNestedInput
 }
@@ -306,31 +306,31 @@ export type RoleUncheckedUpdateInput = {
 export type RoleCreateManyInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
 }
 
 export type RoleUpdateManyMutationInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type RoleUncheckedUpdateManyInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type RoleNullableScalarRelationFilter = {
@@ -341,31 +341,31 @@ export type RoleNullableScalarRelationFilter = {
 export type RoleCountOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
 }
 
 export type RoleMaxOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
 }
 
 export type RoleMinOrderByAggregateInput = {
   role_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
 }
 
 export type RoleScalarRelationFilter = {
@@ -406,22 +406,22 @@ export type RoleUpdateOneRequiredWithoutRolePermissionsNestedInput = {
 export type RoleCreateWithoutUsersInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   rolePermissions?: Prisma.RolePermissionCreateNestedManyWithoutRoleInput
 }
 
 export type RoleUncheckedCreateWithoutUsersInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   rolePermissions?: Prisma.RolePermissionUncheckedCreateNestedManyWithoutRoleInput
 }
 
@@ -444,44 +444,44 @@ export type RoleUpdateToOneWithWhereWithoutUsersInput = {
 export type RoleUpdateWithoutUsersInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   rolePermissions?: Prisma.RolePermissionUpdateManyWithoutRoleNestedInput
 }
 
 export type RoleUncheckedUpdateWithoutUsersInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   rolePermissions?: Prisma.RolePermissionUncheckedUpdateManyWithoutRoleNestedInput
 }
 
 export type RoleCreateWithoutRolePermissionsInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   users?: Prisma.UserCreateNestedManyWithoutRoleInput
 }
 
 export type RoleUncheckedCreateWithoutRolePermissionsInput = {
   role_id?: string
   name: string
-  slug: string
   description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  slug: string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutRoleInput
 }
 
@@ -504,22 +504,22 @@ export type RoleUpdateToOneWithWhereWithoutRolePermissionsInput = {
 export type RoleUpdateWithoutRolePermissionsInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUpdateManyWithoutRoleNestedInput
 }
 
 export type RoleUncheckedUpdateWithoutRolePermissionsInput = {
   role_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   users?: Prisma.UserUncheckedUpdateManyWithoutRoleNestedInput
 }
 
@@ -566,11 +566,11 @@ export type RoleCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Exte
 export type RoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   role_id?: boolean
   name?: boolean
-  slug?: boolean
   description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  slug?: boolean
   rolePermissions?: boolean | Prisma.Role$rolePermissionsArgs<ExtArgs>
   users?: boolean | Prisma.Role$usersArgs<ExtArgs>
   _count?: boolean | Prisma.RoleCountOutputTypeDefaultArgs<ExtArgs>
@@ -579,34 +579,34 @@ export type RoleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type RoleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   role_id?: boolean
   name?: boolean
-  slug?: boolean
   description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  slug?: boolean
 }, ExtArgs["result"]["role"]>
 
 export type RoleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   role_id?: boolean
   name?: boolean
-  slug?: boolean
   description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  slug?: boolean
 }, ExtArgs["result"]["role"]>
 
 export type RoleSelectScalar = {
   role_id?: boolean
   name?: boolean
-  slug?: boolean
   description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  slug?: boolean
 }
 
-export type RoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"role_id" | "name" | "slug" | "description" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["role"]>
+export type RoleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"role_id" | "name" | "description" | "is_deleted" | "created_at" | "updated_at" | "slug", ExtArgs["result"]["role"]>
 export type RoleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rolePermissions?: boolean | Prisma.Role$rolePermissionsArgs<ExtArgs>
   users?: boolean | Prisma.Role$usersArgs<ExtArgs>
@@ -624,11 +624,11 @@ export type $RolePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     role_id: string
     name: string
-    slug: string
     description: string | null
     is_deleted: boolean
     created_at: Date
     updated_at: Date
+    slug: string
   }, ExtArgs["result"]["role"]>
   composites: {}
 }
@@ -1056,11 +1056,11 @@ export interface Prisma__RoleClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface RoleFieldRefs {
   readonly role_id: Prisma.FieldRef<"Role", 'String'>
   readonly name: Prisma.FieldRef<"Role", 'String'>
-  readonly slug: Prisma.FieldRef<"Role", 'String'>
   readonly description: Prisma.FieldRef<"Role", 'String'>
   readonly is_deleted: Prisma.FieldRef<"Role", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Role", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Role", 'DateTime'>
+  readonly slug: Prisma.FieldRef<"Role", 'String'>
 }
     
 

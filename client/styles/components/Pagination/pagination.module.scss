@@ -1,0 +1,41 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 20px 10px;
+    border-top: 1px solid color(neutral, 500);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .footer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        border: none;
+
+        button {
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            padding: 0.2rem;
+            border-radius: radius(sm);
+            border: none;
+            cursor: pointer;
+
+
+            &:disabled {
+                // background: color(neutral, 100);
+
+                svg {
+                    color: color(neutral, 500)
+                }
+            }
+
+        }
+    }
+}

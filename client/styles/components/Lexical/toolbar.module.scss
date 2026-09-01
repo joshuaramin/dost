@@ -1,0 +1,66 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid color(neutral, 500);
+
+    div {
+        display: flex;
+        gap: 5px;
+
+        button {
+            padding: 10px 8px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:hover {
+                background-color: color(primary, 500);
+
+                svg {
+                    stroke: color(base, white);
+                }
+            }
+
+            &:disabled {
+                background-color: color(neutral, 200);
+
+                &:hover {
+                    svg {
+                        stroke: color(primary, 200);
+                        ;
+                    }
+                }
+            }
+        }
+
+        .active {
+            background-color: color(primary, 200);
+            ;
+
+
+            svg {
+                stroke: color(base, white);
+            }
+        }
+    }
+
+
+}
+
+.divider {
+    width: 0.5px;
+    border: 0.1px solid $black;
+}

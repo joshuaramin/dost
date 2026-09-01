@@ -1,0 +1,43 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    .textarea_label_container {
+        display: flex;
+        gap: 5px;
+    }
+
+    .required {
+        color: color(error, 500)
+    }
+
+    textarea {
+        width: 100%;
+        height: 150px;
+        resize: none;
+        border: 1px solid color(neutral, 500);
+        // outline: 1px solid color(primary, 500);
+        padding: 10px;
+    }
+
+
+    .error {
+        border: 1px solid color(error, 500);
+        outline: color(error, 500);
+
+        &:focus {
+            border: 1px solid color(error, 500);
+        }
+    }
+
+    .error_message {
+        color: color(error, 500);
+    }
+}

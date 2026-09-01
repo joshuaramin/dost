@@ -1,0 +1,157 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    padding: 2rem 10rem;
+
+    // @include up(xxl) {
+    //     padding: 3rem 5rem;
+    // }
+
+    // @include up(xl) {
+    //     padding: 3rem;
+    // }
+
+    // @include up(lg) {
+    //     padding: 3rem 0;
+    // }
+
+    // @include up(md) {
+    //     padding: 3rem;
+    // }
+
+    // @include up(sm) {
+    //     padding: 3rem 1.1rem;
+    // }
+
+    // @include down(xxl) {
+    //     padding: 3rem 7rem;
+    // }
+
+    // @include down(xl) {
+    //     padding: 3rem;
+    // }
+
+    // @include down(lg) {
+    //     padding: 3rem 4rem;
+    // }
+
+    // @include down(md) {
+    //     padding: 3rem 1.5rem;
+    // }
+
+    // @include down(sm) {
+    //     padding: 3rem 1.1rem;
+    // }
+
+    .container_header {
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .sub_paragraph {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @include down(sm) {
+            padding: 3rem 0;
+        }
+
+        h1 {
+            font-size: font-size(3xl);
+
+            @include down(sm) {
+                font-size: font-size(2xl);
+            }
+        }
+
+        p {
+            font-size: font-size(lg);
+            color: color(base, black);
+        }
+
+        span {
+            color: color(neutral, 600);
+        }
+    }
+
+    .container_body {
+        margin-bottom: 1rem;
+
+        p {
+            font-size: font-size(lg);
+            line-height: 1.8;
+            color: color(base, black);
+            text-align: justify;
+
+            @include down(sm) {
+                font-size: font-size(base);
+            }
+        }
+
+        ul,
+        ol {
+            margin: 1.5rem 0;
+            padding-left: 3rem;
+        }
+
+        ul {
+            list-style: disc;
+        }
+
+        ol {
+            list-style: decimal;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+            font-size: font-size(lg);
+            line-height: 2;
+            color: color(base, black);
+
+            @include down(sm) {
+                font-size: font-size(base);
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            p {
+                margin: 0;
+                font-size: inherit;
+                line-height: inherit;
+            }
+
+            ul,
+            ol {
+                margin-top: 0.75rem;
+                margin-bottom: 0;
+            }
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        a {
+            color: color(primary, 600);
+            text-decoration: underline;
+
+            &:hover {
+                color: color(primary, 700);
+            }
+        }
+    }
+
+    .container_footer {
+        margin-top: 2rem;
+    }
+
+}

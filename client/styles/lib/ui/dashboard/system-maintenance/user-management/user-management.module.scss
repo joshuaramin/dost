@@ -1,0 +1,210 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px 0px color(neutral, 200);
+
+    .filter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .tableWrapper {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 4px;
+        border: 1px solid #e5e7eb;
+        background: color(base, white);
+
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #f9fafb;
+        }
+
+        th,
+        td {
+            width: 300px;
+            padding: space(base);
+        }
+
+        th {
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 1px solid #e5e7eb;
+            white-space: nowrap;
+
+            &:first-child {
+                width: 48px;
+                text-align: center;
+            }
+
+
+
+
+            &:last-child {
+                width: 120px;
+                text-align: right;
+            }
+        }
+
+        td {
+            color: color(base, black);
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            &:first-child {
+                text-align: center;
+            }
+
+
+
+            &:last-child {
+                white-space: nowrap;
+            }
+
+
+
+        }
+
+        tbody {
+            tr {
+                transition: background 0.15s ease;
+
+                &:hover {
+                    background: #f3f4f6;
+                }
+
+                &:nth-child(even) {
+                    background: #fafafa;
+                }
+            }
+
+        }
+    }
+
+    .nameCell {
+        display: flex;
+        align-items: center;
+        gap: space(tiny);
+        min-width: 0;
+
+        >div:first-child {
+            flex-shrink: 0;
+        }
+
+        p,
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .actionButtons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .actionButton {
+        height: 50px;
+        width: 50px;
+        border: none;
+        border-radius: 999px;
+        cursor: pointer;
+        vertical-align: middle;
+        text-align: center;
+        background: transparent;
+        transition:
+            background 0.15s ease,
+            transform 0.15s ease;
+
+
+
+        &:hover {
+            background: #f3f4f6;
+        }
+
+        &:active {
+            transform: scale(0.96);
+        }
+
+        &:focus-visible {
+            outline: 2px solid #2563eb;
+            outline-offset: 2px;
+        }
+
+
+    }
+
+    .actionCell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        button {
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            border-radius: 100px;
+
+            color: color(neutral, 600);
+
+
+            &:hover {
+                background: color(neutral, 300);
+                color: color(primary, 500);
+
+                &:nth-child(3) {
+                    color: color(error, 500);
+                }
+            }
+
+            &:active {
+                transform: scale(0.96);
+            }
+
+            &:focus-visible {
+                outline: 2px solid #2563eb;
+                outline-offset: 2px;
+            }
+        }
+    }
+}
+
+.loading {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20;
+    padding: 25px 20px;
+    overflow-y: auto;
+}

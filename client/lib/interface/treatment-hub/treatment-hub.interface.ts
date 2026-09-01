@@ -1,0 +1,81 @@
+import { BarangyasPropereties } from "../geom/barangay.interface";
+import { MunicipalitiesProperties } from "../geom/municipalities.interface";
+import { ProvicneProperties } from "../geom/provinces.interface";
+import { RegionProperties } from "../geom/regions.interface";
+import { MetaInterface } from "../meta.interface";
+
+export type TreatmentHubStatus = "ACTIVE" | "INACTIVE" | "TEMPORARILY_CLOSED";
+
+export interface TreatmentHubService {
+  services: {
+    name: string;
+    description: string;
+  };
+}
+export interface TreatmentHubInterface {
+  treatment_hub_id: string;
+  code: string;
+  name: string;
+  slug: string;
+
+  description?: string;
+
+  address?: string;
+
+  region_code: string;
+  region_name: string;
+
+  province_code: string;
+  province_name: string;
+
+  municipality_code: string;
+  municipality_name: string;
+
+  barangay_code: string;
+  barangay_name: string;
+
+  postal_code?: string;
+
+  municipalities: MunicipalitiesProperties;
+  regions: RegionProperties;
+  provinces: ProvicneProperties;
+  barangays: BarangyasPropereties;
+
+  contact_number?: string;
+  telephone?: string;
+  email?: string;
+  website?: string;
+  facebook?: string;
+
+  operating_hours?: string;
+
+  latitude: number;
+  longitude: number;
+
+  services: TreatmentHubService[];
+  status: TreatmentHubStatus;
+
+  is_deleted: boolean;
+
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TreatmentHubResult {
+  meta: MetaInterface;
+  data: {
+    edges: {
+      node: TreatmentHubInterface;
+      cursor: string;
+    }[];
+    pageInfo: {
+      startCursor: string;
+      endCursor: string;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+    };
+    totalCount: number;
+    timestamp: string;
+    success: boolean;
+  };
+}

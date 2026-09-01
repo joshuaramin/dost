@@ -1,0 +1,53 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    display: flex;
+
+    .sidebar {
+        width: 500px;
+        padding: 20px;
+        height: 100vh;
+        overflow-y: auto;
+
+        .header {
+            // background-color: red;
+            padding: 20px 0;
+        }
+
+
+        .rp {
+            padding: 10px 0;
+        }
+
+        h2 {
+            font-size: font-size(base);
+            margin-bottom: 5px;
+        }
+
+        .provinces {
+            padding: 0 30px;
+            overflow-y: auto;
+            margin-bottom: 5;
+
+            .provinces_name {
+                padding: 10 15;
+                cursor: pointer;
+                border-radius: 4px;
+
+                span {
+                    font-size: font-size(tiny)
+                }
+
+                &:hover {
+                    background-color: color(secondary, 500);
+                }
+            }
+        }
+
+    }
+}

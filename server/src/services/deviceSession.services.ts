@@ -12,7 +12,12 @@ const DeviceSessionManage = new PrismaCRUDManager<
 
 export const GetAllDeviceSession = async (
   id: string,
-  { after, filter: { orderBy, search, sortBy }, limit }: DeviceSessionInterface,
+  {
+    after,
+    filter: { orderBy, search, sortBy },
+    limit,
+    before,
+  }: DeviceSessionInterface,
 ) => {
   let where: DeviceSessionWhereInput = {
     is_deleted: false,
@@ -22,7 +27,14 @@ export const GetAllDeviceSession = async (
   return DeviceSessionManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

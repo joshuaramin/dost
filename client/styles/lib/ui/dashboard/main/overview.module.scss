@@ -1,0 +1,206 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.col1 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+    @include down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(sm) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .col1_card {
+        background-color: color(base, white);
+        padding: space(lg);
+        border-radius: radius(sm);
+        ;
+        border: 1px solid color(neutral, 500);
+
+        .header {
+            display: flex;
+            // justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            gap: 20px;
+            // min-height: 120px;
+            max-height: 150px;
+
+            .iconChart {
+                width: 45px;
+                height: 45px;
+                background-color: color(primary, 100);
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: radius(sm);
+
+                svg {
+                    color: color(primary, 500);
+                }
+            }
+
+            @include down(xxl) {
+                height: 150px;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 5px 0;
+            }
+
+            @include down(lg) {
+                flex-direction: column;
+                align-items: flex-start;
+                height: 135px;
+                padding: 15px 0;
+            }
+
+            .header_col1 {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        .footer {
+            background-color: color(neutral, 100);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 15px;
+            border-radius: radius(sm);
+
+            span {
+                font-size: font-size(tiny);
+            }
+        }
+    }
+}
+
+.col2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+    @include down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(sm) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .col2_card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color: color(base, white);
+        padding: space(lg);
+        border-radius: radius(sm);
+        border: 1px solid color(neutral, 500);
+
+        .iconChart {
+            width: 45px;
+            height: 45px;
+            background-color: color(primary, 100);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: radius(sm);
+
+            svg {
+                color: color(primary, 500);
+            }
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            svg {
+                stroke-width: 2.5px;
+            }
+        }
+    }
+}
+
+.col3 {
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+
+    @include down(lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include down(sm) {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .col3_card {
+        background-color: color(base, white);
+        padding: space(lg);
+        border-radius: radius(sm);
+        border: 1px solid color(neutral, 500);
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 10px;
+
+            .iconChart {
+                width: 45px;
+                height: 45px;
+                background-color: color(primary, 100);
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: radius(sm);
+
+                svg {
+                    color: color(primary, 500);
+                }
+            }
+        }
+
+        .footer {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 15px;
+            border-radius: radius(sm);
+
+            h1 {
+                font-size: font-size(3xl);
+            }
+
+            span {
+                font-size: font-size(tiny);
+            }
+        }
+    }
+}

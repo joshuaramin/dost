@@ -1,20 +1,22 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
 
 
     section {
         width: 100%;
-        padding: 2rem 10rem;
+        padding: 1rem 10rem;
 
 
         h2 {
             line-height: 1.5em;
             font-size: $fnt3xl;
             color: color(primary, 500);
-            font-family: "Alegreya";
+            // font-family: "Alegreya";
 
             @include down(md) {
                 font-size: $fnt2xl;
@@ -24,6 +26,14 @@
         p {
             font-size: $fntbase;
             color: color(neutral, 700);
+        }
+
+        ul {
+            padding-left: 50px;
+
+            li {
+                padding: 10;
+            }
         }
 
         @include down(xxl) {
@@ -57,13 +67,11 @@
                 background-color: color(primary, 500);
                 color: white;
                 border: none;
-                border-radius: 4px;
+                border-radius: radius(sm);
                 cursor: pointer;
                 transition: background-color 0.3s ease;
 
-                &:hover {
-                    background-color: color(primary, 600);
-                }
+
 
                 &:nth-child(2) {
                     border: 1px solid color(primary, 500);
@@ -71,7 +79,7 @@
                     color: color(primary, 500);
 
                     &:hover {
-                        background-color: color(secondary, 600);
+                        background-color: color(secondary, 500);
                     }
                 }
             }
@@ -83,6 +91,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
             margin-top: 2rem;
+
 
             @include down(xxl) {
                 grid-template-columns: 1fr;
@@ -100,62 +109,123 @@
         .methodologyItem {
             width: 100%;
             padding: 3rem;
-            border: 1px solid color(neutral, 300);
+            border: 1px solid color(neutral, 500);
             display: flex;
             flex-direction: column;
+            background-color: color(base, white);
             gap: 10px;
 
+
+            border-radius: radius(sm);
 
             @include down(xxl) {
                 padding: 2rem;
             }
 
-            span {
+            h1 {
 
-                font-size: $fntlg;
-                // text-transform: uppercase;
-                font-weight: 500;
+                font-size: font-size(xl);
 
                 @include down(md) {
-                    font-size: $fnttiny;
+                    font-size: font-size(xl);
                 }
 
-            }
-
-            h3 {
-                // text-transform: uppercase;
-                font-size: $fntxl;
-                font-family: "Alegreya";
-
-                @include down(md) {
-                    font-size: $fntlg;
+                @include down(sm) {
+                    font-size: font-size(lg);
                 }
             }
 
             p {
-                font-size: $fntbase;
-
-                @include down(md) {
-                    font-size: $fnttiny;
-                }
+                text-align: justify;
             }
 
-
-            &:nth-child(odd) {
-                background-color: color(primary, 500);
+            &:nth-child(2) {
+                background-color: color(primary, 800);
                 color: #fff;
 
                 p {
-                    color: #fff !important;
+                    color: #fff;
+                }
+            }
+        }
+
+        .team_card {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            background: color(base, white);
+            border: 1px solid color(neutral, 200);
+            border-radius: radius(base);
+
+            transition: all .3s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+
+            &:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+            }
+
+            .avatar {
+                position: relative;
+                width: 100%;
+                height: 500px;
+                overflow: hidden;
+                background: color(neutral, 100);
+
+                img {
+                    transition: transform .4s ease;
                 }
             }
 
-            &:nth-child(even) {
-                background-color: color(secondary, 500);
-                color: color(primary, 500) !important;
+            &:hover .avatar img {
+                transform: scale(1.05);
+            }
 
-                p {
-                    color: color(primary, 500) !important;
+            .divider {
+                width: 100%;
+                height: 4px;
+                background: linear-gradient(90deg,
+                        color(primary, 500),
+                        color(secondary, 500));
+            }
+
+            .sub_team_card {
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: .35rem;
+
+                h1,
+                h2,
+                h3 {
+                    margin: 0;
+                    color: color(primary, 600);
+                    font-weight: 700;
+                }
+
+                p,
+                span {
+                    margin: 0;
+                    color: color(neutral, 600);
+                    line-height: 1.5;
+                }
+            }
+
+            @include down(md) {
+                .avatar {
+                    height: 280px;
+                }
+
+                .sub_team_card {
+                    padding: 1.25rem;
+                }
+            }
+
+            @include down(sm) {
+                .avatar {
+                    height: 240px;
                 }
             }
         }

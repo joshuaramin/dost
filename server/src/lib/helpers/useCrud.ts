@@ -4,9 +4,11 @@ type PrismaDelegate = {
   findMany: (args?: any) => Promise<any[]>;
   findFirst: (args?: any) => Promise<any | null>;
   create: (args: any) => Promise<any>;
+  createMany: (args: any) => Promise<any>;
   findUnique: (args: any) => Promise<any | null>;
   update: (args: any) => Promise<any>;
   count: (args?: any) => Promise<number>;
+  deleteMany: (args?: any) => Promise<any>;
 };
 
 type FindManyArgs<M extends PrismaDelegate> = NonNullable<
@@ -18,6 +20,11 @@ type FindFirstArgs<M extends PrismaDelegate> = NonNullable<
 >;
 
 type CreateArgs<M extends PrismaDelegate> = Parameters<M["create"]>[0];
+
+type CreateManyArgs<M extends PrismaDelegate> = Parameters<M["createMany"]>[0];
+
+type DeleteManyArgs<M extends PrismaDelegate> = Parameters<M["deleteMany"]>[0];
+
 type UpdateArgs<M extends PrismaDelegate> = Parameters<M["update"]>[0];
 
 type ReadOptions<M extends PrismaDelegate, TCursor> = {
@@ -28,14 +35,22 @@ type ReadOptions<M extends PrismaDelegate, TCursor> = {
   include?: FindManyArgs<M>["include"];
   where?: FindManyArgs<M>["where"];
   orderBy?: FindManyArgs<M>["orderBy"];
+  direction?: "forward" | "backward";
 };
 
 interface Result<TNode, TCursor = unknown> {
-  edges: { node: TNode; cursor: TCursor }[];
+  edges: {
+    node: TNode;
+    cursor: TCursor;
+  }[];
+
   pageInfo: {
+    startCursor: TCursor | null;
     endCursor: TCursor | null;
     hasNextPage: boolean;
+    hasPrevPage: boolean;
   };
+
   totalCount: number;
 }
 
@@ -50,95 +65,241 @@ export class PrismaCRUDManager<
   constructor(
     private model: M,
     private idKey: TIdKey,
-    private hasSoftDelete: boolean = true, // ✅ NEW FLAG
+    private hasSoftDelete: boolean = true,
   ) {}
 
   private buildWhere(where?: any) {
-    if (!this.hasSoftDelete) return where || {};
+    if (!this.hasSoftDelete) {
+      return where || {};
+    }
 
     return {
-      AND: [{ is_deleted: false }, ...(where ? [where] : [])],
+      AND: [
+        {
+          is_deleted: false,
+        },
+        ...(where ? [where] : []),
+      ],
     };
   }
 
-  async unique<K extends keyof T>(key: K, value: T[K]): Promise<T | null> {
+  async unique<
+    K extends keyof T,
+    Args extends NonNullable<Parameters<M["findUnique"]>[0]>,
+  >(
+    key: K,
+    value: T[K],
+    options?: {
+      select?: Args["select"];
+      include?: Args["include"];
+    } & Omit<Args, "where" | "select" | "include">,
+  ): Promise<ReturnType<M["findUnique"]>> {
     return this.model.findUnique({
-      where: { [key]: value },
-    } as any);
+      where: {
+        [key]: value,
+      } as any,
+      select: options?.select,
+      include: options?.include,
+      ...(options as any),
+    });
+  }
+
+  async findFirst(
+    options?: FindFirstArgs<M>,
+  ): Promise<Awaited<ReturnType<M["findFirst"]>>> {
+    if (!options) {
+      return this.model.findFirst({
+        where: this.buildWhere(),
+      });
+    }
+
+    return this.model.findFirst({
+      ...options,
+      where: this.buildWhere(options.where),
+    });
   }
 
   async create(data: CreateArgs<M>["data"]): Promise<T> {
-    return this.model.create({ data });
+    return this.model.create({
+      data,
+    });
+  }
+
+  async createMany(data: CreateManyArgs<M>["data"]): Promise<
+    CreateManyArgs<M> extends {
+      data: infer D;
+    }
+      ? any
+      : any
+  > {
+    return this.model.createMany({
+      data,
+    });
+  }
+
+  async deleteMany(
+    where?: DeleteManyArgs<M>["where"],
+  ): Promise<Awaited<ReturnType<M["deleteMany"]>>> {
+    return this.model.deleteMany({
+      where,
+    });
   }
 
   async read(
     options: ReadOptions<M, T[TIdKey]> = {},
   ): Promise<Result<T, T[TIdKey]>> {
-    const { cursor, limit, select, include, where, orderBy, sortBy } = options;
+    const {
+      cursor,
+      limit = "10",
+      select,
+      include,
+      where,
+      orderBy,
+      sortBy,
+      direction = "forward",
+    } = options;
 
     if (select && include) {
       throw new Error("Cannot use select and include together.");
     }
 
+    const take = Math.abs(Number(limit));
+
     const mergedWhere = this.buildWhere(where);
+
+    const isBackward = direction === "backward";
 
     const query: FindManyArgs<M> = {
       where: mergedWhere,
-      orderBy: orderBy ?? { [this.idKey]: sortBy ?? "asc" },
-      take: Number(limit) || 10,
-      ...(select && { select }),
-      ...(include && { include }),
+
+      orderBy: orderBy ?? {
+        [this.idKey]: sortBy ?? "asc",
+      },
+
+      take: isBackward ? -(take + 1) : take + 1,
+
+      ...(select && {
+        select,
+      }),
+
+      ...(include && {
+        include,
+      }),
     };
 
     if (cursor) {
-      (query as any).cursor = { [this.idKey]: cursor };
+      (query as any).cursor = {
+        [this.idKey]: cursor,
+      };
+
       (query as any).skip = 1;
     }
 
-    const items = await this.model.findMany(query);
+    let results = await this.model.findMany(query);
+
+    const hasMore = results.length > take;
+
+    if (isBackward) {
+      results = results.slice(0, take);
+
+      results.reverse();
+    } else {
+      results = hasMore ? results.slice(0, take) : results;
+    }
 
     const totalCount = await this.model.count({
       where: mergedWhere,
     });
 
-    const hasNextPage = items.length >= (Number(limit) || 10);
+    const items = results;
+
+    const hasNextPage = isBackward ? Boolean(cursor) : hasMore;
+
+    const hasPrevPage = isBackward ? hasMore : Boolean(cursor);
 
     return ResultFn({
       edges: items.map((item: any) => ({
         node: item,
         cursor: item[this.idKey],
       })),
+
       pageInfo: {
-        endCursor: items.length ? items[items.length - 1][this.idKey] : null,
+        startCursor: items.length > 0 ? items[0][this.idKey] : null,
+
+        endCursor:
+          items.length > 0 ? items[items.length - 1][this.idKey] : null,
+
         hasNextPage,
+        hasPrevPage,
       },
+
       totalCount,
     });
   }
 
-  async readById(
+  async readById<TResult = T>(
     value: T[TIdKey] | string,
+
     key: keyof T = this.idKey,
+
     options?: Pick<FindFirstArgs<M>, "select" | "include">,
-  ): Promise<T | null> {
+
+    resolver?: (entity: T) => Promise<TResult>,
+  ): Promise<T | TResult | null> {
     if (options?.select && options?.include) {
       throw new Error("Cannot use select and include together.");
     }
 
     const where = this.hasSoftDelete
-      ? { AND: [{ [key]: value }, { is_deleted: false }] }
-      : { [key]: value };
+      ? {
+          AND: [
+            {
+              [key]: value,
+            },
+            {
+              is_deleted: false,
+            },
+          ],
+        }
+      : {
+          [key]: value,
+        };
 
-    return this.model.findFirst({
+    const entity = await this.model.findFirst({
       where,
-      ...(options?.select && { select: options.select }),
-      ...(options?.include && { include: options.include }),
+
+      ...(options?.select && {
+        select: options.select,
+      }),
+
+      ...(options?.include && {
+        include: options.include,
+      }),
     });
+
+    if (!entity) {
+      return null;
+    }
+
+    if (resolver) {
+      return resolver(entity as T);
+    }
+
+    return entity as T;
   }
 
-  async update(id: T[TIdKey], data: UpdateArgs<M>["data"]): Promise<T> {
+  async update<K extends string>(
+    key: keyof T = this.idKey,
+
+    value: T[TIdKey] | string,
+
+    data: UpdateArgs<M>["data"],
+  ): Promise<T> {
     return this.model.update({
-      where: { [this.idKey]: id },
+      where: {
+        [key]: value,
+      },
+
       data,
     });
   }
@@ -149,8 +310,13 @@ export class PrismaCRUDManager<
     }
 
     return this.model.update({
-      where: { [this.idKey]: id },
-      data: { is_deleted: true },
+      where: {
+        [this.idKey]: id,
+      },
+
+      data: {
+        is_deleted: true,
+      },
     });
   }
 
@@ -160,8 +326,13 @@ export class PrismaCRUDManager<
     }
 
     return this.model.update({
-      where: { [this.idKey]: id },
-      data: { is_deleted: false },
+      where: {
+        [this.idKey]: id,
+      },
+
+      data: {
+        is_deleted: false,
+      },
     });
   }
 }

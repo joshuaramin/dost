@@ -4,7 +4,6 @@ import { AWS_CONFIG } from "../config/aws.config";
 const emailSES = new SESClient(AWS_CONFIG);
 
 interface Props {
-  source: string;
   html: string;
   subject: string;
   toAddress?: string[];
@@ -12,42 +11,44 @@ interface Props {
   ccAddress?: string[];
 }
 
-const useSES = async ({
-  source,
+const sendEmailSES = async ({
   html,
   subject,
   bccAddress,
   ccAddress,
   toAddress,
 }: Props) => {
+  if (!toAddress || toAddress.length === 0) {
+    throw new Error("At least one recipient is required in toAddress");
+  }
+
+  const command = new SendEmailCommand({
+    Source: "ADVOCAID <raminjoshua05@gmail.com>",
+    Destination: {
+      ToAddresses: toAddress ?? [],
+      BccAddresses: bccAddress ?? [],
+      CcAddresses: ccAddress ?? [],
+    },
+    Message: {
+      Subject: {
+        Data: subject,
+        Charset: "UTF-8",
+      },
+      Body: {
+        Html: {
+          Data: html,
+          Charset: "UTF-8",
+        },
+      },
+    },
+  });
+
   try {
-    const email = new SendEmailCommand({
-      Source: source,
-      Destination: {
-        ToAddresses: toAddress,
-        BccAddresses: bccAddress,
-        CcAddresses: ccAddress,
-      },
-      Message: {
-        Subject: {
-          Data: subject,
-        },
-        Body: {
-          Html: {
-            Charset: "UTF-8",
-            Data: html,
-          },
-        },
-      },
-    });
-
-    const response = await emailSES.send(email);
-
-    console.log("Response: ", response);
+    const response = await emailSES.send(command);
     return response;
   } catch (error) {
-    console.log("Error: ", error);
+    throw error;
   }
 };
 
-export default useSES;
+export default sendEmailSES;

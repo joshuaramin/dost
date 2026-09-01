@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model OTP
+ * 
+ */
+export type OTP = Prisma.OTPModel
+/**
  * Model Profile
  * 
  */
@@ -77,7 +82,77 @@ export type RolePermission = Prisma.RolePermissionModel
  */
 export type ActivityLog = Prisma.ActivityLogModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
  * Model DeviceSession
  * 
  */
 export type DeviceSession = Prisma.DeviceSessionModel
+/**
+ * Model EducationAttachment
+ * 
+ */
+export type EducationAttachment = Prisma.EducationAttachmentModel
+/**
+ * Model EducationTag
+ * 
+ */
+export type EducationTag = Prisma.EducationTagModel
+/**
+ * Model EducationResourceTag
+ * 
+ */
+export type EducationResourceTag = Prisma.EducationResourceTagModel
+/**
+ * Model EducationCategory
+ * 
+ */
+export type EducationCategory = Prisma.EducationCategoryModel
+/**
+ * Model EducationResource
+ * 
+ */
+export type EducationResource = Prisma.EducationResourceModel
+/**
+ * Model Survey
+ * 
+ */
+export type Survey = Prisma.SurveyModel
+/**
+ * Model SurveyQuestion
+ * 
+ */
+export type SurveyQuestion = Prisma.SurveyQuestionModel
+/**
+ * Model QuestionOption
+ * 
+ */
+export type QuestionOption = Prisma.QuestionOptionModel
+/**
+ * Model SurveyResponse
+ * 
+ */
+export type SurveyResponse = Prisma.SurveyResponseModel
+/**
+ * Model SurveyAnswer
+ * 
+ */
+export type SurveyAnswer = Prisma.SurveyAnswerModel
+/**
+ * Model SurveyAnswerOption
+ * 
+ */
+export type SurveyAnswerOption = Prisma.SurveyAnswerOptionModel
+/**
+ * Model spatial_ref_sys
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type spatial_ref_sys = Prisma.spatial_ref_sysModel

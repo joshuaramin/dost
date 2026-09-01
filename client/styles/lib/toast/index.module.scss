@@ -1,0 +1,116 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 400px;
+    height: auto;
+    min-height: 80px;
+    border-radius: 4px;
+    background-color: #fff;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 0 1px 0 #f5f5f5;
+
+    &::before {
+        content: "";
+        width: 12px;
+        height: 100%;
+        min-height: 100%;
+        flex-shrink: 0;
+        background-color: transparent;
+    }
+
+    &.success {
+        &::before {
+            background-color: color(success, 500);
+        }
+
+        svg {
+            color: color(success, 500);
+        }
+    }
+
+    &.error {
+        &::before {
+            background-color: color(error, 500);
+        }
+
+        svg {
+            color: color(error, 500);
+        }
+    }
+
+    &.warning {
+        &::before {
+            background-color: color(secondary, 500);
+        }
+
+        svg {
+            color: color(secondary, 500);
+        }
+    }
+
+    .icon_container {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 1rem;
+    }
+
+    .body_container {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 1rem 0.5rem 1rem 0;
+
+        h1 {
+            margin: 0;
+            font-size: font-size(lg);
+            font-weight: 600;
+        }
+
+        p,
+        .timestamp {
+            margin: 0;
+            font-size: font-size(tiny);
+        }
+    }
+}
+
+.enter {
+    animation: slideIn 0.3s ease forwards;
+}
+
+.leave {
+    animation: slideOut 0.2s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}

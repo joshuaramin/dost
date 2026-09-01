@@ -4,20 +4,26 @@ import { ResourceInterface } from "@/lib/interface/resource.interface";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, Resource } from "@/lib/prisma/system/generated/prisma/client";
 
+const defaultActions = ["create", "read", "update", "delete", "deny", "export"];
+
+// Manage
 const ResourceManage = new PrismaCRUDManager<
   Resource,
   "resource_id",
   typeof prisma.resource
 >(prisma.resource, "resource_id");
 
+// Functions
+
 export const GetAllResource = ({
   limit,
   after,
+  before,
   filter: { orderBy, search, sortBy },
 }: ResourceInterface) => {
   let where: Prisma.ResourceWhereInput = {
     is_deleted: false,
-    parent: null,
+    parent_id: null,
     ...(search && {
       name: { contains: search, mode: "insensitive" },
     }),
@@ -28,6 +34,11 @@ export const GetAllResource = ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,
@@ -35,10 +46,22 @@ export const GetAllResource = ({
     select: {
       resource_id: true,
       name: true,
+      slug: true,
       children: {
+        where: { is_deleted: false },
+        orderBy: {
+          order: "asc",
+        },
         select: {
           resource_id: true,
           name: true,
+          slug: true,
+          permissions: {
+            select: {
+              permission_id: true,
+              name: true,
+            },
+          },
         },
       },
       created_at: true,
@@ -47,58 +70,92 @@ export const GetAllResource = ({
   });
 };
 
-export const GetResourceBySlug = (data: any) => {
-  return ResourceManage.readById(data.key, "slug");
+export const GetResourceBySlug = (data: string) => {
+  return ResourceManage.readById(data, "slug", {
+    include: { children: true },
+  });
 };
 
 export const UpdateResourceById = async (id: string, data: any) => {
-  return ResourceManage.update(id, data);
+  return ResourceManage.update("resource_id", id, data);
 };
 
-export const CreateResource = async (data: any) => {
-  const slug = useSlugify(data.name);
-  const defaultActions = [
-    "create",
-    "read",
-    "updated",
-    "delete",
-    "deny",
-    "export",
-  ];
+export const CreateResource = async (data: any[]) => {
+  return await prisma.$transaction(async (tx) => {
+    return await Promise.all(
+      data.map(async (resource, resourceIndex: number) => {
+        const slug = useSlugify(resource.name);
 
-  return ResourceManage.create({
-    name: data.name,
-    slug,
-    order: data.order,
-    permissions: {
-      createMany: {
-        data: defaultActions.map((permission) => ({
-          name: `${slug}:${permission}`,
-          slug: useSlugify(permission),
-        })),
-      },
-    },
+        return await tx.resource.create({
+          data: {
+            name: resource.name,
+            slug,
+            order: resource.order ?? resourceIndex + 1,
 
-    children: {
-      create: data.children.map(
-        ({ name }: { name: string }, index: number) => ({
-          name,
-          order: index + 1,
-          slug: useSlugify(name),
-          permissions: {
-            createMany: {
-              data: defaultActions.map((permission) => ({
-                name: `${useSlugify(name)}:${permission}`,
-                slug: useSlugify(permission),
-              })),
+            permissions: {
+              createMany: {
+                data: defaultActions.map((permission: string) => ({
+                  name: `${slug}:${permission}`,
+                  slug: useSlugify(permission),
+                })),
+              },
             },
+
+            children: resource.children?.length
+              ? {
+                  create: resource.children.map(
+                    (child: { name: string }, index: number) => {
+                      const childSlug = useSlugify(child.name);
+
+                      return {
+                        name: child.name,
+                        order: index + 1,
+                        slug: childSlug,
+
+                        permissions: {
+                          createMany: {
+                            data: defaultActions.map((permission: string) => ({
+                              name: `${childSlug}:${permission}`,
+                              slug: useSlugify(permission),
+                            })),
+                          },
+                        },
+                      };
+                    },
+                  ),
+                }
+              : undefined,
           },
-        }),
-      ),
-    },
+        });
+      }),
+    );
   });
 };
 
 export const SoftDeleteResource = async (data: any) => {
-  return ResourceManage.delete(data.resource_id);
+  return ResourceManage.delete(data);
+};
+
+export const AddSubResources = async (id: string, data: any) => {
+  const resource = await ResourceManage.readById(id, "slug");
+
+  console.log("Resource to add sub-resource to:", data);
+
+  return ResourceManage.update("slug", id, {
+    children: {
+      create: {
+        name: data.data.name,
+        order: data.data.order,
+        slug: useSlugify(data.data.name),
+        permissions: {
+          createMany: {
+            data: defaultActions.map((permission: string) => ({
+              name: `${useSlugify(data.data.name)}:${permission}`,
+              slug: useSlugify(permission),
+            })),
+          },
+        },
+      },
+    },
+  });
 };

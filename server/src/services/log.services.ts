@@ -13,7 +13,7 @@ const ActivityLogManage = new PrismaCRUDManager<
 
 export const GetAllActivityLogs = async (
   id: string,
-  { after, filter: { orderBy, sortBy }, limit }: ActivityLogsInterface,
+  { after, before, filter: { orderBy, sortBy }, limit }: ActivityLogsInterface,
 ) => {
   let where: ActivityLogWhereInput = {
     is_deleted: false,
@@ -22,7 +22,14 @@ export const GetAllActivityLogs = async (
   return ActivityLogManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

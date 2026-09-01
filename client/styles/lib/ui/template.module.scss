@@ -1,0 +1,70 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    height: 100vh;
+    padding: 3rem 2rem;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    @include down(md) {
+        padding: 3rem 1rem;
+    }
+
+    p {
+        width: 100%;
+        margin: 0;
+    }
+
+    .header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: space(base);
+        flex-wrap: wrap;
+        margin-bottom: space(lg);
+
+        .header_col1 {
+            display: flex;
+            flex-direction: column;
+            gap: space(sm);
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .btns {
+            display: flex;
+            align-items: center;
+            gap: space(sm);
+            flex-wrap: wrap;
+        }
+    }
+
+    .body {
+        flex: 1;
+        overflow-y: auto;
+        padding: space(base) 0;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+        scrollbar-width: none;
+
+
+    }
+
+    .modal_footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: space(sm);
+        padding-top: space(base);
+        border-top: 1px solid color(neutral, 500);
+    }
+}

@@ -1,0 +1,35 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
+.container {
+    input[type="checkbox"] {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border: 2px solid color(primary, 500);
+        border-radius: radius(sm);
+        display: grid;
+        place-content: center;
+        cursor: pointer;
+    }
+
+    input[type="checkbox"]::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        transform: scale(0);
+        background: white;
+        border-radius: 2px;
+        transition: 0.1s ease-in-out;
+    }
+
+    input[type="checkbox"]:checked {
+        background: color(primary, 500);
+    }
+
+    input[type="checkbox"]:checked::before {
+        transform: scale(1);
+    }
+}

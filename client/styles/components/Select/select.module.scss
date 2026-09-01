@@ -1,0 +1,256 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: radius(sm);
+    gap: 10px;
+
+    .header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .isRequired {
+            color: color(error, 500);
+        }
+
+        label {
+            font-size: font-siz(base);
+        }
+    }
+
+    .body {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-radius: 5px;
+        padding: 0 20px;
+
+        button {
+            height: 35px;
+            width: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border-radius: 5px;
+            border: none;
+
+            &:hover {
+                background-color: color(primary, 500);
+
+                svg {
+                    stroke: color(base, white)
+                }
+            }
+        }
+    }
+
+    .errorBody {
+        width: 100%;
+        padding: 5px;
+
+        .error {
+            font-size: font-size(base);
+            color: color(error, 500);
+        }
+    }
+
+    .select {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+    }
+
+    .selectError {
+        width: 100%;
+        height: 55px;
+        border: 1px solid color(error, 500);
+        appearance: none;
+        padding: 10px 20px;
+        border-radius: radius(sm);
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .categoryspan {
+            font-size: font-size(tiny);
+        }
+
+        button {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+            svg {
+                fill: color(neutral, 500);
+            }
+
+            &:hover {
+                svg {
+                    fill: color(primary, 500)
+                }
+            }
+        }
+
+
+    }
+
+    .selectContainer {
+        height: 55px;
+        appearance: none;
+        padding: 10px 20px;
+        border-radius: raduis(sm);
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid color(neutral, 500);
+        background-color: color(base, white);
+        position: relative;
+        overflow-y: auto;
+
+        .categoryspan {
+            font-size: font-size(tiny);
+        }
+
+        button {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+
+            svg {
+                fill: color(neutral, 500);
+            }
+
+            &:hover {
+                svg {
+                    fill: color(primary, 500)
+                }
+            }
+        }
+    }
+
+    .optionContainerError {
+        width: 100%;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: color(base, white);
+
+        position: absolute;
+        top: 45px;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 10px;
+
+        max-height: 260px;
+        overflow-y: auto;
+
+        border: 1px solid color(error, 500);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+
+        z-index: 1000;
+
+        input {
+            width: 100%;
+
+            padding: 16px 12px;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid color(neutral, 200);
+
+            position: sticky;
+            top: 0;
+
+            background-color: color(base, white);
+        }
+
+        button {
+            width: 100%;
+
+            padding: 10px 14px;
+            text-align: left;
+
+            background-color: transparent;
+            border: none;
+
+            cursor: pointer;
+
+            transition: background-color 0.15s ease, color 0.15s ease;
+
+            &:hover {
+                background-color: color(primary, 500);
+                color: color(base, white);
+            }
+        }
+    }
+
+    .optionContainer {
+        width: 100%;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        background-color: color(base, white);
+        // border: 1px solid color(neutral, 200);
+        border-top: none;
+        position: absolute;
+        border-left: 1px solid color(neutral, 500);
+        border-right: 1px solid color(neutral, 500);
+        border-bottom: 1px solid color(neutral, 500);
+        top: -10px;
+        padding: 5px;
+        position: relative;
+
+        input {
+            width: 100%;
+
+            padding: 16px 12px;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid color(neutral, 200);
+
+            position: sticky;
+            top: 0;
+
+            background-color: color(base, white);
+        }
+
+        button {
+            width: 100%;
+
+            padding: 10px 14px;
+            text-align: left;
+
+            background-color: transparent;
+            border: none;
+
+            cursor: pointer;
+
+            transition: background-color 0.15s ease, color 0.15s ease;
+
+            &:hover {
+                background-color: color(primary, 500);
+                color: color(base, white);
+            }
+        }
+    }
+}
