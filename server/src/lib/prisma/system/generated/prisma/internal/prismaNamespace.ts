@@ -406,7 +406,8 @@ export const ModelName = {
   SurveyResponse: 'SurveyResponse',
   SurveyAnswer: 'SurveyAnswer',
   SurveyAnswerOption: 'SurveyAnswerOption',
-  spatial_ref_sys: 'spatial_ref_sys'
+  spatial_ref_sys: 'spatial_ref_sys',
+  Contribution: 'Contribution'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationAttachment" | "educationTag" | "educationResourceTag" | "educationCategory" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys"
+    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationAttachment" | "educationTag" | "educationResourceTag" | "educationCategory" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys" | "contribution"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2128,6 +2129,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Contribution: {
+      payload: Prisma.$ContributionPayload<ExtArgs>
+      fields: Prisma.ContributionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ContributionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ContributionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        findFirst: {
+          args: Prisma.ContributionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ContributionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        findMany: {
+          args: Prisma.ContributionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>[]
+        }
+        create: {
+          args: Prisma.ContributionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        createMany: {
+          args: Prisma.ContributionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ContributionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>[]
+        }
+        delete: {
+          args: Prisma.ContributionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        update: {
+          args: Prisma.ContributionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ContributionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ContributionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ContributionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ContributionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContributionPayload>
+        }
+        aggregate: {
+          args: Prisma.ContributionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateContribution>
+        }
+        groupBy: {
+          args: Prisma.ContributionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContributionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ContributionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ContributionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2474,6 +2549,34 @@ export const Spatial_ref_sysScalarFieldEnum = {
 export type Spatial_ref_sysScalarFieldEnum = (typeof Spatial_ref_sysScalarFieldEnum)[keyof typeof Spatial_ref_sysScalarFieldEnum]
 
 
+export const ContributionScalarFieldEnum = {
+  contribution_id: 'contribution_id',
+  type: 'type',
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  is_deleted: 'is_deleted',
+  image_url: 'image_url',
+  source_url: 'source_url',
+  classification: 'classification',
+  classification_method: 'classification_method',
+  confidence_score: 'confidence_score',
+  status: 'status',
+  reviewed_by: 'reviewed_by',
+  reviewed_at: 'reviewed_at',
+  review_reason: 'review_reason',
+  region_id: 'region_id',
+  province_ogc_fid: 'province_ogc_fid',
+  municipality_ogc_fid: 'municipality_ogc_fid',
+  barangay_ogc_fid: 'barangay_ogc_fid',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type ContributionScalarFieldEnum = (typeof ContributionScalarFieldEnum)[keyof typeof ContributionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2610,6 +2713,62 @@ export type ListEnumSurveyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'ContributionClassification'
+ */
+export type EnumContributionClassificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionClassification'>
+    
+
+
+/**
+ * Reference to a field of type 'ContributionClassification[]'
+ */
+export type ListEnumContributionClassificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionClassification[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClassificationMethod'
+ */
+export type EnumClassificationMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClassificationMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'ClassificationMethod[]'
+ */
+export type ListEnumClassificationMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClassificationMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ContributionStatus'
+ */
+export type EnumContributionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ContributionStatus[]'
+ */
+export type ListEnumContributionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2740,6 +2899,7 @@ export type GlobalOmitConfig = {
   surveyAnswer?: Prisma.SurveyAnswerOmit
   surveyAnswerOption?: Prisma.SurveyAnswerOptionOmit
   spatial_ref_sys?: Prisma.spatial_ref_sysOmit
+  contribution?: Prisma.ContributionOmit
 }
 
 /* Types for Logging */

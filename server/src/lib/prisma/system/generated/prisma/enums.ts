@@ -9,6 +9,33 @@
 * 🟢 You can import this file directly.
 */
 
+export const ContributionClassification = {
+  PENDING: 'PENDING',
+  MISINFORMATION: 'MISINFORMATION',
+  FACTUAL: 'FACTUAL'
+} as const
+
+export type ContributionClassification = (typeof ContributionClassification)[keyof typeof ContributionClassification]
+
+
+export const ClassificationMethod = {
+  MANUAL: 'MANUAL',
+  AI: 'AI',
+  HYBRID: 'HYBRID'
+} as const
+
+export type ClassificationMethod = (typeof ClassificationMethod)[keyof typeof ClassificationMethod]
+
+
+export const ContributionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED'
+} as const
+
+export type ContributionStatus = (typeof ContributionStatus)[keyof typeof ContributionStatus]
+
+
 export const EducationResourceType = {
   ARTICLE: 'ARTICLE',
   VIDEO: 'VIDEO',

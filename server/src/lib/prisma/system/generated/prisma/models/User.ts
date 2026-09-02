@@ -211,6 +211,8 @@ export type UserWhereInput = {
   EducationResource?: Prisma.EducationResourceListRelationFilter
   Notification?: Prisma.NotificationListRelationFilter
   OTP?: Prisma.OTPListRelationFilter
+  contributions?: Prisma.ContributionListRelationFilter
+  reviewed_contributions?: Prisma.ContributionListRelationFilter
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
@@ -230,6 +232,8 @@ export type UserOrderByWithRelationInput = {
   EducationResource?: Prisma.EducationResourceOrderByRelationAggregateInput
   Notification?: Prisma.NotificationOrderByRelationAggregateInput
   OTP?: Prisma.OTPOrderByRelationAggregateInput
+  contributions?: Prisma.ContributionOrderByRelationAggregateInput
+  reviewed_contributions?: Prisma.ContributionOrderByRelationAggregateInput
   Profile?: Prisma.ProfileOrderByWithRelationInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
@@ -252,6 +256,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   EducationResource?: Prisma.EducationResourceListRelationFilter
   Notification?: Prisma.NotificationListRelationFilter
   OTP?: Prisma.OTPListRelationFilter
+  contributions?: Prisma.ContributionListRelationFilter
+  reviewed_contributions?: Prisma.ContributionListRelationFilter
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
@@ -297,6 +303,8 @@ export type UserCreateInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -316,6 +324,8 @@ export type UserUncheckedCreateInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -331,6 +341,8 @@ export type UserUpdateInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -350,6 +362,8 @@ export type UserUncheckedUpdateInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -631,6 +645,36 @@ export type UserUpdateOneWithoutEducationResourceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEducationResourceInput, Prisma.UserUpdateWithoutEducationResourceInput>, Prisma.UserUncheckedUpdateWithoutEducationResourceInput>
 }
 
+export type UserCreateNestedOneWithoutContributionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContributionsInput, Prisma.UserUncheckedCreateWithoutContributionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContributionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReviewed_contributionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewed_contributionsInput, Prisma.UserUncheckedCreateWithoutReviewed_contributionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewed_contributionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutContributionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutContributionsInput, Prisma.UserUncheckedCreateWithoutContributionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutContributionsInput
+  upsert?: Prisma.UserUpsertWithoutContributionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutContributionsInput, Prisma.UserUpdateWithoutContributionsInput>, Prisma.UserUncheckedUpdateWithoutContributionsInput>
+}
+
+export type UserUpdateOneWithoutReviewed_contributionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewed_contributionsInput, Prisma.UserUncheckedCreateWithoutReviewed_contributionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewed_contributionsInput
+  upsert?: Prisma.UserUpsertWithoutReviewed_contributionsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewed_contributionsInput, Prisma.UserUpdateWithoutReviewed_contributionsInput>, Prisma.UserUncheckedUpdateWithoutReviewed_contributionsInput>
+}
+
 export type UserCreateWithoutOTPInput = {
   user_id?: string
   email: string
@@ -642,6 +686,8 @@ export type UserCreateWithoutOTPInput = {
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -660,6 +706,8 @@ export type UserUncheckedCreateWithoutOTPInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -690,6 +738,8 @@ export type UserUpdateWithoutOTPInput = {
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -708,6 +758,8 @@ export type UserUncheckedUpdateWithoutOTPInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -723,6 +775,8 @@ export type UserCreateWithoutProfileInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
@@ -741,6 +795,8 @@ export type UserUncheckedCreateWithoutProfileInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -771,6 +827,8 @@ export type UserUpdateWithoutProfileInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
 }
@@ -789,6 +847,8 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -803,6 +863,8 @@ export type UserCreateWithoutRoleInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
 }
@@ -820,6 +882,8 @@ export type UserUncheckedCreateWithoutRoleInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -874,6 +938,8 @@ export type UserCreateWithoutActivityLogInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -892,6 +958,8 @@ export type UserUncheckedCreateWithoutActivityLogInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -922,6 +990,8 @@ export type UserUpdateWithoutActivityLogInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -940,6 +1010,8 @@ export type UserUncheckedUpdateWithoutActivityLogInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -954,6 +1026,8 @@ export type UserCreateWithoutNotificationInput = {
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -972,6 +1046,8 @@ export type UserUncheckedCreateWithoutNotificationInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -1002,6 +1078,8 @@ export type UserUpdateWithoutNotificationInput = {
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -1020,6 +1098,8 @@ export type UserUncheckedUpdateWithoutNotificationInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1035,6 +1115,8 @@ export type UserCreateWithoutOrganizationInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
 }
@@ -1052,6 +1134,8 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -1092,6 +1176,8 @@ export type UserCreateWithoutDeviceSessionInput = {
   EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -1110,6 +1196,8 @@ export type UserUncheckedCreateWithoutDeviceSessionInput = {
   EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -1140,6 +1228,8 @@ export type UserUpdateWithoutDeviceSessionInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -1158,6 +1248,8 @@ export type UserUncheckedUpdateWithoutDeviceSessionInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1172,6 +1264,8 @@ export type UserCreateWithoutEducationResourceInput = {
   DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
@@ -1190,6 +1284,8 @@ export type UserUncheckedCreateWithoutEducationResourceInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
   Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -1220,6 +1316,8 @@ export type UserUpdateWithoutEducationResourceInput = {
   DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
@@ -1238,6 +1336,184 @@ export type UserUncheckedUpdateWithoutEducationResourceInput = {
   DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutContributionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutContributionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutContributionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutContributionsInput, Prisma.UserUncheckedCreateWithoutContributionsInput>
+}
+
+export type UserCreateWithoutReviewed_contributionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutReviewed_contributionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewed_contributionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewed_contributionsInput, Prisma.UserUncheckedCreateWithoutReviewed_contributionsInput>
+}
+
+export type UserUpsertWithoutContributionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutContributionsInput, Prisma.UserUncheckedUpdateWithoutContributionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutContributionsInput, Prisma.UserUncheckedCreateWithoutContributionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutContributionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutContributionsInput, Prisma.UserUncheckedUpdateWithoutContributionsInput>
+}
+
+export type UserUpdateWithoutContributionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutContributionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserUpsertWithoutReviewed_contributionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewed_contributionsInput, Prisma.UserUncheckedUpdateWithoutReviewed_contributionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewed_contributionsInput, Prisma.UserUncheckedCreateWithoutReviewed_contributionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewed_contributionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewed_contributionsInput, Prisma.UserUncheckedUpdateWithoutReviewed_contributionsInput>
+}
+
+export type UserUpdateWithoutReviewed_contributionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewed_contributionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1263,6 +1539,8 @@ export type UserUpdateWithoutRoleInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
 }
@@ -1280,6 +1558,8 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1315,6 +1595,8 @@ export type UserUpdateWithoutOrganizationInput = {
   EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
 }
@@ -1332,6 +1614,8 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
   Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -1356,6 +1640,8 @@ export type UserCountOutputType = {
   EducationResource: number
   Notification: number
   OTP: number
+  contributions: number
+  reviewed_contributions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1364,6 +1650,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   EducationResource?: boolean | UserCountOutputTypeCountEducationResourceArgs
   Notification?: boolean | UserCountOutputTypeCountNotificationArgs
   OTP?: boolean | UserCountOutputTypeCountOTPArgs
+  contributions?: boolean | UserCountOutputTypeCountContributionsArgs
+  reviewed_contributions?: boolean | UserCountOutputTypeCountReviewed_contributionsArgs
 }
 
 /**
@@ -1411,6 +1699,20 @@ export type UserCountOutputTypeCountOTPArgs<ExtArgs extends runtime.Types.Extens
   where?: Prisma.OTPWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountContributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContributionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewed_contributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ContributionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   user_id?: boolean
@@ -1426,6 +1728,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   EducationResource?: boolean | Prisma.User$EducationResourceArgs<ExtArgs>
   Notification?: boolean | Prisma.User$NotificationArgs<ExtArgs>
   OTP?: boolean | Prisma.User$OTPArgs<ExtArgs>
+  contributions?: boolean | Prisma.User$contributionsArgs<ExtArgs>
+  reviewed_contributions?: boolean | Prisma.User$reviewed_contributionsArgs<ExtArgs>
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
@@ -1476,6 +1780,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   EducationResource?: boolean | Prisma.User$EducationResourceArgs<ExtArgs>
   Notification?: boolean | Prisma.User$NotificationArgs<ExtArgs>
   OTP?: boolean | Prisma.User$OTPArgs<ExtArgs>
+  contributions?: boolean | Prisma.User$contributionsArgs<ExtArgs>
+  reviewed_contributions?: boolean | Prisma.User$reviewed_contributionsArgs<ExtArgs>
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
@@ -1498,6 +1804,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     EducationResource: Prisma.$EducationResourcePayload<ExtArgs>[]
     Notification: Prisma.$NotificationPayload<ExtArgs>[]
     OTP: Prisma.$OTPPayload<ExtArgs>[]
+    contributions: Prisma.$ContributionPayload<ExtArgs>[]
+    reviewed_contributions: Prisma.$ContributionPayload<ExtArgs>[]
     Profile: Prisma.$ProfilePayload<ExtArgs> | null
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs> | null
@@ -1910,6 +2218,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   EducationResource<T extends Prisma.User$EducationResourceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$EducationResourceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EducationResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Notification<T extends Prisma.User$NotificationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$NotificationArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   OTP<T extends Prisma.User$OTPArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$OTPArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OTPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  contributions<T extends Prisma.User$contributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$contributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewed_contributions<T extends Prisma.User$reviewed_contributionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewed_contributionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContributionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   Profile<T extends Prisma.User$ProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ProfileArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   organization<T extends Prisma.User$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2468,6 +2778,54 @@ export type User$OTPArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   take?: number
   skip?: number
   distinct?: Prisma.OTPScalarFieldEnum | Prisma.OTPScalarFieldEnum[]
+}
+
+/**
+ * User.contributions
+ */
+export type User$contributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Contribution
+   */
+  select?: Prisma.ContributionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Contribution
+   */
+  omit?: Prisma.ContributionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContributionInclude<ExtArgs> | null
+  where?: Prisma.ContributionWhereInput
+  orderBy?: Prisma.ContributionOrderByWithRelationInput | Prisma.ContributionOrderByWithRelationInput[]
+  cursor?: Prisma.ContributionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContributionScalarFieldEnum | Prisma.ContributionScalarFieldEnum[]
+}
+
+/**
+ * User.reviewed_contributions
+ */
+export type User$reviewed_contributionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Contribution
+   */
+  select?: Prisma.ContributionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Contribution
+   */
+  omit?: Prisma.ContributionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContributionInclude<ExtArgs> | null
+  where?: Prisma.ContributionWhereInput
+  orderBy?: Prisma.ContributionOrderByWithRelationInput | Prisma.ContributionOrderByWithRelationInput[]
+  cursor?: Prisma.ContributionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ContributionScalarFieldEnum | Prisma.ContributionScalarFieldEnum[]
 }
 
 /**

@@ -73,7 +73,8 @@ export const ModelName = {
   SurveyResponse: 'SurveyResponse',
   SurveyAnswer: 'SurveyAnswer',
   SurveyAnswerOption: 'SurveyAnswerOption',
-  spatial_ref_sys: 'spatial_ref_sys'
+  spatial_ref_sys: 'spatial_ref_sys',
+  Contribution: 'Contribution'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -397,6 +398,34 @@ export const Spatial_ref_sysScalarFieldEnum = {
 } as const
 
 export type Spatial_ref_sysScalarFieldEnum = (typeof Spatial_ref_sysScalarFieldEnum)[keyof typeof Spatial_ref_sysScalarFieldEnum]
+
+
+export const ContributionScalarFieldEnum = {
+  contribution_id: 'contribution_id',
+  type: 'type',
+  title: 'title',
+  slug: 'slug',
+  content: 'content',
+  is_deleted: 'is_deleted',
+  image_url: 'image_url',
+  source_url: 'source_url',
+  classification: 'classification',
+  classification_method: 'classification_method',
+  confidence_score: 'confidence_score',
+  status: 'status',
+  reviewed_by: 'reviewed_by',
+  reviewed_at: 'reviewed_at',
+  review_reason: 'review_reason',
+  region_id: 'region_id',
+  province_ogc_fid: 'province_ogc_fid',
+  municipality_ogc_fid: 'municipality_ogc_fid',
+  barangay_ogc_fid: 'barangay_ogc_fid',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type ContributionScalarFieldEnum = (typeof ContributionScalarFieldEnum)[keyof typeof ContributionScalarFieldEnum]
 
 
 export const SortOrder = {
