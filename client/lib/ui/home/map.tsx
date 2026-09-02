@@ -291,7 +291,7 @@ export default function SurveillanceMap() {
                      {RegionLoading ? "" : RegionData?.data.data.map((region: any) => (
                     <div key={region.region_ocde}>
                             <div
-                                style={{ fontWeight: "700", padding: 8, cursor: "pointer" }}
+                                style={{ fontWeight: "700", padding: 8, cursor: "pointer", backgroundColor: "#35408E", color: "white"}}
                                 onClick={() => zoomToBounds(region.bounds)}
                             >
                                 {region.region_name}
@@ -305,9 +305,9 @@ export default function SurveillanceMap() {
                                         paddingLeft: 25,
                                         cursor: "pointer",
                                         borderRadius: 5,
-                                        color: selectedProvince === p.code ? "white" : "black",
-                                        background: selectedProvince === p.code ? "rgb(25, 27, 162)" : "transparent",
-                                        opacity: 0.4,
+                                        color: selectedProvince === p.code ? "black" : "#35408E",
+                                        background: selectedProvince === p.code ? "rgb(192, 192, 199)" : "transparent",
+                                        opacity: 0.9,
                                     }}
                                     onClick={() => zoomToBounds(p.bounds, p.code)}
                                 >
@@ -326,7 +326,7 @@ export default function SurveillanceMap() {
       <div
         className={`${styles.indicator} ${styles[legend.color]}`}
       />
-      <Text size="sm">{legend.label}</Text>
+      <Text style={{color: "#35408E"}} size="sm">{legend.label}</Text>
     </div>
   ))}
 </div>

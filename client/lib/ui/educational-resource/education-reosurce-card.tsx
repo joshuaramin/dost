@@ -127,7 +127,10 @@ export default function EducationResourceCard({  thumbnail,  slug, type, title, 
               </div>
             </div>
             <div className={styles.footer}>
-              <Link href={route}>Visit Site  <TbArrowRight size={18} /></Link>
+              <div className={styles.footerBtn}>
+                {/* <Link href={route}>Visit Site  <TbArrowRight size={18} /></Link> */}
+                <Link href={route}>Read More</Link>
+              </div>
   
             </div>
           </div>

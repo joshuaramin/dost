@@ -8,7 +8,7 @@
     width: 100%;
     height: 900px;
     // display: flex;
-    border: 1px solid color(neutral, 500);
+    border: 2px solid color(neutral, 301);
     border-radius: radius(sm);
     margin: 0;
     position: relative;
@@ -31,13 +31,15 @@
         z-index: 999;
         left: 20;
         top: 20;
-        border-radius: radius(sm);
+        border-radius: radius(tiny);
         color: color(base, black);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
 
         h1 {
-            padding: 20px 0;
+            padding: 20px 0 10px 0;
             border-bottom: 1px solid #ccc;
             font-size: font-size(lg);
+            color: color(primary, 500);
         }
 
         @include down(md) {
@@ -100,6 +102,10 @@
                 &.danger {
                     background: color(error, 500);
                 }
+            }
+
+            text {
+                color: color(primary, 500)
             }
         }
     }

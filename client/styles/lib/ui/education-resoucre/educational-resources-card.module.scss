@@ -7,11 +7,12 @@
 .education_card {
     width: 100%;
     background: color(base, white);
-    border: 1px solid color(neutral, 500);
-    border-radius: radius(sm);
+    border: 2px solid color(neutral, 301);
+    border-radius: radius(tiny);
     overflow: hidden;
     position: relative;
     padding: 2rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
 
     .header {
         width: 100%;
@@ -35,7 +36,7 @@
     .sub_body {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        // gap: 10px;
 
         // h1 {
         //     overflow: hidden;
@@ -55,31 +56,44 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            color: #1A1F5E;
+            color: #7a7e96;
+            margin-top: 10px;
         }
     }
 
     .footer {
         position: relative;
         display: flex;
-        // justify-content: flex-end;
         align-items: center;
         margin-top: 15px;
+
+        .footerBtn {
+            background-color: color(primary, 500);
+            border-radius: 5px;
+            padding: 10px 20px;
+
+            &:hover {
+                background-color: #1A1F5E;
+            }
+        }
 
         a {
             display: flex;
             align-items: center;
-            color: color(error, 500);
+            // color: color(error, 500);
+            color: #ffff;
             text-decoration: none;
             gap: 5px;
+            font-size: 14px;
 
-            &:hover {
-                text-decoration: underline;
-            }
+            // &:hover {
+            //     text-decoration: underline;
+            // }
         }
 
         svg {
-            color: color(error, 500)
+            // color: color(error, 500)
+            color: #ffff
         }
 
         // .model_footer {

@@ -13,7 +13,7 @@
     max-width: 1200px;
     margin: auto;
     // background: #5d4037;
-    padding: 20px;
+    padding: 10px;
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, .25);
 }
@@ -63,6 +63,8 @@
     justify-content: center;
     gap: 20px;
     position: relative;
+    margin-top: 20px;
+    margin-bottom: 7em;
 
     button {
         width: 45px;
@@ -72,7 +74,8 @@
         align-items: center;
         justify-content: center;
         border: none;
-        background-color: transparent;
+        background-color: color(primary, 500);
+        color: white;
 
     }
 

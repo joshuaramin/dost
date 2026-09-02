@@ -9,7 +9,7 @@
     padding: 2rem 10rem;
     color: #fff;
 
-    background-color: color(primary, 600);
+    background-color: color(primary, 500);
 
     @include down(xxl) {
         padding: 3rem 7rem;
@@ -62,7 +62,13 @@
 
         p {
             font-size: font-size(base);
+            line-height: 25px;
         }
+    }
+
+    .logoBG {
+        background-color: #fff;
+        border-radius: 999;
     }
 
     a {
@@ -87,7 +93,6 @@
             font-size: font-size(base);
             text-decoration: none;
         }
-
 
     }
 }

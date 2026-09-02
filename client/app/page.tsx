@@ -49,11 +49,15 @@ export default function Home() {
       <Header />
       <section>
         {/* <TitleWrapper title="ADVOCACY RESEARCH PROGRAM" /> */}
-        <h2>Transforming Digital Conversations</h2>
-        <h2>into <span style={{
-          color: "#ffbd59"
-        }}>HIV INTELLIGENCE</span></h2>
-        <h2>Through Geospatial AI for Public Health Surveillance</h2>
+        <div className={styles.pageTitle}>
+          <h2>Transforming Digital Conversations into <span style={{
+            color: "#FFB633"
+          }}>HIV INTELLIGENCE</span></h2>
+          {/* <h2>into <span style={{
+            color: "#ffbd59"
+          }}>HIV INTELLIGENCE</span></h2> */}
+          <h2>Through Geospatial AI for Public Health Surveillance</h2>
+        </div>
         <p className={SecondaryFont.className} style={{ textAlign: "justify" }}>
           AI-powered geospatial public health surveillance for monitoring HIV discourse, misinformation, stigma, and regional trends across the Philippines.
         </p>
@@ -129,8 +133,10 @@ export default function Home() {
           ].map((item, index) => (
             <div key={index} className={styles.methodologyItem}>
               <div>
-                <span className={PrimaryFont.className}>Stage 0{index + 1}</span>
-                <br/>
+                <div className={styles.stage}>
+                  <span className={PrimaryFont.className}>Stage 0{index + 1}</span>
+                </div>
+                {/* <br/> */}
                 <Title className={PrimaryFont.className} size="sm">{item.name}</Title>
               </div>
               <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
@@ -154,21 +160,23 @@ export default function Home() {
 
       <section>
         <TitleWrapper title="The Team" />
-        <Title size="lg">Research & Advocates</Title>
-          <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
-          Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
-        </Paragraph>
+          <div className={styles.teamHeader}>
+             <Title size="lg" style={{color: "#35408E"}}>Research & Advocates</Title>
+                <Paragraph className={SecondaryFont.className} style={{marginBottom: 10, textAlign: "justify"}}>
+                Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
+              </Paragraph>
+          </div>
 
         <Grid max={"1fr"}  min={300}gap={20}>
           {Personnel.map(({name, info } ) => (
             info.map(({name, position, url}, index) => (
             <div className={styles.team_card} key={index}>
               <div className={styles.avatar}>
-                <Image src={url ?? ""} alt={name} layout="fill" objectFit="cover" objectPosition="center"/>
+                <Image src={url ?? ""} alt={name} layout="fill" objectFit="cover" objectPosition="top"/>
               </div>
               <div className={styles.divider}></div>
               <div className={styles.sub_team_card}>
-                <Text style={{ fontWeight: 900 }} size="md">{name}</Text>
+                <h1 style={{ fontWeight: 900 }} >{name}</h1>
                 <Text size="sm">{position}</Text>
               </div>
           </div>
@@ -176,6 +184,9 @@ export default function Home() {
         ))}
         </Grid>
         </section>
+      <br/>
+      <br/>
+      <br/>
       <Footer />
     </div>
   );

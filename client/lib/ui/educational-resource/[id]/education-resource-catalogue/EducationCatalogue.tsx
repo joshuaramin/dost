@@ -77,7 +77,7 @@ export default function EducationCatalogue({ data} : Props) {
                   <TbCircleArrowLeft size={35} />
               </button>
 
-              <Text size="lg">
+              <Text size="lg" style={{color: "#35408E"}}>
                   {leftPage ? page : "Cover"} - {page + 1}
               </Text>
 
