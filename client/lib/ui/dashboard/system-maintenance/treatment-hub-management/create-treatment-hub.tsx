@@ -290,7 +290,6 @@ export default function CreateTreatmentHub() {
                         control={control}
                         falseValue="INACTIVE"
                         trueValue="ACTIVE"
-                        setValue={setValue}
                         falseLabel="INACTIVE"
                         label="Status"
                         trueLabel="ACTIVE"

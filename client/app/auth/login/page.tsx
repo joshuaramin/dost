@@ -17,7 +17,7 @@ import TitleWrapper from '@/lib/ui/titleWrapper';
 import Title from '@/lib/ui/title';
 import useFormHook from '@/lib/hooks/useFormHook';
 import { UserSchema } from '@/lib/validations/user.validation';
-import { UserFormFields } from '@/lib/types/user.type';
+import { UserLoginFields } from '@/lib/types/user.type';
 
 import useFormMutation from '@/lib/hooks/useMutation';
 import { toastError, toastSuccess } from '@/lib/ui/toast';
@@ -35,7 +35,7 @@ export default function Page() {
         }
     })
 
-    const mutation = useFormMutation<UserFormFields>({
+    const mutation = useFormMutation<UserLoginFields>({
         url: "auth/login",
         key: ["Login"],
         method: "POST",
@@ -44,7 +44,7 @@ export default function Page() {
         }
     })
 
-    const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => {
+    const onHandleSubmit: SubmitHandler<UserLoginFields> = (data) => {
         mutation.mutate({ email: data.email }, {
             onSuccess: (res: any) => {
 

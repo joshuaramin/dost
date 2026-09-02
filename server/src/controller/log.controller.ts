@@ -6,12 +6,13 @@ export const getAllActivityLogs = async (
   response: Response,
 ) => {
   try {
-    const { limit, sortBy, orderBy, search, after } = request.query;
+    const { limit, sortBy, orderBy, search, after, before } = request.query;
 
     const id = String(request.params.id);
     const result = await GetAllActivityLogs(id, {
       after: after as string,
       limit: limit as string,
+      before: before as string,
       filter: {
         orderBy: orderBy as string,
         sortBy: sortBy as string,

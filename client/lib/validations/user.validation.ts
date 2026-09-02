@@ -6,6 +6,9 @@ export const UserSchema = z.object({
   is_deleted: z.boolean().optional(),
 });
 
+export const UserLogin = z.object({
+  email: z.string().min(1, "Email Address is required"),
+});
 export const ProfileSchema = z.object({
   first_name: z.string().min(1, "First Name is required"),
   last_name: z.string().min(1, "Last Name is required"),

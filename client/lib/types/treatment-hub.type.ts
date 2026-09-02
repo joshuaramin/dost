@@ -1,4 +1,4 @@
 import { z } from "zod";
-import CreateTreatmentHub from "../ui/dashboard/system-maintenance/treatment-hub-management/create-treatment-hub";
+import { CreateTreatmentHubSchema } from "../validations/treatment-hub.validation";
 
-export type TreatmentHubFields = z.infer<typeof CreateTreatmentHub>;
+export type TreatmentHubFields = z.infer<typeof CreateTreatmentHubSchema>;
