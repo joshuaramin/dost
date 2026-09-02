@@ -88,9 +88,10 @@
         align-items: center;
         justify-content: space-between;
         background: color(base, white);
-        border: 1px solid color(neutral, 500);
-        border-radius: 5px;
+        border: 1.5px solid color(neutral, 500);
+        border-radius: 8px;
         cursor: pointer;
+        color: color(primary, 500);
 
         .categoryspan {
             font-size: font-siz(sm);
@@ -146,6 +147,7 @@
             text-align: left;
             cursor: pointer;
             transition: background-color .15s ease, color .15s ease;
+            color: color(primary, 500);
 
             &:hover {
                 background: color(primary, 500);

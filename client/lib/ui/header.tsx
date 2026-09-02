@@ -10,7 +10,10 @@ export default function Header() {
         <div className={styles.container}>
             <div className={styles.main}>
                 <header>
-                    <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
+                    <div className={styles.logoBG}>
+                        <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
+                    </div>
+                    
                     {/* <Image src={"/logo.png"} alt="logo" width={80} height={80} /> */}
                     <div>
                         <h2>HIV GEOSPATIAL SURVIELLANCE</h2>

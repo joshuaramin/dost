@@ -397,8 +397,8 @@ export default function MapUI() {
         <div className={styles.container}>
             <div className={styles.sidebar}>
                 <div className={styles.header}>
-                    <Title title="Geospatial Signal map" />
-                    <Text size="lg">
+                    <Title title="Geospatial Signal Map" />
+                    <Text size="lg" style={{color: "#7a7e96"}}>
                         Regions and Provincial Level
                     </Text>
                 </div>
@@ -407,7 +407,13 @@ export default function MapUI() {
             {regions.map((region) => (
                     <div key={region.region_code}>
                         <div
-                            style={{ fontWeight: "bold", padding: 8, cursor: "pointer" }}
+                            style={{ 
+                                fontWeight: "bold", 
+                                padding: 8, 
+                                cursor: "pointer" ,
+                                backgroundColor: "#35408E",
+                                color: "white"
+                            }}
                             onClick={() => zoomToBounds(region.bounds)}
                         >
                             {region.region_name}
@@ -421,8 +427,8 @@ export default function MapUI() {
                                     paddingLeft: 25,
                                     cursor: "pointer",
                                     borderRadius: 5,
-                                    color: selectedProvince === p.code ? "white" : "black",
-                                    background: selectedProvince === p.code ? "#35408E" : "transparent",
+                                    color: selectedProvince === p.code ? "#35408E" : "black",
+                                    background: selectedProvince === p.code ? "#E4E8F0" : "transparent",
                                 }}
                                 onClick={() => zoomToBounds(p.bounds, p.code)}
                             >

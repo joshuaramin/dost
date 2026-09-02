@@ -45,7 +45,6 @@ export default function EducationResourceId({ id }: Props ) {
             <Title size="md">
                 {resource?.title}
             </Title>
-            <Paragraph>{resource?.summary}</Paragraph>
             <div className={styles.sub_paragraph}>
                 {resource?.Author ?  <Text size="md">{resource?.Author.Profile.first_name || ""}</Text> : <Text size="md">Unknown Author</Text>}
                 {resource?.created_at && (
@@ -54,6 +53,10 @@ export default function EducationResourceId({ id }: Props ) {
                 </Text>
                 )}
             </div>
+            <Paragraph>{resource?.summary}</Paragraph>
+
+            <div className={styles.divider}></div>
+            
             </>
         )}
         </div>
@@ -70,7 +73,7 @@ export default function EducationResourceId({ id }: Props ) {
         }
 
 <div className={styles.container_footer}>
-    <Title size="lg">Recommended Resources</Title>   
+    <Title size="lg" style={{color: "#35408E"}}>Recommended Resources</Title>   
         <Grid max={"1fr"} min={330} gap={10}>
         {isLoading ? 
             Array.from({length: 6}).map((node, index) => (

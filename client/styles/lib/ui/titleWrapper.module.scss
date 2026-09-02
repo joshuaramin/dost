@@ -24,6 +24,7 @@
     h1 {
         font-size: $fntbase;
         text-transform: uppercase;
+        color: #1A1F5E;
 
         @include down(md) {
             font-size: $fntbase;

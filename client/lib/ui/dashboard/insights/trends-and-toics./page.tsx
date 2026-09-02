@@ -87,7 +87,7 @@ export default function TrendsAndTopics() {
             [
                 { title: "#HIVAwareness", trend: "up", percentage: "+143%"},
                 { title: "HIV Treatment Access", trend: "up", percentage: "+88%"}, 
-                { title: "Testing centers", trend: "up", percentage: "+62%"},
+                { title: "Testing Centers", trend: "up", percentage: "+62%"},
                 { title: "Prevention Methods", trend: "down", percentage: "-10%"}
               ].map(({  title, percentage, trend}, index) => (
                 <div className={styles.card} key={index}>
@@ -96,7 +96,7 @@ export default function TrendsAndTopics() {
                   </div>
                   <div>
                     <Title size="md">{title}</Title>
-                    <Text size="sm">{percentage}</Text>
+                    <Text size="sm" style={{fontStyle: "italic"}}>{percentage}</Text>
                   </div>
                 </div>
               ))

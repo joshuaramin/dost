@@ -8,12 +8,15 @@ export default function Footer() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div style={{ display: "flex", alignItems: "center", justifyItems: "center"}}>
-                    <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
-                    <Image src={"/assets/philippine_logo.png"} alt="logo" width={80} height={80} />
+                    <div className={styles.logoBG}>
+                        <Image src={"/assets/logo.png"} alt="logo" width={80} height={80} />
+                    </div>
+                    
+                    <Image src={"/assets/philippine_logo.png"} alt="logo" width={120} height={120} />
                 </div>
 
                 <h2>
-                    HIV Geospatial Intelligence · Avocaid Program
+                    HIV Geospatial Intelligence · AvocAid PH Program
                 </h2>
                 <p>
                     A school-hosted government advocacy initiative transforming digital conversations into actionable HIV surveillance intelligence for a healthier Philippines.

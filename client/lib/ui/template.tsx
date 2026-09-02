@@ -135,7 +135,7 @@ export default function Template<T extends FieldValues = FieldValues>({
             <div className={styles.header}>
                 <div className={styles.header_col1}>
                 <Title size="lg">{title}</Title>
-                    <Text size="md">{description}</Text>
+                    <Text size="md" style={{color: "#7a7e96", marginTop: 15}}>{description}</Text>
                 </div>
 
                 <div className={styles.btns}>
