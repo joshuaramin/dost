@@ -14,7 +14,6 @@ enum ClassificationMethod {
 
 export interface ContributionInterface {
   contribution_id: string;
-  title: string;
   type: string;
   slug: string;
   content: string;

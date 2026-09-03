@@ -95,7 +95,6 @@ export default function CommunityContribution() {
                 <Table>
                     <Table.Header>
                         <Table.Row>
-                            <Table.Head>Title</Table.Head>
                             <Table.Head>Type</Table.Head>
                             <Table.Head>Classification</Table.Head>
                             <Table.Head>Classification Method</Table.Head>
@@ -108,12 +107,11 @@ export default function CommunityContribution() {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {data?.data.edges.map(({node: { contribution_id, type, title, classification, status, classification_method, slug,
+                        {data?.data.edges.map(({node: { contribution_id, type, classification, status, classification_method, slug,
 
                             barangay, province, region, municipality
                         }}) => (
                             <Table.Row key={contribution_id}>
-                                <Table.Cell>{title}</Table.Cell>
                                 <Table.Cell>{type}</Table.Cell>
                                 <Table.Cell>{classification}</Table.Cell>
                                 <Table.Cell>{classification_method}</Table.Cell>

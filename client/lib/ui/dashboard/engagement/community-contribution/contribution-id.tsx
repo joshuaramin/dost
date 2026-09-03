@@ -150,19 +150,15 @@ export default function ContributionID({ id }: Props) {
                 <div className={styles.header}>
                     <div className={styles.headerTop}>
                         <div>
-                            <span
+                            <Text size="sm"
                                 className={
                                     styles.eyebrow
                                 }
                             >
                                 Contribution Review
-                            </span>
+                            </Text>
 
-                            <h1>
-                                {contribution.title}
-                            </h1>
-
-                            <span
+                            <Text size="sm"
                                 className={
                                     styles.contributionId
                                 }
@@ -171,20 +167,21 @@ export default function ContributionID({ id }: Props) {
                                 {
                                     contribution.contribution_id
                                 }
-                            </span>
+                            </Text>
                         </div>
 
-                        <span
+                        <Text size="sm"
                             className={`${styles.status} ${statusClass}`}
                         >
-                            <span
+                            <Text size="sm"
                                 className={
                                     styles.statusDot
                                 }
-                            />
+                            >
 
                             {status}
-                        </span>
+                            </Text>
+                        </Text>
                     </div>
 
                     <div className={styles.headerMeta}>
@@ -217,13 +214,13 @@ export default function ContributionID({ id }: Props) {
                                 }
                             >
                                 <div>
-                                    <span
+                                    <Text size="sm"
                                         className={
                                             styles.sectionLabel
                                         }
                                     >
                                         Submission
-                                    </span>
+                                    </Text>
 
                                     <h2>
                                         Contribution Content
@@ -242,7 +239,7 @@ export default function ContributionID({ id }: Props) {
                                             contribution.image_url
                                         }
                                         alt={
-                                            contribution.title
+                                            contribution.type
                                         }
                                         className={
                                             styles.image
@@ -412,9 +409,9 @@ export default function ContributionID({ id }: Props) {
                                                 styles.confidenceHeader
                                             }
                                         >
-                                            <span>
+                                            <Text size="md">
                                                 AI Confidence
-                                            </span>
+                                            </Text>
 
                                             <strong>
                                                 {
@@ -457,13 +454,13 @@ export default function ContributionID({ id }: Props) {
                                 }
                             >
                                 <div>
-                                    <span
+                                    <Text size="md"
                                         className={
                                             styles.sectionLabel
                                         }
                                     >
                                         Geography
-                                    </span>
+                                    </Text>
 
                                     <h2>
                                         Location
