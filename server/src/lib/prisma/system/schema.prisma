@@ -21,9 +21,12 @@ model User {
   EducationResource EducationResource[]
   Notification      Notification[]
   OTP               OTP[]
-  Profile           Profile?
-  organization      Organization?       @relation(fields: [organization_id], references: [organization_id])
-  role              Role?               @relation(fields: [role_id], references: [role_id])
+
+  contributions          Contribution[] @relation("ContributionAuthor")
+  reviewed_contributions Contribution[] @relation("ContributionReviewer")
+  Profile                Profile?
+  organization           Organization?  @relation(fields: [organization_id], references: [organization_id])
+  role                   Role?          @relation(fields: [role_id], references: [role_id])
 
   @@index([role_id])
   @@index([is_deleted])
@@ -345,6 +348,69 @@ model spatial_ref_sys {
   auth_srid Int?
   srtext    String? @db.VarChar(2048)
   proj4text String? @db.VarChar(2048)
+}
+
+enum ContributionClassification {
+  PENDING
+  MISINFORMATION
+  FACTUAL
+}
+
+enum ClassificationMethod {
+  MANUAL
+  AI
+  HYBRID
+}
+
+model Contribution {
+  contribution_id String @id @default(cuid())
+
+  type    String @db.VarChar(50)
+  title   String @db.VarChar(100)
+  slug    String
+  content String @db.Text
+
+  is_deleted Boolean @default(false)
+
+  image_url  String?
+  source_url String?
+
+  classification        ContributionClassification @default(PENDING)
+  classification_method ClassificationMethod?
+
+  confidence_score Decimal? @db.Decimal(5, 4)
+
+  status ContributionStatus @default(PENDING)
+
+  reviewed_by   String?
+  reviewed_at   DateTime?
+  review_reason String?   @db.Text
+
+  region       String
+  province     String
+  municipality String
+  barangay     String
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)
+
+  user    User   @relation("ContributionAuthor", fields: [user_id], references: [user_id], onDelete: Cascade)
+  user_id String
+
+  reviewer User? @relation("ContributionReviewer", fields: [reviewed_by], references: [user_id], onDelete: SetNull)
+
+  @@index([user_id])
+  @@index([reviewed_by])
+  @@index([classification])
+  @@index([status])
+  @@index([created_at])
+  @@map("contributions")
+}
+
+enum ContributionStatus {
+  PENDING
+  APPROVED
+  DECLINED
 }
 
 enum EducationResourceType {

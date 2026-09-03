@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "concurrently \"pnpm run server:dev\" \"pnpm run workers:dev\"",
+    "server:dev": "nodemon",
     "prisma:migrate": "npx prisma migrate dev --name=init-db --schema=src/lib/prisma/schema.prisma",
     "prisma:generate": "npx prisma generate --schema=src/lib/prisma/schema.prisma",
     "workers:dev": "tsx watch src/workers/index.ts"
   },
-  "keywords": [],
+  "keywords": [ ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
@@ -53,6 +54,7 @@
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "concurrently": "^10.0.5",
     "prisma": "^7.6.0",
     "tslib": "^2.8.1",
     "tsx": "^4.22.4",
