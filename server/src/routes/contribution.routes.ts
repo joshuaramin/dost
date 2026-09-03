@@ -1,7 +1,7 @@
 import {
   getAllContributions,
   getContributionById,
-  UpdateContribution,
+  updateContribution,
   createContribution,
 } from "@/controller/contribution.controller";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
@@ -13,6 +13,6 @@ const router = express.Router();
 router.get("/", withAuth, asyncHandler(getAllContributions));
 router.get("/:id", withAuth, asyncHandler(getContributionById));
 router.post("/", withAuth, asyncHandler(createContribution));
-router.put("/:id", withAuth, asyncHandler(UpdateContribution));
+router.patch("/:id", withAuth, asyncHandler(updateContribution));
 
 export default router;

@@ -1,12 +1,17 @@
-import { CreateContributionSchema } from "@/lib/validation/contribution.validation";
+import {
+  CreateContributionSchema,
+  UpdateContributionSchema,
+} from "@/lib/validation/contribution.validation";
 import {
   GetAllContributions,
   GetContributionById,
   CreateContribution,
   SoftDeleteContribution,
+  UpdateContributeById,
 } from "@/services/contribution.services";
 import { Request, Response } from "express";
 import z from "zod";
+import id from "zod/v4/locales/id.cjs";
 
 export const getAllContributions = async (
   request: Request,
@@ -86,7 +91,26 @@ export const createContribution = async (
 export const updateContribution = async (
   request: Request,
   response: Response,
-) => {};
+) => {
+  console.log(request.body);
+  const parsedData = UpdateContributionSchema.safeParse(request.body);
+
+  if (!parsedData.success) {
+    return response.status(400).json({
+      message: "Invalid Schema",
+      schema: z.flattenError(parsedData.error),
+      timestamp: new Date(Date.now()),
+    });
+  }
+
+  const result = UpdateContributeById(parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    success: true,
+    timestamp: new Date(),
+  });
+};
 
 export const softDeleteContribution = async (
   request: Request,

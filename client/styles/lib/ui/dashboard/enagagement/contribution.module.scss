@@ -1,0 +1,16 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: radius(sm);
+    border: 1px solid color(neutral, 500);
+    background-color: color(base, white);
+    padding: 10px;
+}

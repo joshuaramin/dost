@@ -386,10 +386,10 @@ model Contribution {
   reviewed_at   DateTime?
   review_reason String?   @db.Text
 
-  region_id            Int?
-  province_ogc_fid     Int?
-  municipality_ogc_fid Int?
-  barangay_ogc_fid     Int?
+  region       String
+  province     String
+  municipality String
+  barangay     String
 
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @default(now()) @updatedAt @db.Timestamp(6)

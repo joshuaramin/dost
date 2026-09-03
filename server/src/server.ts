@@ -24,6 +24,7 @@ import EducationResourceRouter from "@/routes/educational-resources.routes";
 import SurveyRouter from "@/routes/survey.routes";
 import TreatmentHubRouter from "@/routes/treatmenthub.routes";
 import ServiceRouter from "@/routes/services.routes";
+import ContributionRouter from "@/routes/contribution.routes";
 
 import { createBullBoard } from "@bull-board/api";
 import { ExpressAdapter } from "@bull-board/express";
@@ -86,7 +87,7 @@ app.use(responseWrapperMiddleware);
 const routeDefinitions = [
   {
     prefix: "/maintenance/contribution",
-    router: TreatmentHubRouter,
+    router: ContributionRouter,
   },
   {
     prefix: "/maintenance/users",

@@ -28,18 +28,10 @@ export type AggregateContribution = {
 
 export type ContributionAvgAggregateOutputType = {
   confidence_score: runtime.Decimal | null
-  region_id: number | null
-  province_ogc_fid: number | null
-  municipality_ogc_fid: number | null
-  barangay_ogc_fid: number | null
 }
 
 export type ContributionSumAggregateOutputType = {
   confidence_score: runtime.Decimal | null
-  region_id: number | null
-  province_ogc_fid: number | null
-  municipality_ogc_fid: number | null
-  barangay_ogc_fid: number | null
 }
 
 export type ContributionMinAggregateOutputType = {
@@ -58,10 +50,10 @@ export type ContributionMinAggregateOutputType = {
   reviewed_by: string | null
   reviewed_at: Date | null
   review_reason: string | null
-  region_id: number | null
-  province_ogc_fid: number | null
-  municipality_ogc_fid: number | null
-  barangay_ogc_fid: number | null
+  region: string | null
+  province: string | null
+  municipality: string | null
+  barangay: string | null
   created_at: Date | null
   updated_at: Date | null
   user_id: string | null
@@ -83,10 +75,10 @@ export type ContributionMaxAggregateOutputType = {
   reviewed_by: string | null
   reviewed_at: Date | null
   review_reason: string | null
-  region_id: number | null
-  province_ogc_fid: number | null
-  municipality_ogc_fid: number | null
-  barangay_ogc_fid: number | null
+  region: string | null
+  province: string | null
+  municipality: string | null
+  barangay: string | null
   created_at: Date | null
   updated_at: Date | null
   user_id: string | null
@@ -108,10 +100,10 @@ export type ContributionCountAggregateOutputType = {
   reviewed_by: number
   reviewed_at: number
   review_reason: number
-  region_id: number
-  province_ogc_fid: number
-  municipality_ogc_fid: number
-  barangay_ogc_fid: number
+  region: number
+  province: number
+  municipality: number
+  barangay: number
   created_at: number
   updated_at: number
   user_id: number
@@ -121,18 +113,10 @@ export type ContributionCountAggregateOutputType = {
 
 export type ContributionAvgAggregateInputType = {
   confidence_score?: true
-  region_id?: true
-  province_ogc_fid?: true
-  municipality_ogc_fid?: true
-  barangay_ogc_fid?: true
 }
 
 export type ContributionSumAggregateInputType = {
   confidence_score?: true
-  region_id?: true
-  province_ogc_fid?: true
-  municipality_ogc_fid?: true
-  barangay_ogc_fid?: true
 }
 
 export type ContributionMinAggregateInputType = {
@@ -151,10 +135,10 @@ export type ContributionMinAggregateInputType = {
   reviewed_by?: true
   reviewed_at?: true
   review_reason?: true
-  region_id?: true
-  province_ogc_fid?: true
-  municipality_ogc_fid?: true
-  barangay_ogc_fid?: true
+  region?: true
+  province?: true
+  municipality?: true
+  barangay?: true
   created_at?: true
   updated_at?: true
   user_id?: true
@@ -176,10 +160,10 @@ export type ContributionMaxAggregateInputType = {
   reviewed_by?: true
   reviewed_at?: true
   review_reason?: true
-  region_id?: true
-  province_ogc_fid?: true
-  municipality_ogc_fid?: true
-  barangay_ogc_fid?: true
+  region?: true
+  province?: true
+  municipality?: true
+  barangay?: true
   created_at?: true
   updated_at?: true
   user_id?: true
@@ -201,10 +185,10 @@ export type ContributionCountAggregateInputType = {
   reviewed_by?: true
   reviewed_at?: true
   review_reason?: true
-  region_id?: true
-  province_ogc_fid?: true
-  municipality_ogc_fid?: true
-  barangay_ogc_fid?: true
+  region?: true
+  province?: true
+  municipality?: true
+  barangay?: true
   created_at?: true
   updated_at?: true
   user_id?: true
@@ -313,10 +297,10 @@ export type ContributionGroupByOutputType = {
   reviewed_by: string | null
   reviewed_at: Date | null
   review_reason: string | null
-  region_id: number | null
-  province_ogc_fid: number | null
-  municipality_ogc_fid: number | null
-  barangay_ogc_fid: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at: Date
   updated_at: Date
   user_id: string
@@ -361,10 +345,10 @@ export type ContributionWhereInput = {
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
   reviewed_at?: Prisma.DateTimeNullableFilter<"Contribution"> | Date | string | null
   review_reason?: Prisma.StringNullableFilter<"Contribution"> | string | null
-  region_id?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  province_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  municipality_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  barangay_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
+  region?: Prisma.StringFilter<"Contribution"> | string
+  province?: Prisma.StringFilter<"Contribution"> | string
+  municipality?: Prisma.StringFilter<"Contribution"> | string
+  barangay?: Prisma.StringFilter<"Contribution"> | string
   created_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   user_id?: Prisma.StringFilter<"Contribution"> | string
@@ -388,10 +372,10 @@ export type ContributionOrderByWithRelationInput = {
   reviewed_by?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   review_reason?: Prisma.SortOrderInput | Prisma.SortOrder
-  region_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  barangay?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -418,10 +402,10 @@ export type ContributionWhereUniqueInput = Prisma.AtLeast<{
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
   reviewed_at?: Prisma.DateTimeNullableFilter<"Contribution"> | Date | string | null
   review_reason?: Prisma.StringNullableFilter<"Contribution"> | string | null
-  region_id?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  province_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  municipality_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  barangay_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
+  region?: Prisma.StringFilter<"Contribution"> | string
+  province?: Prisma.StringFilter<"Contribution"> | string
+  municipality?: Prisma.StringFilter<"Contribution"> | string
+  barangay?: Prisma.StringFilter<"Contribution"> | string
   created_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   user_id?: Prisma.StringFilter<"Contribution"> | string
@@ -445,10 +429,10 @@ export type ContributionOrderByWithAggregationInput = {
   reviewed_by?: Prisma.SortOrderInput | Prisma.SortOrder
   reviewed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   review_reason?: Prisma.SortOrderInput | Prisma.SortOrder
-  region_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  barangay?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -478,10 +462,10 @@ export type ContributionScalarWhereWithAggregatesInput = {
   reviewed_by?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
   reviewed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Contribution"> | Date | string | null
   review_reason?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
-  region_id?: Prisma.IntNullableWithAggregatesFilter<"Contribution"> | number | null
-  province_ogc_fid?: Prisma.IntNullableWithAggregatesFilter<"Contribution"> | number | null
-  municipality_ogc_fid?: Prisma.IntNullableWithAggregatesFilter<"Contribution"> | number | null
-  barangay_ogc_fid?: Prisma.IntNullableWithAggregatesFilter<"Contribution"> | number | null
+  region?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
+  province?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
+  municipality?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
+  barangay?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Contribution"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Contribution"> | Date | string
   user_id?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
@@ -502,10 +486,10 @@ export type ContributionCreateInput = {
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutContributionsInput
@@ -528,10 +512,10 @@ export type ContributionUncheckedCreateInput = {
   reviewed_by?: string | null
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
@@ -552,10 +536,10 @@ export type ContributionUpdateInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutContributionsNestedInput
@@ -578,10 +562,10 @@ export type ContributionUncheckedUpdateInput = {
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -603,10 +587,10 @@ export type ContributionCreateManyInput = {
   reviewed_by?: string | null
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
@@ -627,10 +611,10 @@ export type ContributionUpdateManyMutationInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -651,10 +635,10 @@ export type ContributionUncheckedUpdateManyInput = {
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -686,10 +670,10 @@ export type ContributionCountOrderByAggregateInput = {
   reviewed_by?: Prisma.SortOrder
   reviewed_at?: Prisma.SortOrder
   review_reason?: Prisma.SortOrder
-  region_id?: Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  barangay?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -697,10 +681,6 @@ export type ContributionCountOrderByAggregateInput = {
 
 export type ContributionAvgOrderByAggregateInput = {
   confidence_score?: Prisma.SortOrder
-  region_id?: Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrder
 }
 
 export type ContributionMaxOrderByAggregateInput = {
@@ -719,10 +699,10 @@ export type ContributionMaxOrderByAggregateInput = {
   reviewed_by?: Prisma.SortOrder
   reviewed_at?: Prisma.SortOrder
   review_reason?: Prisma.SortOrder
-  region_id?: Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  barangay?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -744,10 +724,10 @@ export type ContributionMinOrderByAggregateInput = {
   reviewed_by?: Prisma.SortOrder
   reviewed_at?: Prisma.SortOrder
   review_reason?: Prisma.SortOrder
-  region_id?: Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  province?: Prisma.SortOrder
+  municipality?: Prisma.SortOrder
+  barangay?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
@@ -755,10 +735,6 @@ export type ContributionMinOrderByAggregateInput = {
 
 export type ContributionSumOrderByAggregateInput = {
   confidence_score?: Prisma.SortOrder
-  region_id?: Prisma.SortOrder
-  province_ogc_fid?: Prisma.SortOrder
-  municipality_ogc_fid?: Prisma.SortOrder
-  barangay_ogc_fid?: Prisma.SortOrder
 }
 
 export type ContributionCreateNestedManyWithoutUserInput = {
@@ -880,10 +856,10 @@ export type ContributionCreateWithoutUserInput = {
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   reviewer?: Prisma.UserCreateNestedOneWithoutReviewed_contributionsInput
@@ -905,10 +881,10 @@ export type ContributionUncheckedCreateWithoutUserInput = {
   reviewed_by?: string | null
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -938,10 +914,10 @@ export type ContributionCreateWithoutReviewerInput = {
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutContributionsInput
@@ -962,10 +938,10 @@ export type ContributionUncheckedCreateWithoutReviewerInput = {
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
@@ -1016,10 +992,10 @@ export type ContributionScalarWhereInput = {
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
   reviewed_at?: Prisma.DateTimeNullableFilter<"Contribution"> | Date | string | null
   review_reason?: Prisma.StringNullableFilter<"Contribution"> | string | null
-  region_id?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  province_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  municipality_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
-  barangay_ogc_fid?: Prisma.IntNullableFilter<"Contribution"> | number | null
+  region?: Prisma.StringFilter<"Contribution"> | string
+  province?: Prisma.StringFilter<"Contribution"> | string
+  municipality?: Prisma.StringFilter<"Contribution"> | string
+  barangay?: Prisma.StringFilter<"Contribution"> | string
   created_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Contribution"> | Date | string
   user_id?: Prisma.StringFilter<"Contribution"> | string
@@ -1057,10 +1033,10 @@ export type ContributionCreateManyUserInput = {
   reviewed_by?: string | null
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -1080,10 +1056,10 @@ export type ContributionCreateManyReviewerInput = {
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
   review_reason?: string | null
-  region_id?: number | null
-  province_ogc_fid?: number | null
-  municipality_ogc_fid?: number | null
-  barangay_ogc_fid?: number | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
@@ -1104,10 +1080,10 @@ export type ContributionUpdateWithoutUserInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviewer?: Prisma.UserUpdateOneWithoutReviewed_contributionsNestedInput
@@ -1129,10 +1105,10 @@ export type ContributionUncheckedUpdateWithoutUserInput = {
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1153,10 +1129,10 @@ export type ContributionUncheckedUpdateManyWithoutUserInput = {
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1176,10 +1152,10 @@ export type ContributionUpdateWithoutReviewerInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutContributionsNestedInput
@@ -1200,10 +1176,10 @@ export type ContributionUncheckedUpdateWithoutReviewerInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1224,10 +1200,10 @@ export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  region_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  province_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  municipality_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  barangay_ogc_fid?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1251,10 +1227,10 @@ export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   reviewed_by?: boolean
   reviewed_at?: boolean
   review_reason?: boolean
-  region_id?: boolean
-  province_ogc_fid?: boolean
-  municipality_ogc_fid?: boolean
-  barangay_ogc_fid?: boolean
+  region?: boolean
+  province?: boolean
+  municipality?: boolean
+  barangay?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
@@ -1278,10 +1254,10 @@ export type ContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   reviewed_by?: boolean
   reviewed_at?: boolean
   review_reason?: boolean
-  region_id?: boolean
-  province_ogc_fid?: boolean
-  municipality_ogc_fid?: boolean
-  barangay_ogc_fid?: boolean
+  region?: boolean
+  province?: boolean
+  municipality?: boolean
+  barangay?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
@@ -1305,10 +1281,10 @@ export type ContributionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   reviewed_by?: boolean
   reviewed_at?: boolean
   review_reason?: boolean
-  region_id?: boolean
-  province_ogc_fid?: boolean
-  municipality_ogc_fid?: boolean
-  barangay_ogc_fid?: boolean
+  region?: boolean
+  province?: boolean
+  municipality?: boolean
+  barangay?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
@@ -1332,16 +1308,16 @@ export type ContributionSelectScalar = {
   reviewed_by?: boolean
   reviewed_at?: boolean
   review_reason?: boolean
-  region_id?: boolean
-  province_ogc_fid?: boolean
-  municipality_ogc_fid?: boolean
-  barangay_ogc_fid?: boolean
+  region?: boolean
+  province?: boolean
+  municipality?: boolean
+  barangay?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
 }
 
-export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "title" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "classification" | "classification_method" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region_id" | "province_ogc_fid" | "municipality_ogc_fid" | "barangay_ogc_fid" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
+export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "title" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "classification" | "classification_method" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region" | "province" | "municipality" | "barangay" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
 export type ContributionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Contribution$reviewerArgs<ExtArgs>
@@ -1377,10 +1353,10 @@ export type $ContributionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     reviewed_by: string | null
     reviewed_at: Date | null
     review_reason: string | null
-    region_id: number | null
-    province_ogc_fid: number | null
-    municipality_ogc_fid: number | null
-    barangay_ogc_fid: number | null
+    region: string
+    province: string
+    municipality: string
+    barangay: string
     created_at: Date
     updated_at: Date
     user_id: string
@@ -1824,10 +1800,10 @@ export interface ContributionFieldRefs {
   readonly reviewed_by: Prisma.FieldRef<"Contribution", 'String'>
   readonly reviewed_at: Prisma.FieldRef<"Contribution", 'DateTime'>
   readonly review_reason: Prisma.FieldRef<"Contribution", 'String'>
-  readonly region_id: Prisma.FieldRef<"Contribution", 'Int'>
-  readonly province_ogc_fid: Prisma.FieldRef<"Contribution", 'Int'>
-  readonly municipality_ogc_fid: Prisma.FieldRef<"Contribution", 'Int'>
-  readonly barangay_ogc_fid: Prisma.FieldRef<"Contribution", 'Int'>
+  readonly region: Prisma.FieldRef<"Contribution", 'String'>
+  readonly province: Prisma.FieldRef<"Contribution", 'String'>
+  readonly municipality: Prisma.FieldRef<"Contribution", 'String'>
+  readonly barangay: Prisma.FieldRef<"Contribution", 'String'>
   readonly created_at: Prisma.FieldRef<"Contribution", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Contribution", 'DateTime'>
   readonly user_id: Prisma.FieldRef<"Contribution", 'String'>
