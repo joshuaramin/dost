@@ -37,7 +37,6 @@ export type ContributionSumAggregateOutputType = {
 export type ContributionMinAggregateOutputType = {
   contribution_id: string | null
   type: string | null
-  title: string | null
   slug: string | null
   content: string | null
   is_deleted: boolean | null
@@ -62,7 +61,6 @@ export type ContributionMinAggregateOutputType = {
 export type ContributionMaxAggregateOutputType = {
   contribution_id: string | null
   type: string | null
-  title: string | null
   slug: string | null
   content: string | null
   is_deleted: boolean | null
@@ -87,7 +85,6 @@ export type ContributionMaxAggregateOutputType = {
 export type ContributionCountAggregateOutputType = {
   contribution_id: number
   type: number
-  title: number
   slug: number
   content: number
   is_deleted: number
@@ -122,7 +119,6 @@ export type ContributionSumAggregateInputType = {
 export type ContributionMinAggregateInputType = {
   contribution_id?: true
   type?: true
-  title?: true
   slug?: true
   content?: true
   is_deleted?: true
@@ -147,7 +143,6 @@ export type ContributionMinAggregateInputType = {
 export type ContributionMaxAggregateInputType = {
   contribution_id?: true
   type?: true
-  title?: true
   slug?: true
   content?: true
   is_deleted?: true
@@ -172,7 +167,6 @@ export type ContributionMaxAggregateInputType = {
 export type ContributionCountAggregateInputType = {
   contribution_id?: true
   type?: true
-  title?: true
   slug?: true
   content?: true
   is_deleted?: true
@@ -284,7 +278,6 @@ export type ContributionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type ContributionGroupByOutputType = {
   contribution_id: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted: boolean
@@ -332,7 +325,6 @@ export type ContributionWhereInput = {
   NOT?: Prisma.ContributionWhereInput | Prisma.ContributionWhereInput[]
   contribution_id?: Prisma.StringFilter<"Contribution"> | string
   type?: Prisma.StringFilter<"Contribution"> | string
-  title?: Prisma.StringFilter<"Contribution"> | string
   slug?: Prisma.StringFilter<"Contribution"> | string
   content?: Prisma.StringFilter<"Contribution"> | string
   is_deleted?: Prisma.BoolFilter<"Contribution"> | boolean
@@ -359,7 +351,6 @@ export type ContributionWhereInput = {
 export type ContributionOrderByWithRelationInput = {
   contribution_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   content?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
@@ -389,7 +380,6 @@ export type ContributionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ContributionWhereInput[]
   NOT?: Prisma.ContributionWhereInput | Prisma.ContributionWhereInput[]
   type?: Prisma.StringFilter<"Contribution"> | string
-  title?: Prisma.StringFilter<"Contribution"> | string
   slug?: Prisma.StringFilter<"Contribution"> | string
   content?: Prisma.StringFilter<"Contribution"> | string
   is_deleted?: Prisma.BoolFilter<"Contribution"> | boolean
@@ -416,7 +406,6 @@ export type ContributionWhereUniqueInput = Prisma.AtLeast<{
 export type ContributionOrderByWithAggregationInput = {
   contribution_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   content?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
@@ -449,7 +438,6 @@ export type ContributionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ContributionScalarWhereWithAggregatesInput | Prisma.ContributionScalarWhereWithAggregatesInput[]
   contribution_id?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
   type?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
-  title?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
   content?: Prisma.StringWithAggregatesFilter<"Contribution"> | string
   is_deleted?: Prisma.BoolWithAggregatesFilter<"Contribution"> | boolean
@@ -474,7 +462,6 @@ export type ContributionScalarWhereWithAggregatesInput = {
 export type ContributionCreateInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -499,7 +486,6 @@ export type ContributionCreateInput = {
 export type ContributionUncheckedCreateInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -524,7 +510,6 @@ export type ContributionUncheckedCreateInput = {
 export type ContributionUpdateInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -549,7 +534,6 @@ export type ContributionUpdateInput = {
 export type ContributionUncheckedUpdateInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -574,7 +558,6 @@ export type ContributionUncheckedUpdateInput = {
 export type ContributionCreateManyInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -599,7 +582,6 @@ export type ContributionCreateManyInput = {
 export type ContributionUpdateManyMutationInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -622,7 +604,6 @@ export type ContributionUpdateManyMutationInput = {
 export type ContributionUncheckedUpdateManyInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -657,7 +638,6 @@ export type ContributionOrderByRelationAggregateInput = {
 export type ContributionCountOrderByAggregateInput = {
   contribution_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   content?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
@@ -686,7 +666,6 @@ export type ContributionAvgOrderByAggregateInput = {
 export type ContributionMaxOrderByAggregateInput = {
   contribution_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   content?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
@@ -711,7 +690,6 @@ export type ContributionMaxOrderByAggregateInput = {
 export type ContributionMinOrderByAggregateInput = {
   contribution_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   content?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
@@ -844,7 +822,6 @@ export type EnumContributionStatusFieldUpdateOperationsInput = {
 export type ContributionCreateWithoutUserInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -868,7 +845,6 @@ export type ContributionCreateWithoutUserInput = {
 export type ContributionUncheckedCreateWithoutUserInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -902,7 +878,6 @@ export type ContributionCreateManyUserInputEnvelope = {
 export type ContributionCreateWithoutReviewerInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -926,7 +901,6 @@ export type ContributionCreateWithoutReviewerInput = {
 export type ContributionUncheckedCreateWithoutReviewerInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -979,7 +953,6 @@ export type ContributionScalarWhereInput = {
   NOT?: Prisma.ContributionScalarWhereInput | Prisma.ContributionScalarWhereInput[]
   contribution_id?: Prisma.StringFilter<"Contribution"> | string
   type?: Prisma.StringFilter<"Contribution"> | string
-  title?: Prisma.StringFilter<"Contribution"> | string
   slug?: Prisma.StringFilter<"Contribution"> | string
   content?: Prisma.StringFilter<"Contribution"> | string
   is_deleted?: Prisma.BoolFilter<"Contribution"> | boolean
@@ -1020,7 +993,6 @@ export type ContributionUpdateManyWithWhereWithoutReviewerInput = {
 export type ContributionCreateManyUserInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -1044,7 +1016,6 @@ export type ContributionCreateManyUserInput = {
 export type ContributionCreateManyReviewerInput = {
   contribution_id?: string
   type: string
-  title: string
   slug: string
   content: string
   is_deleted?: boolean
@@ -1068,7 +1039,6 @@ export type ContributionCreateManyReviewerInput = {
 export type ContributionUpdateWithoutUserInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1092,7 +1062,6 @@ export type ContributionUpdateWithoutUserInput = {
 export type ContributionUncheckedUpdateWithoutUserInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1116,7 +1085,6 @@ export type ContributionUncheckedUpdateWithoutUserInput = {
 export type ContributionUncheckedUpdateManyWithoutUserInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1140,7 +1108,6 @@ export type ContributionUncheckedUpdateManyWithoutUserInput = {
 export type ContributionUpdateWithoutReviewerInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1164,7 +1131,6 @@ export type ContributionUpdateWithoutReviewerInput = {
 export type ContributionUncheckedUpdateWithoutReviewerInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1188,7 +1154,6 @@ export type ContributionUncheckedUpdateWithoutReviewerInput = {
 export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
   contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1214,7 +1179,6 @@ export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
 export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   contribution_id?: boolean
   type?: boolean
-  title?: boolean
   slug?: boolean
   content?: boolean
   is_deleted?: boolean
@@ -1241,7 +1205,6 @@ export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type ContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   contribution_id?: boolean
   type?: boolean
-  title?: boolean
   slug?: boolean
   content?: boolean
   is_deleted?: boolean
@@ -1268,7 +1231,6 @@ export type ContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type ContributionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   contribution_id?: boolean
   type?: boolean
-  title?: boolean
   slug?: boolean
   content?: boolean
   is_deleted?: boolean
@@ -1295,7 +1257,6 @@ export type ContributionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type ContributionSelectScalar = {
   contribution_id?: boolean
   type?: boolean
-  title?: boolean
   slug?: boolean
   content?: boolean
   is_deleted?: boolean
@@ -1317,7 +1278,7 @@ export type ContributionSelectScalar = {
   user_id?: boolean
 }
 
-export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "title" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "classification" | "classification_method" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region" | "province" | "municipality" | "barangay" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
+export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "classification" | "classification_method" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region" | "province" | "municipality" | "barangay" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
 export type ContributionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Contribution$reviewerArgs<ExtArgs>
@@ -1340,7 +1301,6 @@ export type $ContributionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     contribution_id: string
     type: string
-    title: string
     slug: string
     content: string
     is_deleted: boolean
@@ -1787,7 +1747,6 @@ export interface Prisma__ContributionClient<T, Null = never, ExtArgs extends run
 export interface ContributionFieldRefs {
   readonly contribution_id: Prisma.FieldRef<"Contribution", 'String'>
   readonly type: Prisma.FieldRef<"Contribution", 'String'>
-  readonly title: Prisma.FieldRef<"Contribution", 'String'>
   readonly slug: Prisma.FieldRef<"Contribution", 'String'>
   readonly content: Prisma.FieldRef<"Contribution", 'String'>
   readonly is_deleted: Prisma.FieldRef<"Contribution", 'Boolean'>

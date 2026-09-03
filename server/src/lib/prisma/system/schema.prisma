@@ -366,7 +366,6 @@ model Contribution {
   contribution_id String @id @default(cuid())
 
   type    String @db.VarChar(50)
-  title   String @db.VarChar(100)
   slug    String
   content String @db.Text
 
