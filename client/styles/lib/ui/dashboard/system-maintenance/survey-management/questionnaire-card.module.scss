@@ -4,6 +4,84 @@
 @use "@/styles/spacing.module" as *;
 @use "@/styles/radius.module" as *;
 
+.sub_header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+    border-top: 1px solid color(neutral, 500);
+    border-bottom: 1px solid color(neutral, 500);
+    background-color: color(base, white);
+
+    button {
+        position: relative;
+        min-width: 140px;
+        height: 100%;
+        padding: 0 24px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: color(neutral, 700);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 3px;
+            background-color: transparent;
+            transition: background-color 0.2s ease;
+        }
+
+        &:hover {
+            background-color: color(neutral, 100);
+            color: color(primary, 500);
+        }
+
+        &:focus-visible {
+            outline: 2px solid color(primary, 500);
+            outline-offset: -2px;
+        }
+
+        &.active {
+            color: color(primary, 500);
+            font-weight: 600;
+
+            &::after {
+                background-color: color(primary, 500);
+            }
+        }
+    }
+
+    @include down(md) {
+        height: 64px;
+
+        button {
+            min-width: 120px;
+            padding: 0 16px;
+        }
+    }
+
+    @include down(sm) {
+        height: 56px;
+
+        button {
+            min-width: 50%;
+            padding: 0 12px;
+        }
+    }
+}
+
 .container {
     width: 100%;
     padding: 0 10rem;
@@ -16,6 +94,14 @@
         padding: 0 5rem;
     }
 
+    @include down(md) {
+        padding: 0 2rem;
+    }
+
+    @include down(sm) {
+        padding: 0 1rem;
+    }
+
     hr {
         height: 25px;
     }
@@ -25,6 +111,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        width: 100%;
     }
 
     .submit_container {
@@ -76,6 +163,19 @@
             .choice {
                 flex: 0 0 300px;
                 min-width: 0;
+            }
+
+            @include down(md) {
+                .body {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+
+                .questions,
+                .choice {
+                    width: 100%;
+                    flex: 1 1 auto;
+                }
             }
         }
 
@@ -157,6 +257,15 @@
                 justify-content: flex-end;
                 gap: 10px;
             }
+
+            @include down(sm) {
+                flex-direction: column;
+                align-items: stretch;
+
+                .footer_1_col_1 {
+                    justify-content: center;
+                }
+            }
         }
 
         .add {
@@ -172,5 +281,38 @@
                 background-color: transparent;
             }
         }
+
+        @include down(md) {
+            padding: 16px;
+        }
+
+        @include down(sm) {
+            padding: 12px;
+        }
+    }
+}
+
+.response_container {
+    width: 100%;
+    min-height: 300px;
+    padding: 4rem 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include down(xxl) {
+        padding: 4rem 2rem;
+    }
+
+    @include down(lg) {
+        padding: 4rem 5rem;
+    }
+
+    @include down(md) {
+        padding: 3rem 2rem;
+    }
+
+    @include down(sm) {
+        padding: 2rem 1rem;
     }
 }

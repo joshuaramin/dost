@@ -6,6 +6,8 @@ import {
   Survey,
   SurveyQuestion,
   QuestionOption,
+  SurveyAnswer,
+  SurveyResponse,
 } from "@/lib/prisma/system/generated/prisma/client";
 import { SurveyWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
@@ -28,6 +30,12 @@ const QuestionOptionManage = new PrismaCRUDManager<
   "question_option_id",
   typeof prisma.questionOption
 >(prisma.questionOption, "question_option_id");
+
+const SurveyResponseManage = new PrismaCRUDManager<
+  SurveyResponse,
+  "response_id",
+  typeof prisma.surveyResponse
+>(prisma.surveyResponse, "response_id");
 
 export const GetAllSurveys = ({
   limit,
@@ -83,23 +91,27 @@ export const GetSurveyById = async (data: any) => {
     select: {
       survey_id: true,
       title: true,
+      slug: true,
       description: true,
+      created_at: true,
+      updated_at: true,
+      is_published: true,
+      _count: true,
       questions: {
         orderBy: {
           created_at: "asc",
         },
         include: {
-          options: true,
+          options: {
+            orderBy: {
+              order_index: "asc",
+            },
+          },
         },
       },
-      created_at: true,
-      updated_at: true,
-      is_published: true,
-      _count: true,
     },
   });
 };
-
 export const CreateSurvey = async (data: Prisma.SurveyCreateInput) => {
   const existingSurvey = await SurveyManage.readById(data.title, "title");
 
@@ -240,6 +252,26 @@ export const UpdateSurveyQuestion = async (id: string, data: any) => {
         },
       },
     });
+  });
+};
+
+export const CreateSurveyResponse = (data: {
+  slug: string;
+  answer: {
+    survey_question_id: string;
+    text: string;
+  }[];
+}) => {
+  return SurveyResponseManage.create({
+    answers: {
+      create: data.answer.map(({ survey_question_id, text }) => ({
+        survey_question_id,
+        answer_text: text,
+      })),
+    },
+    survey: {
+      connect: { slug: data.slug },
+    },
   });
 };
 

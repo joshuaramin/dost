@@ -6,8 +6,8 @@ interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
     
 }
 
-export default function Paragraph({children}: Props) {
+export default function Paragraph({children, ...props}: Props) {
     return (
-        <p className={styles.container}>{children}</p>
+        <p  {...props} className={styles.container}>{children}</p>
     )
 }

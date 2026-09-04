@@ -1,11 +1,10 @@
 import SurveyID from '@/lib/ui/survey/page';
 
 
+export default async function Page({ params }: { params: Promise<{id: string}>}) {
 
-
-
-export default function Page() {
+  const { id } = await params
   return (
-    <SurveyID />
+    <SurveyID slug={id}/>
   )
 }

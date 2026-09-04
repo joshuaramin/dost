@@ -17,7 +17,8 @@ export function proxy(req: NextRequest) {
     publicRoutes.includes(pathname) ||
     pathname.startsWith("/auth/login") ||
     pathname.startsWith("/auth/verification") ||
-    pathname.startsWith("/educational-resources");
+    pathname.startsWith("/educational-resources") ||
+    pathname.startsWith("/survey");
 
   if (isPublicRoute) {
     return NextResponse.next();
