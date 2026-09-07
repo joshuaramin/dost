@@ -78,7 +78,7 @@ export default function Page() {
     return (
         <div className={styles.container}>
             <TitleWrapper title='ADVOCAID RESEARCH PORTAL' />
-            <div>
+            <div style={{color: "#35408E", marginBottom: 10}}>
                 <Title title='Sign in to your Account' />
                 <p>We{"'"}ll send a one-time 6-digit code to your institutional</p>
             </div>
@@ -101,15 +101,21 @@ export default function Page() {
             <hr />
             <div className={styles.contact}>
                 <span> Having Trouble? <Link style={{
-                    color: "#1B4264",
+                    color: "#35408E",
                     fontWeight: "bold",
                     textDecoration: "none"
-                }} href="mailto:raminjoshua05@gmail.com">Contact Avocaid Team</Link></span>
+                }} href="mailto:niceradvocaid@gmail.com">Contact Avocaid Team</Link></span>
                 <Link
                     style={{
-                        color: "#1B4264",
+                        color: "#35408E",
                         fontWeight: "bold",
-                        textDecoration: "none"
+                        fontSize: 15,
+                        backgroundColor: "white",
+                        borderColor: "#35408E",
+                        // borderWidth: 1.5,
+                        // borderStyle: "solid",
+                        padding: 10,
+                        borderRadius: 10,
                     }}
                     href="/">RETURN TO HOME</Link>
             </div>
