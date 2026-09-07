@@ -73,11 +73,12 @@
         gap: 5px;
         background-color: color(success, 100);
         padding: 1rem 2rem;
-        border-radius: 4px;
+        border-radius: 10px;
 
         p {
             line-height: 1.8rem;
             font-size: font-size(base);
+            color: green;
 
             @include down(md) {
                 line-height: 1.4rem;
@@ -111,13 +112,16 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        gap: 5px;
+        gap: 10px;
 
         span,
         a {
             @include down(md) {
                 font-size: font-size(tiny);
-            }
+        }
+        }
+        a {
+            text-decoration: 2px solid underline ;
         }
     }
 }
