@@ -1,3 +1,9 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
 .page {
     width: 100%;
     min-height: 100vh;
@@ -12,7 +18,7 @@
     padding: 28px 32px;
     border: 1px solid #e4e7ec;
     border-radius: 14px;
-    background: #ffffff;
+    background: color(base, white);
     box-shadow: 0 1px 3px rgba(16, 24, 40, 0.04);
 }
 
@@ -62,7 +68,7 @@
 .status {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: radius(tiny);
     min-height: 32px;
     padding: 0 12px;
     border-radius: 999px;

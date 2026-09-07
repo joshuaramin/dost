@@ -12,6 +12,7 @@ import {
   DeleteSurveytQuestion,
   GetAllSurveys,
   GetSurveyById,
+  GetSurveyResponseById,
   UpdateSurveyPublished,
   UpdateSurveyQuestion,
 } from "@/services/survey.service";
@@ -21,7 +22,8 @@ import { Request, Response } from "express";
 import { z } from "zod";
 
 export const getAllSurvey = async (request: Request, response: Response) => {
-  const { after, orderBy, search, sortBy, limit, before } = request.query;
+  const { after, orderBy, search, sortBy, limit, before, is_published } =
+    request.query;
 
   const result = await GetAllSurveys({
     after: after as string,
@@ -32,6 +34,7 @@ export const getAllSurvey = async (request: Request, response: Response) => {
       sortBy: sortBy as string,
     },
     limit: limit as string,
+    is_published: Boolean(is_published as string),
   });
 
   return response.status(200).json({
@@ -134,7 +137,7 @@ export const createSurveyResponse = async (
   const result = await CreateSurveyResponse({
     slug: id,
     answer: parsedData.data.answers.map((answer) => ({
-      survey_question_id: answer.question_id,
+      survey_question_id: answer.survey_question_id,
       text: answer.text ?? "",
     })),
   });
@@ -149,7 +152,25 @@ export const createSurveyResponse = async (
 export const getSurveyById = async (request: Request, response: Response) => {
   const id = String(request.params.id);
 
+  console.log("SLUG: ", id);
   const result = await GetSurveyById(id);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const getSurvreyResponseById = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.query.id);
+
+  console.log("SURVEY RESPONSE: ", id);
+
+  const result = await GetSurveyResponseById(id);
 
   return response.status(200).json({
     ...result,
@@ -164,7 +185,7 @@ export const updateSurvey = (request: Request, response: Response) => {
 
 export const softDeleteSurvey = (request: Request, response: Response) => {};
 
-const surveyPublished = async (request: Request, response: Response) => {
+export const surveyPublished = async (request: Request, response: Response) => {
   const id = String(request.params.id);
 
   const body = request.body;

@@ -6,6 +6,11 @@ export type SurveyType =
   | "MULTIPLE_CHOICE"
   | "CHECKBOX";
 
+export interface SurveyAnswerInterface {
+  survey_question_id: string;
+  answer_text: string
+}
+
 export interface SurveyQuestionOptionInterface {
   question_option_id: string;
   survey_question_id: string;
@@ -28,6 +33,7 @@ export interface SurveyQuestionInterface {
   created_at: string;
   updated_at: string;
   options: SurveyQuestionOptionInterface[];
+  answers: SurveyAnswerInterface[];
 }
 
 export interface SurveyInterface {
@@ -77,5 +83,12 @@ export interface SurveyResponse {
     timestamp: string;
 
     success: boolean;
+  };
+}
+
+export interface SurveyResponseAnswer {
+  meta: MetaInterface;
+  data: {
+    questions: SurveyQuestionInterface[];
   };
 }

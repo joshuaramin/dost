@@ -8,11 +8,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 interface Props<TSchema extends ZodType<any, any>> {
   schema: TSchema;
   defaultValues?: z.infer<TSchema>;
+  shouldUnregister?: boolean;
 }
 
 export default function useFormHook<TSchema extends ZodType<any, any>>({
   schema,
   defaultValues,
+  shouldUnregister = true,
 }: Props<TSchema>) {
   type FormValues = z.infer<TSchema>;
 
@@ -36,7 +38,7 @@ export default function useFormHook<TSchema extends ZodType<any, any>>({
   } = useForm<FormValues>({
     resolver: zodResolver(schema) as never,
     defaultValues: defaultValues as FormValues,
-    shouldUnregister: true,
+    shouldUnregister,
   });
 
   return {

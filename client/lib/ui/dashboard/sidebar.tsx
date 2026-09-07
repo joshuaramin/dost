@@ -104,7 +104,7 @@ export default function DashboardSidebar() {
                     </div>
 
                     <div className={styles.body_child_container}>
-                    {openMenus[edge.node.resource_id] && (
+                    {!openMenus[edge.node.resource_id] && (
                         <div className={styles.child}>
                             {visibleChildren.map((child) => (
                                 <div

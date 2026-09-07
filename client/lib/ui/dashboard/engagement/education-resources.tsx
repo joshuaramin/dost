@@ -109,7 +109,7 @@ export default function EducationResources() {
   return (
       <Template 
         title="Educational Resources" 
-        description="Access educational materials about HIV prevention, treatment, and awareness"
+        description=""
         create="/dashboard/engagement/educational-resources/create"
       >
       <div className={styles.container}>

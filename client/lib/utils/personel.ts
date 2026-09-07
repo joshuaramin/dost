@@ -64,7 +64,7 @@ export const Personnel: PersonalOrganics[] = [
         url: "/assets/abdel.png",
       },
       {
-        name: "Sinapilo, Abdel Jalai",
+        name: "Castillo Angelica",
         position: "Senior Data Sciencetist",
         url: "/assets/abdel.png",
       },

@@ -31,16 +31,23 @@ const QuestionOptionManage = new PrismaCRUDManager<
   typeof prisma.questionOption
 >(prisma.questionOption, "question_option_id");
 
+const SurveyAnswerManage = new PrismaCRUDManager<
+  SurveyAnswer,
+  "answer_id",
+  typeof prisma.surveyAnswer
+>(prisma.surveyAnswer, "answer_id", false);
+
 const SurveyResponseManage = new PrismaCRUDManager<
   SurveyResponse,
   "response_id",
   typeof prisma.surveyResponse
->(prisma.surveyResponse, "response_id");
+>(prisma.surveyResponse, "response_id", false);
 
 export const GetAllSurveys = ({
   limit,
   after,
   before,
+  is_published,
   filter: { orderBy, search, sortBy },
 }: SurveyInterface) => {
   let where: SurveyWhereInput = {
@@ -50,6 +57,9 @@ export const GetAllSurveys = ({
         { title: { contains: search, mode: "insensitive" } },
         { description: { contains: search, mode: "insensitive" } },
       ],
+    }),
+    ...(is_published === true && {
+      is_published: true,
     }),
   };
 
@@ -102,6 +112,7 @@ export const GetSurveyById = async (data: any) => {
           created_at: "asc",
         },
         include: {
+          answers: true,
           options: {
             orderBy: {
               order_index: "asc",
@@ -112,6 +123,24 @@ export const GetSurveyById = async (data: any) => {
     },
   });
 };
+
+export const GetSurveyResponseById = async (data: any) => {
+  console.log("ID: ", data);
+  return SurveyManage.readById(data.id, "survey_id", {
+    select: {
+      questions: {
+        select: {
+          survey_question_id: true,
+          text: true,
+          answers: {
+            select: { answer_text: true },
+          },
+        },
+      },
+    },
+  });
+};
+
 export const CreateSurvey = async (data: Prisma.SurveyCreateInput) => {
   const existingSurvey = await SurveyManage.readById(data.title, "title");
 

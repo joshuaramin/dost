@@ -73,12 +73,11 @@
         gap: 5px;
         background-color: color(success, 100);
         padding: 1rem 2rem;
-        border-radius: 10px;
+        border-radius: radius(sm);
 
         p {
             line-height: 1.8rem;
             font-size: font-size(base);
-            color: green;
 
             @include down(md) {
                 line-height: 1.4rem;
@@ -118,10 +117,11 @@
         a {
             @include down(md) {
                 font-size: font-size(tiny);
+            }
         }
-        }
+
         a {
-            text-decoration: 2px solid underline ;
+            text-decoration: 2px solid underline;
         }
     }
 }
