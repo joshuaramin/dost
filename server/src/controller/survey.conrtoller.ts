@@ -1,10 +1,14 @@
 import useSlugify from "@/lib/helpers/useSlugify";
 
-import { CreateSurveySchema } from "@/lib/validation/survey.validation";
+import {
+  CreateSurveyResponseSchema,
+  CreateSurveySchema,
+} from "@/lib/validation/survey.validation";
 
 import {
   CreateSurvey,
   CreateSurveyQuestion,
+  CreateSurveyResponse,
   DeleteSurveytQuestion,
   GetAllSurveys,
   GetSurveyById,
@@ -104,6 +108,36 @@ export const deleteSurveyQuestionBytId = async (
   console.log("ID: ", id);
 
   const result = await DeleteSurveytQuestion(id);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const createSurveyResponse = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.id);
+  const parsedData = CreateSurveyResponseSchema.safeParse(request.body);
+
+  if (!parsedData.success) {
+    return response.status(400).json({
+      message: "Invalid Schema",
+      schema: z.flattenError(parsedData.error),
+      timestamp: new Date(Date.now()),
+    });
+  }
+
+  const result = await CreateSurveyResponse({
+    slug: id,
+    answer: parsedData.data.answers.map((answer) => ({
+      survey_question_id: answer.question_id,
+      text: answer.text ?? "",
+    })),
+  });
 
   return response.status(200).json({
     ...result,

@@ -56,7 +56,7 @@ export default function DashboardSidebar() {
             <div className={styles.header}>
                 <Avatar variant="lg" src="/assets/logo.png" />
                 <div>
-                <Title size="md">ADVOCAID</Title>
+                <Title style={{ color: "#fff"}} size="md">ADVOCAID</Title>
                     <Text size="sm">Advocacy Program</Text>
                 </div>
             </div>

@@ -27,9 +27,6 @@ export const GetAllContributions = async ({
     ...(classification && {
       classification,
     }),
-    ...(search && {
-      title: { contains: search, mode: "insensitive" },
-    }),
     ...(classification_method && {
       classification_method,
     }),
@@ -55,7 +52,6 @@ export const GetAllContributions = async ({
     select: {
       contribution_id: true,
       type: true,
-      title: true,
       content: true,
       slug: true,
       classification: true,
@@ -84,7 +80,6 @@ export const GetContributionById = async (contribution_id: string) => {
     select: {
       contribution_id: true,
       type: true,
-      title: true,
       content: true,
       slug: true,
       classification: true,
@@ -104,7 +99,6 @@ export const GetContributionById = async (contribution_id: string) => {
 export const CreateContribution = async (data: any) => {
   return ContributionManage.create({
     content: data.content,
-    title: data.title,
     slug: useSlugify(data.title),
     type: data.type,
     classification: data.classification,

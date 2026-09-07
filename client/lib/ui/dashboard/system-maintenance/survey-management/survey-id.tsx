@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     SubmitHandler,
     useFieldArray,
@@ -19,12 +19,18 @@ import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
 import { SurveyIDInterface } from "@/lib/interface/survey-management/survey.interface";
 import QuestionCard from "./question-card";
+import Text from "@/components/Typography/Text/text";
 
 interface Props {
     slug: string;
 }
 
+type SurveyTab = "question" | "response";
+
 export default function SurveyID({ slug }: Props) {
+    const [activeTab, setActiveTab] =
+        useState<SurveyTab>("question");
+
     const { data, isLoading } =
         useFormQuery<SurveyIDInterface>({
             key: ["Survey", slug],
@@ -47,11 +53,7 @@ export default function SurveyID({ slug }: Props) {
         },
     });
 
-    const {
-        fields,
-        append,
-        remove,
-    } = useFieldArray({
+    const { fields } = useFieldArray({
         control,
         name: "questions",
     });
@@ -166,22 +168,17 @@ export default function SurveyID({ slug }: Props) {
                     return {
                         survey_question_id:
                             question.survey_question_id,
-
                         text:
                             question.text ??
                             "",
-
                         type:
                             question.type,
-
                         order_index:
                             question.order_index ??
                             questionIndex + 1,
-
                         is_required:
                             question.is_required ===
                             true,
-
                         options:
                             mappedOptions,
                     };
@@ -210,32 +207,6 @@ export default function SurveyID({ slug }: Props) {
             url: `maintenance/survey/${slug}`,
             headers,
         });
-
-    const handleAddQuestion = () => {
-        const questions =
-            getValues("questions");
-
-        append({
-            survey_question_id:
-                undefined,
-            text: "",
-            type: "SHORT_TEXT",
-            order_index:
-                questions.length + 1,
-            is_required: false,
-            options: [],
-        });
-    };
-
-    const handleRemoveQuestion = (
-        index: number
-    ) => {
-        if (fields.length <= 1) {
-            return;
-        }
-
-        remove(index);
-    };
 
     const onHandleSubmit:
         SubmitHandler<
@@ -279,71 +250,122 @@ export default function SurveyID({ slug }: Props) {
 
     return (
         <TemplateSurvey
-            title={
-                data?.data.title ?? ""
-            }
+            title={data?.data.title ?? ""}
         >
-            <div
-                className={
-                    styles.container
-                }
-            >
-                <Form
-                    onSubmit={handleSubmit(
-                        onHandleSubmit
-                    )}
+            <div className={styles.sub_header}>
+                <button
+                    type="button"
+                    className={
+                        activeTab === "question"
+                            ? styles.active
+                            : undefined
+                    }
+                    onClick={() =>
+                        setActiveTab("question")
+                    }
                 >
-                    <div
-                        className={
-                            styles.question_container
-                        }
-                    >
-                        {fields.map(
-                            (
-                                field,
-                                index
-                            ) => (
-                                <QuestionCard
-                                    slug={slug}
-                                    key={field.id}
-                                    control={
-                                        control
-                                    }
-                                    getValues={
-                                        getValues
-                                    }
-                                    errors={
-                                        errors
-                                    }
-                                    fieldId={
-                                        field.id
-                                    }
-                                    index={
-                                        index
-                                    }
-                                    register={
-                                        register
-                                    }
-                                    setValue={
-                                        setValue
-                                    }
-                                    survey_question_id={field.survey_question_id}
-                                
-                                    isLast={
-                                        index ===
-                                        fields.length -
-                                            1
-                                    }
-                                    isOnlyQuestion={
-                                        fields.length ===
-                                        1
-                                    }
-                                />
-                            )
-                        )}
-                    </div>
-                </Form>
+                    <Text size="sm">
+                        Questions
+                    </Text>
+                </button>
+
+                <button
+                    type="button"
+                    className={
+                        activeTab === "response"
+                            ? styles.active
+                            : undefined
+                    }
+                    onClick={() =>
+                        setActiveTab("response")
+                    }
+                >
+                    <Text size="sm">
+                        Responses
+                    </Text>
+                </button>
             </div>
+
+            {activeTab === "question" && (
+                <div
+                    className={
+                        styles.container
+                    }
+                >
+                    <Form
+                        onSubmit={handleSubmit(
+                            onHandleSubmit
+                        )}
+                    >
+                        <div
+                            className={
+                                styles.question_container
+                            }
+                        >
+                            {fields.map(
+                                (
+                                    field,
+                                    index
+                                ) => (
+                                    <QuestionCard
+                                        slug={
+                                            slug
+                                        }
+                                        key={
+                                            field.id
+                                        }
+                                        control={
+                                            control
+                                        }
+                                        getValues={
+                                            getValues
+                                        }
+                                        errors={
+                                            errors
+                                        }
+                                        fieldId={
+                                            field.id
+                                        }
+                                        index={
+                                            index
+                                        }
+                                        register={
+                                            register
+                                        }
+                                        setValue={
+                                            setValue
+                                        }
+                                        survey_question_id={
+                                            field.survey_question_id
+                                        }
+                                        isLast={
+                                            index ===
+                                            fields.length -
+                                                1
+                                        }
+                                        isOnlyQuestion={
+                                            fields.length ===
+                                            1
+                                        }
+                                    />
+                                )
+                            )}
+                        </div>
+                    </Form>
+                </div>
+            )}
+
+            {activeTab === "response" && (
+                <div
+                    className={
+                        styles.response_container
+                    }
+                >
+                    <Text size="sm">
+                        Survey responses
+                    </Text>
+                </div>
+            )}
         </TemplateSurvey>
     );
 }

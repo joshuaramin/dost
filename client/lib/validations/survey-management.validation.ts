@@ -87,8 +87,6 @@ export const SurveyAnswerSchema = z.object({
 });
 
 export const CreateSurveyResponseSchema = z.object({
-  survey_id: z.string().min(1, "Survey ID is required"),
-
   answers: z
     .array(SurveyAnswerSchema)
     .min(1, "At least one answer is required."),
