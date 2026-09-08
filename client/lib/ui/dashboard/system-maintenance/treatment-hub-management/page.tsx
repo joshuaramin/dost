@@ -18,6 +18,7 @@ import Template from "@/lib/ui/template";
 import useFormQuery from "@/lib/hooks/useQuery";
 import { TreatmentHubResult } from "@/lib/interface/treatment-hub/treatment-hub.interface";
 import { RegionsInterfaceResult } from "@/lib/interface/geom/regions.interface";
+import EmptyState from "@/lib/ui/no-data";
 
 
 export default function TreatmentHub() {
@@ -144,8 +145,11 @@ export default function TreatmentHub() {
                         onSelect={onHandleRegionChange}
                     />
                 </Grid>
-
-                <Table
+                {treatmentHubData?.data.totalCount === 0 ?
+                <EmptyState
+                        title="No data found"
+                        description="There is currently no data to display."
+                /> :  <Table
                     size="md"
                     variant="bordered"
                 >
@@ -283,7 +287,8 @@ export default function TreatmentHub() {
                         )}
                     </Table.Body>
                 </Table>
-
+}
+                
                 <Pagination
                     totalItems={
                         treatmentHubData?.data.totalCount ?? 0

@@ -23,6 +23,7 @@ import  headers  from '@/lib/utils/headers';
 import { CreateSurveySchema, } from '@/lib/validations/survey-management.validation';
 import {  SurveyIDInterface, SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
 import { CreateSurveyFormField} from '@/lib/types/survey-management';
+import EmptyState from '@/lib/ui/no-data';
 
 
 export default function SurveyManagement() {
@@ -154,6 +155,11 @@ export default function SurveyManagement() {
                         value={search}
                         onClear={onHandleClear}
                     />
+                   {data?.data.totalCount === 0 ? 
+                   <EmptyState
+                        title="No data found"
+                        description="There is currently no data to display."
+                    /> : 
                     <Table size="sm" variant="bordered">
                         <Table.Header>
                             <Table.Row>
@@ -187,6 +193,7 @@ export default function SurveyManagement() {
                         ))}
                         </Table.Body>
                     </Table>
+                    }
                 <Pagination
                 currentPage={currentPage}
                     pageSize={limit}

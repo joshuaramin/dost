@@ -68,6 +68,7 @@ export const GetAllContributions = async ({
       municipality: true,
       province: true,
       region: true,
+      created_at: true,
     },
     orderBy: {
       [orderBy]: sortBy,

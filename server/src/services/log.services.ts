@@ -33,5 +33,22 @@ export const GetAllActivityLogs = async (
     orderBy: {
       [orderBy]: sortBy,
     },
+    select: {
+      type: true,
+      activity_logs_id: true,
+      created_at: true,
+      decription: true,
+      user: {
+        select: { user_id: true },
+      },
+    },
+  });
+};
+
+export const CreateActivityLogs = async (data: any) => {
+  return ActivityLogManage.create({
+    type: data.type,
+    decription: data.description,
+    user: { connect: { user_id: data.user_id } },
   });
 };

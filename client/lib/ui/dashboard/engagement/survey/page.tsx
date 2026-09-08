@@ -11,6 +11,9 @@ import headers from '@/lib/utils/headers';
 import useFormQuery from '@/lib/hooks/useQuery';
 import { SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
 import Pagination from '@/components/Pagination/pagination';
+import SurveyCard from './survey-card';
+import NoData from '@/lib/ui/no-data';
+import EmptyState from '@/lib/ui/no-data';
 
 export default function Surveypage() {
 
@@ -36,6 +39,7 @@ export default function Surveypage() {
                 is_published: false
             }
         })
+
 
 
 
@@ -98,6 +102,25 @@ export default function Surveypage() {
                 value={search}
             />
 
+        </Grid>
+        
+        <Grid>
+            <Grid.Row gap={10}>
+            {data?.data.totalCount === 0 ? 
+                <EmptyState 
+                    title="No data found"
+                    description="There is currently no data to display."
+                /> 
+            : data?.data.edges.map(({node: {survey_id, slug, title, description, questions, }}) => (
+                <SurveyCard  
+                    key={survey_id}
+                    title={title}
+                    description={description}
+                    total={questions.length}
+                    slug={slug}
+                />
+            ))}
+            </Grid.Row>
         </Grid>
     
         <Pagination

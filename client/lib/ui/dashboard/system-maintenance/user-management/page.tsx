@@ -3,9 +3,8 @@
 import React, { useState } from 'react'
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/user-management/user-management.module.scss';
 import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
-import { format } from 'date-fns'
 import { useRouter } from 'next/navigation';
-
+import { SubmitHandler, useWatch } from 'react-hook-form';
 
 //lib & utils
 import useFormHook from '@/lib/hooks/useFormHook';
@@ -18,6 +17,7 @@ import { UserResult } from '@/lib/interface/user/user.interface';
 import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
 import  headers from '@/lib/utils/headers';
 import { UserFormFields } from '@/lib/types/user.type';
+import EmptyState from '@/lib/ui/no-data';
 
 
 //components
@@ -28,7 +28,6 @@ import Pagination from '@/components/Pagination/pagination';
 import { Select } from '@/components/Select/select';
 import SelectArray from '@/components/Select/select-array';
 import Grid from '@/components/Grid/grid';
-import { SubmitHandler, useWatch } from 'react-hook-form';
 import Table from '@/components/Table/table';
 
 export default function UserManagement() {
@@ -233,6 +232,11 @@ export default function UserManagement() {
         />
       </Grid.Column>  
       </Grid>
+        {data?.data.totalCount === 0 ? 
+        <EmptyState
+            title="No data found"
+            description="There is currently no data to display."
+        /> : 
         <Table>
           <Table.Header>
             <Table.Row>
@@ -268,7 +272,7 @@ export default function UserManagement() {
                   <Table.Cell>{is_active ? "Active" : "Inactive"}</Table.Cell>
                   <Table.Cell>{name}</Table.Cell>
                   <Table.Cell>
-                    <button onClick={() => router.push(`/dashboard/system-maintenance/user-management/${user_id}`)}>
+                    <button onClick={() => router.push(`/dashboard/system-maintenance/user-management/${user_id}?activeTab=Activity%20Logs`)}>
                       <TbEye size={18} />
                     </button>
                     <button>
@@ -282,6 +286,7 @@ export default function UserManagement() {
             ))}
           </Table.Body>
         </Table>
+      }
         <Pagination 
             pageSize={limit}
             currentPage={currentPage}

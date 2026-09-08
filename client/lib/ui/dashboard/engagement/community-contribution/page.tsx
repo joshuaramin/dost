@@ -14,6 +14,7 @@ import Grid from '@/components/Grid/grid';
 import Search from '@/components/Search/search';
 import { TbEye } from 'react-icons/tb';
 import headers from '@/lib/utils/headers';
+import EmptyState from '@/lib/ui/no-data';
 
 export default function CommunityContribution() {
 
@@ -92,7 +93,11 @@ export default function CommunityContribution() {
                         value={search}
                     />
                 </Grid>
-                <Table>
+                {data?.data.totalCount === 0 ? 
+                <EmptyState
+                    title="No data found"
+                    description="There is currently no data to display."
+                /> : <Table>
                     <Table.Header>
                         <Table.Row>
                             <Table.Head>Type</Table.Head>
@@ -128,7 +133,7 @@ export default function CommunityContribution() {
                             </Table.Row>
                         ))}
                     </Table.Body>
-                </Table>
+                </Table>}
                 <Pagination
                     currentPage={currentPage}
                     pageSize={limit}

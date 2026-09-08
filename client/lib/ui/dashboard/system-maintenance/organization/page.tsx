@@ -25,6 +25,7 @@ import { OrganizationSchema } from '@/lib/validations/organization';
 import { OrganizationFormField } from '@/lib/types/organization';
 import { toastSuccess } from '@/lib/ui/toast';
 import NoData from '@/lib/ui/no-data';
+import EmptyState from '@/lib/ui/no-data';
 
 
 
@@ -161,8 +162,11 @@ export default function Organization() {
             <div className={styles.container}>
                 <Search onChange={onHandleSearch} value={search} />
                 {data?.data.totalCount === 0?  (
-                    <NoData text="Organization" />
-                ) :    <Grid max={450} min={330} gap={10}>
+                    <EmptyState 
+                        title="No data found"
+                        description="There is currently no data to display."
+                    />
+                ) :    <Grid max={"1fr"} min={330} gap={10}>
                         {data?.data.edges.map((node, index) => (
                         <OrganizationCard key={index}
                             address={node.node.address} contact={node.node.contact} logo={node.node.logo} name={node.node.name}

@@ -5,8 +5,8 @@
 @use "@/styles/radius.module" as *;
 
 .footer {
-    width: 100%;
-    min-height: 80px;
+    width: 300px;
+    // min-height: 80px;
     padding-top: space(base);
     border-top: 1px solid color(primary, 500);
 
@@ -16,10 +16,10 @@
     gap: space(base);
 
     .col1 {
+        width: 100%;
         display: flex;
         align-items: center;
         gap: space(base);
-        flex: 1;
         // min-width: 0;
 
         h2 {

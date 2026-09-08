@@ -22,6 +22,7 @@ import Table from '@/components/Table/table';
 import { format } from 'date-fns';
 import { TbEdit, TbEye, TbTrash } from 'react-icons/tb';
 import { useRouter } from 'next/navigation';
+import EmptyState from '@/lib/ui/no-data';
 
 export default function EducationResources() {
 
@@ -161,7 +162,13 @@ export default function EducationResources() {
             />
         </Grid>
 
-            <Table>
+          {data?.data.totalCount === 0 ? 
+            <EmptyState 
+                title="No data found"
+                description="There is currently no data to display."
+            /> : 
+          
+          <Table>
               <Table.Header>
                 <Table.Row>
                   <Table.Head>Title</Table.Head>
@@ -199,6 +206,7 @@ export default function EducationResources() {
                 ))}
               </Table.Body>
             </Table>
+            }
           <Pagination
               currentPage={currentPage}
               pageSize={limit}
