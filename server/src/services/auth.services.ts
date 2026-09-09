@@ -202,6 +202,7 @@ export const AuthLogout = async (id: string) => {
 
   await ActivityLogManage.create({
     type: "Logged Out",
+    decription: "User logged out of the system.",
     user: { connect: { user_id: user?.user_id } },
   });
 

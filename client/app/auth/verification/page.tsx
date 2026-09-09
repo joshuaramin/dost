@@ -174,9 +174,9 @@ export default function Page() {
                     }
                 })
 
-                // setTimeout(() => {
-                //     router.push("/dashboard/main/overview")
-                // }, 800)
+                setTimeout(() => {
+                    router.push("/dashboard/main/overview")
+                }, 800)
             }
         })
     }

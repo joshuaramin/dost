@@ -1,21 +1,14 @@
 "use client" 
 
 import React, { useState } from 'react'
-import styles from "@/styles/lib/ui/education-resoucre/educational-resources-card.module.scss";
-import Image from 'next/image'
+import styles from "@/styles/lib/ui/cards/educational-resources-card.module.scss";
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { TbArrowRight, TbDots, TbPencil, TbTrash } from 'react-icons/tb';
 
 
 //components
-import Text from '@/components/Typography/Text/text';
 import Title from '@/components/Typography/Title/title';
 import Paragraph from '@/components/Typography/Paragraph/paragraph';
-import ModalForm from '@/components/Modal/modal-form';
-import Form from '@/components/Form/form';
-import Button from '@/components/Button/button';
-
 
 //libs & hooks
 import { hasAnyPermission } from '@/lib/utils/hasAnyPermission';

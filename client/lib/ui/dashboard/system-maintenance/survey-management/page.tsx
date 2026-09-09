@@ -24,6 +24,7 @@ import { CreateSurveySchema, } from '@/lib/validations/survey-management.validat
 import {  SurveyIDInterface, SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
 import { CreateSurveyFormField} from '@/lib/types/survey-management';
 import EmptyState from '@/lib/ui/no-data';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
 
 
 export default function SurveyManagement() {
@@ -69,9 +70,19 @@ export default function SurveyManagement() {
             }, {
                 onSuccess: (data: unknown) => {
                     const res = data as SurveyIDInterface;
+
+                    toastSuccess({
+                        title: "Survey Created Successfully",
+                        body: "The new survey has been created and is now ready to configure.",
+                    });
                     router.push(`${pathname}/${res.data.slug}`)
                 },
-                onError: () => {}
+                onError: () => {
+                    toastError({
+                        title: "Failed to Create Survey",
+                        body: "Something went wrong while creating the survey. Please try again.",
+                    });
+                }
 
             })
         }

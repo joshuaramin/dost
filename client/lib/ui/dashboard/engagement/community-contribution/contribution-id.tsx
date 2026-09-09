@@ -12,6 +12,7 @@ import styles from "@/styles/lib/ui/dashboard/enagagement/contribution-id.module
 import Text from "@/components/Typography/Text/text";
 import Image from 'next/image'
 import { sessionStore } from "@/lib/utils/sessions";
+import { toastError, toastSuccess } from "@/lib/ui/toast";
 
 interface Props {
     id: string;
@@ -88,6 +89,19 @@ export default function ContributionID({ id }: Props) {
             review_at: new Date(Date.now()),
             review_reason: reason.trim(),
             user_id: token?.data.user_id
+        }, {
+            onSuccess: () => {
+            toastSuccess({
+                title: "Contribution Updated Successfully",
+                body: `The contribution has been marked as ${nextStatus.toLowerCase()}.`,
+            });
+            },
+            onError: () => {
+                toastError({
+                    title: "Failed to Update Contribution",
+                    body: "Something went wrong while updating the contribution. Please try again.",
+                });
+            }
         });
     };
 
