@@ -2557,6 +2557,7 @@ export const ContributionScalarFieldEnum = {
   is_deleted: 'is_deleted',
   image_url: 'image_url',
   source_url: 'source_url',
+  sentiment: 'sentiment',
   classification: 'classification',
   classification_method: 'classification_method',
   confidence_score: 'confidence_score',
@@ -2708,6 +2709,20 @@ export type EnumSurveyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'SurveyType[]'
  */
 export type ListEnumSurveyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SurveyType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ContributionSentiment'
+ */
+export type EnumContributionSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionSentiment'>
+    
+
+
+/**
+ * Reference to a field of type 'ContributionSentiment[]'
+ */
+export type ListEnumContributionSentimentFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContributionSentiment[]'>
     
 
 

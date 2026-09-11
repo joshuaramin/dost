@@ -27,6 +27,15 @@ export const ClassificationMethod = {
 export type ClassificationMethod = (typeof ClassificationMethod)[keyof typeof ClassificationMethod]
 
 
+export const ContributionSentiment = {
+  POSITIVE: 'POSITIVE',
+  NEGATIVE: 'NEGATIVE',
+  NEUTRAL: 'NEUTRAL'
+} as const
+
+export type ContributionSentiment = (typeof ContributionSentiment)[keyof typeof ContributionSentiment]
+
+
 export const ContributionStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',

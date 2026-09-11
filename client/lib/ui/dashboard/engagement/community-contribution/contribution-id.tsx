@@ -1,17 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import useFormQuery from "@/lib/hooks/useQuery";
-import useFormMutation from "@/lib/hooks/useMutation";
+import styles from "@/styles/lib/ui/dashboard/enagagement/contribution-id.module.scss";
+import Image from "next/image";
 import {
-    ContributionIdInterface,
-} from "@/lib/interface/contribution/contribution.interface";
+    TbMoodSad,
+    TbMoodHappy,
+    TbMoodNeutral,
+} from "react-icons/tb";
+import { SubmitHandler } from "react-hook-form";
+import Link from "next/link";
+
+
+//Components
+import Textarea from "@/components/Textarea/textarea";
+import Text from "@/components/Typography/Text/text";
+
+
+//lib & hooks
+import useFormHook from "@/lib/hooks/useFormHook";
+import useFormMutation from "@/lib/hooks/useMutation";
+import useFormQuery from "@/lib/hooks/useQuery";
 import headers from "@/lib/utils/headers";
 import Template from "@/lib/ui/template";
-import styles from "@/styles/lib/ui/dashboard/enagagement/contribution-id.module.scss";
-import Text from "@/components/Typography/Text/text";
-import Image from 'next/image'
+import { UpdateContributionSchema } from '@/lib/validations/contribution.validation'
+import { UpdateContributionFormField } from "@/lib/types/contribution.types";
 import { sessionStore } from "@/lib/utils/sessions";
+import { ContributionIdInterface } from "@/lib/interface/contribution/contribution.interface";
 
 interface Props {
     id: string;
@@ -27,9 +42,12 @@ type ContributionClassification =
     | "FACTUAL"
     | "MISINFORMATION";
 
-const normalizeClassification = (
-    value?: string | number,
-): ContributionClassification => {
+type ContributionSentiment =
+    | "POSITIVE"
+    | "NEGATIVE"
+    | "NEUTRAL";
+
+const normalizeClassification = (value?: string | number | null): ContributionClassification => {
     switch (value) {
         case "FACTUAL":
         case 2:
@@ -46,15 +64,48 @@ const normalizeClassification = (
     }
 };
 
+const normalizeSentiment = (value?: string | number | null): ContributionSentiment => {
+    switch (value) {
+        case "POSITIVE":
+        case 2:
+            return "POSITIVE";
+
+        case "NEGATIVE":
+        case 1:
+            return "NEGATIVE";
+
+        case "NEUTRAL":
+        case 0:
+        default:
+            return "NEUTRAL";
+    }
+};
+
+const getSentimentIcon = (sentiment: ContributionSentiment) => {
+    switch (sentiment) {
+        case "POSITIVE":
+            return <TbMoodHappy />;
+
+        case "NEGATIVE":
+            return <TbMoodSad />;
+
+        case "NEUTRAL":
+        default:
+            return <TbMoodNeutral />;
+    }
+};
+
 export default function ContributionID({ id }: Props) {
+    const token = sessionStore.get();
 
-    const token = sessionStore.get()
-    const [status, setStatus] = useState<ContributionStatus>("PENDING");
+    const [status, setStatus] =
+        useState<ContributionStatus>("PENDING");
+
     const [reason, setReason] = useState("");
-
     const [reasonError, setReasonError] = useState("");
 
-    const { data, isLoading } = useFormQuery<ContributionIdInterface>({
+    const { data, isLoading } =
+        useFormQuery<ContributionIdInterface>({
             key: ["ContributionId", id],
             url: `maintenance/contribution/${id}`,
             headers,
@@ -62,15 +113,53 @@ export default function ContributionID({ id }: Props) {
 
     const contribution = data?.data;
 
-    const { mutate, isPending } = useFormMutation({
+
+    const { register, errors, handleSubmit, setValue } = useFormHook({
+    schema: UpdateContributionSchema,
+    defaultValues: {
+        sentiment: normalizeSentiment(
+            data?.data?.sentiment,
+        ) as never,
+        slug: data?.data?.slug || "",
+        status: "" as never,
+        review_reason: "",
+        user_id: token?.data.user_id || "",
+        },
+    });
+
+
+    const mutation = useFormMutation({
         key: ["ContributionID", id],
         url: `maintenance/contribution/${id}`,
         method: "PATCH",
-        headers
+        headers,
     });
 
-    const handleStatusUpdate = ( nextStatus: ContributionStatus ) => {
-        if (nextStatus === "DECLINED" && !reason.trim()) {
+    const classification = normalizeClassification(contribution?.classification);
+
+    const classificationClass = {
+        PENDING: styles.classificationPending,
+        FACTUAL: styles.classificationFactual,
+        MISINFORMATION:
+            styles.classificationMisinformation,
+    }[classification];
+
+    const sentiment = normalizeSentiment(
+        contribution?.sentiment,
+    );
+
+    const sentimentClass = {
+        POSITIVE: styles.sentimentPositive,
+        NEGATIVE: styles.sentimentNegative,
+        NEUTRAL: styles.sentimentNeutral,
+    }[sentiment];
+    
+
+    const handleStatusUpdate: SubmitHandler<UpdateContributionFormField> = (data) => {
+        if (
+            data.status === "DECLINED" &&
+            !reason.trim()
+        ) {
             setReasonError(
                 "A reason is required when declining a contribution.",
             );
@@ -80,14 +169,18 @@ export default function ContributionID({ id }: Props) {
 
         setReasonError("");
 
-        setStatus(nextStatus);
+        setStatus(data.status);
 
-        mutate({
+        mutation.mutate({
             id: contribution?.contribution_id,
-            status: nextStatus,
-            review_at: new Date(Date.now()),
-            review_reason: reason.trim(),
-            user_id: token?.data.user_id
+            status: data.status,
+            review_at: Date.now(),
+            review_reason: data.review_reason,
+            sentiment: data.sentiment,
+            user_id: token?.data.user_id,
+        }, { 
+            onSuccess: () => {},
+            onError: () => {}
         });
     };
 
@@ -96,17 +189,6 @@ export default function ContributionID({ id }: Props) {
         APPROVED: styles.statusApproved,
         DECLINED: styles.statusDeclined,
     }[status];
-
-    const classificationClass = {
-        PENDING: styles.classificationPending,
-        FACTUAL: styles.classificationFactual,
-        MISINFORMATION:
-            styles.classificationMisinformation,
-    }[
-        normalizeClassification(
-            contribution?.classification,
-        )
-    ];
 
     if (isLoading) {
         return (
@@ -146,61 +228,33 @@ export default function ContributionID({ id }: Props) {
     return (
         <div>
             <div className={styles.page}>
-                {token?.data.user_id}
                 <div className={styles.header}>
                     <div className={styles.headerTop}>
                         <div>
-                            <Text size="sm"
-                                className={
-                                    styles.eyebrow
-                                }
-                            >
+                            <Text size="sm" className={styles.eyebrow}>
                                 Contribution Review
-                            </Text>
-
-                            <Text size="sm"
-                                className={
-                                    styles.contributionId
-                                }
-                            >
-                                ID:{" "}
-                                {
-                                    contribution.contribution_id
-                                }
                             </Text>
                         </div>
 
-                        <Text size="sm"
-                            className={`${styles.status} ${statusClass}`}
-                        >
-                            <Text size="sm"
-                                className={
-                                    styles.statusDot
-                                }
-                            >
-
-                            {status}
+                        <Text size="sm" className={`${styles.status} ${statusClass}`}>
+                            <Text size="sm" className={styles.statusDot}>
+                                {status}
                             </Text>
                         </Text>
                     </div>
 
                     <div className={styles.headerMeta}>
-                        <Text size="sm">
-                            {contribution.type}
-                        </Text>
+                        <Text size="sm">{contribution.type}</Text>
 
-                        <Text size="sm"
-                            className={
-                                styles.metaDivider
-                            }
-                        >
+                        <Text size="sm" className={styles.metaDivider}>
                             /
                         </Text>
 
-                        <Text size="sm"
+                        <Text
+                            size="sm"
                             className={`${styles.classification} ${classificationClass}`}
                         >
-                            {contribution.classification}
+                            {classification}
                         </Text>
                     </div>
                 </div>
@@ -208,20 +262,11 @@ export default function ContributionID({ id }: Props) {
                 <div className={styles.contentLayout}>
                     <main className={styles.main}>
                         <section className={styles.card}>
-                            <div
-                                className={
-                                    styles.cardHeader
-                                }
-                            >
+                            <div className={styles.cardHeader}>
                                 <div>
-                                    <Text size="sm"
-                                        className={
-                                            styles.sectionLabel
-                                        }
-                                    >
+                                    <Text size="sm" className={styles.sectionLabel}>
                                         Submission
                                     </Text>
-
                                     <h2>
                                         Contribution Content
                                     </h2>
@@ -229,11 +274,7 @@ export default function ContributionID({ id }: Props) {
                             </div>
 
                             {contribution.image_url && (
-                                <div
-                                    className={
-                                        styles.imageContainer
-                                    }
-                                >
+                                <div className={styles.imageContainer}>
                                     <Image
                                         src={
                                             contribution.image_url
@@ -244,6 +285,8 @@ export default function ContributionID({ id }: Props) {
                                         className={
                                             styles.image
                                         }
+                                        width={1200}
+                                        height={800}
                                     />
                                 </div>
                             )}
@@ -262,7 +305,7 @@ export default function ContributionID({ id }: Props) {
                                         styles.sourceContainer
                                     }
                                 >
-                                    <a
+                                    <Link
                                         href={
                                             contribution.source_url
                                         }
@@ -272,7 +315,8 @@ export default function ContributionID({ id }: Props) {
                                             styles.source
                                         }
                                     >
-                                        <Text size="sm"
+                                        <Text
+                                            size="sm"
                                             className={
                                                 styles.sourceIcon
                                             }
@@ -280,7 +324,8 @@ export default function ContributionID({ id }: Props) {
                                             ↗
                                         </Text>
 
-                                        <Text size="sm"
+                                        <Text
+                                            size="sm"
                                             className={
                                                 styles.sourceText
                                             }
@@ -296,14 +341,15 @@ export default function ContributionID({ id }: Props) {
                                             </strong>
                                         </Text>
 
-                                        <Text size="sm"
+                                        <Text
+                                            size="sm"
                                             className={
                                                 styles.sourceArrow
                                             }
                                         >
                                             →
-                                        </Text >
-                                    </a>
+                                        </Text>
+                                    </Link>
                                 </div>
                             )}
                         </section>
@@ -315,7 +361,8 @@ export default function ContributionID({ id }: Props) {
                                 }
                             >
                                 <div>
-                                    <Text size="sm"
+                                    <Text
+                                        size="sm"
                                         className={
                                             styles.sectionLabel
                                         }
@@ -323,46 +370,26 @@ export default function ContributionID({ id }: Props) {
                                         Analysis
                                     </Text>
 
-                                    <h2>
-                                        Classification
-                                    </h2>
+                                    <h2>Classification</h2>
                                 </div>
 
-                                <Text size="sm"
-                                    className={`${styles.classification} ${classificationClass}`}
-                                >
-                                    {
-                                        contribution.classification
-                                    }
+                                <Text size="sm"className={`${styles.classification} ${classificationClass}`}>
+                                    {classification}
                                 </Text>
                             </div>
 
-                            <div
-                                className={
-                                    styles.analysisGrid
-                                }
-                            >
-                                <div
-                                    className={
-                                        styles.analysisItem
-                                    }
-                                >
+                            <div className={styles.analysisGrid}>
+                                <div className={styles.analysisItem}>
                                     <span>
                                         Classification
                                     </span>
 
                                     <strong>
-                                        {
-                                            contribution.classification
-                                        }
+                                        {classification}
                                     </strong>
                                 </div>
 
-                                <div
-                                    className={
-                                        styles.analysisItem
-                                    }
-                                >
+                                <div className={styles.analysisItem} >
                                     <span>
                                         Classification
                                         Method
@@ -370,91 +397,34 @@ export default function ContributionID({ id }: Props) {
 
                                     <strong>
                                         {
-                                            contribution.classification_method
+                                            contribution.classification_method ||
+                                            "N/A"
                                         }
                                     </strong>
                                 </div>
 
-                                <div
-                                    className={
-                                        styles.analysisItem
-                                    }
-                                >
-                                    <span>
+                                <div className={styles.analysisItem}>
+                                    <Text size="sm">
                                         Confidence Score
-                                    </span>
+                                    </Text>
 
-                                    <strong>
+                                    <Text size="lg">
                                         {contribution.confidence_score !==
                                             null &&
                                         contribution.confidence_score !==
                                             undefined
                                             ? `${contribution.confidence_score}%`
                                             : "N/A"}
-                                    </strong>
+                                    </Text>
                                 </div>
                             </div>
-
-                            {contribution.confidence_score !==
-                                null &&
-                                contribution.confidence_score !==
-                                    undefined && (
-                                    <div
-                                        className={
-                                            styles.confidence
-                                        }
-                                    >
-                                        <div
-                                            className={
-                                                styles.confidenceHeader
-                                            }
-                                        >
-                                            <Text size="md">
-                                                AI Confidence
-                                            </Text>
-
-                                            <strong>
-                                                {
-                                                    contribution.confidence_score
-                                                }
-                                                %
-                                            </strong>
-                                        </div>
-
-                                        <div
-                                            className={
-                                                styles.progressTrack
-                                            }
-                                        >
-                                            <div
-                                                className={
-                                                    styles.progressValue
-                                                }
-                                                style={{
-                                                    width: `${Math.min(
-                                                        100,
-                                                        Math.max(
-                                                            0,
-                                                            Number(
-                                                                contribution.confidence_score,
-                                                            ),
-                                                        ),
-                                                    )}%`,
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
                         </section>
 
                         <section className={styles.card}>
-                            <div
-                                className={
-                                    styles.cardHeader
-                                }
-                            >
+                            <div className={styles.cardHeader}>
                                 <div>
-                                    <Text size="md"
+                                    <Text
+                                        size="sm"
                                         className={
                                             styles.sectionLabel
                                         }
@@ -468,35 +438,19 @@ export default function ContributionID({ id }: Props) {
                                 </div>
                             </div>
 
-                            <div
-                                className={
-                                    styles.locationGrid
-                                }
-                            >
-                                <div
-                                    className={
-                                        styles.locationItem
-                                    }
-                                >
-                                    <span>
+                            <div className={styles.locationGrid}>
+                                <div className={styles.locationItem}>
+                                    <Text size="lg">
                                         Province
-                                    </span>
+                                    </Text>
 
-                                    <strong>
-                                        {
-                                            contribution.province
-                                        }
-                                    </strong>
+                                    <strong>{contribution.province}</strong>
                                 </div>
 
-                                <div
-                                    className={
-                                        styles.locationItem
-                                    }
-                                >
-                                    <span>
+                                <div className={styles.locationItem}>
+                                    <Text size="lg">
                                         Municipality
-                                    </span>
+                                    </Text>
 
                                     <strong>
                                         {contribution.municipality ||
@@ -504,11 +458,7 @@ export default function ContributionID({ id }: Props) {
                                     </strong>
                                 </div>
 
-                                <div
-                                    className={
-                                        styles.locationItem
-                                    }
-                                >
+                                <div className={styles.locationItem}>
                                     <span>
                                         Barangay
                                     </span>
@@ -561,73 +511,39 @@ export default function ContributionID({ id }: Props) {
                             >
                                 Review the contribution
                                 content, classification,
-                                and source before deciding
-                                whether it should be
+                                sentiment, and source before
+                                deciding whether it should be
                                 approved.
                             </p>
 
-                            <div
-                                className={
-                                    styles.currentStatus
-                                }
-                            >
-                                <span>
+                            <div className={styles.currentStatus}>
+                                <Text size="sm">
                                     Current Status
-                                </span>
+                                </Text>
 
-                                <strong
-                                    className={
-                                        statusClass
-                                    }
-                                >
+                                <strong className={statusClass}>
                                     {status}
                                 </strong>
                             </div>
-
-                            <div
-                                className={
-                                    styles.reasonField
-                                }
-                            >
-                                <div
-                                    className={
-                                        styles.reasonLabel
-                                    }
-                                >
-                                    <label htmlFor="reason">
-                                        Review Reason
-                                    </label>
-
-                                    <span>
-                                        Required for decline
-                                    </span>
+                            <div className={styles.reviewSentiment}>
+                                <div className={styles.reviewSentimentHeader}>
+                                    {JSON.stringify(sentimentClass, null ,2)}
                                 </div>
+                            </div>
 
-                                <textarea
-                                    id="reason"
-                                    value={reason}
-                                    onChange={(event) => {
-                                        setReason(
-                                            event.target
-                                                .value,
-                                        );
-
-                                        if (
-                                            event.target.value.trim()
-                                        ) {
-                                            setReasonError(
-                                                "",
-                                            );
-                                        }
-                                    }}
-                                    placeholder="Enter the reason for your review decision..."
-                                    rows={5}
-                                    disabled={isPending}
-                                    className={
-                                        reasonError
-                                            ? styles.textareaError
-                                            : styles.textarea
-                                    }
+                            <div className={styles.reasonField}>
+                                <div className={styles.reasonLabel}>
+                                    <Text size="sm">
+                                        Required for decline
+                                    </Text>
+                                </div>
+                                <Textarea 
+                                    register={register}
+                                    cols={6}
+                                    name="review_reason"
+                                    placeholder="Enter the reason for your review decissions"
+                                    label="Review Reason" 
+                                    errors={errors.review_reason}
                                 />
 
                                 {reasonError && (
@@ -652,7 +568,7 @@ export default function ContributionID({ id }: Props) {
                                         styles.approveButton
                                     }
                                     disabled={
-                                        isPending ||
+                                        mutation.isPending ||
                                         status ===
                                             "APPROVED"
                                     }
@@ -664,7 +580,7 @@ export default function ContributionID({ id }: Props) {
                                 >
                                     <span>✓</span>
 
-                                    {isPending &&
+                                    {mutation.isPending &&
                                     status ===
                                         "APPROVED"
                                         ? "Approving..."
@@ -677,7 +593,7 @@ export default function ContributionID({ id }: Props) {
                                         styles.declineButton
                                     }
                                     disabled={
-                                        isPending ||
+                                        mutation.isPending ||
                                         status ===
                                             "DECLINED"
                                     }
@@ -689,7 +605,7 @@ export default function ContributionID({ id }: Props) {
                                 >
                                     <span>×</span>
 
-                                    {isPending &&
+                                    {mutation.isPending &&
                                     status ===
                                         "DECLINED"
                                         ? "Declining..."
@@ -703,7 +619,7 @@ export default function ContributionID({ id }: Props) {
                                             styles.pendingButton
                                         }
                                         disabled={
-                                            isPending
+                                            mutation.isPending
                                         }
                                         onClick={() =>
                                             handleStatusUpdate(
@@ -717,7 +633,7 @@ export default function ContributionID({ id }: Props) {
                             </div>
                         </section>
 
-                        <section className={styles.card}>
+                        {/* <section className={styles.card}>
                             <div
                                 className={
                                     styles.cardHeader
@@ -768,9 +684,27 @@ export default function ContributionID({ id }: Props) {
                                         Classification
                                     </span>
 
+                                    <strong
+                                        className={`${styles.classification} ${classificationClass}`}
+                                    >
+                                        {classification}
+                                    </strong>
+                                </div>
+
+                                <div
+                                    className={
+                                        styles.detailRow
+                                    }
+                                >
+                                    <span>
+                                        Classification
+                                        Method
+                                    </span>
+
                                     <strong>
                                         {
-                                            contribution.classification
+                                            contribution.classification_method ||
+                                            "N/A"
                                         }
                                     </strong>
                                 </div>
@@ -781,13 +715,17 @@ export default function ContributionID({ id }: Props) {
                                     }
                                 >
                                     <span>
-                                        Method
+                                        Sentiment
                                     </span>
 
-                                    <strong>
-                                        {
-                                            contribution.classification_method
-                                        }
+                                    <strong
+                                        className={`${styles.sentiment} ${sentimentClass}`}
+                                    >
+                                        {getSentimentIcon(
+                                            sentiment,
+                                        )}
+
+                                        {sentiment}
                                     </strong>
                                 </div>
 
@@ -809,7 +747,65 @@ export default function ContributionID({ id }: Props) {
                                     </strong>
                                 </div>
                             </div>
-                        </section>
+                        </section> */}
+
+                        {contribution.confidence_score !==
+                            null &&
+                            contribution.confidence_score !==
+                                undefined && (
+                                <section
+                                    className={
+                                        styles.card
+                                    }
+                                >
+                                    <div
+                                        className={
+                                            styles.confidence
+                                        }
+                                    >
+                                        <div
+                                            className={
+                                                styles.confidenceHeader
+                                            }
+                                        >
+                                            <Text size="md">
+                                                Classification
+                                                Confidence
+                                            </Text>
+
+                                            <strong>
+                                                {
+                                                    contribution.confidence_score
+                                                }
+                                                %
+                                            </strong>
+                                        </div>
+
+                                        <div
+                                            className={
+                                                styles.progressTrack
+                                            }
+                                        >
+                                            <div
+                                                className={
+                                                    styles.progressValue
+                                                }
+                                                style={{
+                                                    width: `${Math.min(
+                                                        100,
+                                                        Math.max(
+                                                            0,
+                                                            Number(
+                                                                contribution.confidence_score,
+                                                            ),
+                                                        ),
+                                                    )}%`,
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </section>
+                            )}
                     </aside>
                 </div>
             </div>

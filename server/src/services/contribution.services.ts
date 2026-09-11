@@ -100,13 +100,13 @@ export const GetContributionById = async (contribution_id: string) => {
 export const CreateContribution = async (data: any) => {
   return ContributionManage.create({
     content: data.content,
-    slug: useSlugify(data.title),
+    slug: useSlugify(data.type),
     type: data.type,
     classification: data.classification,
-    barangay: data.barangay,
-    municipality: data.municipality,
-    province: data.province,
-    region: data.region,
+    barangay: data.barangay || "",
+    municipality: data.municipality || "",
+    province: data.province || "",
+    region: data.region || "",
     classification_method: data.classification_method,
     status: data.status,
     image_url: data.image_url,
@@ -125,6 +125,7 @@ export const UpdateContributeById = async (data: any) => {
     status: data.status,
     review_reason: data.review_reason,
     reviewed_at: data.review_at,
+    sentiment: data.sentiment,
     reviewer: {
       connect: { user_id: data.user_id },
     },

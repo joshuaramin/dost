@@ -103,6 +103,7 @@ export default function CommunityContribution() {
                             <Table.Head>Type</Table.Head>
                             <Table.Head>Classification</Table.Head>
                             <Table.Head>Classification Method</Table.Head>
+                            <Table.Head>Sentiment</Table.Head>
                             <Table.Head>Status</Table.Head>
                             <Table.Head>Region</Table.Head>
                             <Table.Head>Province</Table.Head>
@@ -112,19 +113,21 @@ export default function CommunityContribution() {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {data?.data.edges.map(({node: { contribution_id, type, classification, status, classification_method, slug,
+                        {data?.data.edges.map(({node: { contribution_id, type, classification, status, classification_method, 
+                        sentiment, slug,
 
                             barangay, province, region, municipality
                         }}) => (
                             <Table.Row key={contribution_id}>
                                 <Table.Cell>{type}</Table.Cell>
                                 <Table.Cell>{classification}</Table.Cell>
-                                <Table.Cell>{classification_method}</Table.Cell>
+                                <Table.Cell>{classification_method ?? "N/A"}</Table.Cell>
+                                <Table.Cell>{sentiment || "N/A"}</Table.Cell>
                                 <Table.Cell>{status}</Table.Cell>
-                                <Table.Cell>{region}</Table.Cell>
-                                <Table.Cell>{province}</Table.Cell>
-                                <Table.Cell>{municipality}</Table.Cell>
-                                <Table.Cell>{barangay}</Table.Cell>
+                                <Table.Cell>{region || "N?A"}</Table.Cell>
+                                <Table.Cell>{province || "N/A"}</Table.Cell>
+                                <Table.Cell>{municipality ||  "N/A"}</Table.Cell>
+                                <Table.Cell>{barangay ||  "N/A"}</Table.Cell>
                                 <Table.Cell>
                                     <button onClick={() => router.push(`/dashboard/engagement/community-contributions/${slug}`)}>
                                         <TbEye size={23} />
