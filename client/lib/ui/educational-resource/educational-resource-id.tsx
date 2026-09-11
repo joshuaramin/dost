@@ -12,7 +12,7 @@ import Paragraph from '@/components/Typography/Paragraph/paragraph';
 //lib & hooks
 import useFormQuery from '@/lib/hooks/useQuery';
 import { EducationResourceIdInterface } from '@/lib/interface/education-resource/educational-resources.interface';
-import EducationResourceCard from './education-reosurce-card';
+import EducationResourceCard from '../cards/education-reosurce-card';
 import Grid from '@/components/Grid/grid';
 import SkeletonCard from '../loading/SkeletonCard';
 import SkeletonTitle from '../loading/SkeletonTitle';

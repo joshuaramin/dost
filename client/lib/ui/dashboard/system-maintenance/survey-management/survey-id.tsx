@@ -19,7 +19,7 @@ import TemplateSurvey from "@/lib/ui/dashboard/template-survey";
 import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
-import QuestionCard from "./question-card";
+import QuestionCard from "../../../cards/question-card";
 import { SurveyIDInterface } from "@/lib/interface/survey-management/survey.interface";
 import { SurveyQuestionFormSchema } from "@/lib/validations/survey-management.validation";
 import { SurveyQuestionFormField } from "@/lib/types/survey-management";

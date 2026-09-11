@@ -10,24 +10,36 @@ import Paragraph from '@/components/Typography/Paragraph/paragraph'
 import Button from '@/components/Button/button';
 import useFormMutation from '@/lib/hooks/useMutation';
 import { sessionStore } from '@/lib/utils/sessions';
-
+import { toastSuccess } from '@/lib/ui/toast';
+import Cookies from 'cookies-next'
+import { useRouter } from 'next/navigation';
 export default function GeneralSettings() {
 
-
+    const router = useRouter()
     const session = sessionStore.get();
-
+    const cookie = Cookies
 
     const mutation = useFormMutation({
         key: ["Logout"],
         method: "POST",
-        url: "maintenance/activity-logs"
+        url: `auth/logout/${session?.data.user_id}`
     })
 
 
     const onHandleSubmit = () => {
-        mutation.mutate({} , {
-            onSuccess: () => {},
-            onError: () => {}
+        mutation.mutate(null, {
+            onSuccess: () => {
+                toastSuccess({
+                    title: "Logged Out",
+                    body: "You have been successfully logged out of your account.",
+                })
+                cookie.deleteCookie("token")
+                sessionStore.clear();
+                router.push("/")
+            },
+            onError: (err) => {
+                console.error(err)
+            }
         })
     }
 
@@ -177,7 +189,7 @@ export default function GeneralSettings() {
                 <Button
                     size="md"
                     variant="danger"
-                    onClick={() => {}}
+                    onClick={onHandleSubmit}
                 >
                     <Text size="sm" style={{ fontWeight: 700 }}>Logout</Text>
                 </Button>

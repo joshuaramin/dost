@@ -26,7 +26,11 @@ import Template from "@/lib/ui/template";
 import { UpdateContributionSchema } from '@/lib/validations/contribution.validation'
 import { UpdateContributionFormField } from "@/lib/types/contribution.types";
 import { sessionStore } from "@/lib/utils/sessions";
+<<<<<<< HEAD
 import { ContributionIdInterface } from "@/lib/interface/contribution/contribution.interface";
+=======
+import { toastError, toastSuccess } from "@/lib/ui/toast";
+>>>>>>> fde791795b86f8b94169ae00a914f7aecbc8f6ef
 
 interface Props {
     id: string;
@@ -173,6 +177,7 @@ export default function ContributionID({ id }: Props) {
 
         mutation.mutate({
             id: contribution?.contribution_id,
+<<<<<<< HEAD
             status: data.status,
             review_at: Date.now(),
             review_reason: data.review_reason,
@@ -181,6 +186,25 @@ export default function ContributionID({ id }: Props) {
         }, { 
             onSuccess: () => {},
             onError: () => {}
+=======
+            status: nextStatus,
+            review_at: new Date(Date.now()),
+            review_reason: reason.trim(),
+            user_id: token?.data.user_id
+        }, {
+            onSuccess: () => {
+            toastSuccess({
+                title: "Contribution Updated Successfully",
+                body: `The contribution has been marked as ${nextStatus.toLowerCase()}.`,
+            });
+            },
+            onError: () => {
+                toastError({
+                    title: "Failed to Update Contribution",
+                    body: "Something went wrong while updating the contribution. Please try again.",
+                });
+            }
+>>>>>>> fde791795b86f8b94169ae00a914f7aecbc8f6ef
         });
     };
 
