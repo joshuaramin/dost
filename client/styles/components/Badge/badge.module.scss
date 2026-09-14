@@ -1,0 +1,102 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10;
+    width: fit-content;
+
+    border: 1px solid transparent;
+    border-radius: radius(sm);
+
+    user-select: none;
+    white-space: nowrap;
+
+    font-weight: 600;
+    line-height: 1;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+}
+
+.sm {
+    min-height: 24px;
+    padding: 0 space(sm);
+
+    font-size: font-size(sm);
+}
+
+.md {
+    min-height: 28px;
+    padding: 0 space(base);
+
+    font-size: font-size(sm);
+}
+
+.lg {
+    min-height: 34px;
+    padding: 0 space(lg);
+
+    font-size: font-size(base);
+}
+
+.default {
+    background: color(neutral, 100);
+    border-color: color(neutral, 300);
+    color: color(neutral, 700);
+}
+
+.primary {
+    background: color(primary, 100);
+    border-color: color(primary, 200);
+    color: color(primary, 700);
+}
+
+.secondary {
+    background: color(secondary, 100);
+    border-color: color(secondary, 200);
+    color: color(secondary, 700);
+}
+
+.success {
+    background: color(success, 100);
+    border-color: color(success, 200);
+    color: color(success, 700);
+}
+
+.warning {
+    background: color(secondary, 100);
+    border-color: color(secondary, 200);
+    color: color(secondary, 700);
+}
+
+.danger {
+    background: color(error, 100);
+    border-color: color(error, 200);
+    color: color(error, 700);
+}
+
+.info {
+    background: color(primary, 100);
+    border-color: color(primary, 200);
+    color: color(primary, 700);
+}

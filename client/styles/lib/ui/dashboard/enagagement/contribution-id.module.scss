@@ -432,7 +432,7 @@
 }
 
 .reviewSentiment {
-    margin: 18px 20px 0;
+    margin: 18px 20px 20px;
     padding: 16px;
     border: 1px solid #e4e7ec;
     border-radius: 10px;
@@ -441,38 +441,90 @@
 
 .reviewSentimentHeader {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 8px;
+    width: 100%;
 }
 
 .reviewSentimentValue {
-    display: block;
-    margin-top: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #344054;
-    font-size: 13px;
     font-weight: 700;
-    line-height: 1.4;
+}
+
+.container_sentinment {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
 }
 
 .sentimentBadge {
-    display: inline-flex;
+    display: flex;
+    flex: 1;
+    // align-items: center;
+    // justify-content: center;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-height: 30px;
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: #fff;
+    gap: 7px;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 10px;
+    border: 1px solid transparent;
+    border-radius: radius(sm);
+    background: transparent;
+    color: #667085;
+    font-family: inherit;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 
     svg {
-        width: 17px;
-        height: 17px;
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
         stroke-width: 2;
+    }
+
+    &:hover {
+        border-color: color(primary, 100);
+        background: color(primary, 100);
+        color: #1b4264;
+        transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+        outline: 2px solid rgba(27, 66, 100, 0.3);
+        outline-offset: 2px;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+}
+
+.sentimentBadgeActive {
+    border-color: color(primary, 500);
+    background: rgba(27, 66, 100, 0.08);
+    color: #1b4264;
+
+    &:hover {
+        border-color: #1b4264;
+        background: rgba(27, 66, 100, 0.12);
+        color: #1b4264;
     }
 }
 
@@ -978,15 +1030,34 @@
 
     .card {
         border-radius: 11px;
+        padding: 10px;
     }
 
-    .reviewSentimentHeader {
-        align-items: flex-start;
-        flex-direction: column;
+    .reviewSentiment {
+        .reviewSentimentHeader {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 5px;
+        }
+    }
+
+
+    .container_sentinment {
+        // min-width: 0;
+        display: flex;
     }
 
     .sentimentBadge {
-        align-self: flex-start;
+        padding: 8px 5px;
+        gap: 4px;
+        font-size: 9px;
+        display: flex;
+        flex-direction: column;
+
+        svg {
+            width: 17px;
+            height: 17px;
+        }
     }
 
     .reviewActions {

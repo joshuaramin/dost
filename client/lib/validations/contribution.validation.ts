@@ -17,6 +17,7 @@ export const ContributionSentiment = z.enum([
 ]);
 
 export const ContributionValidation = z.object({
+  contribution_id: z.string().optional(),
   content: z.string().trim().min(1, "Content is required"),
   type: z.string().trim().min(1, "Type is required"),
   classification: ContributionClassification.default("PENDING"),
@@ -42,10 +43,10 @@ export const CreateContributionSchema = ContributionValidation.extend({
 
 export const UpdateContributionSchema = z
   .object({
-    status: ContributionStatus,
-    slug: z.string().min(1, "Contribution ID is required"),
+    status: z.string().min(1, "Status is required"),
+    contribution_id: z.string().min(1, "Contribution ID is required"),
     user_id: z.string().min(1, "Review By is required"),
-    sentiment: ContributionSentiment,
+    sentiment: z.string().min(1, "Sentiment is required"),
     review_reason: z
       .string()
       .trim()

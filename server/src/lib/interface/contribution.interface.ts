@@ -5,4 +5,6 @@ export interface ContributionInterface extends BasicArgs {
   type: string;
   status: string;
   classification: string;
+  sentiment: string;
+  user_id: string;
 }
