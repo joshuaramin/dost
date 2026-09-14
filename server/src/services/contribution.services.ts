@@ -139,7 +139,7 @@ export const UpdateContributeById = async (data: any) => {
     data.contribution_id,
     {
       status: data.status,
-      classification: data.status === "APPROVED" ? "FACTUAL" : "MISINFORMATION",
+      classification: data.classification,
       classification_method: "MANUAL",
       review_reason: data.review_reason,
       reviewed_at: data.review_at,
