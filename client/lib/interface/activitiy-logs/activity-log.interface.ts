@@ -5,18 +5,18 @@ export interface ActivityLogsInterface {
   type: string;
   description: string;
   is_deleted: boolean;
-  created_at: unknown;
-  updated_at: unknown;
+  created_at: string | undefined;
+  updated_at: string | undefined;
 }
 
 export interface ActivityLogsInterfaceResult {
   meta: MetaInterface;
   data: {
     edges: {
-      node: ActivityLogsInterface[];
+      node: ActivityLogsInterface;
       cursor: string;
-    };
-  }[];
+    }[];
+  };
   pageInfo: {
     startCursor: string;
     endCursor: string;

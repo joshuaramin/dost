@@ -66,7 +66,7 @@ export const EducationResourceSchema = z.object({
 
   external_link: z.string().optional(),
 
-  type: EducationResourceType,
+  type: z.string().min(1, "Educational Type is required"),
 
   status: EducationStatus.default("DRAFT"),
 

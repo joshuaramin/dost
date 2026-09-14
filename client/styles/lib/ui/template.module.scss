@@ -10,7 +10,7 @@
     background-color: color(base, white);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto;
 
     @include down(md) {
         padding: 3rem 1rem;
@@ -28,7 +28,6 @@
         gap: space(base);
         flex-wrap: wrap;
         margin-bottom: space(lg);
-        color: color(primary, 500);
 
         .header_col1 {
             display: flex;
@@ -47,17 +46,7 @@
     }
 
     .body {
-        flex: 1;
-        overflow-y: auto;
-        padding: space(base) 0;
-
-        &::-webkit-scrollbar {
-            width: 0;
-        }
-
-        scrollbar-width: none;
-
-
+        width: 100%;
     }
 
     .modal_footer {

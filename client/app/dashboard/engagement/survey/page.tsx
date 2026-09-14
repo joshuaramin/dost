@@ -1,10 +1,10 @@
 
-import Template from '@/lib/ui/template';
+import Surveypage from '@/lib/ui/dashboard/engagement/survey/page';
 import React from 'react'
 
 
-export default async function Page({ params }: { params: Promise<{id: string }>}) {
+export default async function Page() {
   return (
-    <Template title="Survey"> </Template>
+    <Surveypage />
   )
 }

@@ -29,7 +29,7 @@ import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
 import { TreatmentHubFields } from "@/lib/types/treatment-hub.type";
 import { TreatmenetHubServiceResult } from "@/lib/interface/services/service.interface";
-import { toastSuccess } from "@/lib/ui/toast";
+import { toastError, toastSuccess } from "@/lib/ui/toast";
 
 export default function CreateTreatmentHub() {
     const {
@@ -146,7 +146,10 @@ export default function CreateTreatmentHub() {
                 reset();
             },
             onError: (error) => {
-                console.error("Error: ", error);
+                toastError({
+                    title: "Failed to Create Role",
+                    body: "Something went wrong while creating the role. Please try again.",
+                });
             },
         });
     };

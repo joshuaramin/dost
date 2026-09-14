@@ -23,6 +23,8 @@ import  headers  from '@/lib/utils/headers';
 import { CreateSurveySchema, } from '@/lib/validations/survey-management.validation';
 import {  SurveyIDInterface, SurveyResponse } from '@/lib/interface/survey-management/survey.interface';
 import { CreateSurveyFormField} from '@/lib/types/survey-management';
+import EmptyState from '@/lib/ui/no-data';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
 
 
 export default function SurveyManagement() {
@@ -68,9 +70,19 @@ export default function SurveyManagement() {
             }, {
                 onSuccess: (data: unknown) => {
                     const res = data as SurveyIDInterface;
+
+                    toastSuccess({
+                        title: "Survey Created Successfully",
+                        body: "The new survey has been created and is now ready to configure.",
+                    });
                     router.push(`${pathname}/${res.data.slug}`)
                 },
-                onError: () => {}
+                onError: () => {
+                    toastError({
+                        title: "Failed to Create Survey",
+                        body: "Something went wrong while creating the survey. Please try again.",
+                    });
+                }
 
             })
         }
@@ -154,6 +166,11 @@ export default function SurveyManagement() {
                         value={search}
                         onClear={onHandleClear}
                     />
+                   {data?.data.totalCount === 0 ? 
+                   <EmptyState
+                        title="No data found"
+                        description="There is currently no data to display."
+                    /> : 
                     <Table size="sm" variant="bordered">
                         <Table.Header>
                             <Table.Row>
@@ -187,6 +204,7 @@ export default function SurveyManagement() {
                         ))}
                         </Table.Body>
                     </Table>
+                    }
                 <Pagination
                 currentPage={currentPage}
                     pageSize={limit}

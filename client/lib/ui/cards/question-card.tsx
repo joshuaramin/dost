@@ -304,14 +304,6 @@ export default function QuestionCard({
                                     label: "Long Text",
                                     value: "LONG_TEXT",
                                 },
-                                {
-                                    label: "Multiple Choice",
-                                    value: "MULTIPLE_CHOICE",
-                                },
-                                {
-                                    label: "Checkbox",
-                                    value: "CHECKBOX",
-                                },
                             ]}
                             error={
                                 questionErrors?.type

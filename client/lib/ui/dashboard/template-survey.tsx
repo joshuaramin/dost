@@ -10,9 +10,10 @@ import { toastSuccess } from "../toast";
 interface Props {
     children: ReactNode;
     title: string;
+    slug: string
 }
 
-export default function TemplateSurvey({ children, title }: Props) {
+export default function TemplateSurvey({ children, title, slug }: Props) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const handleToggle = () => {
@@ -24,7 +25,7 @@ export default function TemplateSurvey({ children, title }: Props) {
     };
 
     const handleCopyLink = async () => {
-        await navigator.clipboard.writeText(`http://localhost:3000/survey/${title}`);
+        await navigator.clipboard.writeText(`http://localhost:3000/survey/${slug}`);
         toastSuccess({
             title: "Link Copied",
             body: "The survey link has been successfully copied to your clipboard.",
@@ -35,7 +36,9 @@ export default function TemplateSurvey({ children, title }: Props) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <Title size="md">{title}</Title>
+                <Title style={{
+                    color: "35408E"
+                }} size="md">{title}</Title>
 
                 <div className={styles.btngroup}>
                     <button type="button" onClick={handlePublish}>

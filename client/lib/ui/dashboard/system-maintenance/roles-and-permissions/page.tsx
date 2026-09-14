@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import styles from '@/styles/lib/ui/dashboard/system-maintenance/roles-and-permission/roles-and-permission.module.scss';
 import { SubmitHandler } from 'react-hook-form';
-import RolesAndPermissionsCard from './roles-and-permissions-card'
+import RolesAndPermissionsCard from '../../../cards/roles-and-permissions-card'
 
 // Components
 import Input from '@/components/Input/input';
@@ -21,7 +21,8 @@ import useFormMutation from '@/lib/hooks/useMutation';
 import { RolesAndPermissionResponse } from '@/lib/interface/roles-and-permissions/roles-and-permission';
 import { RolesSchema } from '@/lib/validations/role.validation';
 import { RolesSchemaFormField } from '@/lib/types/roles-and-permissions';
-import NoData from '@/lib/ui/no-data';
+import EmptyState from '@/lib/ui/no-data';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
 
 export default function RolesPermissions() {
 
@@ -60,12 +61,22 @@ export default function RolesPermissions() {
     })
 
     const onHandleSubmition: SubmitHandler<RolesSchemaFormField> = (data) => {
-        mutaiton.mutateAsync({
+        mutaiton.mutate({
             name: data.name,
             description: data.description
         }, {
-            onSuccess: () => {},
-            onError: () => {}
+           onSuccess: () => {
+                toastSuccess({
+                    title: "Role successfully created",
+                    body: "The new role has been created successfully.",
+                });
+            },
+            onError: () => {
+                toastError({
+                    title: "Failed to create role",
+                    body: "Something went wrong while creating the role.",
+                });
+            },
         })
     }
 
@@ -136,7 +147,11 @@ export default function RolesPermissions() {
             <Search 
                 onChange={onHandleSearch} value={search}
             />
-            {data?.data.totalCount === 0 ? <NoData text="Roles and Permissions" /> : (
+            {data?.data.totalCount === 0 ? 
+                <EmptyState  
+                    title="No data found"
+                    description="There is currently no data to display."
+                /> : (
                 <Grid min={330} gap={10}>
                     {data?.data.edges.map((node, index) => (
                         <RolesAndPermissionsCard key={index} name={node.node.name} description={node.node.description} slug={node.node.slug} />

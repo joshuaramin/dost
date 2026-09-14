@@ -1,0 +1,78 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.activity_logs_group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.activity_log_card {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid color(neutral, 200);
+    border-radius: radius(base);
+    background: color(base, white);
+}
+
+.activity_log_indicator {
+    display: flex;
+    justify-content: center;
+    width: 8px;
+    padding: 4px 0;
+}
+
+.activity_log_indicator span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: color(primary, 500);
+}
+
+.activity_log_content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+
+.activity_log_header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.activity_log_information {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+@include down(md) {
+    .activity_log_card {
+        padding: 14px;
+    }
+
+    .activity_log_header {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .activity_log_metadata {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

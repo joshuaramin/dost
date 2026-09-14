@@ -11,6 +11,8 @@ import jwt from "jsonwebtoken";
 import { generateOTP, hashOTP } from "@/utils/otpGenerator";
 import { AppError } from "@/lib/common/appError";
 import { authQueue } from "@/jobs/auth/auth.queue";
+import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
+import { DeviceSessionInterface } from "@/lib/interface/device-sessions";
 
 interface DeviceSessions {
   device_name: string;
@@ -200,8 +202,95 @@ export const AuthLogout = async (id: string) => {
 
   await ActivityLogManage.create({
     type: "Logged Out",
+    decription: "User logged out of the system.",
     user: { connect: { user_id: user?.user_id } },
   });
 
   return { user };
+};
+
+export const GetDeviceSessions = async ({
+  after,
+  before,
+  filter: { orderBy, sortBy },
+  limit,
+  user_id,
+}: DeviceSessionInterface) => {
+  let where: DeviceSessionWhereInput = {
+    is_deleted: false,
+    user: {
+      user_id,
+    },
+  };
+  return await DeviceSessionManage.read({
+    where,
+    limit,
+    ...(after && {
+      cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
+    }),
+    orderBy: {
+      [orderBy]: sortBy,
+    },
+    select: {
+      browser: true,
+      device_name: true,
+      device_sessions_id: true,
+      device_type: true,
+      expired_at: true,
+      ip_address: true,
+      is_revoked: true,
+      os: true,
+      user_agent: true,
+      user: {
+        select: { user_id: true },
+      },
+    },
+  });
+};
+
+export const GetResendOTP = async (
+  email: string,
+  deviceSession: DeviceSession,
+) => {
+  const user = await UserManage.unique("email", email);
+
+  if (!user) {
+    throw new AppError("Email address is not found ", 400);
+  }
+
+  const profile = await prisma.profile.findFirst({
+    where: {
+      User: { email },
+    },
+  });
+  const fullname =
+    `${profile?.first_name ?? ""} ${profile?.last_name ?? ""}`.trim();
+
+  await authQueue.add(
+    email,
+    {
+      email: email,
+      fullname,
+      ip: deviceSession.ip_address,
+      userAgent: deviceSession.user_agent,
+    },
+    {
+      attempts: 5,
+      backoff: {
+        type: "exponential",
+        delay: 3000,
+      },
+      removeOnComplete: true,
+    },
+  );
+
+  return {
+    email,
+    success: true,
+  };
 };

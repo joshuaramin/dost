@@ -21,10 +21,9 @@ export default function Header() {
                     </div>
                 </header>
                 <nav>
-                    <Link className={PrimaryFont.className} href={"/"}>Abstract</Link>
-                    <Link className={PrimaryFont.className} href={"/"}>Methodology</Link>
-                    <Link className={PrimaryFont.className} href={"/"}>Partners and Agencies</Link>
-                    <Link className={PrimaryFont.className} href={"/"}>Contact</Link>
+                    <Link className={PrimaryFont.className} href={"/"}>Surveillance Map</Link>
+                    <Link className={PrimaryFont.className} href={"/"}>Educational Resource</Link>
+                    <Link className={PrimaryFont.className} href={"/"}>Researchers Team</Link>
                 </nav>
                 <button>
                     <TbMenu2 size={35} />

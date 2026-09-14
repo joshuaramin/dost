@@ -5,6 +5,7 @@ import {
   deleteSurveyQuestionBytId,
   getAllSurvey,
   getSurveyById,
+  getSurvreyResponseById,
   updateSurveyQuestionById,
 } from "@/controller/survey.conrtoller";
 
@@ -20,6 +21,13 @@ router.get(
   withAuth,
   withPermission("survey-management:read"),
   asyncHandler(getAllSurvey),
+);
+
+router.get(
+  "/response/:id",
+  withAuth,
+  asyncHandler(getSurvreyResponseById),
+  withPermission("survey-management:read"),
 );
 router.post(
   "/",

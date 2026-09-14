@@ -408,6 +408,7 @@ export const ContributionScalarFieldEnum = {
   is_deleted: 'is_deleted',
   image_url: 'image_url',
   source_url: 'source_url',
+  sentiment: 'sentiment',
   classification: 'classification',
   classification_method: 'classification_method',
   confidence_score: 'confidence_score',

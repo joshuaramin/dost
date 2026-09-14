@@ -297,8 +297,37 @@
     min-height: 300px;
     padding: 4rem 10rem;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+
+    .response_card {
+        width: 100%;
+        padding: 20px;
+        border-radius: radius(base);
+        box-shadow: 0px 0px 3px 0px color(neutral, 500);
+        background-color: color(neutral, 100);
+
+
+
+        .response_header {
+            padding: 10px 0;
+            border-bottom: 1px solid color(neutral, 500);
+        }
+
+        .answer {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px 0 0;
+
+            .survey_question_answer_card {
+                width: 100%;
+                border-radius: radius(sm);
+                background-color: color(neutral, 300);
+                padding: 10px 15px;
+            }
+        }
+    }
 
     @include down(xxl) {
         padding: 4rem 2rem;

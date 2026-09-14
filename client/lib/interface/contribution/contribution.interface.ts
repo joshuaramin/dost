@@ -6,6 +6,12 @@ enum Classification {
   FACTUAL,
 }
 
+enum ContributionSentiment {
+  POSTIIVE,
+  NEGATIVE,
+  NEUTRAL,
+}
+
 enum ClassificationMethod {
   MANUAL,
   AI,
@@ -18,6 +24,7 @@ export interface ContributionInterface {
   slug: string;
   content: string;
   status: string;
+  sentiment: ContributionSentiment;
   is_deleted: boolean;
   image_url: string;
   source_url: string;

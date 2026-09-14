@@ -8,6 +8,7 @@ import styles from "@/styles/lib/ui/home/surveillance.module.scss"
 import useFormQuery from "@/lib/hooks/useQuery"
 import Title from "../title"
 import Text from "@/components/Typography/Text/text"
+import headers from '@/lib/utils/headers'
 
 type Province = {
     code: string
@@ -49,6 +50,11 @@ export default function SurveillanceMap() {
         url: "maintenance/geospatial/hierarchy",
     })
 
+    const {} = useFormQuery({
+        key: ["TreatmentHub"],
+        url: "maintenance/treatment-hub",
+        headers
+    })
     const safeSetFilter = (
         map: maplibregl.Map,
         layer: string,

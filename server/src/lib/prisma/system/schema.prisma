@@ -362,6 +362,12 @@ enum ClassificationMethod {
   HYBRID
 }
 
+enum ContributionSentiment {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+}
+
 model Contribution {
   contribution_id String @id @default(cuid())
 
@@ -373,8 +379,9 @@ model Contribution {
 
   image_url  String?
   source_url String?
+  sentiment  ContributionSentiment?
 
-  classification        ContributionClassification @default(PENDING)
+  classification        ContributionClassification? @default(PENDING)
   classification_method ClassificationMethod?
 
   confidence_score Decimal? @db.Decimal(5, 4)

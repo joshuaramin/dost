@@ -28,6 +28,7 @@ import { EducationResourceFormField } from '@/lib/types/education-resource.type'
 import useFormMutation from '@/lib/hooks/useMutation';
 import headers from '@/lib/utils/headers'
 import ButtonToggle from '@/components/Toggle/buttonToggle';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
 
 
 export default function Page() {
@@ -53,7 +54,7 @@ export default function Page() {
         status: "DRAFT",
         tags: [],
         title: "",
-        type: "ARTICLE",
+        type: "" as string as never,
         content: "",
         summary: "",
         thumbnail: "" as unknown as File,
@@ -87,11 +88,16 @@ export default function Page() {
         }, 
         {
         onSuccess: () => {
-            alert("Successs")
+             toastSuccess({
+                    title: "Educational Resource Created Successfully",
+                    body: "The new educational resource has been added and is now available in the system.",
+                });
         },
         onError: (data) => {
-            alert("NO SUCCESS")
-            console.log(data)
+              toastError({
+                title: "Failed to Create Educational Resource",
+                body: "Something went wrong while creating the educational resource. Please try again.",
+            });
         }
         })
     }
@@ -116,18 +122,6 @@ export default function Page() {
                     label="Title" 
                     isRequired={true} 
                     error={errors.title}
-                />
-                <FileUpload 
-                    register={register}
-                    name="thumbnail"
-                    isRequired={true}
-                    accepted={{
-                        "image": ["jpeg", "jpg", "webp", "png"]
-                    }}
-                    error={errors.thumbnail}
-                    label="Thumbnail"
-                    setValue={setValue}
-                    multiple={false}
                 />
                 <Select 
                     control={control}
@@ -207,13 +201,15 @@ export default function Page() {
             name="status"
         />
 
-        <Button
-            variant="primary"
-            size="md"
-        >
-            <Text size="sm">Save</Text>
-        </Button>
+     
         </div>
+
+            <Button
+                variant="primary"
+                size="md"
+            >
+                <Text size="sm">Save</Text>
+            </Button>
             </Form>
         </div>
     </Template>

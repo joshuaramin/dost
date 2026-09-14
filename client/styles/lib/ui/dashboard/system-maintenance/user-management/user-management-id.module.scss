@@ -1,3 +1,10 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
 .container {
     width: 100%;
 
@@ -48,49 +55,20 @@
 
     .body {
         width: 100%;
-        padding: 20px 10px;
-
-        .body_header {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            border-bottom: 1px solid #e5e7eb;
-
-            button {
-                position: relative;
-                padding: 10px 20px;
-                border: none;
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
-                background-color: transparent;
-                cursor: pointer;
-                transition:
-                    background-color 0.15s ease,
-                    color 0.15s ease;
-
-                &:hover {
-                    background-color: rgba(0, 0, 0, 0.04);
-                }
-
-                &.active {
-                    background-color: rgba(0, 0, 0, 0.04);
-
-                    &::after {
-                        content: "";
-                        position: absolute;
-                        left: 0;
-                        right: 0;
-                        bottom: -1px;
-                        height: 2px;
-                        background-color: currentColor;
-                    }
-                }
-            }
-        }
+        padding: 20px 0;
 
         .body_content {
             width: 100%;
-            padding: 24px 10px;
+            padding: 10;
+
+            .session_group {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid color(neutral, 500);
+                border-radius: radius(tiny);
+                overflow: hidden;
+            }
         }
     }
 }

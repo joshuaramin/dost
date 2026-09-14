@@ -28,6 +28,8 @@ export const getAllContributions = async (
     status,
     orderBy,
     type,
+    sentiment,
+    user_id,
   } = request.query;
 
   const result = await GetAllContributions({
@@ -43,6 +45,8 @@ export const getAllContributions = async (
     status: status as string,
     type: type as string,
     limit: limit as string,
+    sentiment: sentiment as string,
+    user_id: user_id as string,
   });
 
   return response.status(200).json({

@@ -8,18 +8,21 @@ import {
 
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/survey-management/questionnaire-card.module.scss";
 
+//components
+import Text from "@/components/Typography/Text/text";
+import Title from "@/components/Typography/Title/title";
 import Form from "@/components/Form/form";
 
+//lib & hooks
 import useFormHook from "@/lib/hooks/useFormHook";
 import TemplateSurvey from "@/lib/ui/dashboard/template-survey";
-import { SurveyQuestionFormSchema } from "@/lib/validations/survey-management.validation";
-import { SurveyQuestionFormField } from "@/lib/types/survey-management";
 import useFormQuery from "@/lib/hooks/useQuery";
 import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
+import QuestionCard from "../../../cards/question-card";
 import { SurveyIDInterface } from "@/lib/interface/survey-management/survey.interface";
-import QuestionCard from "./question-card";
-import Text from "@/components/Typography/Text/text";
+import { SurveyQuestionFormSchema } from "@/lib/validations/survey-management.validation";
+import { SurveyQuestionFormField } from "@/lib/types/survey-management";
 
 interface Props {
     slug: string;
@@ -31,12 +34,11 @@ export default function SurveyID({ slug }: Props) {
     const [activeTab, setActiveTab] =
         useState<SurveyTab>("question");
 
-    const { data, isLoading } =
-        useFormQuery<SurveyIDInterface>({
-            key: ["Survey", slug],
-            url: `maintenance/survey/${slug}`,
-            headers,
-        });
+    const { data: SurveyData, isLoading } = useFormQuery<SurveyIDInterface>({
+        key: ["Survey", slug],
+        url: `maintenance/survey/${slug}`,
+        headers,
+    });
 
     const {
         register,
@@ -48,6 +50,7 @@ export default function SurveyID({ slug }: Props) {
         getValues,
     } = useFormHook<typeof SurveyQuestionFormSchema>({
         schema: SurveyQuestionFormSchema,
+        shouldUnregister: false,
         defaultValues: {
             questions: [],
         },
@@ -59,11 +62,11 @@ export default function SurveyID({ slug }: Props) {
     });
 
     useEffect(() => {
-        if (!data?.data) {
+        if (!SurveyData?.data) {
             return;
         }
 
-        const questions = data.data.questions ?? [];
+        const questions = SurveyData.data.questions ?? [];
 
         const activeQuestions = questions
             .filter(
@@ -195,7 +198,7 @@ export default function SurveyID({ slug }: Props) {
                     false,
             }
         );
-    }, [data, reset]);
+    }, [SurveyData?.data, reset]);
 
     const mutation =
         useFormMutation<SurveyQuestionFormField>({
@@ -230,7 +233,7 @@ export default function SurveyID({ slug }: Props) {
 
     if (isLoading) {
         return (
-            <TemplateSurvey title="">
+            <TemplateSurvey title="" slug="">
                 <div
                     className={
                         styles.container
@@ -250,7 +253,8 @@ export default function SurveyID({ slug }: Props) {
 
     return (
         <TemplateSurvey
-            title={data?.data.title ?? ""}
+            title={SurveyData?.data.title ?? ""}
+            slug={slug}
         >
             <div className={styles.sub_header}>
                 <button
@@ -355,17 +359,49 @@ export default function SurveyID({ slug }: Props) {
                 </div>
             )}
 
-            {activeTab === "response" && (
-                <div
-                    className={
-                        styles.response_container
-                    }
-                >
-                    <Text size="sm">
-                        Survey responses
-                    </Text>
-                </div>
-            )}
+          {activeTab === "response" && (
+                <div className={styles.response_container}>
+                    {SurveyData?.data?.questions?.map(
+                        ({ survey_question_id, text, answers }) => (
+                            <div
+                                className={styles.response_card}
+                                key={survey_question_id}
+                            >
+                                <div className={styles.response_header}>
+                                    <Title size="md">{text}</Title>
+                                </div>
+
+                                <div className={styles.answer}>
+                                    <Text size="sm">
+                                        Answers: {answers?.length ?? 0}
+                                    </Text>
+
+                                    {answers?.length ? (
+                                        answers.map(
+                                            ({ answer_text }, index) => (
+                                                <div
+                                                    className={
+                                                        styles.survey_question_answer_card
+                                                    }
+                                                    key={index}
+                                                >
+                                                    <Text size="sm">
+                                                        {answer_text || "No answer"}
+                                                    </Text>
+                                                </div>
+                                            )
+                                        )
+                                    ) : (
+                                        <Text size="sm">
+                                            No answers submitted.
+                                        </Text>
+                                    )}
+                                </div>
+                            </div>
+                        )
+                    )}
+            </div>
+        )}
         </TemplateSurvey>
     );
 }

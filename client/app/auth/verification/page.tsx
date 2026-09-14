@@ -28,7 +28,7 @@ export default function Page() {
 
     const router = useRouter();
     const store = store2
-    const INITIAL_SECOND = 300;
+    const INITIAL_SECOND = 180;
     const [otp, setOtp] = useState<string[]>(Array(6).fill(""))
     const [countdown, setCountdown] = useState(INITIAL_SECOND);
 
@@ -109,13 +109,20 @@ export default function Page() {
         params: {}
     })
 
+
+    const activityMutation = useFormMutation({
+        key: ["CreateActivityLogs"],
+        method: "POST",
+        url: "maintenance/activity-logs"
+    })
+
     const onHandleSubmit: SubmitHandler<VerifyOTPFormFields> = (data) => {
         mutation.mutateAsync({ code: data.code }, {
             onSuccess: (data) => {
 
-                const res = data.data
+            const res = data.data
 
-           cookies.setCookie("token", res.token);
+            cookies.setCookie("token", res.token);
 
             console.log("TOKEN");
             console.log(res.token);
@@ -126,6 +133,16 @@ export default function Page() {
             console.log(payload);
 
                 console.log(res)
+
+                activityMutation.mutate({
+                    type:  "LOGIN",
+                    description: "User successfully logged into the system.",
+                    user_id: data.data.user.user_id,
+                }, {
+                    onSuccess: (data) => {{
+                        console.log("Acitvity Log created", data)
+                    }}
+                })
 
 
                 toastSuccess({
@@ -210,8 +227,8 @@ export default function Page() {
 
             <Button
                 size="md"
-                types="outline"
-                variant={countdown > 0 ? "disabled" : "primary"}
+                types={countdown > 0 ? "outline" : "filled"}
+                variant={countdown > 0 ? "secondary" : "primary"}
                 className={styles.resend}
                 onClick={() => {
                     setCountdown(INITIAL_SECOND)

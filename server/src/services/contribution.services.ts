@@ -22,8 +22,13 @@ export const GetAllContributions = async ({
   type,
   limit,
   filter: { orderBy, sortBy, search },
+  sentiment,
+  user_id,
 }: ContributionInterface) => {
   let where = {
+    ...(sentiment && {
+      sentiment,
+    }),
     ...(classification && {
       classification,
     }),
@@ -35,6 +40,11 @@ export const GetAllContributions = async ({
     }),
     ...(type && {
       type,
+    }),
+    ...(user_id && {
+      user: {
+        user_id,
+      },
     }),
   } as Prisma.ContributionWhereInput;
 
@@ -68,6 +78,8 @@ export const GetAllContributions = async ({
       municipality: true,
       province: true,
       region: true,
+      created_at: true,
+      sentiment: true,
     },
     orderBy: {
       [orderBy]: sortBy,
@@ -76,7 +88,7 @@ export const GetAllContributions = async ({
 };
 
 export const GetContributionById = async (contribution_id: string) => {
-  return ContributionManage.readById(contribution_id, "slug", {
+  return ContributionManage.readById(contribution_id, "contribution_id", {
     select: {
       contribution_id: true,
       type: true,
@@ -92,6 +104,7 @@ export const GetContributionById = async (contribution_id: string) => {
       reviewed_by: true,
       reviewed_at: true,
       confidence_score: true,
+      sentiment: true,
     },
   });
 };
@@ -99,13 +112,13 @@ export const GetContributionById = async (contribution_id: string) => {
 export const CreateContribution = async (data: any) => {
   return ContributionManage.create({
     content: data.content,
-    slug: useSlugify(data.title),
+    slug: useSlugify(data.type),
     type: data.type,
     classification: data.classification,
-    barangay: data.barangay,
-    municipality: data.municipality,
-    province: data.province,
-    region: data.region,
+    barangay: data.barangay || "",
+    municipality: data.municipality || "",
+    province: data.province || "",
+    region: data.region || "",
     classification_method: data.classification_method,
     status: data.status,
     image_url: data.image_url,
@@ -120,14 +133,22 @@ export const CreateContribution = async (data: any) => {
 };
 
 export const UpdateContributeById = async (data: any) => {
-  return await ContributionManage.update("contribution_id", data.id, {
-    status: data.status,
-    review_reason: data.review_reason,
-    reviewed_at: data.review_at,
-    reviewer: {
-      connect: { user_id: data.user_id },
+  console.log(data);
+  return await ContributionManage.update(
+    "contribution_id",
+    data.contribution_id,
+    {
+      status: data.status,
+      classification: data.status === "APPROVED" ? "FACTUAL" : "MISINFORMATION",
+      classification_method: "MANUAL",
+      review_reason: data.review_reason,
+      reviewed_at: data.review_at,
+      sentiment: data.sentiment,
+      reviewer: {
+        connect: { user_id: data.user_id },
+      },
     },
-  });
+  );
 };
 
 export const SoftDeleteContribution = async (contribution_id: string) => {

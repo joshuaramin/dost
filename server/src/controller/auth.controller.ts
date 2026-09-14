@@ -1,4 +1,9 @@
-import { AuthLogin, AuthLogout, AuthVerfiy } from "@/services/auth.services";
+import {
+  AuthLogin,
+  AuthLogout,
+  AuthVerfiy,
+  GetDeviceSessions,
+} from "@/services/auth.services";
 import { getDeviceInfo } from "@/utils/deviceParser";
 import { Response, Request } from "express";
 
@@ -49,3 +54,31 @@ export async function Logout(request: Request, response: Response) {
     .status(200)
     .json({ data: result, message: "Logged out successfully" });
 }
+
+export const DeviceSessions = async (request: Request, response: Response) => {
+  const userId = String(request.params.id);
+
+  const { orderBy, sortBy, after, before, limit, search } = request.query;
+
+  const result = await GetDeviceSessions({
+    after: after as string,
+    before: before as string,
+    filter: {
+      orderBy: orderBy as string,
+      search: search as string,
+      sortBy: sortBy as string,
+    },
+    limit: limit as string,
+    user_id: userId,
+  });
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const ResendOTP = async (request: Request, response: Response) => {
+  
+};

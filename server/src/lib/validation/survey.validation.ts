@@ -68,13 +68,8 @@ export const CreateSurveySchema = z.object({
 });
 
 export const SurveyAnswerSchema = z.object({
-  question_id: z.string().min(1, "Question ID is required"),
-
-  text: z.string().optional(),
-
-  option_id: z.string().optional(),
-
-  option_ids: z.array(z.string()).optional(),
+  survey_question_id: z.string(),
+  text: z.string(),
 });
 
 export const CreateSurveyResponseSchema = z.object({

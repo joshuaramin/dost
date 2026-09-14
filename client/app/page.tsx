@@ -10,7 +10,7 @@ import TitleWrapper from "@/lib/ui/titleWrapper";
 import Footer from "@/lib/ui/footer";
 import SurveillanceMap from "@/lib/ui/home/map";
 import useFormQuery from "@/lib/hooks/useQuery";
-import EducationResourceCard from "@/lib/ui/educational-resource/education-reosurce-card";
+import EducationResourceCard from "@/lib/ui/cards/education-reosurce-card";
 import { OrganizationResult } from "@/lib/interface/organization/organization.interface";
 import { EducationalResourceResult } from "@/lib/interface/education-resource/educational-resources.interface";
 import { Personnel } from "@/lib/utils/personel";

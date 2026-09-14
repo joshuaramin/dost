@@ -14,6 +14,7 @@ const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
 export const GetAllUsers = ({
   limit,
   after,
+  before,
   filter: { orderBy, search, sortBy },
   organization_id,
   role_id,
@@ -45,6 +46,11 @@ export const GetAllUsers = ({
     limit,
     ...(after && {
       cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: after,
+      direction: "backward",
     }),
     orderBy: {
       [orderBy]: sortBy,

@@ -14,7 +14,7 @@ import Search from '@/components/Search/search';
 
 
 //lib && hooks
-import OrganizationCard from './organization-card';
+import OrganizationCard from '../../../cards/organization-card';
 import useFormHook from '@/lib/hooks/useFormHook';
 import Template from '@/lib/ui/template';
 import headers  from '@/lib/utils/headers';
@@ -23,8 +23,9 @@ import useFormQuery from '@/lib/hooks/useQuery';
 import { OrganizationResult } from '@/lib/interface/organization/organization.interface';
 import { OrganizationSchema } from '@/lib/validations/organization';
 import { OrganizationFormField } from '@/lib/types/organization';
-import { toastSuccess } from '@/lib/ui/toast';
-import NoData from '@/lib/ui/no-data';
+import { toastError, toastSuccess } from '@/lib/ui/toast';
+import EmptyState from '@/lib/ui/no-data';
+import { reset } from 'next/dist/lib/picocolors';
 
 
 
@@ -38,7 +39,7 @@ export default function Organization() {
     const [ endCursor, setEndCursor ] = useState<string>("")
     const [ startCursor, setStartCursor ] = useState<string>("")
 
-    const { data, isLoading } = useFormQuery<OrganizationResult>({
+    const { data, isLoading, } = useFormQuery<OrganizationResult>({
         key: ["Organizatoin", search, endCursor, startCursor],
         url: "maintenance/organization",
         headers, 
@@ -51,7 +52,7 @@ export default function Organization() {
     })
 
 
-    const { register, errors, handleSubmit, setValue } = useFormHook({
+    const { register, errors, handleSubmit, setValue , reset} = useFormHook({
         schema: OrganizationSchema,
         defaultValues: {
             logo: File as unknown as never,
@@ -77,13 +78,22 @@ export default function Organization() {
             contact: data.contact,
             address: data.address
         }, {
-            onSuccess: () => {
+              onSuccess: () => {
                 toastSuccess({
-                    title: "",
-                    body: ""
-                })
+                    title: "Organization Created Successfully",
+                    body: "The new organization has been added and is now available in the system.",
+                });
+
+                reset();
             },
-            onError: () => {}
+            onError: (error) => {
+                console.error("Error:", error);
+
+                toastError({
+                    title: "Failed to Create Organization",
+                    body: "Something went wrong while creating the organization. Please try again.",
+                });
+            },
         })
     }
 
@@ -161,8 +171,11 @@ export default function Organization() {
             <div className={styles.container}>
                 <Search onChange={onHandleSearch} value={search} />
                 {data?.data.totalCount === 0?  (
-                    <NoData text="Organization" />
-                ) :    <Grid max={450} min={330} gap={10}>
+                    <EmptyState 
+                        title="No data found"
+                        description="There is currently no data to display."
+                    />
+                ) :    <Grid max={"1fr"} min={330} gap={10}>
                         {data?.data.edges.map((node, index) => (
                         <OrganizationCard key={index}
                             address={node.node.address} contact={node.node.contact} logo={node.node.logo} name={node.node.name}
