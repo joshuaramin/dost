@@ -16,13 +16,14 @@ export interface ActivityLogsInterfaceResult {
       node: ActivityLogsInterface;
       cursor: string;
     }[];
+    pageInfo: {
+      startCursor: string;
+      endCursor: string;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+    };
   };
-  pageInfo: {
-    startCursor: string;
-    endCursor: string;
-    hasNextPage: boolean;
-    hasPrevPage: boolean;
-  };
+
   totalCount: number;
   timestamp: string;
   success: boolean;

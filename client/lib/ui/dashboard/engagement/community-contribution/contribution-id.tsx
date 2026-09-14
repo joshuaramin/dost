@@ -136,6 +136,12 @@ export default function ContributionID({ id }: Props) {
     headers,
   });
 
+  const activityMutation = useFormMutation({
+    key: ["CreateActivityLogs"],
+    method: "POST",
+    url: "maintenance/activity-logs",
+  });
+
   useEffect(() => {
     if (!contribution) {
       return;
@@ -207,8 +213,24 @@ export default function ContributionID({ id }: Props) {
           setValue("sentiment", selectedSentiment);
 
           toastSuccess({
-            title: "Updated",
+            title: "Contribution Updated Successfully",
+            body: `The contribution has been marked as ${newStatus.toLowerCase()}.`,
           });
+
+          activityMutation.mutate(
+            {
+              type: "UPDATE",
+              description: `User updated the status of contribution ID: ${id}.`,
+              user_id: token?.data.user_id,
+            },
+            {
+              onSuccess: (data) => {
+                {
+                  console.log("Acitvity Log created", data);
+                }
+              },
+            },
+          );
         },
         onError: (err) => {
           console.log(err);

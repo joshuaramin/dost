@@ -29,6 +29,8 @@ import SelectArray from "@/components/Select/select-array";
 import Grid from "@/components/Grid/grid";
 import Table from "@/components/Table/table";
 import Badge from "@/components/Badge/badge";
+import { sessionStore } from "@/lib/utils/sessions";
+import { toastError, toastSuccess } from "@/lib/ui/toast";
 
 export default function UserManagement() {
   const router = useRouter();
@@ -44,6 +46,7 @@ export default function UserManagement() {
 
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
+  const token = sessionStore.get();
   const { data, isLoading } = useFormQuery<UserResult>({
     key: [
       "UserManagement",
@@ -98,6 +101,11 @@ export default function UserManagement() {
     headers,
   });
 
+  const activityMutation = useFormMutation({
+    key: ["CreateActivityLogs"],
+    method: "POST",
+    url: "maintenance/activity-logs",
+  });
   const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => {
     mutation.mutateAsync(
       {
@@ -108,8 +116,33 @@ export default function UserManagement() {
         role_id: data.role_id,
       },
       {
-        onSuccess: () => {},
-        onError: () => {},
+        onSuccess: () => {
+          activityMutation.mutate(
+            {
+              type: "CREATE",
+              description: `User created a new user account for ${data.first_name} ${data.last_name}.`,
+              user_id: token?.data.user_id,
+            },
+            {
+              onSuccess: (activityData) => {
+                console.log("Activity Log created", activityData);
+              },
+              onError: (error) => {
+                console.error("Failed to create activity log:", error);
+              },
+            },
+          );
+          toastSuccess({
+            title: "User Created Successfully",
+            body: `The user account for ${data.first_name} ${data.last_name} has been created successfully.`,
+          });
+        },
+        onError: () => {
+          toastError({
+            title: "Failed to Create User",
+            body: "Something went wrong while creating the user account. Please try again.",
+          });
+        },
       },
     );
   };
