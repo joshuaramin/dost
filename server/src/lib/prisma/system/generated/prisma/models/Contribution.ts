@@ -45,6 +45,7 @@ export type ContributionMinAggregateOutputType = {
   sentiment: $Enums.ContributionSentiment | null
   classification: $Enums.ContributionClassification | null
   classification_method: $Enums.ClassificationMethod | null
+  language: string | null
   confidence_score: runtime.Decimal | null
   status: $Enums.ContributionStatus | null
   reviewed_by: string | null
@@ -70,6 +71,7 @@ export type ContributionMaxAggregateOutputType = {
   sentiment: $Enums.ContributionSentiment | null
   classification: $Enums.ContributionClassification | null
   classification_method: $Enums.ClassificationMethod | null
+  language: string | null
   confidence_score: runtime.Decimal | null
   status: $Enums.ContributionStatus | null
   reviewed_by: string | null
@@ -95,6 +97,7 @@ export type ContributionCountAggregateOutputType = {
   sentiment: number
   classification: number
   classification_method: number
+  language: number
   confidence_score: number
   status: number
   reviewed_by: number
@@ -130,6 +133,7 @@ export type ContributionMinAggregateInputType = {
   sentiment?: true
   classification?: true
   classification_method?: true
+  language?: true
   confidence_score?: true
   status?: true
   reviewed_by?: true
@@ -155,6 +159,7 @@ export type ContributionMaxAggregateInputType = {
   sentiment?: true
   classification?: true
   classification_method?: true
+  language?: true
   confidence_score?: true
   status?: true
   reviewed_by?: true
@@ -180,6 +185,7 @@ export type ContributionCountAggregateInputType = {
   sentiment?: true
   classification?: true
   classification_method?: true
+  language?: true
   confidence_score?: true
   status?: true
   reviewed_by?: true
@@ -290,8 +296,9 @@ export type ContributionGroupByOutputType = {
   image_url: string | null
   source_url: string | null
   sentiment: $Enums.ContributionSentiment | null
-  classification: $Enums.ContributionClassification
+  classification: $Enums.ContributionClassification | null
   classification_method: $Enums.ClassificationMethod | null
+  language: string | null
   confidence_score: runtime.Decimal | null
   status: $Enums.ContributionStatus
   reviewed_by: string | null
@@ -338,8 +345,9 @@ export type ContributionWhereInput = {
   image_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   source_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   sentiment?: Prisma.EnumContributionSentimentNullableFilter<"Contribution"> | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFilter<"Contribution"> | $Enums.ContributionClassification
+  classification?: Prisma.EnumContributionClassificationNullableFilter<"Contribution"> | $Enums.ContributionClassification | null
   classification_method?: Prisma.EnumClassificationMethodNullableFilter<"Contribution"> | $Enums.ClassificationMethod | null
+  language?: Prisma.StringNullableFilter<"Contribution"> | string | null
   confidence_score?: Prisma.DecimalNullableFilter<"Contribution"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFilter<"Contribution"> | $Enums.ContributionStatus
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
@@ -365,8 +373,9 @@ export type ContributionOrderByWithRelationInput = {
   image_url?: Prisma.SortOrderInput | Prisma.SortOrder
   source_url?: Prisma.SortOrderInput | Prisma.SortOrder
   sentiment?: Prisma.SortOrderInput | Prisma.SortOrder
-  classification?: Prisma.SortOrder
+  classification?: Prisma.SortOrderInput | Prisma.SortOrder
   classification_method?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
   confidence_score?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewed_by?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -395,8 +404,9 @@ export type ContributionWhereUniqueInput = Prisma.AtLeast<{
   image_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   source_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   sentiment?: Prisma.EnumContributionSentimentNullableFilter<"Contribution"> | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFilter<"Contribution"> | $Enums.ContributionClassification
+  classification?: Prisma.EnumContributionClassificationNullableFilter<"Contribution"> | $Enums.ContributionClassification | null
   classification_method?: Prisma.EnumClassificationMethodNullableFilter<"Contribution"> | $Enums.ClassificationMethod | null
+  language?: Prisma.StringNullableFilter<"Contribution"> | string | null
   confidence_score?: Prisma.DecimalNullableFilter<"Contribution"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFilter<"Contribution"> | $Enums.ContributionStatus
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
@@ -422,8 +432,9 @@ export type ContributionOrderByWithAggregationInput = {
   image_url?: Prisma.SortOrderInput | Prisma.SortOrder
   source_url?: Prisma.SortOrderInput | Prisma.SortOrder
   sentiment?: Prisma.SortOrderInput | Prisma.SortOrder
-  classification?: Prisma.SortOrder
+  classification?: Prisma.SortOrderInput | Prisma.SortOrder
   classification_method?: Prisma.SortOrderInput | Prisma.SortOrder
+  language?: Prisma.SortOrderInput | Prisma.SortOrder
   confidence_score?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewed_by?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -455,8 +466,9 @@ export type ContributionScalarWhereWithAggregatesInput = {
   image_url?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
   source_url?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
   sentiment?: Prisma.EnumContributionSentimentNullableWithAggregatesFilter<"Contribution"> | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationWithAggregatesFilter<"Contribution"> | $Enums.ContributionClassification
+  classification?: Prisma.EnumContributionClassificationNullableWithAggregatesFilter<"Contribution"> | $Enums.ContributionClassification | null
   classification_method?: Prisma.EnumClassificationMethodNullableWithAggregatesFilter<"Contribution"> | $Enums.ClassificationMethod | null
+  language?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
   confidence_score?: Prisma.DecimalNullableWithAggregatesFilter<"Contribution"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusWithAggregatesFilter<"Contribution"> | $Enums.ContributionStatus
   reviewed_by?: Prisma.StringNullableWithAggregatesFilter<"Contribution"> | string | null
@@ -480,8 +492,9 @@ export type ContributionCreateInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
@@ -505,8 +518,9 @@ export type ContributionUncheckedCreateInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_by?: string | null
@@ -530,8 +544,9 @@ export type ContributionUpdateInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -555,8 +570,9 @@ export type ContributionUncheckedUpdateInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -580,8 +596,9 @@ export type ContributionCreateManyInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_by?: string | null
@@ -605,8 +622,9 @@ export type ContributionUpdateManyMutationInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -628,8 +646,9 @@ export type ContributionUncheckedUpdateManyInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -665,6 +684,7 @@ export type ContributionCountOrderByAggregateInput = {
   sentiment?: Prisma.SortOrder
   classification?: Prisma.SortOrder
   classification_method?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   confidence_score?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewed_by?: Prisma.SortOrder
@@ -694,6 +714,7 @@ export type ContributionMaxOrderByAggregateInput = {
   sentiment?: Prisma.SortOrder
   classification?: Prisma.SortOrder
   classification_method?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   confidence_score?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewed_by?: Prisma.SortOrder
@@ -719,6 +740,7 @@ export type ContributionMinOrderByAggregateInput = {
   sentiment?: Prisma.SortOrder
   classification?: Prisma.SortOrder
   classification_method?: Prisma.SortOrder
+  language?: Prisma.SortOrder
   confidence_score?: Prisma.SortOrder
   status?: Prisma.SortOrder
   reviewed_by?: Prisma.SortOrder
@@ -825,8 +847,8 @@ export type NullableEnumContributionSentimentFieldUpdateOperationsInput = {
   set?: $Enums.ContributionSentiment | null
 }
 
-export type EnumContributionClassificationFieldUpdateOperationsInput = {
-  set?: $Enums.ContributionClassification
+export type NullableEnumContributionClassificationFieldUpdateOperationsInput = {
+  set?: $Enums.ContributionClassification | null
 }
 
 export type NullableEnumClassificationMethodFieldUpdateOperationsInput = {
@@ -854,8 +876,9 @@ export type ContributionCreateWithoutUserInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
@@ -878,8 +901,9 @@ export type ContributionUncheckedCreateWithoutUserInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_by?: string | null
@@ -912,8 +936,9 @@ export type ContributionCreateWithoutReviewerInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
@@ -936,8 +961,9 @@ export type ContributionUncheckedCreateWithoutReviewerInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
@@ -989,8 +1015,9 @@ export type ContributionScalarWhereInput = {
   image_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   source_url?: Prisma.StringNullableFilter<"Contribution"> | string | null
   sentiment?: Prisma.EnumContributionSentimentNullableFilter<"Contribution"> | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFilter<"Contribution"> | $Enums.ContributionClassification
+  classification?: Prisma.EnumContributionClassificationNullableFilter<"Contribution"> | $Enums.ContributionClassification | null
   classification_method?: Prisma.EnumClassificationMethodNullableFilter<"Contribution"> | $Enums.ClassificationMethod | null
+  language?: Prisma.StringNullableFilter<"Contribution"> | string | null
   confidence_score?: Prisma.DecimalNullableFilter<"Contribution"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFilter<"Contribution"> | $Enums.ContributionStatus
   reviewed_by?: Prisma.StringNullableFilter<"Contribution"> | string | null
@@ -1030,8 +1057,9 @@ export type ContributionCreateManyUserInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_by?: string | null
@@ -1054,8 +1082,9 @@ export type ContributionCreateManyReviewerInput = {
   image_url?: string | null
   source_url?: string | null
   sentiment?: $Enums.ContributionSentiment | null
-  classification?: $Enums.ContributionClassification
+  classification?: $Enums.ContributionClassification | null
   classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
   confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: $Enums.ContributionStatus
   reviewed_at?: Date | string | null
@@ -1078,8 +1107,9 @@ export type ContributionUpdateWithoutUserInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1102,8 +1132,9 @@ export type ContributionUncheckedUpdateWithoutUserInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1126,8 +1157,9 @@ export type ContributionUncheckedUpdateManyWithoutUserInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1150,8 +1182,9 @@ export type ContributionUpdateWithoutReviewerInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1174,8 +1207,9 @@ export type ContributionUncheckedUpdateWithoutReviewerInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1198,8 +1232,9 @@ export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
   image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
-  classification?: Prisma.EnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
   classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
   reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1226,6 +1261,7 @@ export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   sentiment?: boolean
   classification?: boolean
   classification_method?: boolean
+  language?: boolean
   confidence_score?: boolean
   status?: boolean
   reviewed_by?: boolean
@@ -1253,6 +1289,7 @@ export type ContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   sentiment?: boolean
   classification?: boolean
   classification_method?: boolean
+  language?: boolean
   confidence_score?: boolean
   status?: boolean
   reviewed_by?: boolean
@@ -1280,6 +1317,7 @@ export type ContributionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   sentiment?: boolean
   classification?: boolean
   classification_method?: boolean
+  language?: boolean
   confidence_score?: boolean
   status?: boolean
   reviewed_by?: boolean
@@ -1307,6 +1345,7 @@ export type ContributionSelectScalar = {
   sentiment?: boolean
   classification?: boolean
   classification_method?: boolean
+  language?: boolean
   confidence_score?: boolean
   status?: boolean
   reviewed_by?: boolean
@@ -1321,7 +1360,7 @@ export type ContributionSelectScalar = {
   user_id?: boolean
 }
 
-export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "sentiment" | "classification" | "classification_method" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region" | "province" | "municipality" | "barangay" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
+export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"contribution_id" | "type" | "slug" | "content" | "is_deleted" | "image_url" | "source_url" | "sentiment" | "classification" | "classification_method" | "language" | "confidence_score" | "status" | "reviewed_by" | "reviewed_at" | "review_reason" | "region" | "province" | "municipality" | "barangay" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["contribution"]>
 export type ContributionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Contribution$reviewerArgs<ExtArgs>
@@ -1350,8 +1389,9 @@ export type $ContributionPayload<ExtArgs extends runtime.Types.Extensions.Intern
     image_url: string | null
     source_url: string | null
     sentiment: $Enums.ContributionSentiment | null
-    classification: $Enums.ContributionClassification
+    classification: $Enums.ContributionClassification | null
     classification_method: $Enums.ClassificationMethod | null
+    language: string | null
     confidence_score: runtime.Decimal | null
     status: $Enums.ContributionStatus
     reviewed_by: string | null
@@ -1799,6 +1839,7 @@ export interface ContributionFieldRefs {
   readonly sentiment: Prisma.FieldRef<"Contribution", 'ContributionSentiment'>
   readonly classification: Prisma.FieldRef<"Contribution", 'ContributionClassification'>
   readonly classification_method: Prisma.FieldRef<"Contribution", 'ClassificationMethod'>
+  readonly language: Prisma.FieldRef<"Contribution", 'String'>
   readonly confidence_score: Prisma.FieldRef<"Contribution", 'Decimal'>
   readonly status: Prisma.FieldRef<"Contribution", 'ContributionStatus'>
   readonly reviewed_by: Prisma.FieldRef<"Contribution", 'String'>

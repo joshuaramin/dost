@@ -124,6 +124,17 @@ export const CreateUser = async (data: any) => {
   return user;
 };
 
+export const UpdateUser = (data: any) => {
+  return UserManage.update("user_id", data.user_id, {
+    Profile: {
+      update: {
+        first_name: data.profile.first_name,
+        last_name: data.profile.first_name,
+      },
+    },
+  });
+};
+
 export const SoftDeleteUser = async (data: any) => {
   return UserManage.delete(data.user_id);
 };

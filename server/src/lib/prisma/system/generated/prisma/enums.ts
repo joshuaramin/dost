@@ -61,8 +61,7 @@ export type EducationResourceType = (typeof EducationResourceType)[keyof typeof 
 
 export const EducationStatus = {
   DRAFT: 'DRAFT',
-  PUBLISHED: 'PUBLISHED',
-  ARCHIVED: 'ARCHIVED'
+  PUBLISHED: 'PUBLISHED'
 } as const
 
 export type EducationStatus = (typeof EducationStatus)[keyof typeof EducationStatus]

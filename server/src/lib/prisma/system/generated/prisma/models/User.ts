@@ -216,6 +216,7 @@ export type UserWhereInput = {
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  user_preference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -237,6 +238,7 @@ export type UserOrderByWithRelationInput = {
   Profile?: Prisma.ProfileOrderByWithRelationInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
+  user_preference?: Prisma.UserPreferenceOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -261,6 +263,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   Profile?: Prisma.XOR<Prisma.ProfileNullableScalarRelationFilter, Prisma.ProfileWhereInput> | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
+  user_preference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
 }, "user_id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -308,6 +311,7 @@ export type UserCreateInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -327,6 +331,7 @@ export type UserUncheckedCreateInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -346,6 +351,7 @@ export type UserUpdateInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -365,6 +371,7 @@ export type UserUncheckedUpdateInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -431,14 +438,14 @@ export type UserMinOrderByAggregateInput = {
   is_active?: Prisma.SortOrder
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
-}
-
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserListRelationFilter = {
@@ -465,6 +472,20 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type UserCreateNestedOneWithoutUser_preferenceInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUser_preferenceInput, Prisma.UserUncheckedCreateWithoutUser_preferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUser_preferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUser_preferenceNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUser_preferenceInput, Prisma.UserUncheckedCreateWithoutUser_preferenceInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUser_preferenceInput
+  upsert?: Prisma.UserUpsertWithoutUser_preferenceInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUser_preferenceInput, Prisma.UserUpdateWithoutUser_preferenceInput>, Prisma.UserUncheckedUpdateWithoutUser_preferenceInput>
 }
 
 export type UserCreateNestedOneWithoutOTPInput = {
@@ -675,6 +696,98 @@ export type UserUpdateOneWithoutReviewed_contributionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewed_contributionsInput, Prisma.UserUpdateWithoutReviewed_contributionsInput>, Prisma.UserUncheckedUpdateWithoutReviewed_contributionsInput>
 }
 
+export type UserCreateWithoutUser_preferenceInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+}
+
+export type UserUncheckedCreateWithoutUser_preferenceInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUser_preferenceInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUser_preferenceInput, Prisma.UserUncheckedCreateWithoutUser_preferenceInput>
+}
+
+export type UserUpsertWithoutUser_preferenceInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUser_preferenceInput, Prisma.UserUncheckedUpdateWithoutUser_preferenceInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUser_preferenceInput, Prisma.UserUncheckedCreateWithoutUser_preferenceInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUser_preferenceInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUser_preferenceInput, Prisma.UserUncheckedUpdateWithoutUser_preferenceInput>
+}
+
+export type UserUpdateWithoutUser_preferenceInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUser_preferenceInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+}
+
 export type UserCreateWithoutOTPInput = {
   user_id?: string
   email: string
@@ -691,6 +804,7 @@ export type UserCreateWithoutOTPInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOTPInput = {
@@ -709,6 +823,7 @@ export type UserUncheckedCreateWithoutOTPInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOTPInput = {
@@ -743,6 +858,7 @@ export type UserUpdateWithoutOTPInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOTPInput = {
@@ -761,6 +877,7 @@ export type UserUncheckedUpdateWithoutOTPInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -779,6 +896,7 @@ export type UserCreateWithoutProfileInput = {
   reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -797,6 +915,7 @@ export type UserUncheckedCreateWithoutProfileInput = {
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -831,6 +950,7 @@ export type UserUpdateWithoutProfileInput = {
   reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -849,6 +969,7 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -867,6 +988,7 @@ export type UserCreateWithoutRoleInput = {
   reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -885,6 +1007,7 @@ export type UserUncheckedCreateWithoutRoleInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -943,6 +1066,7 @@ export type UserCreateWithoutActivityLogInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivityLogInput = {
@@ -961,6 +1085,7 @@ export type UserUncheckedCreateWithoutActivityLogInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivityLogInput = {
@@ -995,6 +1120,7 @@ export type UserUpdateWithoutActivityLogInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivityLogInput = {
@@ -1013,6 +1139,7 @@ export type UserUncheckedUpdateWithoutActivityLogInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationInput = {
@@ -1031,6 +1158,7 @@ export type UserCreateWithoutNotificationInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationInput = {
@@ -1049,6 +1177,7 @@ export type UserUncheckedCreateWithoutNotificationInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationInput = {
@@ -1083,6 +1212,7 @@ export type UserUpdateWithoutNotificationInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationInput = {
@@ -1101,6 +1231,7 @@ export type UserUncheckedUpdateWithoutNotificationInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrganizationInput = {
@@ -1119,6 +1250,7 @@ export type UserCreateWithoutOrganizationInput = {
   reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationInput = {
@@ -1137,6 +1269,7 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationInput = {
@@ -1181,6 +1314,7 @@ export type UserCreateWithoutDeviceSessionInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDeviceSessionInput = {
@@ -1199,6 +1333,7 @@ export type UserUncheckedCreateWithoutDeviceSessionInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDeviceSessionInput = {
@@ -1233,6 +1368,7 @@ export type UserUpdateWithoutDeviceSessionInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeviceSessionInput = {
@@ -1251,6 +1387,7 @@ export type UserUncheckedUpdateWithoutDeviceSessionInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEducationResourceInput = {
@@ -1269,6 +1406,7 @@ export type UserCreateWithoutEducationResourceInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEducationResourceInput = {
@@ -1287,6 +1425,7 @@ export type UserUncheckedCreateWithoutEducationResourceInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEducationResourceInput = {
@@ -1321,6 +1460,7 @@ export type UserUpdateWithoutEducationResourceInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEducationResourceInput = {
@@ -1339,6 +1479,7 @@ export type UserUncheckedUpdateWithoutEducationResourceInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContributionsInput = {
@@ -1357,6 +1498,7 @@ export type UserCreateWithoutContributionsInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContributionsInput = {
@@ -1375,6 +1517,7 @@ export type UserUncheckedCreateWithoutContributionsInput = {
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContributionsInput = {
@@ -1398,6 +1541,7 @@ export type UserCreateWithoutReviewed_contributionsInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewed_contributionsInput = {
@@ -1416,6 +1560,7 @@ export type UserUncheckedCreateWithoutReviewed_contributionsInput = {
   OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewed_contributionsInput = {
@@ -1450,6 +1595,7 @@ export type UserUpdateWithoutContributionsInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContributionsInput = {
@@ -1468,6 +1614,7 @@ export type UserUncheckedUpdateWithoutContributionsInput = {
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReviewed_contributionsInput = {
@@ -1497,6 +1644,7 @@ export type UserUpdateWithoutReviewed_contributionsInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewed_contributionsInput = {
@@ -1515,6 +1663,7 @@ export type UserUncheckedUpdateWithoutReviewed_contributionsInput = {
   OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -1543,6 +1692,7 @@ export type UserUpdateWithoutRoleInput = {
   reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -1561,6 +1711,7 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -1599,6 +1750,7 @@ export type UserUpdateWithoutOrganizationInput = {
   reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationInput = {
@@ -1617,6 +1769,7 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1733,6 +1886,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
+  user_preference?: boolean | Prisma.User$user_preferenceArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1785,6 +1939,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   Profile?: boolean | Prisma.User$ProfileArgs<ExtArgs>
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
+  user_preference?: boolean | Prisma.User$user_preferenceArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1809,6 +1964,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     Profile: Prisma.$ProfilePayload<ExtArgs> | null
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs> | null
+    user_preference: Prisma.$UserPreferencePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     user_id: string
@@ -2223,6 +2379,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   Profile<T extends Prisma.User$ProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ProfileArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   organization<T extends Prisma.User$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user_preference<T extends Prisma.User$user_preferenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$user_preferenceArgs<ExtArgs>>): Prisma.Prisma__UserPreferenceClient<runtime.Types.Result.GetResult<Prisma.$UserPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2883,6 +3040,25 @@ export type User$roleArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   include?: Prisma.RoleInclude<ExtArgs> | null
   where?: Prisma.RoleWhereInput
+}
+
+/**
+ * User.user_preference
+ */
+export type User$user_preferenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserPreference
+   */
+  select?: Prisma.UserPreferenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserPreference
+   */
+  omit?: Prisma.UserPreferenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserPreferenceInclude<ExtArgs> | null
+  where?: Prisma.UserPreferenceWhereInput
 }
 
 /**

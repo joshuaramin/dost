@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  UserPreference: 'UserPreference',
   OTP: 'OTP',
   Profile: 'Profile',
   Resource: 'Resource',
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationAttachment" | "educationTag" | "educationResourceTag" | "educationCategory" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys" | "contribution"
+    modelProps: "user" | "userPreference" | "oTP" | "profile" | "resource" | "role" | "permission" | "rolePermission" | "activityLog" | "notification" | "organization" | "deviceSession" | "educationAttachment" | "educationTag" | "educationResourceTag" | "educationCategory" | "educationResource" | "survey" | "surveyQuestion" | "questionOption" | "surveyResponse" | "surveyAnswer" | "surveyAnswerOption" | "spatial_ref_sys" | "contribution"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -498,6 +499,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserPreference: {
+      payload: Prisma.$UserPreferencePayload<ExtArgs>
+      fields: Prisma.UserPreferenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserPreferenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserPreferenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        findFirst: {
+          args: Prisma.UserPreferenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserPreferenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        findMany: {
+          args: Prisma.UserPreferenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>[]
+        }
+        create: {
+          args: Prisma.UserPreferenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        createMany: {
+          args: Prisma.UserPreferenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserPreferenceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>[]
+        }
+        delete: {
+          args: Prisma.UserPreferenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        update: {
+          args: Prisma.UserPreferenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        deleteMany: {
+          args: Prisma.UserPreferenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserPreferenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserPreferenceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>[]
+        }
+        upsert: {
+          args: Prisma.UserPreferenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserPreferencePayload>
+        }
+        aggregate: {
+          args: Prisma.UserPreferenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserPreference>
+        }
+        groupBy: {
+          args: Prisma.UserPreferenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPreferenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserPreferenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserPreferenceCountAggregateOutputType> | number
         }
       }
     }
@@ -2256,6 +2331,21 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserPreferenceScalarFieldEnum = {
+  preference_id: 'preference_id',
+  default_language: 'default_language',
+  email_notifications: 'email_notifications',
+  email_security_alerts: 'email_security_alerts',
+  email_system_notifications: 'email_system_notifications',
+  email_activity_notifications: 'email_activity_notifications',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
+
+
 export const OTPScalarFieldEnum = {
   otp_id: 'otp_id',
   identifier: 'identifier',
@@ -2454,7 +2544,6 @@ export const EducationResourceScalarFieldEnum = {
   published_at: 'published_at',
   status: 'status',
   summary: 'summary',
-  thumbnail: 'thumbnail',
   type: 'type',
   external_link: 'external_link'
 } as const
@@ -2560,6 +2649,7 @@ export const ContributionScalarFieldEnum = {
   sentiment: 'sentiment',
   classification: 'classification',
   classification_method: 'classification_method',
+  language: 'language',
   confidence_score: 'confidence_score',
   status: 'status',
   reviewed_by: 'reviewed_by',
@@ -2891,6 +2981,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  userPreference?: Prisma.UserPreferenceOmit
   oTP?: Prisma.OTPOmit
   profile?: Prisma.ProfileOmit
   resource?: Prisma.ResourceOmit

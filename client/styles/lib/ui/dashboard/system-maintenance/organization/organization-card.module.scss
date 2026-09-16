@@ -8,7 +8,8 @@
     width: 100%;
     padding: 1.5rem;
     border-radius: radius(sm);
-    border: 1px solid color(neutral, 500);
+    // border: 1px solid color(neutral, 500);
+    box-shadow: 0px 0px 3px 0px color(neutral, 500);
     gap: 20px;
     background-color: color(base, white);
 
@@ -17,10 +18,60 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        position: relative;
 
         h1 {
             font-size: font-size(lg);
             color: color(primary, 500)
+        }
+
+        .options {
+            width: 170px;
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 35px;
+            right: 0;
+            background-color: color(base, white);
+            box-shadow: 0px 0px 3px 0px color(neutral, 400);
+            border-radius: radius(tiny);
+
+            button {
+                padding: 10px;
+                border-radius: radius(sm);
+                border: none;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                padding: 15px;
+                background-color: transparent;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: color(neutral, 200);
+                }
+
+                &:nth-child(2) {
+                    &:hover {
+                        border-top-left-radius: 0;
+                        border-top-right-radius: 0;
+                        background-color: color(error, 500);
+                        color: color(base, white);
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    form {
+
+        .model_footer {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            justify-content: flex-end;
         }
     }
 

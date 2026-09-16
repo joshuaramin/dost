@@ -14,3 +14,8 @@ export const CreateUserSchema = UserSchema.extend({
   role_id: z.string().min(1, "Role ID is required"),
   organization_id: z.string().min(1, "Organization is required"),
 });
+
+export const UpdateUserSchema = z.object({
+  image: z.string().optional(),
+  profile: ProfileSchema.shape,
+});

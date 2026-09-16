@@ -175,6 +175,7 @@ export const CreateSurveyQuestion = async (
     },
   });
 
+  console.log(survey);
   if (!survey) {
     throw new AppError("Survey not found", 404);
   }

@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import styles from "@/styles/lib/ui/dashboard/enagagement/contribution-id.module.scss";
 import Image from "next/image";
-import { TbMoodSad, TbMoodHappy, TbMoodNeutral } from "react-icons/tb";
+import {
+  TbMoodSad,
+  TbMoodHappy,
+  TbMoodNeutral,
+  TbLanguage,
+  TbChevronDown,
+  TbCheck,
+} from "react-icons/tb";
 import Link from "next/link";
 
 import Title from "@/components/Typography/Title/title";
@@ -113,7 +120,8 @@ export default function ContributionID({ id }: Props) {
   });
 
   const contribution = data?.data;
-
+  const [language, setLanguage] = useState("english");
+  const [languageOpen, setLanguageOpen] = useState(false);
   const [status, setStatus] = useState<ContributionStatus>("PENDING");
   const [sentiment, setSentiment] = useState<ContributionSentiment>("NEUTRAL");
   const [reasonError, setReasonError] = useState("");
@@ -446,7 +454,135 @@ export default function ContributionID({ id }: Props) {
 
                 <strong className={statusClass}>{status}</strong>
               </div>
+              <div className={styles.language_container}>
+                <div className={styles.language_header}>
+                  <div className={styles.language_icon}>
+                    <TbLanguage size={19} />
+                  </div>
 
+                  <div className={styles.language_info}>
+                    <span className={styles.language_label}>
+                      Content Language
+                    </span>
+                    <span className={styles.language_description}>
+                      Select the language of this contribution
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.language_select}>
+                  <button
+                    type="button"
+                    className={cn(
+                      styles.language_trigger,
+                      languageOpen && styles.language_trigger_open,
+                    )}
+                    onClick={() => setLanguageOpen((previous) => !previous)}
+                  >
+                    <div className={styles.language_selected}>
+                      <span className={styles.language_selected_dot} />
+
+                      <span>
+                        {
+                          {
+                            english: "English",
+                            tagalog: "Tagalog",
+                            hiligaynon: "Hiligaynon",
+                            bisaya: "Bisaya",
+                            chavacano: "Chavacano",
+                            ilonggo: "Ilonggo",
+                            pangasinan: "Pangasinan",
+                            cebuano: "Cebuano",
+                          }[language]
+                        }
+                      </span>
+                    </div>
+
+                    <TbChevronDown
+                      size={19}
+                      className={cn(
+                        styles.language_chevron,
+                        languageOpen && styles.language_chevron_open,
+                      )}
+                    />
+                  </button>
+
+                  {languageOpen && (
+                    <div className={styles.language_dropdown}>
+                      {[
+                        {
+                          label: "English",
+                          value: "english",
+                        },
+                        {
+                          label: "Tagalog",
+                          value: "tagalog",
+                        },
+                        {
+                          label: "Hiligaynon",
+                          value: "hiligaynon",
+                        },
+                        {
+                          label: "Bisaya",
+                          value: "bisaya",
+                        },
+                        {
+                          label: "Chavacano",
+                          value: "chavacano",
+                        },
+                        {
+                          label: "Ilonggo",
+                          value: "ilonggo",
+                        },
+                        {
+                          label: "Pangasinan",
+                          value: "pangasinan",
+                        },
+                        {
+                          label: "Cebuano",
+                          value: "cebuano",
+                        },
+                      ].map((option) => {
+                        const selected = language === option.value;
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={cn(
+                              styles.language_option,
+                              selected && styles.language_option_selected,
+                            )}
+                            onClick={() => {
+                              setLanguage(option.value);
+                              setLanguageOpen(false);
+                            }}
+                          >
+                            <div className={styles.language_option_content}>
+                              <span
+                                className={cn(
+                                  styles.language_option_dot,
+                                  selected &&
+                                    styles.language_option_dot_selected,
+                                )}
+                              />
+
+                              <span>{option.label}</span>
+                            </div>
+
+                            {selected && (
+                              <TbCheck
+                                size={18}
+                                className={styles.language_check}
+                              />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className={styles.reviewSentiment}>
                 <div className={styles.reviewSentimentHeader}>
                   {["POSITIVE", "NEUTRAL", "NEGATIVE"].map((value) => {

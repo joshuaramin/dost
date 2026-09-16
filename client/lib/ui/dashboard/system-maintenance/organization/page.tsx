@@ -206,6 +206,7 @@ export default function Organization() {
           <Grid max={"1fr"} min={330} gap={10}>
             {data?.data.edges.map((node, index) => (
               <OrganizationCard
+                id={node.node.organization_id}
                 key={index}
                 address={node.node.address}
                 contact={node.node.contact}

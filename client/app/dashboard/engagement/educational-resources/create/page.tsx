@@ -39,20 +39,11 @@ export default function Page() {
     url: `maintenance/educational-resource/category?search=${category}`,
   });
 
-  const {
-    register,
-    errors,
-    handleSubmit,
-    setValue,
-    watch,
-    getValues,
-    control,
-  } = useFormHook({
+  const { register, errors, handleSubmit, setValue, control } = useFormHook({
     schema: CreateEducationResourceSchema,
     defaultValues: {
       attachments: [],
       category_id: "",
-      is_deleted: false,
       is_featured: false,
       status: "DRAFT",
       tags: [],
@@ -60,7 +51,6 @@ export default function Page() {
       type: "" as string as never,
       content: "",
       summary: "",
-      thumbnail: "" as unknown as File,
       user_id: "",
     },
   });
@@ -78,6 +68,7 @@ export default function Page() {
     method: "POST",
     url: "maintenance/activity-logs",
   });
+
   const onHandleSubmit: SubmitHandler<EducationResourceFormField> = (data) => {
     mutation.mutate(
       {
@@ -85,13 +76,11 @@ export default function Page() {
         category_id: data.category_id,
         content: data.content,
         summary: data.summary,
-        is_deleted: Boolean(false),
         is_featured: Boolean(false),
         attachments: data.attachments,
         status: data.status,
         tags: data.tags,
         type: data.type,
-        thumbnail: data.thumbnail,
         external_link: data.external_link,
         user_id: sessions?.data.user_id,
       },
@@ -115,7 +104,7 @@ export default function Page() {
             },
           );
         },
-        onError: (data) => {
+        onError: () => {
           toastError({
             title: "Failed to Create Educational Resource",
             body: "Something went wrong while creating the educational resource. Please try again.",
@@ -181,7 +170,7 @@ export default function Page() {
               isRequired
               label="Content"
               name="content"
-              setValue={setValue}
+              control={control}
             />
           )}
 

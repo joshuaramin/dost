@@ -29,7 +29,7 @@ export default function AuditLog() {
     headers,
     params: {
       orderBy: "created_at",
-      sortBy: "asc",
+      sortBy: "desc",
       limit: limit,
       after: endCursor || undefined,
       before: startCursor || undefined,

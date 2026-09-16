@@ -1,9 +1,14 @@
-import { CreateUserSchema, UserSchema } from "@/lib/validation/user.validation";
+import {
+  CreateUserSchema,
+  UpdateUserSchema,
+  UserSchema,
+} from "@/lib/validation/user.validation";
 import {
   CreateUser,
   GetAllUsers,
   GetUserById,
   SoftDeleteUser,
+  UpdateUser,
 } from "@/services/user.services";
 import { Request, Response } from "express";
 import z from "zod";
@@ -62,6 +67,27 @@ export const createUser = async (request: Request, response: Response) => {
   }
 
   const result = await CreateUser(parsedData.data);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const updateUser = async (request: Request, response: Response) => {
+  const parsedData = UpdateUserSchema.safeParse(request.body);
+  const file = request.file as Express.MulterS3.File;
+
+  console.log(file);
+
+  if (file.mimetype.startsWith("image/")) {
+    return response.status(400).json({
+      message: "Only image files are allowed",
+    });
+  }
+
+  const result = await UpdateUser(parsedData.data);
+
   return response.status(200).json({
     ...result,
     timestamp: new Date(Date.now()),

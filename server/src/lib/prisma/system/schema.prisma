@@ -28,9 +28,29 @@ model User {
   organization           Organization?  @relation(fields: [organization_id], references: [organization_id])
   role                   Role?          @relation(fields: [role_id], references: [role_id])
 
+  user_preference UserPreference?
+
   @@index([role_id])
   @@index([is_deleted])
   @@index([created_at])
+}
+
+model UserPreference {
+  preference_id                String  @id @default(cuid())
+  default_language             String  @default("ENGLISH")
+  email_notifications          Boolean @default(true)
+  email_security_alerts        Boolean @default(true)
+  email_system_notifications   Boolean @default(true)
+  email_activity_notifications Boolean @default(true)
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @updatedAt @db.Timestamp(6)
+
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+
+  user_id String @unique
+
+  @@map("user_preferences")
 }
 
 model OTP {
@@ -236,7 +256,6 @@ model EducationResource {
   published_at          DateTime?
   status                EducationStatus        @default(DRAFT)
   summary               String?                @db.VarChar(500)
-  thumbnail             String?
   type                  EducationResourceType
   external_link         String?
   attachments           EducationAttachment[]
@@ -384,6 +403,7 @@ model Contribution {
   classification        ContributionClassification? @default(PENDING)
   classification_method ClassificationMethod?
 
+  language         String?
   confidence_score Decimal? @db.Decimal(5, 4)
 
   status ContributionStatus @default(PENDING)
@@ -433,7 +453,6 @@ enum EducationResourceType {
 enum EducationStatus {
   DRAFT
   PUBLISHED
-  ARCHIVED
 }
 
 enum AttachmentType {

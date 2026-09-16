@@ -38,7 +38,6 @@ export type EducationResourceMinAggregateOutputType = {
   published_at: Date | null
   status: $Enums.EducationStatus | null
   summary: string | null
-  thumbnail: string | null
   type: $Enums.EducationResourceType | null
   external_link: string | null
 }
@@ -57,7 +56,6 @@ export type EducationResourceMaxAggregateOutputType = {
   published_at: Date | null
   status: $Enums.EducationStatus | null
   summary: string | null
-  thumbnail: string | null
   type: $Enums.EducationResourceType | null
   external_link: string | null
 }
@@ -76,7 +74,6 @@ export type EducationResourceCountAggregateOutputType = {
   published_at: number
   status: number
   summary: number
-  thumbnail: number
   type: number
   external_link: number
   _all: number
@@ -97,7 +94,6 @@ export type EducationResourceMinAggregateInputType = {
   published_at?: true
   status?: true
   summary?: true
-  thumbnail?: true
   type?: true
   external_link?: true
 }
@@ -116,7 +112,6 @@ export type EducationResourceMaxAggregateInputType = {
   published_at?: true
   status?: true
   summary?: true
-  thumbnail?: true
   type?: true
   external_link?: true
 }
@@ -135,7 +130,6 @@ export type EducationResourceCountAggregateInputType = {
   published_at?: true
   status?: true
   summary?: true
-  thumbnail?: true
   type?: true
   external_link?: true
   _all?: true
@@ -227,7 +221,6 @@ export type EducationResourceGroupByOutputType = {
   published_at: Date | null
   status: $Enums.EducationStatus
   summary: string | null
-  thumbnail: string | null
   type: $Enums.EducationResourceType
   external_link: string | null
   _count: EducationResourceCountAggregateOutputType | null
@@ -267,7 +260,6 @@ export type EducationResourceWhereInput = {
   published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
   status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
   summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
   external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   attachments?: Prisma.EducationAttachmentListRelationFilter
@@ -290,7 +282,6 @@ export type EducationResourceOrderByWithRelationInput = {
   published_at?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   external_link?: Prisma.SortOrderInput | Prisma.SortOrder
   attachments?: Prisma.EducationAttachmentOrderByRelationAggregateInput
@@ -316,7 +307,6 @@ export type EducationResourceWhereUniqueInput = Prisma.AtLeast<{
   published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
   status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
   summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
   external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   attachments?: Prisma.EducationAttachmentListRelationFilter
@@ -339,7 +329,6 @@ export type EducationResourceOrderByWithAggregationInput = {
   published_at?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   summary?: Prisma.SortOrderInput | Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
   external_link?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.EducationResourceCountOrderByAggregateInput
@@ -364,7 +353,6 @@ export type EducationResourceScalarWhereWithAggregatesInput = {
   published_at?: Prisma.DateTimeNullableWithAggregatesFilter<"EducationResource"> | Date | string | null
   status?: Prisma.EnumEducationStatusWithAggregatesFilter<"EducationResource"> | $Enums.EducationStatus
   summary?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
-  thumbnail?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
   type?: Prisma.EnumEducationResourceTypeWithAggregatesFilter<"EducationResource"> | $Enums.EducationResourceType
   external_link?: Prisma.StringNullableWithAggregatesFilter<"EducationResource"> | string | null
 }
@@ -381,7 +369,6 @@ export type EducationResourceCreateInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
@@ -404,7 +391,6 @@ export type EducationResourceUncheckedCreateInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
@@ -423,7 +409,6 @@ export type EducationResourceUpdateInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
@@ -446,7 +431,6 @@ export type EducationResourceUncheckedUpdateInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
@@ -467,7 +451,6 @@ export type EducationResourceCreateManyInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
 }
@@ -484,7 +467,6 @@ export type EducationResourceUpdateManyMutationInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -503,7 +485,6 @@ export type EducationResourceUncheckedUpdateManyInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -537,7 +518,6 @@ export type EducationResourceCountOrderByAggregateInput = {
   published_at?: Prisma.SortOrder
   status?: Prisma.SortOrder
   summary?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   type?: Prisma.SortOrder
   external_link?: Prisma.SortOrder
 }
@@ -556,7 +536,6 @@ export type EducationResourceMaxOrderByAggregateInput = {
   published_at?: Prisma.SortOrder
   status?: Prisma.SortOrder
   summary?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   type?: Prisma.SortOrder
   external_link?: Prisma.SortOrder
 }
@@ -575,7 +554,6 @@ export type EducationResourceMinOrderByAggregateInput = {
   published_at?: Prisma.SortOrder
   status?: Prisma.SortOrder
   summary?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   type?: Prisma.SortOrder
   external_link?: Prisma.SortOrder
 }
@@ -716,7 +694,6 @@ export type EducationResourceCreateWithoutUserInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
@@ -737,7 +714,6 @@ export type EducationResourceUncheckedCreateWithoutUserInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
@@ -787,7 +763,6 @@ export type EducationResourceScalarWhereInput = {
   published_at?: Prisma.DateTimeNullableFilter<"EducationResource"> | Date | string | null
   status?: Prisma.EnumEducationStatusFilter<"EducationResource"> | $Enums.EducationStatus
   summary?: Prisma.StringNullableFilter<"EducationResource"> | string | null
-  thumbnail?: Prisma.StringNullableFilter<"EducationResource"> | string | null
   type?: Prisma.EnumEducationResourceTypeFilter<"EducationResource"> | $Enums.EducationResourceType
   external_link?: Prisma.StringNullableFilter<"EducationResource"> | string | null
 }
@@ -804,7 +779,6 @@ export type EducationResourceCreateWithoutAttachmentsInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   category: Prisma.EducationCategoryCreateNestedOneWithoutResourcesInput
@@ -826,7 +800,6 @@ export type EducationResourceUncheckedCreateWithoutAttachmentsInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   tags?: Prisma.EducationResourceTagUncheckedCreateNestedManyWithoutResourceInput
@@ -860,7 +833,6 @@ export type EducationResourceUpdateWithoutAttachmentsInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   category?: Prisma.EducationCategoryUpdateOneRequiredWithoutResourcesNestedInput
@@ -882,7 +854,6 @@ export type EducationResourceUncheckedUpdateWithoutAttachmentsInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.EducationResourceTagUncheckedUpdateManyWithoutResourceNestedInput
@@ -900,7 +871,6 @@ export type EducationResourceCreateWithoutTagsInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
@@ -922,7 +892,6 @@ export type EducationResourceUncheckedCreateWithoutTagsInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
@@ -956,7 +925,6 @@ export type EducationResourceUpdateWithoutTagsInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
@@ -978,7 +946,6 @@ export type EducationResourceUncheckedUpdateWithoutTagsInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
@@ -996,7 +963,6 @@ export type EducationResourceCreateWithoutCategoryInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentCreateNestedManyWithoutResourceInput
@@ -1017,7 +983,6 @@ export type EducationResourceUncheckedCreateWithoutCategoryInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
   attachments?: Prisma.EducationAttachmentUncheckedCreateNestedManyWithoutResourceInput
@@ -1063,7 +1028,6 @@ export type EducationResourceCreateManyUserInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
 }
@@ -1080,7 +1044,6 @@ export type EducationResourceUpdateWithoutUserInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
@@ -1101,7 +1064,6 @@ export type EducationResourceUncheckedUpdateWithoutUserInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
@@ -1121,7 +1083,6 @@ export type EducationResourceUncheckedUpdateManyWithoutUserInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1139,7 +1100,6 @@ export type EducationResourceCreateManyCategoryInput = {
   published_at?: Date | string | null
   status?: $Enums.EducationStatus
   summary?: string | null
-  thumbnail?: string | null
   type: $Enums.EducationResourceType
   external_link?: string | null
 }
@@ -1156,7 +1116,6 @@ export type EducationResourceUpdateWithoutCategoryInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUpdateManyWithoutResourceNestedInput
@@ -1177,7 +1136,6 @@ export type EducationResourceUncheckedUpdateWithoutCategoryInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   attachments?: Prisma.EducationAttachmentUncheckedUpdateManyWithoutResourceNestedInput
@@ -1197,7 +1155,6 @@ export type EducationResourceUncheckedUpdateManyWithoutCategoryInput = {
   published_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumEducationStatusFieldUpdateOperationsInput | $Enums.EducationStatus
   summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumEducationResourceTypeFieldUpdateOperationsInput | $Enums.EducationResourceType
   external_link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -1256,7 +1213,6 @@ export type EducationResourceSelect<ExtArgs extends runtime.Types.Extensions.Int
   published_at?: boolean
   status?: boolean
   summary?: boolean
-  thumbnail?: boolean
   type?: boolean
   external_link?: boolean
   attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
@@ -1280,7 +1236,6 @@ export type EducationResourceSelectCreateManyAndReturn<ExtArgs extends runtime.T
   published_at?: boolean
   status?: boolean
   summary?: boolean
-  thumbnail?: boolean
   type?: boolean
   external_link?: boolean
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
@@ -1301,7 +1256,6 @@ export type EducationResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   published_at?: boolean
   status?: boolean
   summary?: boolean
-  thumbnail?: boolean
   type?: boolean
   external_link?: boolean
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
@@ -1322,12 +1276,11 @@ export type EducationResourceSelectScalar = {
   published_at?: boolean
   status?: boolean
   summary?: boolean
-  thumbnail?: boolean
   type?: boolean
   external_link?: boolean
 }
 
-export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "content" | "is_deleted" | "created_at" | "updated_at" | "user_id" | "slug" | "category_id" | "is_featured" | "published_at" | "status" | "summary" | "thumbnail" | "type" | "external_link", ExtArgs["result"]["educationResource"]>
+export type EducationResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"education_resource_id" | "title" | "content" | "is_deleted" | "created_at" | "updated_at" | "user_id" | "slug" | "category_id" | "is_featured" | "published_at" | "status" | "summary" | "type" | "external_link", ExtArgs["result"]["educationResource"]>
 export type EducationResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attachments?: boolean | Prisma.EducationResource$attachmentsArgs<ExtArgs>
   category?: boolean | Prisma.EducationCategoryDefaultArgs<ExtArgs>
@@ -1366,7 +1319,6 @@ export type $EducationResourcePayload<ExtArgs extends runtime.Types.Extensions.I
     published_at: Date | null
     status: $Enums.EducationStatus
     summary: string | null
-    thumbnail: string | null
     type: $Enums.EducationResourceType
     external_link: string | null
   }, ExtArgs["result"]["educationResource"]>
@@ -1809,7 +1761,6 @@ export interface EducationResourceFieldRefs {
   readonly published_at: Prisma.FieldRef<"EducationResource", 'DateTime'>
   readonly status: Prisma.FieldRef<"EducationResource", 'EducationStatus'>
   readonly summary: Prisma.FieldRef<"EducationResource", 'String'>
-  readonly thumbnail: Prisma.FieldRef<"EducationResource", 'String'>
   readonly type: Prisma.FieldRef<"EducationResource", 'EducationResourceType'>
   readonly external_link: Prisma.FieldRef<"EducationResource", 'String'>
 }

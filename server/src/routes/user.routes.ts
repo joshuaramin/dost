@@ -3,10 +3,12 @@ import {
   getUserById,
   createUser,
   softDeleteUser,
+  updateUser,
 } from "@/controller/user.controller";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import { withAuth } from "@/lib/helpers/useAuth";
 import { withPermission } from "@/lib/helpers/usePermission";
+import upload from "@/lib/helpers/useMulter";
 
 import express from "express";
 
@@ -39,6 +41,13 @@ router.post(
 //Patch
 
 router.patch(
+  "/:id",
+  withAuth,
+  withPermission("user-management:update"),
+  asyncHandler(updateUser),
+);
+
+router.put(
   "/:id",
   withAuth,
   withPermission("user-management:update"),

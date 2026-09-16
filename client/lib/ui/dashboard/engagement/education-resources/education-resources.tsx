@@ -26,6 +26,7 @@ import { format } from "date-fns";
 import { TbEdit, TbEye, TbTrash } from "react-icons/tb";
 import { useRouter } from "next/navigation";
 import EmptyState from "@/lib/ui/no-data";
+import useFormMutation from "@/lib/hooks/useMutation";
 
 export default function EducationResources() {
   const router = useRouter();
@@ -226,9 +227,6 @@ export default function EducationResources() {
                         }
                       >
                         <TbEdit size={18} />
-                      </button>
-                      <button>
-                        <TbTrash size={18} />
                       </button>
                     </Table.Cell>
                   </Table.Row>

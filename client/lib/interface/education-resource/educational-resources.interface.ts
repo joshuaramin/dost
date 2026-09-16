@@ -67,7 +67,7 @@ export interface EducationalResourceInterface {
   content: string;
   created_at: any;
   updated_at: any;
-  status: "DRAFT" | "PUBLISHED" | "ARCHIVED";
+  status: "DRAFT" | "PUBLISHED";
   Author: UserInterface;
   published_at: any;
   type: string;

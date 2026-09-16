@@ -13,7 +13,7 @@ import express from "express";
 const router = express.Router();
 
 //Get
-router.get("/", withAuth, asyncHandler(getAllRoles));
+router.get("/", asyncHandler(getAllRoles));
 router.get("/:slug", withAuth, asyncHandler(getRoleBySlug));
 
 //Post

@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  UserPreference: 'UserPreference',
   OTP: 'OTP',
   Profile: 'Profile',
   Resource: 'Resource',
@@ -105,6 +106,21 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const UserPreferenceScalarFieldEnum = {
+  preference_id: 'preference_id',
+  default_language: 'default_language',
+  email_notifications: 'email_notifications',
+  email_security_alerts: 'email_security_alerts',
+  email_system_notifications: 'email_system_notifications',
+  email_activity_notifications: 'email_activity_notifications',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
 
 
 export const OTPScalarFieldEnum = {
@@ -305,7 +321,6 @@ export const EducationResourceScalarFieldEnum = {
   published_at: 'published_at',
   status: 'status',
   summary: 'summary',
-  thumbnail: 'thumbnail',
   type: 'type',
   external_link: 'external_link'
 } as const
@@ -411,6 +426,7 @@ export const ContributionScalarFieldEnum = {
   sentiment: 'sentiment',
   classification: 'classification',
   classification_method: 'classification_method',
+  language: 'language',
   confidence_score: 'confidence_score',
   status: 'status',
   reviewed_by: 'reviewed_by',

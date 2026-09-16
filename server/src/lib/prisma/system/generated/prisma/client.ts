@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserPreference
+ * 
+ */
+export type UserPreference = Prisma.UserPreferenceModel
+/**
  * Model OTP
  * 
  */
