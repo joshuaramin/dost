@@ -25,6 +25,7 @@ export interface ContributionInterface {
   content: string;
   status: string;
   sentiment: ContributionSentiment;
+  language: string;
   is_deleted: boolean;
   image_url: string;
   source_url: string;
@@ -35,6 +36,7 @@ export interface ContributionInterface {
   barangay: string;
   classification_method: ClassificationMethod;
   confidence_score: string;
+  created_at: string;
   reviewed_by: string;
   reviewed_at: string;
 }

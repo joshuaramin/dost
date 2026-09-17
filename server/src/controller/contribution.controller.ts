@@ -30,6 +30,7 @@ export const getAllContributions = async (
     type,
     sentiment,
     user_id,
+    language,
   } = request.query;
 
   const result = await GetAllContributions({
@@ -41,6 +42,7 @@ export const getAllContributions = async (
       sortBy: sortBy as string,
     },
     classification: classification as string,
+    language: language as string,
     method: method as string,
     status: status as string,
     type: type as string,

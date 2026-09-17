@@ -12,6 +12,7 @@ import {
 import { SurveyWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
 import useSlugify from "@/lib/helpers/useSlugify";
+import { tuple } from "zod";
 
 const SurveyManage = new PrismaCRUDManager<
   Survey,
@@ -92,12 +93,16 @@ export const GetAllSurveys = ({
           options: true,
         },
       },
+      responses: {
+        select: { _count: true },
+      },
+      _count: true,
     },
   });
 };
 
 export const GetSurveyById = async (data: any) => {
-  return await SurveyManage.readById(data, "slug", {
+  return await SurveyManage.readById(data.id, "slug", {
     select: {
       survey_id: true,
       title: true,
@@ -112,13 +117,18 @@ export const GetSurveyById = async (data: any) => {
           created_at: "asc",
         },
         include: {
-          answers: true,
+          answers: {
+            select: { response: { select: { _count: true } } },
+          },
           options: {
             orderBy: {
               order_index: "asc",
             },
           },
         },
+      },
+      responses: {
+        select: { _count: true },
       },
     },
   });
@@ -210,7 +220,7 @@ export const CreateSurveyQuestion = async (
 };
 
 export const DeleteSurveytQuestion = async (data: any) => {
-  return QuestionnaireManage.delete(data);
+  return QuestionnaireManage.delete("survey_question_id", data);
 };
 
 export const UpdateSurveyQuestion = async (id: string, data: any) => {
@@ -310,7 +320,7 @@ export const UpdateSurvey = async (data: any) => {
 };
 
 export const DeleteSurvey = async (data: any) => {
-  return SurveyManage.delete(data.survey_id);
+  return SurveyManage.delete("survey_id", data.survey_id);
 };
 
 export const UpdateSurveyPublished = async (id: string, data: boolean) => {

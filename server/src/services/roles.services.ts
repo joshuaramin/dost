@@ -76,7 +76,7 @@ export const CreateRole = async (data: any) => {
 };
 
 export const SoftDeleteRole = async (data: any) => {
-  return RoleManage.delete(data.role_id);
+  return RoleManage.delete("role_id", data.role_id);
 };
 
 export const AddRolePermission = async (role_id: string, data: any) => {

@@ -131,6 +131,7 @@ export default function ContributionID({ id }: Props) {
     defaultValues: {
       contribution_id: "",
       sentiment: "",
+      language: "",
       status: "",
       review_reason: "",
       user_id: "",
@@ -165,6 +166,7 @@ export default function ContributionID({ id }: Props) {
     setValue("contribution_id", id);
     setValue("status", normalizedStatus);
     setValue("sentiment", normalizedSentiment);
+    setValue("language", language);
     setValue("user_id", token?.data.user_id || "");
   }, [contribution, id, setValue, token?.data.user_id]);
 
@@ -208,6 +210,7 @@ export default function ContributionID({ id }: Props) {
         contribution_id: id,
         status: newStatus,
         review_at: new Date().toISOString(),
+        language: language,
         review_reason: reviewReason,
         sentiment: selectedSentiment,
         user_id: token?.data.user_id,
@@ -512,35 +515,35 @@ export default function ContributionID({ id }: Props) {
                       {[
                         {
                           label: "English",
-                          value: "english",
+                          value: "English",
                         },
                         {
                           label: "Tagalog",
-                          value: "tagalog",
+                          value: "Tagalog",
                         },
                         {
                           label: "Hiligaynon",
-                          value: "hiligaynon",
+                          value: "Hiligaynon",
                         },
                         {
                           label: "Bisaya",
-                          value: "bisaya",
+                          value: "Bisaya",
                         },
                         {
                           label: "Chavacano",
-                          value: "chavacano",
+                          value: "Chavacano",
                         },
                         {
                           label: "Ilonggo",
-                          value: "ilonggo",
+                          value: "Illonggo",
                         },
                         {
                           label: "Pangasinan",
-                          value: "pangasinan",
+                          value: "Pangasinan",
                         },
                         {
                           label: "Cebuano",
-                          value: "cebuano",
+                          value: "Cebuanno",
                         },
                       ].map((option) => {
                         const selected = language === option.value;

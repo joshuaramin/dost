@@ -54,5 +54,5 @@ export const CreateOrganization = (data: any) => {
 };
 
 export const SoftDeleteOrganization = (data: any) => {
-  return OrganizationManage.delete(data);
+  return OrganizationManage.delete("organization_id", data);
 };

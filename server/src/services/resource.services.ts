@@ -133,7 +133,7 @@ export const CreateResource = async (data: any[]) => {
 };
 
 export const SoftDeleteResource = async (data: any) => {
-  return ResourceManage.delete(data);
+  return ResourceManage.delete("resource_id", data);
 };
 
 export const AddSubResources = async (id: string, data: any) => {

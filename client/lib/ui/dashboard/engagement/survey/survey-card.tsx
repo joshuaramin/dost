@@ -1,10 +1,8 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-
 import styles from "@/styles/lib/ui/cards/survey-card.module.scss";
 
+//components
 import Title from "@/components/Typography/Title/title";
 import Text from "@/components/Typography/Text/text";
 import Paragraph from "@/components/Typography/Paragraph/paragraph";
@@ -17,10 +15,8 @@ interface Props {
 }
 
 export default function SurveyCard({ title, description, slug, total }: Props) {
-  const router = useRouter();
-
   const handleNavigate = () => {
-    router.push(`/survey/${slug}`);
+    window.open(`/survey/${slug}`, "_blank", "noopener,noreferrer");
   };
 
   return (

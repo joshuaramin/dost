@@ -188,9 +188,6 @@ export const createEducationResources = async (
 
     const attachments = files.attachments ?? [];
 
-    console.log("BODY:", body);
-    console.log("ATTACHMENTS:", attachments);
-
     const parseData = CreateEducationResourceBodySchema.safeParse(body);
 
     if (!parseData.success) {
@@ -338,10 +335,6 @@ export const updateEducationResource = async (
 ) => {
   const id = String(request.params.slug);
   const body = request.body;
-
-  console.log("Resource ID:", id);
-  console.log("Content-Type:", request.headers["content-type"]);
-  console.log("Educational Body:", body);
 
   const files =
     (request.files as {

@@ -195,7 +195,6 @@ export default function SurveyManagement() {
             <Table.Header>
               <Table.Row>
                 <Table.Head>Title</Table.Head>
-                <Table.Head>Description</Table.Head>
                 <Table.Head>Total No. of Questions</Table.Head>
                 <Table.Head>Total No. of Respondents</Table.Head>
                 <Table.Head>Status</Table.Head>
@@ -219,9 +218,8 @@ export default function SurveyManagement() {
                 }) => (
                   <Table.Row key={survey_id}>
                     <Table.Cell>{title}</Table.Cell>
-                    <Table.Cell>{description}</Table.Cell>
                     <Table.Cell>{questions.length}</Table.Cell>
-                    <Table.Cell>{_count?.responses ?? 0}</Table.Cell>
+                    <Table.Cell>{_count?.responses}</Table.Cell>
                     <Table.Cell>
                       {is_published ? "PUBLISHED" : "DRAFT"}
                     </Table.Cell>

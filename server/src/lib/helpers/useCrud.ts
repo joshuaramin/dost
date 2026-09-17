@@ -303,21 +303,19 @@ export class PrismaCRUDManager<
       data,
     });
   }
-
-  async delete(id: T[TIdKey]): Promise<T> {
+  async delete<TKey extends keyof T>(key: TKey, value: T[TKey]): Promise<T> {
     if (!this.hasSoftDelete) {
       throw new Error("Soft delete not enabled for this model");
     }
 
     return this.model.update({
       where: {
-        [this.idKey]: id,
+        [key]: value,
       },
-
       data: {
         is_deleted: true,
       },
-    });
+    }) as Promise<T>;
   }
 
   async restore(id: T[TIdKey]): Promise<T> {

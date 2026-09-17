@@ -294,9 +294,6 @@ export default function UserManagement() {
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.Head>
-                  <Checkbox />
-                </Table.Head>
                 <Table.Head>Name</Table.Head>
                 <Table.Head>Email</Table.Head>
                 <Table.Head>Status</Table.Head>
@@ -316,9 +313,6 @@ export default function UserManagement() {
                   },
                 }) => (
                   <Table.Row key={user_id}>
-                    <Table.Cell>
-                      <Checkbox />
-                    </Table.Cell>
                     <Table.Cell>
                       {first_name} {last_name}
                     </Table.Cell>
@@ -344,9 +338,6 @@ export default function UserManagement() {
                         }
                       >
                         <TbEye size={18} />
-                      </button>
-                      <button>
-                        <TbEdit size={18} />
                       </button>
                       <button>
                         <TbTrash size={18} />

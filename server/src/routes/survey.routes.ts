@@ -22,6 +22,7 @@ router.get(
   withPermission("survey-management:read"),
   asyncHandler(getAllSurvey),
 );
+router.get("/:id", withAuth, asyncHandler(getSurveyById));
 
 router.get(
   "/response/:id",
@@ -43,7 +44,5 @@ router.patch("/question/:id", withAuth, asyncHandler(updateSurveyQuestionById));
 router.patch("/:id", withAuth, asyncHandler(deleteSurveyQuestionBytId));
 
 router.post("/response/:id", withAuth, asyncHandler(createSurveyResponse));
-
-router.get("/:id", asyncHandler(getSurveyById));
 
 export default router;

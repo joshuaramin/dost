@@ -28,6 +28,7 @@ interface Props<T extends FieldValues> {
   error?: {
     message?: string;
   };
+  value: string;
 }
 
 interface InitialContentPluginProps {
@@ -97,6 +98,7 @@ export default function ReactEditor<T extends FieldValues>({
   name,
   height,
   error,
+  value,
 }: Props<T>) {
   const hasError = !!error;
 
@@ -108,7 +110,6 @@ export default function ReactEditor<T extends FieldValues>({
         <div className={styles.container}>
           <div className={styles.header}>
             <label className={cn(styles.label)}>{label}</label>
-
             {isRequired ? <span className={styles.isRequired}>*</span> : null}
           </div>
 
@@ -139,12 +140,11 @@ export default function ReactEditor<T extends FieldValues>({
 
               <HistoryPlugin />
 
-              <InitialContentPlugin value={field.value ?? ""} />
+              <InitialContentPlugin value={value ?? field.value ?? ""} />
 
               <EditorContentHandler onChange={field.onChange} />
 
               <CheckListPlugin />
-
               <ListPlugin />
             </LexicalComposer>
           </div>

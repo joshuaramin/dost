@@ -169,6 +169,13 @@
     }
 }
 
+.model_footer {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    justify-content: flex-end;
+}
+
 .revoke_button,
 .revoke_all_button {
     flex-shrink: 0;

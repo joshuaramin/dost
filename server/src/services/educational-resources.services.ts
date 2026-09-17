@@ -130,6 +130,7 @@ export const GetEducationByid = (data: string) => {
         tags: true,
         external_link: true,
         type: true,
+        education_resource_id: true,
         category: {
           select: {
             education_category_id: true,
@@ -253,5 +254,6 @@ export const CreateEducationCategory = (
 };
 
 export const SoftDeleteEducationResource = (data: any) => {
-  return EducationResourceManage.delete(data);
+  console.log("DELETE", data);
+  return EducationResourceManage.delete("slug", data);
 };

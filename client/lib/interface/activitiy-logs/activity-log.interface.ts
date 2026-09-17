@@ -22,9 +22,9 @@ export interface ActivityLogsInterfaceResult {
       hasNextPage: boolean;
       hasPrevPage: boolean;
     };
-  };
 
-  totalCount: number;
-  timestamp: string;
-  success: boolean;
+    totalCount: number;
+    timestamp: string;
+    success: boolean;
+  };
 }

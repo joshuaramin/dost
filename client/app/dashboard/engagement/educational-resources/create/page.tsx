@@ -171,6 +171,7 @@ export default function Page() {
               label="Content"
               name="content"
               control={control}
+              value={"content"}
             />
           )}
 
