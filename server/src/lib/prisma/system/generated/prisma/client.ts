@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserPreference
+ * 
+ */
+export type UserPreference = Prisma.UserPreferenceModel
+/**
  * Model OTP
  * 
  */
@@ -56,6 +61,36 @@ export type OTP = Prisma.OTPModel
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model RewardPointRule
+ * 
+ */
+export type RewardPointRule = Prisma.RewardPointRuleModel
+/**
+ * Model RewardTransaction
+ * 
+ */
+export type RewardTransaction = Prisma.RewardTransactionModel
+/**
+ * Model UserReward
+ * 
+ */
+export type UserReward = Prisma.UserRewardModel
+/**
+ * Model RewardLevel
+ * 
+ */
+export type RewardLevel = Prisma.RewardLevelModel
+/**
+ * Model Badge
+ * 
+ */
+export type Badge = Prisma.BadgeModel
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = Prisma.UserBadgeModel
 /**
  * Model Resource
  * 

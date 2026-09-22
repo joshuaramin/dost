@@ -96,7 +96,6 @@ export const GetAllEducationResource = ({
       slug: true,
       attachments: true,
       status: true,
-      thumbnail: true,
       tags: true,
       type: true,
       is_deleted: true,
@@ -129,9 +128,9 @@ export const GetEducationByid = (data: string) => {
         published_at: true,
         status: true,
         tags: true,
-        thumbnail: true,
         external_link: true,
         type: true,
+        education_resource_id: true,
         category: {
           select: {
             education_category_id: true,
@@ -215,7 +214,24 @@ export const CreateEducationResource = (
     is_deleted: data.is_deleted,
     published_at: data.published_at,
     tags: data.tags,
-    thumbnail: data.thumbnail,
+    external_link: data.external_link,
+    user: data.user,
+  });
+};
+
+export const UpdateEducationalResourcre = (id: string, data: any) => {
+  return EducationResourceManage.update("slug", id, {
+    category_id: data.category,
+    content: data.content,
+    slug: data.slug,
+    summary: data.summary,
+    title: data.title,
+    type: data.type,
+    attachments: data.attachments,
+    status: data.status,
+    is_featured: data.is_featured,
+    published_at: data.published_at,
+    tags: data.tags,
     external_link: data.external_link,
     user: data.user,
   });
@@ -238,5 +254,6 @@ export const CreateEducationCategory = (
 };
 
 export const SoftDeleteEducationResource = (data: any) => {
-  return EducationResourceManage.delete(data);
+  console.log("DELETE", data);
+  return EducationResourceManage.delete("slug", data);
 };

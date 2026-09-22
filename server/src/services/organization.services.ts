@@ -52,3 +52,7 @@ export const CreateOrganization = (data: any) => {
     address: data.address,
   });
 };
+
+export const SoftDeleteOrganization = (data: any) => {
+  return OrganizationManage.delete("organization_id", data);
+};

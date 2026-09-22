@@ -11,6 +11,15 @@
     gap: 20px;
 }
 
+.activity_logs_group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid color(neutral, 500);
+    border-radius: radius(tiny);
+    overflow: hidden;
+}
+
 .tabs {
     width: 100%;
     display: flex;
@@ -160,6 +169,13 @@
     }
 }
 
+.model_footer {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    justify-content: flex-end;
+}
+
 .revoke_button,
 .revoke_all_button {
     flex-shrink: 0;
@@ -191,6 +207,7 @@
 .session_actions {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
 }
 
 .revoke_all_button {
@@ -207,7 +224,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    border: 1px solid color(neutral, 500);
-    border-radius: radius(tiny);
+    // border: 1px solid color(neutral, 500);
+    border-radius: radius(sm);
     overflow: hidden;
+    gap: 10px;
 }

@@ -10,19 +10,19 @@ import { useRouter } from "next/navigation";
 import useFormQuery from "@/lib/hooks/useQuery";
 import { ContributionResult } from "@/lib/interface/contribution/contribution.interface";
 import Grid from "@/components/Grid/grid";
-import Search from "@/components/Search/search";
 import { TbEye } from "react-icons/tb";
 import headers from "@/lib/utils/headers";
 import EmptyState from "@/lib/ui/no-data";
-import { Select } from "@/components/Select/select";
 import SelectArray from "@/components/Select/select-array";
 import Badge from "@/components/Badge/badge";
+import { format } from "date-fns";
 
 export default function CommunityContribution() {
   const router = useRouter();
 
   const limit = 20;
   const [search, setSearch] = useState<string>("");
+  const [language, setLanaguage] = useState<string>("");
   const [endCursor, setEndCursor] = useState<string>("");
   const [startCursor, setStartCursor] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,6 +39,7 @@ export default function CommunityContribution() {
       classification,
       sentiment,
       type,
+      language,
     ],
     url: "maintenance/contribution",
     headers,
@@ -51,8 +52,11 @@ export default function CommunityContribution() {
       classification,
       sentiment,
       type,
+      language,
     },
   });
+
+  console.log(data);
 
   const onHandleNextPage = () => {
     const pageInfo = data?.data.pageInfo;
@@ -143,11 +147,13 @@ export default function CommunityContribution() {
                 <Table.Head>Classification</Table.Head>
                 <Table.Head>Classification Method</Table.Head>
                 <Table.Head>Sentiment</Table.Head>
+                <Table.Head>Langauge</Table.Head>
                 <Table.Head>Status</Table.Head>
                 <Table.Head>Region</Table.Head>
                 <Table.Head>Province</Table.Head>
                 <Table.Head>Municipality</Table.Head>
                 <Table.Head>Barangay</Table.Head>
+                <Table.Head>Date Created</Table.Head>
                 <Table.Head>Action</Table.Head>
               </Table.Row>
             </Table.Header>
@@ -159,11 +165,13 @@ export default function CommunityContribution() {
                     type,
                     classification,
                     status,
+                    language,
                     classification_method,
                     sentiment,
                     barangay,
                     province,
                     region,
+                    created_at,
                     municipality,
                   },
                 }) => (
@@ -194,6 +202,7 @@ export default function CommunityContribution() {
                         {sentiment}
                       </Badge>
                     </Table.Cell>
+                    <Table.Cell>{language ?? "N/A"}</Table.Cell>
                     <Table.Cell>
                       <Badge
                         size="md"
@@ -206,6 +215,9 @@ export default function CommunityContribution() {
                     <Table.Cell>{province || "N/A"}</Table.Cell>
                     <Table.Cell>{municipality || "N/A"}</Table.Cell>
                     <Table.Cell>{barangay || "N/A"}</Table.Cell>
+                    <Table.Cell>
+                      {format(new Date(created_at), "MMMM dd, yyyy")}
+                    </Table.Cell>
                     <Table.Cell>
                       <button
                         onClick={() =>

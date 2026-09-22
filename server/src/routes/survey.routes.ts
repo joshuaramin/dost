@@ -6,6 +6,8 @@ import {
   getAllSurvey,
   getSurveyById,
   getSurvreyResponseById,
+  softDeleteSurvey,
+  surveyPublished,
   updateSurveyQuestionById,
 } from "@/controller/survey.conrtoller";
 
@@ -22,6 +24,7 @@ router.get(
   withPermission("survey-management:read"),
   asyncHandler(getAllSurvey),
 );
+router.get("/:id", withAuth, asyncHandler(getSurveyById));
 
 router.get(
   "/response/:id",
@@ -43,7 +46,8 @@ router.patch("/question/:id", withAuth, asyncHandler(updateSurveyQuestionById));
 router.patch("/:id", withAuth, asyncHandler(deleteSurveyQuestionBytId));
 
 router.post("/response/:id", withAuth, asyncHandler(createSurveyResponse));
+router.put("/:id", withAuth, asyncHandler(softDeleteSurvey));
 
-router.get("/:id", asyncHandler(getSurveyById));
+router.patch("/publish/:id", withAuth, asyncHandler(surveyPublished));
 
 export default router;

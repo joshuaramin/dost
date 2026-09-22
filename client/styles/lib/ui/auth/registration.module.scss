@@ -1,12 +1,228 @@
-@use "@/styles/mixins.module" as *;
-@use "@/styles/variables.module" as *;
-@use "@/styles/colors.module" as *;
-@use "@/styles/spacing.module" as *;
-@use "@/styles/radius.module" as *;
+ @use "@/styles/mixins.module" as *;
+ @use "@/styles/variables.module" as *;
+ @use "@/styles/colors.module" as *;
+ @use "@/styles/spacing.module" as *;
+ @use "@/styles/radius.module" as *;
 
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 5rem 25rem;
-}
+ .container {
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 5rem 25rem;
+
+
+     h1 {
+         color: color(primary, 500)
+     }
+
+     @include down(xxxl) {
+         padding: 3rem 10rem;
+     }
+
+     @include down(xxl) {
+         padding: 3rem 8rem;
+     }
+
+     @include down(xl) {
+         padding: 3rem 5rem;
+     }
+
+     @include down(lg) {
+         padding: 3rem 4rem;
+     }
+
+     @include down(md) {
+         padding: 3rem 1.5rem;
+     }
+
+     @include down(sm) {
+         padding: 2rem 1.1rem;
+     }
+
+     form {
+         width: 100%;
+         display: flex;
+         flex-direction: column;
+         gap: 24px;
+     }
+
+     .container_role {
+         width: 100%;
+
+         .role_card {
+             position: relative;
+             width: 100%;
+             min-height: 160px;
+             padding: 24px 20px;
+
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             gap: 16px;
+
+             cursor: pointer;
+             user-select: none;
+
+             background-color: color(neutral, 100);
+             border: 1px solid color(neutral, 300);
+             border-radius: radius(base);
+
+             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+             transition:
+                 border-color 0.2s ease,
+                 background-color 0.2s ease,
+                 box-shadow 0.2s ease,
+                 transform 0.2s ease;
+
+             .role_content {
+                 display: flex;
+                 flex-direction: column;
+                 align-items: center;
+                 justify-content: center;
+                 gap: 12px;
+                 text-align: center;
+
+                 svg {
+                     flex-shrink: 0;
+                     stroke-width: 1.8px;
+                 }
+             }
+
+             input {
+                 position: absolute;
+                 width: 1px;
+                 height: 1px;
+                 opacity: 0;
+                 pointer-events: none;
+             }
+
+             &:hover {
+                 border-color: color(primary, 400);
+                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                 transform: translateY(-1px);
+             }
+
+             &:active {
+                 transform: translateY(0);
+             }
+
+             &:has(input:checked) {
+                 border-color: color(primary, 500);
+                 background-color: color(primary, 100);
+                 box-shadow:
+                     0 0 0 1px color(primary, 500),
+                     0 4px 12px rgba(0, 0, 0, 0.08);
+             }
+
+             &:has(input:checked):hover {
+                 border-color: color(primary, 500);
+                 box-shadow:
+                     0 0 0 1px color(primary, 500),
+                     0 6px 16px rgba(0, 0, 0, 0.1);
+             }
+
+             &:has(input:focus-visible) {
+                 outline: none;
+                 box-shadow:
+                     0 0 0 3px color(primary, 200),
+                     0 0 0 4px color(primary, 500);
+             }
+         }
+     }
+
+     .row_2 {
+         width: 100%;
+         display: flex;
+         gap: 20px;
+
+         >* {
+             flex: 1;
+             min-width: 0;
+         }
+
+         @include down(md) {
+             flex-direction: column;
+         }
+     }
+
+     .actions {
+         width: 100%;
+         display: flex;
+         align-items: center;
+         justify-content: flex-end;
+         gap: 12px;
+
+         @include down(sm) {
+             flex-direction: column-reverse;
+             align-items: stretch;
+         }
+     }
+
+     .step_3_container {
+
+         .review {
+             width: 100%;
+             display: flex;
+             flex-direction: column;
+             gap: 20px;
+
+             padding: 24px;
+
+             background-color: color(neutral, 100);
+             border: 1px solid color(neutral, 300);
+             border-radius: radius(base);
+
+             .review_item {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 6px;
+                 padding-bottom: 16px;
+                 border-bottom: 1px solid color(neutral, 200);
+
+                 &:last-child {
+                     padding-bottom: 0;
+                     border-bottom: none;
+                 }
+             }
+         }
+
+         .taa {
+             display: flex;
+             flex-direction: column;
+             padding: 10 20px;
+
+             .taa_item {
+                 display: flex;
+                 align-items: center;
+                 gap: 10px;
+                 margin: 5px 0;
+             }
+         }
+     }
+
+
+     @include down(md) {
+         .container_role {
+             .role_card {
+                 min-height: 145px;
+                 padding: 20px 16px;
+             }
+         }
+     }
+
+     @include down(sm) {
+         .container_role {
+             .role_card {
+                 min-height: 130px;
+                 padding: 18px 14px;
+             }
+         }
+
+         .review {
+             padding: 20px;
+         }
+     }
+ }

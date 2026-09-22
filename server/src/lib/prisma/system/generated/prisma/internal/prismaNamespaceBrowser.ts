@@ -52,8 +52,15 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  UserPreference: 'UserPreference',
   OTP: 'OTP',
   Profile: 'Profile',
+  RewardPointRule: 'RewardPointRule',
+  RewardTransaction: 'RewardTransaction',
+  UserReward: 'UserReward',
+  RewardLevel: 'RewardLevel',
+  Badge: 'Badge',
+  UserBadge: 'UserBadge',
   Resource: 'Resource',
   Role: 'Role',
   Permission: 'Permission',
@@ -107,6 +114,21 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const UserPreferenceScalarFieldEnum = {
+  preference_id: 'preference_id',
+  default_language: 'default_language',
+  email_notifications: 'email_notifications',
+  email_security_alerts: 'email_security_alerts',
+  email_system_notifications: 'email_system_notifications',
+  email_activity_notifications: 'email_activity_notifications',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type UserPreferenceScalarFieldEnum = (typeof UserPreferenceScalarFieldEnum)[keyof typeof UserPreferenceScalarFieldEnum]
+
+
 export const OTPScalarFieldEnum = {
   otp_id: 'otp_id',
   identifier: 'identifier',
@@ -129,6 +151,7 @@ export const ProfileScalarFieldEnum = {
   profile_id: 'profile_id',
   first_name: 'first_name',
   last_name: 'last_name',
+  location: 'location',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',
@@ -136,6 +159,83 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const RewardPointRuleScalarFieldEnum = {
+  reward_point_rule_id: 'reward_point_rule_id',
+  action_type: 'action_type',
+  points: 'points',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RewardPointRuleScalarFieldEnum = (typeof RewardPointRuleScalarFieldEnum)[keyof typeof RewardPointRuleScalarFieldEnum]
+
+
+export const RewardTransactionScalarFieldEnum = {
+  reward_transaction_id: 'reward_transaction_id',
+  user_id: 'user_id',
+  reward_point_rule_id: 'reward_point_rule_id',
+  contribution_id: 'contribution_id',
+  action_type: 'action_type',
+  points: 'points',
+  created_at: 'created_at'
+} as const
+
+export type RewardTransactionScalarFieldEnum = (typeof RewardTransactionScalarFieldEnum)[keyof typeof RewardTransactionScalarFieldEnum]
+
+
+export const UserRewardScalarFieldEnum = {
+  user_reward_id: 'user_reward_id',
+  user_id: 'user_id',
+  total_points: 'total_points',
+  current_level_id: 'current_level_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type UserRewardScalarFieldEnum = (typeof UserRewardScalarFieldEnum)[keyof typeof UserRewardScalarFieldEnum]
+
+
+export const RewardLevelScalarFieldEnum = {
+  reward_level_id: 'reward_level_id',
+  name: 'name',
+  description: 'description',
+  min_points: 'min_points',
+  order_index: 'order_index',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RewardLevelScalarFieldEnum = (typeof RewardLevelScalarFieldEnum)[keyof typeof RewardLevelScalarFieldEnum]
+
+
+export const BadgeScalarFieldEnum = {
+  badge_id: 'badge_id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  icon_url: 'icon_url',
+  requirement_type: 'requirement_type',
+  requirement_value: 'requirement_value',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type BadgeScalarFieldEnum = (typeof BadgeScalarFieldEnum)[keyof typeof BadgeScalarFieldEnum]
+
+
+export const UserBadgeScalarFieldEnum = {
+  user_badge_id: 'user_badge_id',
+  user_id: 'user_id',
+  badge_id: 'badge_id',
+  earned_at: 'earned_at'
+} as const
+
+export type UserBadgeScalarFieldEnum = (typeof UserBadgeScalarFieldEnum)[keyof typeof UserBadgeScalarFieldEnum]
 
 
 export const ResourceScalarFieldEnum = {
@@ -305,7 +405,6 @@ export const EducationResourceScalarFieldEnum = {
   published_at: 'published_at',
   status: 'status',
   summary: 'summary',
-  thumbnail: 'thumbnail',
   type: 'type',
   external_link: 'external_link'
 } as const
@@ -411,6 +510,7 @@ export const ContributionScalarFieldEnum = {
   sentiment: 'sentiment',
   classification: 'classification',
   classification_method: 'classification_method',
+  language: 'language',
   confidence_score: 'confidence_score',
   status: 'status',
   reviewed_by: 'reviewed_by',

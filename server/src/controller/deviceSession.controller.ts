@@ -7,7 +7,8 @@ export const getAllDeviceSesisonByUserId = async (
 ) => {
   try {
     const id = String(request.params.id);
-    const { limit, after, orderBy, sortBy, search, before } = request.query;
+    const { limit, after, orderBy, sortBy, search, before, user_id } =
+      request.query;
 
     const result = await GetAllDeviceSession(id, {
       after: after as string,
@@ -18,6 +19,7 @@ export const getAllDeviceSesisonByUserId = async (
         sortBy: sortBy as string,
       },
       limit: limit as string,
+      user_id: user_id as string,
     });
 
     return response.status(200).json({

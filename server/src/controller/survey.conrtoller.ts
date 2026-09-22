@@ -13,6 +13,7 @@ import {
   GetAllSurveys,
   GetSurveyById,
   GetSurveyResponseById,
+  SoftDeleteSurvey,
   UpdateSurveyPublished,
   UpdateSurveyQuestion,
 } from "@/services/survey.service";
@@ -152,7 +153,6 @@ export const createSurveyResponse = async (
 export const getSurveyById = async (request: Request, response: Response) => {
   const id = String(request.params.id);
 
-  console.log("SLUG: ", id);
   const result = await GetSurveyById(id);
 
   return response.status(200).json({
@@ -183,7 +183,20 @@ export const updateSurvey = (request: Request, response: Response) => {
   const id = String(request.params.id);
 };
 
-export const softDeleteSurvey = (request: Request, response: Response) => {};
+export const softDeleteSurvey = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.id);
+
+  const result = await SoftDeleteSurvey(id);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
 
 export const surveyPublished = async (request: Request, response: Response) => {
   const id = String(request.params.id);

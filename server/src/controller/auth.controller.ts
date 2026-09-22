@@ -1,8 +1,15 @@
 import {
+  CreateUserSchema,
+  RegisterUserSchema,
+  UserSchema,
+} from "@/lib/validation/user.validation";
+import {
   AuthLogin,
   AuthLogout,
+  AuthRegister,
   AuthVerfiy,
   GetDeviceSessions,
+  GetResendOTP,
 } from "@/services/auth.services";
 import { getDeviceInfo } from "@/utils/deviceParser";
 import { Response, Request } from "express";
@@ -80,5 +87,35 @@ export const DeviceSessions = async (request: Request, response: Response) => {
 };
 
 export const ResendOTP = async (request: Request, response: Response) => {
-  
+  const deviceInfo = getDeviceInfo(request);
+
+  const email = String(request.query.email);
+
+  const result = await GetResendOTP(email, deviceInfo);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const Registration = async (request: Request, response: Response) => {
+  const body = request.body;
+  const parsedData = RegisterUserSchema.safeParse(body);
+
+  if (!parsedData.success) {
+    return response.status(400).json({
+      message: parsedData.error.flatten(),
+      success: false,
+      timestamp: new Date(),
+    });
+  }
+
+  const result = await AuthRegister(parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    success: true,
+    timestamp: new Date(),
+  });
 };

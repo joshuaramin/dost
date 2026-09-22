@@ -45,6 +45,7 @@ export const UpdateContributionSchema = z
     status: z.string().min(1, "Status is required"),
     contribution_id: z.string().min(1, "Contribution ID is required"),
     user_id: z.string().min(1, "Review By is required"),
+    language: z.string().min(1, "Language is required"),
     sentiment: z.string().min(1, "Sentiment is required"),
     review_reason: z
       .string()

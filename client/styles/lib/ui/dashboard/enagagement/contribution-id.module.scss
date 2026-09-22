@@ -431,8 +431,224 @@
     }
 }
 
+.language_container {
+    position: relative;
+    width: 100%;
+    padding: 15px 20px;
+}
+
+.language_header {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 10px;
+}
+
+.language_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border: 1px solid rgba(27, 66, 100, 0.12);
+    border-radius: 9px;
+    background: rgba(27, 66, 100, 0.06);
+    color: #1b4264;
+}
+
+.language_info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.language_label {
+    color: #26323d;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.language_description {
+    color: #8a949e;
+    font-size: 11px;
+    line-height: 1.3;
+}
+
+.language_select {
+    position: relative;
+    width: 100%;
+    // overflow-y: auto;
+}
+
+.language_trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 1px solid #dce2e7;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #273440;
+    cursor: pointer;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+
+    &:hover {
+        border-color: #b9c4cd;
+        background: #fcfdfe;
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-color: #1b4264;
+        box-shadow: 0 0 0 3px rgba(27, 66, 100, 0.1);
+    }
+}
+
+.language_trigger_open {
+    border-color: #1b4264;
+    box-shadow: 0 0 0 3px rgba(27, 66, 100, 0.08);
+}
+
+.language_selected {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.language_selected_dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1b4264;
+    box-shadow: 0 0 0 3px rgba(255, 164, 0, 0.12);
+}
+
+.language_chevron {
+    color: #7d8791;
+    transition: transform 0.2s ease;
+}
+
+.language_chevron_open {
+    transform: rotate(180deg);
+}
+
+.language_dropdown {
+    position: absolute;
+    z-index: 50;
+    top: calc(100% + 7px);
+    left: 0;
+    width: 100%;
+    max-height: 220px;
+    padding: 6px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #dce2e7;
+    border-radius: 11px;
+    background: #ffffff;
+    box-shadow:
+        0 14px 35px rgba(27, 66, 100, 0.12),
+        0 3px 10px rgba(0, 0, 0, 0.05);
+    animation: languageDropdownIn 0.15s ease;
+
+    scrollbar-width: thin;
+    scrollbar-color: #c5cdd4 transparent;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #c5cdd4;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background: #9ca7b0;
+    }
+}
+
+.language_option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: auto;
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #4b5661;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
+
+    &:hover {
+        background: #f4f7f9;
+        color: #1b4264;
+    }
+}
+
+.language_option_selected {
+    background: rgba(27, 66, 100, 0.07);
+    color: #1b4264;
+    font-weight: 600;
+}
+
+.language_option_content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.language_option_dot {
+    width: 7px;
+    height: 7px;
+    border: 1px solid #aeb7bf;
+    border-radius: 50%;
+    background: transparent;
+}
+
+.language_option_dot_selected {
+    border-color: #ffa400;
+    background: #ffa400;
+}
+
+.language_check {
+    color: #1b4264;
+}
+
+@keyframes languageDropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .reviewSentiment {
-    margin: 18px 20px 20px;
+    margin: 5px 20px 20px;
     padding: 16px;
     border: 1px solid #e4e7ec;
     border-radius: 10px;

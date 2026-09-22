@@ -8,12 +8,14 @@ import {
   GetEducationByid,
   GetEducationTag,
   SoftDeleteEducationResource,
+  UpdateEducationalResourcre,
 } from "@/services/educational-resources.services";
 import {
   CreateEducationCategorySchema,
   CreateEducationResourceBodySchema,
   CreateEducationResourceSchema,
   CreateEducationTagSchema,
+  UpdateEducationResourceSchema,
 } from "@/lib/validation/educational-resource.validation";
 import useSlugify from "@/lib/helpers/useSlugify";
 import { getAttachmentType } from "@/lib/helpers/useGetAttachment";
@@ -184,13 +186,7 @@ export const createEducationResources = async (
         attachments?: Express.MulterS3.File[];
       }) ?? {};
 
-    const thumbnail = files.thumbnail?.[0];
-
     const attachments = files.attachments ?? [];
-
-    console.log("BODY:", body);
-    console.log("ATTACHMENTS:", attachments);
-    console.log("THUMBNAIL:", thumbnail);
 
     const parseData = CreateEducationResourceBodySchema.safeParse(body);
 
@@ -267,12 +263,6 @@ export const createEducationResources = async (
 
       is_featured: data.is_featured,
 
-      ...(thumbnail
-        ? {
-            thumbnail: `${process.env.CDN_URL}/${thumbnail.key}`,
-          }
-        : {}),
-
       ...(attachments.length > 0
         ? {
             attachments: {
@@ -337,6 +327,79 @@ export const createEducationResources = async (
       timestamp: new Date(),
     });
   }
+};
+
+export const updateEducationResource = async (
+  request: Request,
+  response: Response,
+) => {
+  const id = String(request.params.slug);
+  const body = request.body;
+
+  const files =
+    (request.files as {
+      thumbnail?: Express.MulterS3.File[];
+      attachments?: Express.MulterS3.File[];
+    }) ?? {};
+
+  const attachments = files.attachments ?? [];
+
+  const parseData = UpdateEducationResourceSchema.safeParse(body);
+
+  if (!parseData.success) {
+    return response.status(400).json({
+      message: "Invalid Schema",
+      schema: parseData.error.flatten().fieldErrors,
+      timestamp: new Date(),
+    });
+  }
+
+  const result = await UpdateEducationalResourcre(id, {
+    title: parseData.data.title,
+
+    summary: parseData.data.summary,
+
+    slug: useSlugify(`${parseData.data.title}`),
+
+    content: parseData.data.content,
+
+    status: parseData.data.status,
+
+    type: parseData.data.type,
+
+    is_deleted: false,
+
+    external_link: parseData.data.external_link,
+
+    is_featured: parseData.data.is_featured,
+    ...(attachments.length > 0
+      ? {
+          attachments: {
+            create: attachments.map((file, index) => ({
+              type: getAttachmentType(file.mimetype),
+
+              file_name: file.originalname,
+
+              file_url: `${process.env.CDN_URL}/${file.key}`,
+
+              mime_type: file.mimetype,
+
+              file_size: file.size,
+
+              order_index: index,
+            })),
+          },
+        }
+      : {}),
+  });
+
+  console.log("Updated Resource:", result);
+
+  return response.status(200).json({
+    ...result,
+    success: true,
+    timestamp: new Date(),
+  });
 };
 
 export const softDeleteEducationResource = async (

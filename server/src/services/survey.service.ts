@@ -12,6 +12,7 @@ import {
 import { SurveyWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
 import useSlugify from "@/lib/helpers/useSlugify";
+import { tuple } from "zod";
 
 const SurveyManage = new PrismaCRUDManager<
   Survey,
@@ -84,6 +85,7 @@ export const GetAllSurveys = ({
       is_deleted: true,
       description: true,
       created_at: true,
+      is_published: true,
       questions: {
         where: {
           is_deleted: false,
@@ -92,6 +94,10 @@ export const GetAllSurveys = ({
           options: true,
         },
       },
+      responses: {
+        select: { _count: true },
+      },
+      _count: true,
     },
   });
 };
@@ -112,13 +118,21 @@ export const GetSurveyById = async (data: any) => {
           created_at: "asc",
         },
         include: {
-          answers: true,
+          answers: {
+            select: {
+              answer_text: true,
+              response: { select: { _count: true } },
+            },
+          },
           options: {
             orderBy: {
               order_index: "asc",
             },
           },
         },
+      },
+      responses: {
+        select: { _count: true },
       },
     },
   });
@@ -175,6 +189,7 @@ export const CreateSurveyQuestion = async (
     },
   });
 
+  console.log(survey);
   if (!survey) {
     throw new AppError("Survey not found", 404);
   }
@@ -209,7 +224,7 @@ export const CreateSurveyQuestion = async (
 };
 
 export const DeleteSurveytQuestion = async (data: any) => {
-  return QuestionnaireManage.delete(data);
+  return QuestionnaireManage.delete("survey_question_id", data);
 };
 
 export const UpdateSurveyQuestion = async (id: string, data: any) => {
@@ -308,8 +323,8 @@ export const UpdateSurvey = async (data: any) => {
   return SurveyManage.update("survey_id", data.key, data);
 };
 
-export const DeleteSurvey = async (data: any) => {
-  return SurveyManage.delete(data.survey_id);
+export const SoftDeleteSurvey = async (data: any) => {
+  return SurveyManage.delete("survey_id", data);
 };
 
 export const UpdateSurveyPublished = async (id: string, data: boolean) => {

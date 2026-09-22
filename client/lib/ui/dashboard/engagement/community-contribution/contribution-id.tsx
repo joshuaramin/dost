@@ -3,7 +3,14 @@
 import { useEffect, useState } from "react";
 import styles from "@/styles/lib/ui/dashboard/enagagement/contribution-id.module.scss";
 import Image from "next/image";
-import { TbMoodSad, TbMoodHappy, TbMoodNeutral } from "react-icons/tb";
+import {
+  TbMoodSad,
+  TbMoodHappy,
+  TbMoodNeutral,
+  TbLanguage,
+  TbChevronDown,
+  TbCheck,
+} from "react-icons/tb";
 import Link from "next/link";
 
 import Title from "@/components/Typography/Title/title";
@@ -113,7 +120,8 @@ export default function ContributionID({ id }: Props) {
   });
 
   const contribution = data?.data;
-
+  const [language, setLanguage] = useState("english");
+  const [languageOpen, setLanguageOpen] = useState(false);
   const [status, setStatus] = useState<ContributionStatus>("PENDING");
   const [sentiment, setSentiment] = useState<ContributionSentiment>("NEUTRAL");
   const [reasonError, setReasonError] = useState("");
@@ -123,6 +131,7 @@ export default function ContributionID({ id }: Props) {
     defaultValues: {
       contribution_id: "",
       sentiment: "",
+      language: "",
       status: "",
       review_reason: "",
       user_id: "",
@@ -134,6 +143,12 @@ export default function ContributionID({ id }: Props) {
     url: `maintenance/contribution/${id}`,
     method: "PATCH",
     headers,
+  });
+
+  const activityMutation = useFormMutation({
+    key: ["CreateActivityLogs"],
+    method: "POST",
+    url: "maintenance/activity-logs",
   });
 
   useEffect(() => {
@@ -151,6 +166,7 @@ export default function ContributionID({ id }: Props) {
     setValue("contribution_id", id);
     setValue("status", normalizedStatus);
     setValue("sentiment", normalizedSentiment);
+    setValue("language", language);
     setValue("user_id", token?.data.user_id || "");
   }, [contribution, id, setValue, token?.data.user_id]);
 
@@ -194,6 +210,7 @@ export default function ContributionID({ id }: Props) {
         contribution_id: id,
         status: newStatus,
         review_at: new Date().toISOString(),
+        language: language,
         review_reason: reviewReason,
         sentiment: selectedSentiment,
         user_id: token?.data.user_id,
@@ -207,8 +224,24 @@ export default function ContributionID({ id }: Props) {
           setValue("sentiment", selectedSentiment);
 
           toastSuccess({
-            title: "Updated",
+            title: "Contribution Updated Successfully",
+            body: `The contribution has been marked as ${newStatus.toLowerCase()}.`,
           });
+
+          activityMutation.mutate(
+            {
+              type: "UPDATE",
+              description: `User updated the status of contribution ID: ${id}.`,
+              user_id: token?.data.user_id,
+            },
+            {
+              onSuccess: (data) => {
+                {
+                  console.log("Acitvity Log created", data);
+                }
+              },
+            },
+          );
         },
         onError: (err) => {
           console.log(err);
@@ -424,7 +457,135 @@ export default function ContributionID({ id }: Props) {
 
                 <strong className={statusClass}>{status}</strong>
               </div>
+              <div className={styles.language_container}>
+                <div className={styles.language_header}>
+                  <div className={styles.language_icon}>
+                    <TbLanguage size={19} />
+                  </div>
 
+                  <div className={styles.language_info}>
+                    <span className={styles.language_label}>
+                      Content Language
+                    </span>
+                    <span className={styles.language_description}>
+                      Select the language of this contribution
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.language_select}>
+                  <button
+                    type="button"
+                    className={cn(
+                      styles.language_trigger,
+                      languageOpen && styles.language_trigger_open,
+                    )}
+                    onClick={() => setLanguageOpen((previous) => !previous)}
+                  >
+                    <div className={styles.language_selected}>
+                      <span className={styles.language_selected_dot} />
+
+                      <span>
+                        {
+                          {
+                            english: "English",
+                            tagalog: "Tagalog",
+                            hiligaynon: "Hiligaynon",
+                            bisaya: "Bisaya",
+                            chavacano: "Chavacano",
+                            ilonggo: "Ilonggo",
+                            pangasinan: "Pangasinan",
+                            cebuano: "Cebuano",
+                          }[language]
+                        }
+                      </span>
+                    </div>
+
+                    <TbChevronDown
+                      size={19}
+                      className={cn(
+                        styles.language_chevron,
+                        languageOpen && styles.language_chevron_open,
+                      )}
+                    />
+                  </button>
+
+                  {languageOpen && (
+                    <div className={styles.language_dropdown}>
+                      {[
+                        {
+                          label: "English",
+                          value: "English",
+                        },
+                        {
+                          label: "Tagalog",
+                          value: "Tagalog",
+                        },
+                        {
+                          label: "Hiligaynon",
+                          value: "Hiligaynon",
+                        },
+                        {
+                          label: "Bisaya",
+                          value: "Bisaya",
+                        },
+                        {
+                          label: "Chavacano",
+                          value: "Chavacano",
+                        },
+                        {
+                          label: "Ilonggo",
+                          value: "Illonggo",
+                        },
+                        {
+                          label: "Pangasinan",
+                          value: "Pangasinan",
+                        },
+                        {
+                          label: "Cebuano",
+                          value: "Cebuanno",
+                        },
+                      ].map((option) => {
+                        const selected = language === option.value;
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={cn(
+                              styles.language_option,
+                              selected && styles.language_option_selected,
+                            )}
+                            onClick={() => {
+                              setLanguage(option.value);
+                              setLanguageOpen(false);
+                            }}
+                          >
+                            <div className={styles.language_option_content}>
+                              <span
+                                className={cn(
+                                  styles.language_option_dot,
+                                  selected &&
+                                    styles.language_option_dot_selected,
+                                )}
+                              />
+
+                              <span>{option.label}</span>
+                            </div>
+
+                            {selected && (
+                              <TbCheck
+                                size={18}
+                                className={styles.language_check}
+                              />
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
               <div className={styles.reviewSentiment}>
                 <div className={styles.reviewSentimentHeader}>
                   {["POSITIVE", "NEUTRAL", "NEGATIVE"].map((value) => {

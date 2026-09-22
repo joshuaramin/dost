@@ -136,6 +136,25 @@
     }
 }
 
+.neutral {
+
+    &.filled {
+        background-color: transparent;
+        color: color(neutral, 500);
+    }
+
+    &.outline {
+        // background-color: transparent;
+        border: 1px solid (neutral, 500);
+        color: color(neutral, 700);
+
+        &:hover {
+            background-color: color(neutral, 500);
+            color: color(neutral, 900)
+        }
+    }
+}
+
 .disabled {
     background: color(neutral, 300) !important;
     border-color: color(neutral, 300) !important;

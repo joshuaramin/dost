@@ -4,7 +4,6 @@
 @use "@/styles/spacing.module" as *;
 @use "@/styles/radius.module" as *;
 
-
 .activity_logs_group {
     display: flex;
     flex-direction: column;
@@ -14,20 +13,25 @@
 
 .activity_log_card {
     display: flex;
-    align-items: stretch;
+    align-items: center;
     gap: 14px;
     width: 100%;
     padding: 16px;
-    border: 1px solid color(neutral, 200);
-    border-radius: radius(base);
+    border-bottom: 1px solid color(neutral, 500);
     background: color(base, white);
+
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .activity_log_indicator {
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 8px;
     padding: 4px 0;
+    flex-shrink: 0;
 }
 
 .activity_log_indicator span {
@@ -41,9 +45,9 @@
 
 .activity_log_content {
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 12px;
-    flex: 1;
     min-width: 0;
 }
 

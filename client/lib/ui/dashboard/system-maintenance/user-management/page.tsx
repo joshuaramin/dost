@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "@/styles/lib/ui/dashboard/system-maintenance/user-management/user-management.module.scss";
 import { TbEdit, TbEye, TbTrash } from "react-icons/tb";
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useWatch } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 
 //lib & utils
 import useFormHook from "@/lib/hooks/useFormHook";
@@ -17,6 +17,8 @@ import { UserResult } from "@/lib/interface/user/user.interface";
 import { RolesAndPermissionResponse } from "@/lib/interface/roles-and-permissions/roles-and-permission";
 import headers from "@/lib/utils/headers";
 import { UserFormFields } from "@/lib/types/user.type";
+import { sessionStore } from "@/lib/utils/sessions";
+import { toastError, toastSuccess } from "@/lib/ui/toast";
 import EmptyState from "@/lib/ui/no-data";
 
 //components
@@ -29,6 +31,10 @@ import SelectArray from "@/components/Select/select-array";
 import Grid from "@/components/Grid/grid";
 import Table from "@/components/Table/table";
 import Badge from "@/components/Badge/badge";
+import ModalForm from "@/components/Modal/modal-form";
+import Form from "@/components/Form/form";
+import Text from "@/components/Typography/Text/text";
+import Button from "@/components/Button/button";
 
 export default function UserManagement() {
   const router = useRouter();
@@ -44,6 +50,10 @@ export default function UserManagement() {
 
   const onHandleAddnewToggle = () => setOpen((prev) => !prev);
 
+  const token = sessionStore.get();
+
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [deletToggle, setDeleteToggle] = useState<boolean>(false);
   const { data, isLoading } = useFormQuery<UserResult>({
     key: [
       "UserManagement",
@@ -98,6 +108,11 @@ export default function UserManagement() {
     headers,
   });
 
+  const activityMutation = useFormMutation({
+    key: ["CreateActivityLogs"],
+    method: "POST",
+    url: "maintenance/activity-logs",
+  });
   const onHandleSubmit: SubmitHandler<UserFormFields> = (data) => {
     mutation.mutateAsync(
       {
@@ -108,8 +123,33 @@ export default function UserManagement() {
         role_id: data.role_id,
       },
       {
-        onSuccess: () => {},
-        onError: () => {},
+        onSuccess: () => {
+          activityMutation.mutate(
+            {
+              type: "CREATE",
+              description: `User created a new user account for ${data.first_name} ${data.last_name}.`,
+              user_id: token?.data.user_id,
+            },
+            {
+              onSuccess: (activityData) => {
+                console.log("Activity Log created", activityData);
+              },
+              onError: (error) => {
+                console.error("Failed to create activity log:", error);
+              },
+            },
+          );
+          toastSuccess({
+            title: "User Created Successfully",
+            body: `The user account for ${data.first_name} ${data.last_name} has been created successfully.`,
+          });
+        },
+        onError: () => {
+          toastError({
+            title: "Failed to Create User",
+            body: "Something went wrong while creating the user account. Please try again.",
+          });
+        },
       },
     );
   };
@@ -152,6 +192,72 @@ export default function UserManagement() {
     setCurrentPage(1);
     setEndCursor("");
     setStartCursor("");
+  };
+
+  const onHandleDeleteToggle = (user_id: string) => {
+    setSelectedUserId(user_id);
+    setDeleteToggle(true);
+  };
+
+  const deleteMutation = useFormMutation({
+    key: ["DeletMutation"],
+    method: "PUT",
+    url: `maintenance/users/${selectedUserId}`,
+    headers,
+  });
+
+  const onDeleteMutation = () => {
+    if (!selectedUserId) {
+      return;
+    }
+
+    const selectedUser = data?.data.edges.find(
+      ({ node }) => node.user_id === selectedUserId,
+    );
+
+    if (!selectedUser) {
+      return;
+    }
+
+    const fullname = `${selectedUser.node.Profile.first_name} ${selectedUser.node.Profile.last_name}`;
+
+    activityMutation.mutate(
+      {
+        type: "DELETE",
+        description: `User deleted the account of ${fullname}.`,
+        user_id: token?.data.user_id,
+      },
+      {
+        onSuccess: (activityData) => {
+          console.log("Activity Log created", activityData);
+        },
+        onError: (error) => {
+          console.error("Failed to create activity log:", error);
+        },
+      },
+    );
+
+    deleteMutation.mutate(null, {
+      onSuccess: () => {
+        toastSuccess({
+          title: "User Deleted",
+          body: `The user account for ${fullname} has been deleted successfully.`,
+        });
+
+        // queryClient.invalidateQueries({
+        //   queryKey: ["UserManagement"],
+        // });
+
+        // setDeleteToggle(false);
+        // setSelectedUserId(null);
+      },
+      onError: () => {
+        toastError({
+          title: "Deletion Failed",
+          body: "Unable to delete the user. Please try again.",
+        });
+      },
+    });
   };
 
   return (
@@ -261,9 +367,6 @@ export default function UserManagement() {
           <Table>
             <Table.Header>
               <Table.Row>
-                <Table.Head>
-                  <Checkbox />
-                </Table.Head>
                 <Table.Head>Name</Table.Head>
                 <Table.Head>Email</Table.Head>
                 <Table.Head>Status</Table.Head>
@@ -283,9 +386,6 @@ export default function UserManagement() {
                   },
                 }) => (
                   <Table.Row key={user_id}>
-                    <Table.Cell>
-                      <Checkbox />
-                    </Table.Cell>
                     <Table.Cell>
                       {first_name} {last_name}
                     </Table.Cell>
@@ -312,10 +412,7 @@ export default function UserManagement() {
                       >
                         <TbEye size={18} />
                       </button>
-                      <button>
-                        <TbEdit size={18} />
-                      </button>
-                      <button>
+                      <button onClick={() => onHandleDeleteToggle(user_id)}>
                         <TbTrash size={18} />
                       </button>
                     </Table.Cell>
@@ -324,6 +421,39 @@ export default function UserManagement() {
               )}
             </Table.Body>
           </Table>
+        )}
+        {deletToggle && selectedUserId && (
+          <ModalForm
+            title="Delete Users"
+            onHandleCloseToggle={() => {
+              setDeleteToggle(false);
+              setSelectedUserId(null);
+            }}
+          >
+            <Form onSubmit={onDeleteMutation}>
+              <Text size="md" style={{ fontWeight: "400" }}>
+                This action is permanent and cannot be undone. The item and its
+                associated information will be permanently deleted.
+              </Text>
+              <div className={styles.model_footer}>
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setDeleteToggle(false);
+                    setSelectedUserId(null);
+                  }}
+                  size="sm"
+                  variant="neutral"
+                  types="outline"
+                >
+                  <Text size="sm">Cancel</Text>
+                </Button>
+                <Button size="sm" variant="danger">
+                  <Text size="sm">Confirm</Text>
+                </Button>
+              </div>
+            </Form>
+          </ModalForm>
         )}
         <Pagination
           pageSize={limit}

@@ -4,8 +4,6 @@ import React, { ReactNode } from 'react'
 import styles from '@/styles/components/Modal/modal-form.module.scss';
 import { TbX } from 'react-icons/tb';
 import Title from '@/components/Typography/Title/title';
-import Text from '../Typography/Text/text';
-import Button from '../Button/button';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement>{
     children: ReactNode

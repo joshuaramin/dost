@@ -23,6 +23,7 @@ export const GetAllContributions = async ({
   limit,
   filter: { orderBy, sortBy, search },
   sentiment,
+  language,
   user_id,
 }: ContributionInterface) => {
   let where = {
@@ -40,6 +41,9 @@ export const GetAllContributions = async ({
     }),
     ...(type && {
       type,
+    }),
+    ...(language && {
+      language: { contains: language, mode: "insensitive" },
     }),
     ...(user_id && {
       user: {
@@ -70,6 +74,7 @@ export const GetAllContributions = async ({
       is_deleted: true,
       image_url: true,
       source_url: true,
+      language: true,
       review_reason: true,
       reviewed_by: true,
       reviewed_at: true,
@@ -80,6 +85,7 @@ export const GetAllContributions = async ({
       region: true,
       created_at: true,
       sentiment: true,
+      user: true,
     },
     orderBy: {
       [orderBy]: sortBy,
@@ -141,6 +147,7 @@ export const UpdateContributeById = async (data: any) => {
       status: data.status,
       classification: data.classification,
       classification_method: "MANUAL",
+      language: data.language,
       review_reason: data.review_reason,
       reviewed_at: data.review_at,
       sentiment: data.sentiment,
@@ -152,5 +159,5 @@ export const UpdateContributeById = async (data: any) => {
 };
 
 export const SoftDeleteContribution = async (contribution_id: string) => {
-  return ContributionManage.delete(contribution_id);
+  return ContributionManage.delete("contribution_id", contribution_id);
 };

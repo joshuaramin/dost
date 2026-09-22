@@ -21,7 +21,7 @@ export const EducationResourceType = z.enum([
   "EXTERNAL_LINK",
 ]);
 
-export const EducationStatus = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
+export const EducationStatus = z.enum(["DRAFT", "PUBLISHED"]);
 
 export const EducationTagSchema = z.object({
   education_tag_id: z.string().optional(),
@@ -69,28 +69,15 @@ export const EducationResourceSchema = z.object({
     .max(500, "Summary must not exceed 500 characters"),
 
   content: z.string().optional(),
-
   external_link: z.string().optional(),
-
   type: EducationResourceType,
-
   status: EducationStatus.default("DRAFT"),
-
-  thumbnail: z.file().optional(),
-
   is_featured: booleanField.default(false),
-
   category_id: z.string().min(1, "Category is required"),
-
   user_id: z.string().optional(),
-
   published_at: z.date().optional(),
-
   tags: z.array(EducationResourceTagSchema).default([]),
-
   attachments: z.array(z.file()).default([]),
-
-  is_deleted: booleanField.default(false),
 });
 
 /**

@@ -7,7 +7,8 @@ import {
   getEducationById,
   getAllEducationCategory,
   getEducationTag,
-  softDeleteEducationResource
+  softDeleteEducationResource,
+  updateEducationResource,
 } from "@/controller/educational-resources.controller";
 import { withAuth } from "@/lib/helpers/useAuth";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
@@ -27,7 +28,7 @@ router.post(
   "/",
   withAuth,
   withPermission("educational-resource:create"),
-  upload.fields([{ name: "thumbnail", maxCount: 1 }, { name: "attachments" }]),
+  upload.fields([{ name: "attachments" }]),
   asyncHandler(createEducationResources),
 );
 router.post(
@@ -44,7 +45,13 @@ router.post(
 );
 
 //Put
-router.put("/:id", withAuth, withPermission("educational-resource:update"));
+router.put(
+  "/:slug",
+  withAuth,
+  withPermission("educational-resource:update"),
+  upload.fields([{ name: "attachments" }]),
+  asyncHandler(updateEducationResource),
+);
 
 //Patch
 router.patch(

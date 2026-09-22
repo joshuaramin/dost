@@ -294,3 +294,17 @@ export const GetResendOTP = async (
     success: true,
   };
 };
+
+export const AuthRegister = async (data: any) => {
+  return UserManage.create({
+    email: data.email,
+    Profile: {
+      create: {
+        first_name: data.first_name,
+        last_name: data.last_name,
+        location: data.location,
+      },
+    },
+    role: { connect: { role_id: data.role_id } },
+  });
+};

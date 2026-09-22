@@ -1,45 +1,55 @@
 import { nlpdb } from "@/lib/prisma/nlp/prisma";
 
 export const GetGroupedHeatMapGeo = async () => {
-  const result = await nlpdb.$queryRaw`
-    WITH grouped AS (
-      SELECT 
-        p.name_1 AS province,
-        p.geom,
-        COUNT(h.id)::int AS total_points,
-        COALESCE(SUM(h.weight), 0)::int AS total_weight,
-        AVG(h.sentiment)::float AS avg_sentiment
-      FROM heatmap_points h
-      JOIN provinces p
-      ON ST_Within(
-        ST_Transform(h.geom, 4326),
-        ST_Transform(p.geom, 4326)
-      )
-      GROUP BY p.name_1, p.geom
-    )
-    SELECT COALESCE(
-      jsonb_build_object(
-        'type', 'FeatureCollection',
-        'features', COALESCE(
-          jsonb_agg(
-            jsonb_build_object(
-              'type', 'Feature',
-              'geometry', ST_AsGeoJSON(geom)::jsonb,
-              'properties', jsonb_build_object(
-                'province', province,
-                'total_points', total_points,
-                'total_weight', total_weight,
-                'avg_sentiment', avg_sentiment
-              )
-            )
-          ),
-          '[]'::jsonb
-        )
-      ),
-      '{"type":"FeatureCollection","features":[]}'::jsonb
-    ) AS geojson
-    FROM grouped;
+  const result = await nlpdb.$queryRaw<
+    {
+      id: string;
+      platform: string | null;
+      keyword: string | null;
+      sentiment: number | null;
+      engagement: number | null;
+      weight: number | null;
+      created_at: Date | null;
+      geometry: {
+        type: "Point";
+        coordinates: [number, number];
+      } | null;
+    }[]
+  >`
+    SELECT
+      id,
+      platform,
+      keyword,
+      sentiment,
+      engagement,
+      weight,
+      created_at,
+      ST_AsGeoJSON(geom)::json AS geometry
+    FROM heatmap_points
+    WHERE geom IS NOT NULL
   `;
 
-  return result[0]?.geojson;
+  return {
+    type: "FeatureCollection",
+    features: result
+      .filter(
+        (item) =>
+          item.geometry?.type === "Point" &&
+          Array.isArray(item.geometry.coordinates) &&
+          item.geometry.coordinates.length >= 2,
+      )
+      .map((item) => ({
+        type: "Feature",
+        properties: {
+          id: item.id,
+          platform: item.platform,
+          keyword: item.keyword,
+          sentiment: Number(item.sentiment ?? 0),
+          engagement: Number(item.engagement ?? 0),
+          weight: Number(item.weight ?? 0),
+          created_at: item.created_at,
+        },
+        geometry: item.geometry,
+      })),
+  };
 };

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   CreateOrganization,
   GetAllOrganization,
+  SoftDeleteOrganization,
 } from "@/services/organization.services";
 import { OrganizationSchema } from "@/lib/validation/organization.validation";
 
@@ -85,5 +86,11 @@ export const softDeleteOrganization = async (
   response: Response,
 ) => {
   const id = String(request.params.id);
-  // const result =
+  const result = await SoftDeleteOrganization(id);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
 };

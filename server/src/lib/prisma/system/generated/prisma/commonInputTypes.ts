@@ -150,6 +150,40 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumRewardActionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel> | $Enums.RewardActionType
+}
+
+export type EnumRewardActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.RewardActionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+}
+
+export type EnumBadgeRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel> | $Enums.BadgeRequirementType
+}
+
+export type EnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.BadgeRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+}
+
 export type EnumAttachmentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AttachmentType | Prisma.EnumAttachmentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AttachmentType[] | Prisma.ListEnumAttachmentTypeFieldRefInput<$PrismaModel>
@@ -277,11 +311,11 @@ export type EnumContributionSentimentNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumContributionSentimentNullableFilter<$PrismaModel> | $Enums.ContributionSentiment | null
 }
 
-export type EnumContributionClassificationFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel>
-  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel> | $Enums.ContributionClassification
+export type EnumContributionClassificationNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel> | $Enums.ContributionClassification | null
 }
 
 export type EnumClassificationMethodNullableFilter<$PrismaModel = never> = {
@@ -319,14 +353,14 @@ export type EnumContributionSentimentNullableWithAggregatesFilter<$PrismaModel =
   _max?: Prisma.NestedEnumContributionSentimentNullableFilter<$PrismaModel>
 }
 
-export type EnumContributionClassificationWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel>
-  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContributionClassificationWithAggregatesFilter<$PrismaModel> | $Enums.ContributionClassification
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel>
+export type EnumContributionClassificationNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContributionClassificationNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContributionClassification | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel>
 }
 
 export type EnumClassificationMethodNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -514,6 +548,40 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
 }
 
+export type NestedEnumRewardActionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel> | $Enums.RewardActionType
+}
+
+export type NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.RewardActionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumBadgeRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel> | $Enums.BadgeRequirementType
+}
+
+export type NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.BadgeRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+}
+
 export type NestedEnumAttachmentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AttachmentType | Prisma.EnumAttachmentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AttachmentType[] | Prisma.ListEnumAttachmentTypeFieldRefInput<$PrismaModel>
@@ -641,11 +709,11 @@ export type NestedEnumContributionSentimentNullableFilter<$PrismaModel = never> 
   not?: Prisma.NestedEnumContributionSentimentNullableFilter<$PrismaModel> | $Enums.ContributionSentiment | null
 }
 
-export type NestedEnumContributionClassificationFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel>
-  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel> | $Enums.ContributionClassification
+export type NestedEnumContributionClassificationNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel> | $Enums.ContributionClassification | null
 }
 
 export type NestedEnumClassificationMethodNullableFilter<$PrismaModel = never> = {
@@ -683,14 +751,14 @@ export type NestedEnumContributionSentimentNullableWithAggregatesFilter<$PrismaM
   _max?: Prisma.NestedEnumContributionSentimentNullableFilter<$PrismaModel>
 }
 
-export type NestedEnumContributionClassificationWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel>
-  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumContributionClassificationWithAggregatesFilter<$PrismaModel> | $Enums.ContributionClassification
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumContributionClassificationFilter<$PrismaModel>
+export type NestedEnumContributionClassificationNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContributionClassification | Prisma.EnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ContributionClassification[] | Prisma.ListEnumContributionClassificationFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumContributionClassificationNullableWithAggregatesFilter<$PrismaModel> | $Enums.ContributionClassification | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContributionClassificationNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumClassificationMethodNullableWithAggregatesFilter<$PrismaModel = never> = {
