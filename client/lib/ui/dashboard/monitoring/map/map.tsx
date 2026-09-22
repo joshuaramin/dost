@@ -1,17 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import * as maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet.heat";
+
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point } from "@turf/helpers";
+
 import styles from "@/styles/lib/ui/dashboard/monitoring/map.module.scss";
 
+import useFormQuery from "@/lib/hooks/useQuery";
 import Title from "@/components/Typography/Title/title";
 import Text from "@/components/Typography/Text/text";
-
-import useFormQuery from "@/lib/hooks/useQuery";
 import headers from "@/lib/utils/headers";
 
 type Province = {
@@ -44,18 +52,766 @@ type HeatmapFeature = {
   };
 };
 
+type GeoJSONFeature = {
+  type: "Feature";
+  properties?: Record<string, any>;
+  geometry: any;
+};
+
+type FeatureCollection = {
+  type: "FeatureCollection";
+  features: GeoJSONFeature[];
+};
+
+type MapControllerProps = {
+  mapRef: React.MutableRefObject<L.Map | null>;
+};
+
+type HeatmapLayerProps = {
+  features: HeatmapFeature[];
+};
+
+type NLPPointsLayerProps = {
+  features: HeatmapFeature[];
+};
+
+type DynamicGeoJSONProps = {
+  data: FeatureCollection | null;
+  style: (feature?: any) => L.PathOptions;
+  onEachFeature?: (feature: any, layer: L.Layer) => void;
+  pane?: string;
+  interactive?: boolean;
+};
+
 const legends = [
-  { label: "Low", color: "success" },
-  { label: "Medium", color: "warning" },
-  { label: "High", color: "danger" },
+  {
+    label: "Low",
+    color: "success",
+  },
+  {
+    label: "Medium",
+    color: "warning",
+  },
+  {
+    label: "High",
+    color: "danger",
+  },
 ];
 
+const canvasRenderer = L.canvas({
+  padding: 0.5,
+});
+
+function MapController({ mapRef }: MapControllerProps) {
+  const map = useMap();
+
+  useEffect(() => {
+    mapRef.current = map;
+
+    return () => {
+      if (mapRef.current === map) {
+        mapRef.current = null;
+      }
+    };
+  }, [map, mapRef]);
+
+  return null;
+}
+
+function DynamicGeoJSON({
+  data,
+  style,
+  onEachFeature,
+  pane,
+  interactive = true,
+}: DynamicGeoJSONProps) {
+  const layerRef = useRef<L.GeoJSON | null>(null);
+
+  const handleRef = useCallback((layer: L.GeoJSON | null) => {
+    layerRef.current = layer;
+  }, []);
+
+  useEffect(() => {
+    const layer = layerRef.current;
+
+    if (!layer || !data) {
+      return;
+    }
+
+    layer.clearLayers();
+
+    if (data.features.length) {
+      layer.addData(data as any);
+    }
+  }, [data]);
+
+  return (
+    <GeoJSON
+      ref={handleRef}
+      data={
+        {
+          type: "FeatureCollection",
+          features: [],
+        } as any
+      }
+      style={style}
+      onEachFeature={onEachFeature}
+      pane={pane}
+      interactive={interactive}
+    />
+  );
+}
+
+function HeatmapLayer({ features }: HeatmapLayerProps) {
+  const map = useMap();
+  const heatLayerRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!heatLayerRef.current) {
+      heatLayerRef.current = (L as any).heatLayer([], {
+        radius: 28,
+        blur: 18,
+        maxZoom: 12,
+        minOpacity: 0.2,
+        max: 1,
+        gradient: {
+          0.1: "#3b82f6",
+          0.25: "#22c55e",
+          0.45: "#facc15",
+          0.65: "#f97316",
+          0.8: "#ef4444",
+          1: "#7f1d1d",
+        },
+      });
+
+      heatLayerRef.current.addTo(map);
+    }
+
+    return () => {
+      if (heatLayerRef.current) {
+        map.removeLayer(heatLayerRef.current);
+
+        heatLayerRef.current = null;
+      }
+    };
+  }, [map]);
+
+  useEffect(() => {
+    if (!heatLayerRef.current) {
+      return;
+    }
+
+    const heatPoints: [number, number, number][] = [];
+
+    for (const feature of features) {
+      const coordinates = feature.geometry?.coordinates;
+
+      if (
+        !Array.isArray(coordinates) ||
+        coordinates.length !== 2 ||
+        !Number.isFinite(Number(coordinates[0])) ||
+        !Number.isFinite(Number(coordinates[1]))
+      ) {
+        continue;
+      }
+
+      const lng = Number(coordinates[0]);
+      const lat = Number(coordinates[1]);
+
+      const weight = Number(feature.properties?.weight ?? 0);
+
+      if (!Number.isFinite(weight)) {
+        continue;
+      }
+
+      heatPoints.push([lat, lng, Math.min(Math.max(weight, 0), 100)]);
+    }
+
+    heatLayerRef.current.setLatLngs(heatPoints);
+  }, [features]);
+
+  return null;
+}
+
+function NLPPointsLayer({ features }: NLPPointsLayerProps) {
+  const map = useMap();
+  const layerRef = useRef<L.LayerGroup | null>(null);
+
+  useEffect(() => {
+    if (!layerRef.current) {
+      layerRef.current = L.layerGroup().addTo(map);
+    }
+
+    const layerGroup = layerRef.current;
+
+    layerGroup.clearLayers();
+
+    const renderer = canvasRenderer;
+
+    for (const feature of features) {
+      const coordinates = feature.geometry?.coordinates;
+
+      if (
+        !Array.isArray(coordinates) ||
+        coordinates.length !== 2 ||
+        !Number.isFinite(Number(coordinates[0])) ||
+        !Number.isFinite(Number(coordinates[1]))
+      ) {
+        continue;
+      }
+
+      const lng = Number(coordinates[0]);
+
+      const lat = Number(coordinates[1]);
+
+      const properties = feature.properties ?? {};
+
+      const platform = properties.platform ?? "Unknown";
+
+      const keyword = properties.keyword ?? "Unknown";
+
+      const sentiment = Number(properties.sentiment ?? 0);
+
+      const engagement = Number(properties.engagement ?? 0);
+
+      const weight = Number(properties.weight ?? 0);
+
+      const createdAt = properties.created_at
+        ? new Date(String(properties.created_at)).toLocaleString()
+        : "Unknown";
+
+      const marker = L.circleMarker([lat, lng], {
+        renderer,
+        radius: 6,
+        stroke: false,
+        fillColor: "#000000",
+        fillOpacity: 0,
+        interactive: true,
+      });
+
+      marker.bindPopup(
+        `
+          <div style="min-width:220px;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:10px;">
+              NLP Surveillance
+            </div>
+
+            <div style="margin-bottom:5px;">
+              <strong>Platform:</strong>
+              ${escapeHTML(String(platform))}
+            </div>
+
+            <div style="margin-bottom:5px;">
+              <strong>Keyword:</strong>
+              ${escapeHTML(String(keyword))}
+            </div>
+
+            <div style="margin-bottom:5px;">
+              <strong>Sentiment:</strong>
+              ${sentiment.toFixed(2)}
+            </div>
+
+            <div style="margin-bottom:5px;">
+              <strong>Engagement:</strong>
+              ${engagement.toLocaleString()}
+            </div>
+
+            <div style="margin-bottom:5px;">
+              <strong>Risk Weight:</strong>
+              ${weight}
+            </div>
+
+            <div>
+              <strong>Date:</strong>
+              ${escapeHTML(createdAt)}
+            </div>
+          </div>
+        `,
+        {
+          closeButton: false,
+          closeOnClick: false,
+          offset: L.point(0, -8),
+        },
+      );
+
+      marker.on("mouseover", () => {
+        map.getContainer().style.cursor = "pointer";
+
+        marker.openPopup();
+      });
+
+      marker.on("mousemove", (event: L.LeafletMouseEvent) => {
+        const popup = marker.getPopup();
+
+        if (popup) {
+          popup.setLatLng(event.latlng);
+        }
+      });
+
+      marker.on("mouseout", () => {
+        map.getContainer().style.cursor = "";
+
+        marker.closePopup();
+      });
+
+      layerGroup.addLayer(marker);
+    }
+
+    return () => {
+      layerGroup.clearLayers();
+    };
+  }, [map, features]);
+
+  return null;
+}
+
+function MunicipalityLabels({ features }: { features: GeoJSONFeature[] }) {
+  const map = useMap();
+
+  const layerRef = useRef<L.LayerGroup | null>(null);
+
+  useEffect(() => {
+    if (!layerRef.current) {
+      layerRef.current = L.layerGroup().addTo(map);
+    }
+
+    const layerGroup = layerRef.current;
+
+    const updateLabels = () => {
+      layerGroup.clearLayers();
+
+      const zoom = map.getZoom();
+
+      if (zoom < 8) {
+        return;
+      }
+
+      const mapBounds = map.getBounds();
+
+      for (const feature of features) {
+        const center = getCenterFromGeometry(feature.geometry);
+
+        if (!center) {
+          continue;
+        }
+
+        const latLng = L.latLng(center[1], center[0]);
+
+        if (!mapBounds.contains(latLng)) {
+          continue;
+        }
+
+        const properties = feature.properties ?? {};
+
+        const name =
+          properties.name ??
+          properties.municipality_name ??
+          properties.mun_name ??
+          properties.NAME_3 ??
+          properties.NAME ??
+          "";
+
+        if (!name) {
+          continue;
+        }
+
+        const marker = L.marker(latLng, {
+          interactive: false,
+          icon: L.divIcon({
+            className: styles.municipality_label,
+            html: `<span>${escapeHTML(String(name))}</span>`,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0],
+          }),
+        });
+
+        layerGroup.addLayer(marker);
+      }
+    };
+
+    updateLabels();
+
+    map.on("zoomend", updateLabels);
+
+    map.on("moveend", updateLabels);
+
+    return () => {
+      map.off("zoomend", updateLabels);
+
+      map.off("moveend", updateLabels);
+
+      layerGroup.clearLayers();
+    };
+  }, [map, features]);
+
+  return null;
+}
+
+function escapeHTML(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function getGeometryCoordinates(geometry: any): number[][] {
+  if (!geometry?.coordinates) {
+    return [];
+  }
+
+  if (geometry.type === "Polygon") {
+    return geometry.coordinates
+      .flat(1)
+      .filter(
+        (coordinate: any) =>
+          Array.isArray(coordinate) &&
+          coordinate.length >= 2 &&
+          Number.isFinite(Number(coordinate[0])) &&
+          Number.isFinite(Number(coordinate[1])),
+      );
+  }
+
+  if (geometry.type === "MultiPolygon") {
+    return geometry.coordinates
+      .flat(2)
+      .filter(
+        (coordinate: any) =>
+          Array.isArray(coordinate) &&
+          coordinate.length >= 2 &&
+          Number.isFinite(Number(coordinate[0])) &&
+          Number.isFinite(Number(coordinate[1])),
+      );
+  }
+
+  return [];
+}
+
+function getBoundsFromGeometry(geometry: any): L.LatLngBoundsExpression | null {
+  if (!geometry) {
+    return null;
+  }
+
+  const coordinates = getGeometryCoordinates(geometry);
+
+  if (!coordinates.length) {
+    return null;
+  }
+
+  let minLng = Infinity;
+  let maxLng = -Infinity;
+  let minLat = Infinity;
+  let maxLat = -Infinity;
+
+  for (const coordinate of coordinates) {
+    const lng = Number(coordinate[0]);
+
+    const lat = Number(coordinate[1]);
+
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+      continue;
+    }
+
+    minLng = Math.min(minLng, lng);
+
+    maxLng = Math.max(maxLng, lng);
+
+    minLat = Math.min(minLat, lat);
+
+    maxLat = Math.max(maxLat, lat);
+  }
+
+  if (
+    !Number.isFinite(minLng) ||
+    !Number.isFinite(maxLng) ||
+    !Number.isFinite(minLat) ||
+    !Number.isFinite(maxLat)
+  ) {
+    return null;
+  }
+
+  return [
+    [minLat, minLng],
+    [maxLat, maxLng],
+  ];
+}
+
+function getCenterFromGeometry(geometry: any): [number, number] | null {
+  if (!geometry) {
+    return null;
+  }
+
+  const coordinates = getGeometryCoordinates(geometry);
+
+  if (!coordinates.length) {
+    return null;
+  }
+
+  let minLng = Infinity;
+  let maxLng = -Infinity;
+  let minLat = Infinity;
+  let maxLat = -Infinity;
+
+  for (const coordinate of coordinates) {
+    const lng = Number(coordinate[0]);
+
+    const lat = Number(coordinate[1]);
+
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+      continue;
+    }
+
+    minLng = Math.min(minLng, lng);
+
+    maxLng = Math.max(maxLng, lng);
+
+    minLat = Math.min(minLat, lat);
+
+    maxLat = Math.max(maxLat, lat);
+  }
+
+  if (
+    !Number.isFinite(minLng) ||
+    !Number.isFinite(maxLng) ||
+    !Number.isFinite(minLat) ||
+    !Number.isFinite(maxLat)
+  ) {
+    return null;
+  }
+
+  return [(minLng + maxLng) / 2, (minLat + maxLat) / 2];
+}
+
+type PolygonEntry = {
+  feature: GeoJSONFeature;
+  code: string;
+  bbox: {
+    minLng: number;
+    maxLng: number;
+    minLat: number;
+    maxLat: number;
+  };
+};
+
+function createPolygonEntries(polygons: GeoJSONFeature[]): PolygonEntry[] {
+  const entries: PolygonEntry[] = [];
+
+  for (const feature of polygons) {
+    const code = feature?.properties?.code;
+
+    if (!code) {
+      continue;
+    }
+
+    const coordinates = getGeometryCoordinates(feature.geometry);
+
+    if (!coordinates.length) {
+      continue;
+    }
+
+    let minLng = Infinity;
+    let maxLng = -Infinity;
+    let minLat = Infinity;
+    let maxLat = -Infinity;
+
+    for (const coordinate of coordinates) {
+      const lng = Number(coordinate[0]);
+
+      const lat = Number(coordinate[1]);
+
+      if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+        continue;
+      }
+
+      minLng = Math.min(minLng, lng);
+
+      maxLng = Math.max(maxLng, lng);
+
+      minLat = Math.min(minLat, lat);
+
+      maxLat = Math.max(maxLat, lat);
+    }
+
+    if (
+      !Number.isFinite(minLng) ||
+      !Number.isFinite(maxLng) ||
+      !Number.isFinite(minLat) ||
+      !Number.isFinite(maxLat)
+    ) {
+      continue;
+    }
+
+    entries.push({
+      feature,
+      code: String(code),
+      bbox: {
+        minLng,
+        maxLng,
+        minLat,
+        maxLat,
+      },
+    });
+  }
+
+  return entries;
+}
+
+function aggregateNLPWeights(
+  polygons: GeoJSONFeature[],
+  features: HeatmapFeature[],
+): Map<string, number> {
+  const weights = new Map<string, number>();
+
+  const polygonEntries = createPolygonEntries(polygons);
+
+  for (const polygon of polygonEntries) {
+    weights.set(polygon.code, 0);
+  }
+
+  if (!polygonEntries.length || !features.length) {
+    return weights;
+  }
+
+  for (const nlpFeature of features) {
+    const coordinates = nlpFeature.geometry?.coordinates;
+
+    if (!Array.isArray(coordinates) || coordinates.length !== 2) {
+      continue;
+    }
+
+    const lng = Number(coordinates[0]);
+
+    const lat = Number(coordinates[1]);
+
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+      continue;
+    }
+
+    const weight = Number(nlpFeature.properties?.weight ?? 0);
+
+    if (!Number.isFinite(weight)) {
+      continue;
+    }
+
+    const nlpPoint = point([lng, lat]);
+
+    for (const polygon of polygonEntries) {
+      const { minLng, maxLng, minLat, maxLat } = polygon.bbox;
+
+      if (lng < minLng || lng > maxLng || lat < minLat || lat > maxLat) {
+        continue;
+      }
+
+      try {
+        if (booleanPointInPolygon(nlpPoint, polygon.feature as any)) {
+          const current = weights.get(polygon.code) ?? 0;
+
+          weights.set(polygon.code, current + weight);
+
+          break;
+        }
+      } catch {
+        continue;
+      }
+    }
+  }
+
+  return weights;
+}
+
+function addNLPWeightsToPolygons(
+  polygons: GeoJSONFeature[],
+  features: HeatmapFeature[],
+): GeoJSONFeature[] {
+  const weights = aggregateNLPWeights(polygons, features);
+
+  return polygons.map((feature) => {
+    const code = feature?.properties?.code;
+
+    return {
+      ...feature,
+      properties: {
+        ...(feature.properties ?? {}),
+        nlp_weight: code ? Number(weights.get(String(code)) ?? 0) : 0,
+      },
+    };
+  });
+}
+
+function getRiskColor(weight: number): string {
+  if (weight > 100) {
+    return "#ef4444";
+  }
+
+  if (weight > 75) {
+    return "#f97316";
+  }
+
+  if (weight > 50) {
+    return "#facc15";
+  }
+
+  if (weight > 25) {
+    return "#22c55e";
+  }
+
+  if (weight > 0) {
+    return "#22c55e";
+  }
+
+  return "#94a3b8";
+}
+
+function getProvinceStyle(feature?: any): L.PathOptions {
+  const weight = Number(feature?.properties?.nlp_weight ?? 0);
+
+  const color = getRiskColor(weight);
+
+  return {
+    renderer: canvasRenderer,
+    color,
+    weight: 1.5,
+    opacity: 0.9,
+    fillColor: color,
+    fillOpacity: 0.025,
+  };
+}
+
+function getMunicipalityStyle(feature?: any): L.PathOptions {
+  const weight = Number(feature?.properties?.nlp_weight ?? 0);
+
+  const color = getRiskColor(weight);
+
+  return {
+    renderer: canvasRenderer,
+    color,
+    weight: 0.7,
+    opacity: 0.7,
+    fillColor: color,
+    fillOpacity: 0.01,
+  };
+}
+
+function getRegionStyle(): L.PathOptions {
+  return {
+    renderer: canvasRenderer,
+    color: "#1e293b",
+    weight: 1,
+    opacity: 0.7,
+    fillColor: "#3b82f6",
+    fillOpacity: 0.005,
+  };
+}
+
 export default function SurveillanceMap() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<maplibregl.Map | null>(null);
-  const nlpPopupRef = useRef<maplibregl.Popup | null>(null);
+  const mapRef = useRef<L.Map | null>(null);
 
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
+
+  const [selectedMunicipality, setSelectedMunicipality] = useState<
+    string | null
+  >(null);
 
   const { data: GeomData } = useFormQuery<any>({
     key: ["GetAllGeom"],
@@ -79,889 +835,394 @@ export default function SurveillanceMap() {
     headers,
   });
 
-  const getNLPFeatures = (): HeatmapFeature[] => {
+  const regions = GeomData?.data?.regions;
+
+  const provinces = GeomData?.data?.provinces;
+
+  const municipalities = GeomData?.data?.municipalities;
+
+  const nlpFeatures = useMemo<HeatmapFeature[]>(() => {
     const features = NLPData?.data?.features;
 
     if (!Array.isArray(features)) {
       return [];
     }
 
-    return features.filter(
-      (feature: any) =>
+    return features.filter((feature: any) => {
+      const coordinates = feature?.geometry?.coordinates;
+
+      return (
         feature?.geometry?.type === "Point" &&
-        Array.isArray(feature.geometry.coordinates) &&
-        feature.geometry.coordinates.length === 2 &&
-        Number.isFinite(Number(feature.geometry.coordinates[0])) &&
-        Number.isFinite(Number(feature.geometry.coordinates[1])),
-    );
-  };
+        Array.isArray(coordinates) &&
+        coordinates.length === 2 &&
+        Number.isFinite(Number(coordinates[0])) &&
+        Number.isFinite(Number(coordinates[1]))
+      );
+    });
+  }, [NLPData]);
 
-  const getGeometryCoordinates = (geometry: any): number[][] => {
-    if (!geometry?.coordinates) return [];
-
-    if (geometry.type === "Polygon") {
-      return geometry.coordinates
-        .flat(1)
-        .filter(
-          (coordinate: any) =>
-            Array.isArray(coordinate) &&
-            coordinate.length >= 2 &&
-            Number.isFinite(Number(coordinate[0])) &&
-            Number.isFinite(Number(coordinate[1])),
-        );
+  const provinceFeatures = useMemo<GeoJSONFeature[]>(() => {
+    if (!Array.isArray(provinces?.features)) {
+      return [];
     }
 
-    if (geometry.type === "MultiPolygon") {
-      return geometry.coordinates
-        .flat(2)
-        .filter(
-          (coordinate: any) =>
-            Array.isArray(coordinate) &&
-            coordinate.length >= 2 &&
-            Number.isFinite(Number(coordinate[0])) &&
-            Number.isFinite(Number(coordinate[1])),
-        );
+    return provinces.features;
+  }, [provinces]);
+
+  const filteredMunicipalities = useMemo<GeoJSONFeature[]>(() => {
+    if (!Array.isArray(municipalities?.features)) {
+      return [];
     }
 
-    return [];
-  };
-
-  const getBoundsFromGeometry = (geometry: any) => {
-    if (!geometry) return null;
-
-    const coordinates = getGeometryCoordinates(geometry);
-
-    if (!coordinates.length) return null;
-
-    const lngs = coordinates.map((coordinate) => Number(coordinate[0]));
-    const lats = coordinates.map((coordinate) => Number(coordinate[1]));
-
-    return [
-      [Math.min(...lngs), Math.min(...lats)],
-      [Math.max(...lngs), Math.max(...lats)],
-    ] as maplibregl.LngLatBoundsLike;
-  };
-
-  const getCenterFromGeometry = (geometry: any) => {
-    if (!geometry) return null;
-
-    const coordinates = getGeometryCoordinates(geometry);
-
-    if (!coordinates.length) return null;
-
-    const lngs = coordinates.map((coordinate) => Number(coordinate[0]));
-    const lats = coordinates.map((coordinate) => Number(coordinate[1]));
-
-    return [
-      (Math.min(...lngs) + Math.max(...lngs)) / 2,
-      (Math.min(...lats) + Math.max(...lats)) / 2,
-    ];
-  };
-
-  const aggregateNLPWeights = (polygons: any[], features: HeatmapFeature[]) => {
-    const weights = new Map<string, number>();
-
-    polygons.forEach((polygonFeature: any) => {
-      const code = polygonFeature?.properties?.code;
-
-      if (code) {
-        weights.set(String(code), 0);
-      }
-    });
-
-    features.forEach((nlpFeature) => {
-      const coordinates = nlpFeature.geometry.coordinates;
-
-      if (
-        !Array.isArray(coordinates) ||
-        coordinates.length !== 2 ||
-        !Number.isFinite(Number(coordinates[0])) ||
-        !Number.isFinite(Number(coordinates[1]))
-      ) {
-        return;
-      }
-
-      const nlpPoint = point([Number(coordinates[0]), Number(coordinates[1])]);
-
-      const weight = Number(nlpFeature.properties?.weight ?? 0);
-
-      if (!Number.isFinite(weight)) {
-        return;
-      }
-
-      polygons.forEach((polygonFeature: any) => {
-        const code = polygonFeature?.properties?.code;
-
-        if (!code) {
-          return;
-        }
-
-        try {
-          if (booleanPointInPolygon(nlpPoint, polygonFeature as any)) {
-            const currentWeight = weights.get(String(code)) ?? 0;
-
-            weights.set(String(code), currentWeight + weight);
-          }
-        } catch {
-          return;
-        }
-      });
-    });
-
-    return weights;
-  };
-
-  const addNLPWeightsToPolygons = (
-    polygons: any[],
-    features: HeatmapFeature[],
-  ) => {
-    const weights = aggregateNLPWeights(polygons, features);
-
-    return polygons.map((feature: any) => {
-      const code = feature?.properties?.code;
-
-      return {
-        ...feature,
-        properties: {
-          ...feature.properties,
-          nlp_weight: code ? Number(weights.get(String(code)) ?? 0) : 0,
-        },
-      };
-    });
-  };
-
-  const safeSetFilter = (map: maplibregl.Map, layer: string, filter: any) => {
-    if (!map.getLayer(layer)) return;
-
-    map.setFilter(layer, filter);
-  };
-
-  const zoomToBounds = (bounds: any, code?: string) => {
-    const map = mapInstance.current;
-
-    if (!map || !bounds) return;
-
-    const geometry =
-      bounds.type === "Feature"
-        ? bounds.geometry
-        : bounds.type === "FeatureCollection"
-          ? null
-          : bounds;
-
-    const mapBounds = getBoundsFromGeometry(geometry);
-
-    if (!mapBounds) return;
-
-    map.fitBounds(mapBounds, {
-      padding: 40,
-      duration: 1000,
-      maxZoom: 10,
-    });
-
-    if (code) {
-      safeSetFilter(map, "province-highlight", ["==", ["get", "code"], code]);
-
-      setSelectedProvince(code);
-    }
-  };
-
-  useEffect(() => {
-    if (!mapRef.current) return;
-    if (mapInstance.current) return;
-    if (typeof window === "undefined") return;
-    if (!GeomData?.data) return;
-
-    const regions = GeomData.data.regions;
-    const provinces = GeomData.data.provinces;
-    const municipalities = GeomData.data.municipalities;
-
-    if (
-      !regions?.features ||
-      !provinces?.features ||
-      !municipalities?.features
-    ) {
-      return;
+    if (!selectedProvince) {
+      return municipalities.features;
     }
 
-    const initialNLPFeatures = getNLPFeatures();
+    return municipalities.features.filter((feature: any) => {
+      const properties = feature?.properties ?? {};
 
-    const coloredProvinces = addNLPWeightsToPolygons(
-      provinces.features,
-      initialNLPFeatures,
-    );
+      const provinceCode =
+        properties.province_code ??
+        properties.prov_code ??
+        properties.PROV_CODE ??
+        properties.provinceCode ??
+        properties.parent_code ??
+        properties.PARENT_CODE ??
+        properties.province ??
+        properties.PROVINCE;
 
-    const coloredMunicipalities = addNLPWeightsToPolygons(
-      municipalities.features,
-      initialNLPFeatures,
-    );
+      return (
+        provinceCode !== undefined &&
+        String(provinceCode) === String(selectedProvince)
+      );
+    });
+  }, [municipalities, selectedProvince]);
 
-    const municipalityLabelFeatures = municipalities.features
+  const coloredProvinces = useMemo(() => {
+    if (!provinceFeatures.length) {
+      return [];
+    }
+
+    return addNLPWeightsToPolygons(provinceFeatures, nlpFeatures);
+  }, [provinceFeatures, nlpFeatures]);
+
+  const coloredMunicipalities = useMemo(() => {
+    if (!filteredMunicipalities.length) {
+      return [];
+    }
+
+    return addNLPWeightsToPolygons(filteredMunicipalities, nlpFeatures);
+  }, [filteredMunicipalities, nlpFeatures]);
+
+  const municipalityLabelFeatures = useMemo(() => {
+    if (!filteredMunicipalities.length) {
+      return [];
+    }
+
+    return filteredMunicipalities
       .map((feature: any) => {
         const center = getCenterFromGeometry(feature.geometry);
 
-        if (!center) return null;
+        if (!center) {
+          return null;
+        }
 
         const properties = feature.properties ?? {};
 
+        const name =
+          properties.name ??
+          properties.municipality_name ??
+          properties.mun_name ??
+          properties.NAME_3 ??
+          properties.NAME ??
+          "";
+
+        if (!name) {
+          return null;
+        }
+
         return {
-          type: "Feature",
+          ...feature,
           properties: {
-            code: properties.code,
-            name:
-              properties.name ??
-              properties.municipality_name ??
-              properties.mun_name ??
-              properties.NAME_3 ??
-              properties.NAME ??
-              "",
-          },
-          geometry: {
-            type: "Point",
-            coordinates: center,
+            ...properties,
+            name,
           },
         };
       })
-      .filter((feature: any) => feature && feature.properties.name);
+      .filter((feature: any) => feature && feature.properties?.name);
+  }, [filteredMunicipalities]);
 
-    const map = new maplibregl.Map({
-      container: mapRef.current,
-      style: `https://maps.geo.${process.env.NEXT_PUBLIC_AWS_MAP_REGION}.amazonaws.com/v2/styles/Standard/descriptor?key=${process.env.NEXT_PUBLIC_AWS_MAP_API}`,
-      center: [121.774, 12.9],
-      zoom: 5,
-      minZoom: 4,
-      scrollZoom: true,
-    });
+  const regionGeoJSON = useMemo<FeatureCollection | null>(() => {
+    if (!Array.isArray(regions?.features)) {
+      return null;
+    }
 
-    mapInstance.current = map;
+    return {
+      type: "FeatureCollection",
+      features: regions.features,
+    };
+  }, [regions]);
 
-    const addLayerSafe = (mapInstance: maplibregl.Map, layer: any) => {
-      if (mapInstance.getLayer(layer.id)) {
+  const provinceGeoJSON = useMemo<FeatureCollection | null>(() => {
+    if (!coloredProvinces.length) {
+      return null;
+    }
+
+    return {
+      type: "FeatureCollection",
+      features: coloredProvinces,
+    };
+  }, [coloredProvinces]);
+
+  const municipalityGeoJSON = useMemo<FeatureCollection | null>(() => {
+    if (!coloredMunicipalities.length) {
+      return null;
+    }
+
+    return {
+      type: "FeatureCollection",
+      features: coloredMunicipalities,
+    };
+  }, [coloredMunicipalities]);
+
+  const selectedProvinceGeoJSON = useMemo<FeatureCollection | null>(() => {
+    if (!selectedProvince) {
+      return null;
+    }
+
+    const features = coloredProvinces.filter(
+      (feature: any) =>
+        String(feature?.properties?.code) === String(selectedProvince),
+    );
+
+    if (!features.length) {
+      return null;
+    }
+
+    return {
+      type: "FeatureCollection",
+      features,
+    };
+  }, [coloredProvinces, selectedProvince]);
+
+  const selectedMunicipalityGeoJSON = useMemo<FeatureCollection | null>(() => {
+    if (!selectedMunicipality) {
+      return null;
+    }
+
+    const features = coloredMunicipalities.filter(
+      (feature: any) =>
+        String(feature?.properties?.code) === String(selectedMunicipality),
+    );
+
+    if (!features.length) {
+      return null;
+    }
+
+    return {
+      type: "FeatureCollection",
+      features,
+    };
+  }, [coloredMunicipalities, selectedMunicipality]);
+
+  const zoomToBounds = useCallback(
+    (
+      bounds: any,
+      code?: string,
+      type: "province" | "municipality" = "province",
+    ) => {
+      const map = mapRef.current;
+
+      if (!map || !bounds) {
         return;
       }
 
-      mapInstance.addLayer(layer);
-    };
+      const geometry =
+        bounds?.type === "Feature"
+          ? bounds.geometry
+          : bounds?.type === "FeatureCollection"
+            ? null
+            : bounds;
 
-    map.on("load", () => {
-      map.addSource("regions", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: regions.features,
-        },
+      const mapBounds = getBoundsFromGeometry(geometry);
+
+      if (!mapBounds) {
+        return;
+      }
+
+      if (type === "province") {
+        setSelectedProvince(code ? String(code) : null);
+
+        setSelectedMunicipality(null);
+      }
+
+      if (type === "municipality") {
+        setSelectedMunicipality(code ? String(code) : null);
+      }
+
+      map.fitBounds(mapBounds, {
+        padding: [40, 40],
+        duration: 0.8,
+        maxZoom: type === "municipality" ? 12 : 10,
       });
+    },
+    [],
+  );
 
-      map.addSource("provinces", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: coloredProvinces,
-        },
-      });
+  const provinceOnEachFeature = useCallback((feature: any, layer: L.Layer) => {
+    const code = feature?.properties?.code;
 
-      map.addSource("municipalities", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: coloredMunicipalities,
-        },
-      });
+    const name =
+      feature?.properties?.name ??
+      feature?.properties?.province_name ??
+      feature?.properties?.NAME_1 ??
+      feature?.properties?.NAME ??
+      "";
 
-      map.addSource("municipality-labels", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: municipalityLabelFeatures,
-        },
-      });
+    const weight = Number(feature?.properties?.nlp_weight ?? 0);
 
-      map.addSource("nlp-heatmap", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: initialNLPFeatures,
-        },
-      });
+    layer.bindTooltip(
+      `
+            <div>
+              <strong>${escapeHTML(String(name))}</strong>
+              <br />
+              NLP Risk Weight:
+              ${weight.toFixed(2)}
+            </div>
+          `,
+      {
+        sticky: true,
+        direction: "top",
+      },
+    );
 
-      addLayerSafe(map, {
-        id: "regions-fill",
-        type: "fill",
-        source: "regions",
-        paint: {
-          "fill-color": "#3b82f6",
-          "fill-opacity": 0.01,
-        },
-      });
+    layer.on({
+      mouseover: (event) => {
+        const target = event.target as L.Path;
 
-      addLayerSafe(map, {
-        id: "provinces-fill",
-        type: "fill",
-        source: "provinces",
-        paint: {
-          "fill-color": "#e5e7eb",
-          "fill-opacity": 0.01,
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "municipalities-fill",
-        type: "fill",
-        source: "municipalities",
-        minzoom: 4.5,
-        paint: {
-          "fill-color": "#000000",
-          "fill-opacity": 0,
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "region-line",
-        type: "line",
-        source: "regions",
-        paint: {
-          "line-color": "#1e293b",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            0.7,
-            7,
-            1,
-            10,
-            1.5,
-          ],
-          "line-opacity": 0.9,
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "provinces-line",
-        type: "line",
-        source: "provinces",
-        paint: {
-          "line-color": [
-            "case",
-            [">", ["coalesce", ["get", "nlp_weight"], 0], 0],
-            [
-              "interpolate",
-              ["linear"],
-              ["get", "nlp_weight"],
-              0,
-              "#22c55e",
-              25,
-              "#22c55e",
-              50,
-              "#facc15",
-              75,
-              "#f97316",
-              100,
-              "#ef4444",
-            ],
-            "#94a3b8",
-          ],
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            1,
-            7,
-            1.5,
-            10,
-            2.5,
-            12,
-            3,
-          ],
-          "line-opacity": 1,
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "municipalities-line",
-        type: "line",
-        source: "municipalities",
-        minzoom: 4.5,
-        paint: {
-          "line-color": [
-            "case",
-            [">", ["coalesce", ["get", "nlp_weight"], 0], 0],
-            [
-              "interpolate",
-              ["linear"],
-              ["get", "nlp_weight"],
-              0,
-              "#22c55e",
-              25,
-              "#22c55e",
-              50,
-              "#facc15",
-              75,
-              "#f97316",
-              100,
-              "#ef4444",
-            ],
-            "#cbd5e1",
-          ],
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4.5,
-            0.6,
-            5,
-            0.8,
-            7,
-            1,
-            10,
-            1.4,
-            12,
-            2,
-            14,
-            2.5,
-          ],
-          "line-opacity": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4.5,
-            0.55,
-            6,
-            0.7,
-            8,
-            0.85,
-            10,
-            1,
-          ],
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "province-highlight",
-        type: "line",
-        source: "provinces",
-        paint: {
-          "line-color": "#35408E",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            2,
-            6,
-            2.5,
-            8,
-            3,
-            10,
-            4,
-            12,
-            5,
-          ],
-          "line-opacity": 1,
-        },
-        filter: ["==", ["get", "code"], ""],
-      });
-
-      addLayerSafe(map, {
-        id: "municipality-highlight",
-        type: "line",
-        source: "municipalities",
-        paint: {
-          "line-color": "#35408E",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            5,
-            2,
-            8,
-            3,
-            12,
-            4,
-          ],
-          "line-opacity": 1,
-        },
-        filter: ["==", ["get", "code"], ""],
-      });
-
-      addLayerSafe(map, {
-        id: "nlp-heatmap",
-        type: "heatmap",
-        source: "nlp-heatmap",
-        maxzoom: 14,
-        paint: {
-          "heatmap-weight": [
-            "interpolate",
-            ["linear"],
-            ["coalesce", ["to-number", ["get", "weight"]], 0],
-            0,
-            0,
-            10,
-            0.15,
-            25,
-            0.3,
-            50,
-            0.55,
-            75,
-            0.8,
-            100,
-            1,
-          ],
-          "heatmap-intensity": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            1.5,
-            5,
-            2,
-            6,
-            2.5,
-            8,
-            3,
-            10,
-            4,
-            12,
-            5,
-          ],
-          "heatmap-radius": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            20,
-            5,
-            25,
-            6,
-            32,
-            8,
-            42,
-            10,
-            55,
-            12,
-            65,
-          ],
-          "heatmap-opacity": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4,
-            0.95,
-            8,
-            0.9,
-            12,
-            0.8,
-            13,
-            0.7,
-            14,
-            0,
-          ],
-          "heatmap-color": [
-            "interpolate",
-            ["linear"],
-            ["heatmap-density"],
-            0,
-            "rgba(0,0,0,0)",
-            0.1,
-            "rgba(59,130,246,0.35)",
-            0.25,
-            "rgba(34,197,94,0.5)",
-            0.45,
-            "rgba(250,204,21,0.7)",
-            0.65,
-            "rgba(249,115,22,0.85)",
-            0.8,
-            "rgba(239,68,68,0.95)",
-            1,
-            "rgba(127,29,29,1)",
-          ],
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "nlp-hover-points",
-        type: "circle",
-        source: "nlp-heatmap",
-        maxzoom: 14,
-        paint: {
-          "circle-radius": 12,
-          "circle-color": "#000000",
-          "circle-opacity": 0,
-          "circle-stroke-opacity": 0,
-        },
-      });
-
-      addLayerSafe(map, {
-        id: "municipality-labels",
-        type: "symbol",
-        source: "municipality-labels",
-        minzoom: 4.5,
-        layout: {
-          "text-field": ["get", "name"],
-          "text-size": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            4.5,
-            6,
-            6,
-            7,
-            8,
-            8,
-            10,
-            9,
-            12,
-            10,
-            14,
-            11,
-          ],
-          "text-anchor": "center",
-          "text-allow-overlap": false,
-          "text-ignore-placement": false,
-          "text-padding": 2,
-          "symbol-placement": "point",
-        },
-        paint: {
-          "text-color": "#1e293b",
-          "text-halo-color": "#ffffff",
-          "text-halo-width": 2,
-          "text-halo-blur": 0.4,
-        },
-      });
-
-      map.on("click", "provinces-fill", (e) => {
-        const feature = e.features?.[0];
-
-        if (!feature) return;
-
-        const code = feature.properties?.code;
-
-        if (!code) return;
-
-        setSelectedProvince(String(code));
-
-        safeSetFilter(map, "province-highlight", [
-          "==",
-          ["get", "code"],
-          String(code),
-        ]);
-
-        const mapBounds = getBoundsFromGeometry(feature.geometry);
-
-        if (!mapBounds) return;
-
-        map.fitBounds(mapBounds, {
-          padding: 40,
-          duration: 800,
-          maxZoom: 10,
+        target.setStyle({
+          weight: 3,
+          color: "#35408E",
+          fillOpacity: 0.08,
         });
-      });
 
-      map.on("click", "municipalities-fill", (e) => {
-        const feature = e.features?.[0];
+        target.bringToFront();
+      },
 
-        if (!feature) return;
+      mouseout: (event) => {
+        const target = event.target as L.Path;
 
-        const code = feature.properties?.code;
+        target.setStyle(getProvinceStyle(feature));
+      },
 
-        if (!code) return;
+      click: (event) => {
+        const target = event.target as L.Polygon;
 
-        safeSetFilter(map, "municipality-highlight", [
-          "==",
-          ["get", "code"],
-          String(code),
-        ]);
+        const map = mapRef.current;
 
-        const mapBounds = getBoundsFromGeometry(feature.geometry);
-
-        if (!mapBounds) return;
-
-        map.fitBounds(mapBounds, {
-          padding: 30,
-          duration: 600,
-          maxZoom: 12,
-        });
-      });
-
-      map.on("mouseenter", "provinces-fill", () => {
-        map.getCanvas().style.cursor = "pointer";
-      });
-
-      map.on("mouseleave", "provinces-fill", () => {
-        map.getCanvas().style.cursor = "";
-      });
-
-      map.on("mouseenter", "municipalities-fill", () => {
-        map.getCanvas().style.cursor = "pointer";
-      });
-
-      map.on("mouseleave", "municipalities-fill", () => {
-        map.getCanvas().style.cursor = "";
-      });
-
-      map.on("mouseenter", "nlp-hover-points", (e) => {
-        map.getCanvas().style.cursor = "pointer";
-
-        const feature = e.features?.[0];
-
-        if (!feature) return;
-
-        const properties = feature.properties ?? {};
-
-        const platform = properties.platform ?? "Unknown";
-        const keyword = properties.keyword ?? "Unknown";
-        const sentiment = Number(properties.sentiment ?? 0);
-        const engagement = Number(properties.engagement ?? 0);
-        const weight = Number(properties.weight ?? 0);
-
-        const createdAt = properties.created_at
-          ? new Date(String(properties.created_at)).toLocaleString()
-          : "Unknown";
-
-        if (nlpPopupRef.current) {
-          nlpPopupRef.current.remove();
+        if (!map) {
+          return;
         }
 
-        nlpPopupRef.current = new maplibregl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-          offset: 12,
-        })
-          .setLngLat(e.lngLat)
-          .setHTML(
-            `
-              <div style="min-width:240px;">
-                <div style="font-weight:700;font-size:14px;margin-bottom:10px;">
-                  NLP Surveillance
-                </div>
+        if (code) {
+          setSelectedProvince(String(code));
 
-                <div style="margin-bottom:5px;">
-                  <strong>Platform:</strong> ${platform}
-                </div>
-
-                <div style="margin-bottom:5px;">
-                  <strong>Keyword:</strong> ${keyword}
-                </div>
-
-                <div style="margin-bottom:5px;">
-                  <strong>Sentiment:</strong> ${sentiment.toFixed(2)}
-                </div>
-
-                <div style="margin-bottom:5px;">
-                  <strong>Engagement:</strong> ${engagement.toLocaleString()}
-                </div>
-
-                <div style="margin-bottom:5px;">
-                  <strong>Risk Weight:</strong> ${weight}
-                </div>
-
-                <div>
-                  <strong>Date:</strong> ${createdAt}
-                </div>
-              </div>
-            `,
-          )
-          .addTo(map);
-      });
-
-      map.on("mousemove", "nlp-hover-points", (e) => {
-        if (!nlpPopupRef.current) return;
-
-        nlpPopupRef.current.setLngLat(e.lngLat);
-      });
-
-      map.on("mouseleave", "nlp-hover-points", () => {
-        map.getCanvas().style.cursor = "";
-
-        if (nlpPopupRef.current) {
-          nlpPopupRef.current.remove();
-          nlpPopupRef.current = null;
+          setSelectedMunicipality(null);
         }
-      });
 
-      map.addControl(new maplibregl.NavigationControl());
+        const bounds = target.getBounds();
+
+        if (bounds.isValid()) {
+          map.fitBounds(bounds, {
+            padding: [40, 40],
+            duration: 0.8,
+            maxZoom: 10,
+          });
+        }
+      },
     });
+  }, []);
 
-    return () => {
-      if (nlpPopupRef.current) {
-        nlpPopupRef.current.remove();
-        nlpPopupRef.current = null;
-      }
+  const municipalityOnEachFeature = useCallback(
+    (feature: any, layer: L.Layer) => {
+      const code = feature?.properties?.code;
 
-      map.remove();
-      mapInstance.current = null;
-    };
-  }, [GeomData?.data]);
+      const name =
+        feature?.properties?.name ??
+        feature?.properties?.municipality_name ??
+        feature?.properties?.mun_name ??
+        feature?.properties?.NAME_3 ??
+        feature?.properties?.NAME ??
+        "";
 
-  useEffect(() => {
-    const map = mapInstance.current;
+      const weight = Number(feature?.properties?.nlp_weight ?? 0);
 
-    if (!map) return;
-    if (!GeomData?.data) return;
+      layer.bindTooltip(
+        `
+            <div>
+              <strong>${escapeHTML(String(name))}</strong>
+              <br />
+              NLP Risk Weight:
+              ${weight.toFixed(2)}
+            </div>
+          `,
+        {
+          sticky: true,
+          direction: "top",
+        },
+      );
 
-    const provinces = GeomData.data.provinces;
-    const municipalities = GeomData.data.municipalities;
+      layer.on({
+        mouseover: (event) => {
+          const target = event.target as L.Path;
 
-    if (!provinces?.features || !municipalities?.features) {
-      return;
-    }
+          target.setStyle({
+            weight: 2,
+            color: "#35408E",
+            fillOpacity: 0.08,
+          });
 
-    const updateNLPData = () => {
-      const nlpSource = map.getSource("nlp-heatmap") as
-        | maplibregl.GeoJSONSource
-        | undefined;
+          target.bringToFront();
+        },
 
-      const provinceSource = map.getSource("provinces") as
-        | maplibregl.GeoJSONSource
-        | undefined;
+        mouseout: (event) => {
+          const target = event.target as L.Path;
 
-      const municipalitySource = map.getSource("municipalities") as
-        | maplibregl.GeoJSONSource
-        | undefined;
+          target.setStyle(getMunicipalityStyle(feature));
+        },
 
-      const nlpFeatures = getNLPFeatures();
+        click: (event) => {
+          const target = event.target as L.Polygon;
 
-      if (nlpSource) {
-        nlpSource.setData({
-          type: "FeatureCollection",
-          features: nlpFeatures,
-        });
-      }
+          const map = mapRef.current;
 
-      if (provinceSource && municipalitySource) {
-        const coloredProvinces = addNLPWeightsToPolygons(
-          provinces.features,
-          nlpFeatures,
-        );
+          if (!map) {
+            return;
+          }
 
-        const coloredMunicipalities = addNLPWeightsToPolygons(
-          municipalities.features,
-          nlpFeatures,
-        );
+          if (code) {
+            setSelectedMunicipality(String(code));
+          }
 
-        provinceSource.setData({
-          type: "FeatureCollection",
-          features: coloredProvinces,
-        });
+          const bounds = target.getBounds();
 
-        municipalitySource.setData({
-          type: "FeatureCollection",
-          features: coloredMunicipalities,
-        });
-      }
-    };
-
-    if (map.isStyleLoaded()) {
-      updateNLPData();
-    } else {
-      map.once("load", updateNLPData);
-    }
-  }, [NLPData, GeomData?.data]);
+          if (bounds.isValid()) {
+            map.fitBounds(bounds, {
+              padding: [30, 30],
+              duration: 0.6,
+              maxZoom: 12,
+            });
+          }
+        },
+      });
+    },
+    [],
+  );
 
   return (
     <div className={styles.container}>
       <div className={styles.col1}>
-        <Title size="sm">Administrative Hierarchy</Title>
+        <Title size="md">Administrative Region</Title>
 
         <div className={styles.regions}>
           {RegionLoading
@@ -970,13 +1231,19 @@ export default function SurveillanceMap() {
                 <div key={region.region_code}>
                   <div
                     style={{
-                      fontWeight: "700",
+                      fontWeight: 700,
                       padding: 8,
                       cursor: "pointer",
                       backgroundColor: "#35408E",
                       color: "white",
                     }}
-                    onClick={() => zoomToBounds(region.bounds)}
+                    onClick={() => {
+                      setSelectedProvince(null);
+
+                      setSelectedMunicipality(null);
+
+                      zoomToBounds(region.bounds);
+                    }}
                   >
                     {region.region_name}
                   </div>
@@ -1000,7 +1267,7 @@ export default function SurveillanceMap() {
                         opacity: 0.9,
                       }}
                       onClick={() =>
-                        zoomToBounds(province.bounds, province.code)
+                        zoomToBounds(province.bounds, province.code, "province")
                       }
                     >
                       {province.name}
@@ -1011,7 +1278,92 @@ export default function SurveillanceMap() {
         </div>
       </div>
 
-      <div ref={mapRef} className={styles.col2} />
+      <div className={styles.col2}>
+        <MapContainer
+          center={[12.8797, 121.774]}
+          zoom={6}
+          minZoom={5}
+          maxZoom={18}
+          scrollWheelZoom
+          zoomControl
+          preferCanvas
+          maxBounds={[
+            [4.0, 116.0],
+            [21.5, 127.0],
+          ]}
+          maxBoundsViscosity={1.0}
+          style={{
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          <MapController mapRef={mapRef} />
+
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            maxZoom={19}
+            updateWhenIdle
+            keepBuffer={2}
+          />
+
+          {regionGeoJSON && (
+            <DynamicGeoJSON data={regionGeoJSON} style={getRegionStyle} />
+          )}
+
+          {provinceGeoJSON && (
+            <DynamicGeoJSON
+              data={provinceGeoJSON}
+              style={getProvinceStyle}
+              onEachFeature={provinceOnEachFeature}
+            />
+          )}
+
+          {municipalityGeoJSON && (
+            <DynamicGeoJSON
+              data={municipalityGeoJSON}
+              style={getMunicipalityStyle}
+              onEachFeature={municipalityOnEachFeature}
+            />
+          )}
+
+          <MunicipalityLabels features={municipalityLabelFeatures} />
+
+          <HeatmapLayer features={nlpFeatures} />
+
+          <NLPPointsLayer features={nlpFeatures} />
+
+          {selectedProvinceGeoJSON && (
+            <GeoJSON
+              data={selectedProvinceGeoJSON as any}
+              style={{
+                renderer: canvasRenderer,
+                color: "#35408E",
+                weight: 3,
+                opacity: 1,
+                fillColor: "#35408E",
+                fillOpacity: 0.05,
+                interactive: false,
+              }}
+            />
+          )}
+
+          {selectedMunicipalityGeoJSON && (
+            <GeoJSON
+              data={selectedMunicipalityGeoJSON as any}
+              style={{
+                renderer: canvasRenderer,
+                color: "#35408E",
+                weight: 3,
+                opacity: 1,
+                fillColor: "#35408E",
+                fillOpacity: 0.05,
+                interactive: false,
+              }}
+            />
+          )}
+        </MapContainer>
+      </div>
 
       <div className={styles.legends}>
         {legends.map((legend) => (

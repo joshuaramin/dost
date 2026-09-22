@@ -175,7 +175,7 @@ export default function SurveyID({ slug }: Props) {
 
   if (isLoading) {
     return (
-      <TemplateSurvey title="" slug="">
+      <TemplateSurvey title="" slug="" status={false}>
         <div className={styles.container}>
           <div className={styles.question_container}>Loading...</div>
         </div>
@@ -184,7 +184,11 @@ export default function SurveyID({ slug }: Props) {
   }
 
   return (
-    <TemplateSurvey title={SurveyData?.data.title ?? ""} slug={slug}>
+    <TemplateSurvey
+      title={SurveyData?.data.title ?? ""}
+      slug={slug}
+      status={Boolean(SurveyData?.data.is_published)}
+    >
       <div className={styles.sub_header}>
         <button
           type="button"

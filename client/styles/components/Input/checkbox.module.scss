@@ -2,34 +2,54 @@
 @use "@/styles/variables.module" as *;
 @use "@/styles/colors.module" as *;
 @use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
     input[type="checkbox"] {
         appearance: none;
         width: 16px;
         height: 16px;
+        margin: 0;
         border: 2px solid color(primary, 500);
         border-radius: radius(sm);
         display: grid;
         place-content: center;
         cursor: pointer;
+        flex-shrink: 0;
+        transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
     }
 
     input[type="checkbox"]::before {
         content: "";
         width: 8px;
-        height: 8px;
-        transform: scale(0);
-        background: white;
-        border-radius: 2px;
-        transition: 0.1s ease-in-out;
+        height: 5px;
+        border-left: 2px solid white;
+        border-bottom: 2px solid white;
+        transform: rotate(-45deg) scale(0);
+        transition: transform 0.1s ease-in-out;
+        margin-top: -2px;
     }
 
     input[type="checkbox"]:checked {
         background: color(primary, 500);
+        border-color: color(primary, 500);
     }
 
     input[type="checkbox"]:checked::before {
-        transform: scale(1);
+        transform: rotate(-45deg) scale(1);
+    }
+
+    input[type="checkbox"]:focus-visible {
+        outline: 2px solid color(primary, 300);
+        outline-offset: 2px;
+    }
+
+    input[type="checkbox"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
     }
 }

@@ -1,0 +1,29 @@
+ @use "@/styles/mixins.module" as *;
+ @use "@/styles/variables.module" as *;
+ @use "@/styles/colors.module" as *;
+ @use "@/styles/spacing.module" as *;
+ @use "@/styles/radius.module" as *;
+
+ .container {
+     height: 100vh;
+     width: 100%;
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+     padding: 5rem 25rem;
+
+     .verification_container {
+         padding: 40px;
+         border-radius: radius(tiny);
+         border: 1px solid color(neutral, 500);
+         display: flex;
+         align-content: center;
+         flex-direction: column;
+         gap: 10px;
+         //  justify-content: center;
+
+         svg {
+             color: color(success, 600)
+         }
+     }
+ }

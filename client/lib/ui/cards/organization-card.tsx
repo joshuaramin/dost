@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "@/styles/lib/ui/dashboard/system-maintenance/organization/organization-card.module.scss";
+import styles from "@/styles/lib/ui/cards/organization-card.module.scss";
 import { TbDots, TbEdit, TbTrash } from "react-icons/tb";
 
 //components
@@ -18,6 +18,7 @@ import Button from "@/components/Button/button";
 import { useForm } from "react-hook-form";
 import { toastError, toastSuccess } from "../toast";
 import headers from "@/lib/utils/headers";
+import { sessionStore } from "@/lib/utils/sessions";
 
 interface Props {
   id: string;
@@ -34,6 +35,7 @@ export default function OrganizationCard({
   id,
   name,
 }: Props) {
+  const token = sessionStore.get();
   const [toggle, setToggle] = useState<boolean>(false);
   const [onDeleteToggle, setOnDeleteToggle] = useState<boolean>(false);
 
@@ -58,6 +60,12 @@ export default function OrganizationCard({
     headers,
   });
 
+  const activityMutation = useFormMutation({
+    key: ["CreateActivityLogs"],
+    method: "POST",
+    url: "maintenance/activity-logs",
+  });
+
   const onHandleDeleteMutation = () => {
     onDeleteMutation.mutate(null, {
       onSuccess: () => {
@@ -65,6 +73,18 @@ export default function OrganizationCard({
           title: "Deleted Successfully",
           body: "The item has been deleted successfully.",
         });
+
+        activityMutation.mutate(
+          {
+            type: "DELETE",
+            description: "User deleted an item.",
+            user_id: token?.data.user_id,
+          },
+          {
+            onSuccess: () => {},
+            onError: () => {},
+          },
+        );
       },
       onError: () => {
         toastError({

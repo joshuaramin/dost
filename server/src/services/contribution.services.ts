@@ -85,6 +85,7 @@ export const GetAllContributions = async ({
       region: true,
       created_at: true,
       sentiment: true,
+      user: true,
     },
     orderBy: {
       [orderBy]: sortBy,

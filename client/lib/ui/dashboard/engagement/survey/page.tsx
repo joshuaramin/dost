@@ -88,29 +88,27 @@ export default function Surveypage() {
           />
         </Grid>
 
-        <Grid>
-          <Grid.Row gap={10}>
-            {data?.data.totalCount === 0 ? (
-              <EmptyState
-                title="No data found"
-                description="There is currently no data to display."
-              />
-            ) : (
-              data?.data.edges.map(
-                ({
-                  node: { survey_id, slug, title, description, questions },
-                }) => (
-                  <SurveyCard
-                    key={survey_id}
-                    title={title}
-                    description={description}
-                    total={questions.length}
-                    slug={slug}
-                  />
-                ),
-              )
-            )}
-          </Grid.Row>
+        <Grid max={"1fr"} min={330}>
+          {data?.data.totalCount === 0 ? (
+            <EmptyState
+              title="No data found"
+              description="There is currently no data to display."
+            />
+          ) : (
+            data?.data.edges.map(
+              ({
+                node: { survey_id, slug, title, description, questions },
+              }) => (
+                <SurveyCard
+                  key={survey_id}
+                  title={title}
+                  description={description}
+                  total={questions.length}
+                  slug={slug}
+                />
+              ),
+            )
+          )}
         </Grid>
 
         <Pagination

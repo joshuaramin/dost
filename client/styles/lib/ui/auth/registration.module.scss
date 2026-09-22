@@ -161,31 +161,48 @@
          }
      }
 
-     .review {
-         width: 100%;
-         display: flex;
-         flex-direction: column;
-         gap: 20px;
+     .step_3_container {
 
-         padding: 24px;
-
-         background-color: color(neutral, 100);
-         border: 1px solid color(neutral, 300);
-         border-radius: radius(base);
-
-         .review_item {
+         .review {
+             width: 100%;
              display: flex;
              flex-direction: column;
-             gap: 6px;
-             padding-bottom: 16px;
-             border-bottom: 1px solid color(neutral, 200);
+             gap: 20px;
 
-             &:last-child {
-                 padding-bottom: 0;
-                 border-bottom: none;
+             padding: 24px;
+
+             background-color: color(neutral, 100);
+             border: 1px solid color(neutral, 300);
+             border-radius: radius(base);
+
+             .review_item {
+                 display: flex;
+                 flex-direction: column;
+                 gap: 6px;
+                 padding-bottom: 16px;
+                 border-bottom: 1px solid color(neutral, 200);
+
+                 &:last-child {
+                     padding-bottom: 0;
+                     border-bottom: none;
+                 }
+             }
+         }
+
+         .taa {
+             display: flex;
+             flex-direction: column;
+             padding: 10 20px;
+
+             .taa_item {
+                 display: flex;
+                 align-items: center;
+                 gap: 10px;
+                 margin: 5px 0;
              }
          }
      }
+
 
      @include down(md) {
          .container_role {

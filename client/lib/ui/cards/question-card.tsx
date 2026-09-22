@@ -26,7 +26,7 @@ import QuestionOptionCard from "./question-option-card";
 import { SurveyQuestionFormField } from "@/lib/types/survey-management";
 import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
-import { toastSuccess } from "@/lib/ui/toast";
+import { toastError, toastSuccess } from "@/lib/ui/toast";
 
 interface Props {
   slug: string;
@@ -113,7 +113,10 @@ export default function QuestionCard({
           });
         },
         onError: (error) => {
-          console.error("Failed to create survey question:", error);
+          toastError({
+            title: "Creation Failed",
+            body: "The question could not be created. Please try again.",
+          });
         },
       },
     );
@@ -132,7 +135,10 @@ export default function QuestionCard({
         });
       },
       onError: (error) => {
-        console.error("Failed to delete survey question:", error);
+        toastError({
+          title: "Deletion Failed",
+          body: "The item could not be deleted. Please try again.",
+        });
       },
     });
   };

@@ -362,6 +362,7 @@ export type ContributionWhereInput = {
   user_id?: Prisma.StringFilter<"Contribution"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  rewardTransactions?: Prisma.RewardTransactionListRelationFilter
 }
 
 export type ContributionOrderByWithRelationInput = {
@@ -390,6 +391,7 @@ export type ContributionOrderByWithRelationInput = {
   user_id?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   reviewer?: Prisma.UserOrderByWithRelationInput
+  rewardTransactions?: Prisma.RewardTransactionOrderByRelationAggregateInput
 }
 
 export type ContributionWhereUniqueInput = Prisma.AtLeast<{
@@ -421,6 +423,7 @@ export type ContributionWhereUniqueInput = Prisma.AtLeast<{
   user_id?: Prisma.StringFilter<"Contribution"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  rewardTransactions?: Prisma.RewardTransactionListRelationFilter
 }, "contribution_id">
 
 export type ContributionOrderByWithAggregationInput = {
@@ -507,6 +510,7 @@ export type ContributionCreateInput = {
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutContributionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutReviewed_contributionsInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionUncheckedCreateInput = {
@@ -533,6 +537,7 @@ export type ContributionUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionUpdateInput = {
@@ -559,6 +564,7 @@ export type ContributionUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutContributionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutReviewed_contributionsNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionUncheckedUpdateInput = {
@@ -585,6 +591,7 @@ export type ContributionUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionCreateManyInput = {
@@ -671,6 +678,11 @@ export type ContributionListRelationFilter = {
 
 export type ContributionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ContributionScalarRelationFilter = {
+  is?: Prisma.ContributionWhereInput
+  isNot?: Prisma.ContributionWhereInput
 }
 
 export type ContributionCountOrderByAggregateInput = {
@@ -843,6 +855,20 @@ export type ContributionUncheckedUpdateManyWithoutReviewerNestedInput = {
   deleteMany?: Prisma.ContributionScalarWhereInput | Prisma.ContributionScalarWhereInput[]
 }
 
+export type ContributionCreateNestedOneWithoutRewardTransactionsInput = {
+  create?: Prisma.XOR<Prisma.ContributionCreateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedCreateWithoutRewardTransactionsInput>
+  connectOrCreate?: Prisma.ContributionCreateOrConnectWithoutRewardTransactionsInput
+  connect?: Prisma.ContributionWhereUniqueInput
+}
+
+export type ContributionUpdateOneRequiredWithoutRewardTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ContributionCreateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedCreateWithoutRewardTransactionsInput>
+  connectOrCreate?: Prisma.ContributionCreateOrConnectWithoutRewardTransactionsInput
+  upsert?: Prisma.ContributionUpsertWithoutRewardTransactionsInput
+  connect?: Prisma.ContributionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ContributionUpdateToOneWithWhereWithoutRewardTransactionsInput, Prisma.ContributionUpdateWithoutRewardTransactionsInput>, Prisma.ContributionUncheckedUpdateWithoutRewardTransactionsInput>
+}
+
 export type NullableEnumContributionSentimentFieldUpdateOperationsInput = {
   set?: $Enums.ContributionSentiment | null
 }
@@ -890,6 +916,7 @@ export type ContributionCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   reviewer?: Prisma.UserCreateNestedOneWithoutReviewed_contributionsInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionUncheckedCreateWithoutUserInput = {
@@ -915,6 +942,7 @@ export type ContributionUncheckedCreateWithoutUserInput = {
   barangay: string
   created_at?: Date | string
   updated_at?: Date | string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionCreateOrConnectWithoutUserInput = {
@@ -950,6 +978,7 @@ export type ContributionCreateWithoutReviewerInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user: Prisma.UserCreateNestedOneWithoutContributionsInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionUncheckedCreateWithoutReviewerInput = {
@@ -975,6 +1004,7 @@ export type ContributionUncheckedCreateWithoutReviewerInput = {
   created_at?: Date | string
   updated_at?: Date | string
   user_id: string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutContributionInput
 }
 
 export type ContributionCreateOrConnectWithoutReviewerInput = {
@@ -1046,6 +1076,126 @@ export type ContributionUpdateWithWhereUniqueWithoutReviewerInput = {
 export type ContributionUpdateManyWithWhereWithoutReviewerInput = {
   where: Prisma.ContributionScalarWhereInput
   data: Prisma.XOR<Prisma.ContributionUpdateManyMutationInput, Prisma.ContributionUncheckedUpdateManyWithoutReviewerInput>
+}
+
+export type ContributionCreateWithoutRewardTransactionsInput = {
+  contribution_id?: string
+  type: string
+  slug: string
+  content: string
+  is_deleted?: boolean
+  image_url?: string | null
+  source_url?: string | null
+  sentiment?: $Enums.ContributionSentiment | null
+  classification?: $Enums.ContributionClassification | null
+  classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
+  confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.ContributionStatus
+  reviewed_at?: Date | string | null
+  review_reason?: string | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
+  created_at?: Date | string
+  updated_at?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutContributionsInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutReviewed_contributionsInput
+}
+
+export type ContributionUncheckedCreateWithoutRewardTransactionsInput = {
+  contribution_id?: string
+  type: string
+  slug: string
+  content: string
+  is_deleted?: boolean
+  image_url?: string | null
+  source_url?: string | null
+  sentiment?: $Enums.ContributionSentiment | null
+  classification?: $Enums.ContributionClassification | null
+  classification_method?: $Enums.ClassificationMethod | null
+  language?: string | null
+  confidence_score?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: $Enums.ContributionStatus
+  reviewed_by?: string | null
+  reviewed_at?: Date | string | null
+  review_reason?: string | null
+  region: string
+  province: string
+  municipality: string
+  barangay: string
+  created_at?: Date | string
+  updated_at?: Date | string
+  user_id: string
+}
+
+export type ContributionCreateOrConnectWithoutRewardTransactionsInput = {
+  where: Prisma.ContributionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContributionCreateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedCreateWithoutRewardTransactionsInput>
+}
+
+export type ContributionUpsertWithoutRewardTransactionsInput = {
+  update: Prisma.XOR<Prisma.ContributionUpdateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedUpdateWithoutRewardTransactionsInput>
+  create: Prisma.XOR<Prisma.ContributionCreateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedCreateWithoutRewardTransactionsInput>
+  where?: Prisma.ContributionWhereInput
+}
+
+export type ContributionUpdateToOneWithWhereWithoutRewardTransactionsInput = {
+  where?: Prisma.ContributionWhereInput
+  data: Prisma.XOR<Prisma.ContributionUpdateWithoutRewardTransactionsInput, Prisma.ContributionUncheckedUpdateWithoutRewardTransactionsInput>
+}
+
+export type ContributionUpdateWithoutRewardTransactionsInput = {
+  contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
+  classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
+  reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutContributionsNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutReviewed_contributionsNestedInput
+}
+
+export type ContributionUncheckedUpdateWithoutRewardTransactionsInput = {
+  contribution_id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  content?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  source_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sentiment?: Prisma.NullableEnumContributionSentimentFieldUpdateOperationsInput | $Enums.ContributionSentiment | null
+  classification?: Prisma.NullableEnumContributionClassificationFieldUpdateOperationsInput | $Enums.ContributionClassification | null
+  classification_method?: Prisma.NullableEnumClassificationMethodFieldUpdateOperationsInput | $Enums.ClassificationMethod | null
+  language?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  confidence_score?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  status?: Prisma.EnumContributionStatusFieldUpdateOperationsInput | $Enums.ContributionStatus
+  reviewed_by?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reviewed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  review_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  municipality?: Prisma.StringFieldUpdateOperationsInput | string
+  barangay?: Prisma.StringFieldUpdateOperationsInput | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ContributionCreateManyUserInput = {
@@ -1121,6 +1271,7 @@ export type ContributionUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviewer?: Prisma.UserUpdateOneWithoutReviewed_contributionsNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionUncheckedUpdateWithoutUserInput = {
@@ -1146,6 +1297,7 @@ export type ContributionUncheckedUpdateWithoutUserInput = {
   barangay?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionUncheckedUpdateManyWithoutUserInput = {
@@ -1196,6 +1348,7 @@ export type ContributionUpdateWithoutReviewerInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutContributionsNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionUncheckedUpdateWithoutReviewerInput = {
@@ -1221,6 +1374,7 @@ export type ContributionUncheckedUpdateWithoutReviewerInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutContributionNestedInput
 }
 
 export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
@@ -1249,6 +1403,35 @@ export type ContributionUncheckedUpdateManyWithoutReviewerInput = {
 }
 
 
+/**
+ * Count Type ContributionCountOutputType
+ */
+
+export type ContributionCountOutputType = {
+  rewardTransactions: number
+}
+
+export type ContributionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  rewardTransactions?: boolean | ContributionCountOutputTypeCountRewardTransactionsArgs
+}
+
+/**
+ * ContributionCountOutputType without action
+ */
+export type ContributionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ContributionCountOutputType
+   */
+  select?: Prisma.ContributionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ContributionCountOutputType without action
+ */
+export type ContributionCountOutputTypeCountRewardTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RewardTransactionWhereInput
+}
+
 
 export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   contribution_id?: boolean
@@ -1276,6 +1459,8 @@ export type ContributionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   user_id?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Contribution$reviewerArgs<ExtArgs>
+  rewardTransactions?: boolean | Prisma.Contribution$rewardTransactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ContributionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contribution"]>
 
 export type ContributionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1364,6 +1549,8 @@ export type ContributionOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type ContributionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Contribution$reviewerArgs<ExtArgs>
+  rewardTransactions?: boolean | Prisma.Contribution$rewardTransactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ContributionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ContributionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1379,6 +1566,7 @@ export type $ContributionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     reviewer: Prisma.$UserPayload<ExtArgs> | null
+    rewardTransactions: Prisma.$RewardTransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     contribution_id: string
@@ -1800,6 +1988,7 @@ export interface Prisma__ContributionClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   reviewer<T extends Prisma.Contribution$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contribution$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  rewardTransactions<T extends Prisma.Contribution$rewardTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contribution$rewardTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RewardTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2269,6 +2458,30 @@ export type Contribution$reviewerArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Contribution.rewardTransactions
+ */
+export type Contribution$rewardTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RewardTransaction
+   */
+  select?: Prisma.RewardTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RewardTransaction
+   */
+  omit?: Prisma.RewardTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RewardTransactionInclude<ExtArgs> | null
+  where?: Prisma.RewardTransactionWhereInput
+  orderBy?: Prisma.RewardTransactionOrderByWithRelationInput | Prisma.RewardTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.RewardTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RewardTransactionScalarFieldEnum | Prisma.RewardTransactionScalarFieldEnum[]
 }
 
 /**

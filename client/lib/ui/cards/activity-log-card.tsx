@@ -29,12 +29,11 @@ export default function ActivityLogCard({
         <div className={styles.activity_log_header}>
           <div className={styles.activity_log_information}>
             <Text size="md">{type}</Text>
-
             <Paragraph>{description}</Paragraph>
           </div>
 
           <Text size="sm">
-            {format(new Date(created_at as string), "MMMM dd yyyy")}
+            {format(new Date(created_at as string), "MMMM dd yyyy hh:mm:ss aa")}
           </Text>
         </div>
       </div>

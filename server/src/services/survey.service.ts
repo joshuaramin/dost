@@ -85,6 +85,7 @@ export const GetAllSurveys = ({
       is_deleted: true,
       description: true,
       created_at: true,
+      is_published: true,
       questions: {
         where: {
           is_deleted: false,
@@ -102,7 +103,7 @@ export const GetAllSurveys = ({
 };
 
 export const GetSurveyById = async (data: any) => {
-  return await SurveyManage.readById(data.id, "slug", {
+  return await SurveyManage.readById(data, "slug", {
     select: {
       survey_id: true,
       title: true,
@@ -118,7 +119,10 @@ export const GetSurveyById = async (data: any) => {
         },
         include: {
           answers: {
-            select: { response: { select: { _count: true } } },
+            select: {
+              answer_text: true,
+              response: { select: { _count: true } },
+            },
           },
           options: {
             orderBy: {
@@ -319,8 +323,8 @@ export const UpdateSurvey = async (data: any) => {
   return SurveyManage.update("survey_id", data.key, data);
 };
 
-export const DeleteSurvey = async (data: any) => {
-  return SurveyManage.delete("survey_id", data.survey_id);
+export const SoftDeleteSurvey = async (data: any) => {
+  return SurveyManage.delete("survey_id", data);
 };
 
 export const UpdateSurveyPublished = async (id: string, data: boolean) => {

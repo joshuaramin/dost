@@ -136,5 +136,6 @@ export const UpdateUser = (data: any) => {
 };
 
 export const SoftDeleteUser = async (data: any) => {
-  return UserManage.delete("user_id", data.user_id);
+  console.log(data);
+  return UserManage.delete("user_id", data);
 };

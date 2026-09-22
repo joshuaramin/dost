@@ -144,6 +144,8 @@ export default function RolesPermissions() {
     setOpen((prev) => !prev);
   };
 
+  const onHandleDeleteMutation = () => {};
+
   return (
     <Template
       title="Roles and Permissions"
@@ -181,7 +183,7 @@ export default function RolesPermissions() {
             description="There is currently no data to display."
           />
         ) : (
-          <Grid min={330} gap={10}>
+          <Grid min={330} gap={20}>
             {data?.data.edges.map((node, index) => (
               <RolesAndPermissionsCard
                 key={index}

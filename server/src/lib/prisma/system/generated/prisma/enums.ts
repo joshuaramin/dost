@@ -9,6 +9,25 @@
 * 🟢 You can import this file directly.
 */
 
+export const RewardActionType = {
+  EXPERIENCE: 'EXPERIENCE',
+  MISINFORMATION: 'MISINFORMATION',
+  MEDIA: 'MEDIA'
+} as const
+
+export type RewardActionType = (typeof RewardActionType)[keyof typeof RewardActionType]
+
+
+export const BadgeRequirementType = {
+  TOTAL_POINTS: 'TOTAL_POINTS',
+  APPROVED_CONTRIBUTIONS: 'APPROVED_CONTRIBUTIONS',
+  APPROVED_MISINFORMATION: 'APPROVED_MISINFORMATION',
+  APPROVED_MEDIA: 'APPROVED_MEDIA'
+} as const
+
+export type BadgeRequirementType = (typeof BadgeRequirementType)[keyof typeof BadgeRequirementType]
+
+
 export const ContributionClassification = {
   PENDING: 'PENDING',
   MISINFORMATION: 'MISINFORMATION',

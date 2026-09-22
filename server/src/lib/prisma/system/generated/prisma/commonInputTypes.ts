@@ -150,6 +150,40 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumRewardActionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel> | $Enums.RewardActionType
+}
+
+export type EnumRewardActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.RewardActionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+}
+
+export type EnumBadgeRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel> | $Enums.BadgeRequirementType
+}
+
+export type EnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.BadgeRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+}
+
 export type EnumAttachmentTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.AttachmentType | Prisma.EnumAttachmentTypeFieldRefInput<$PrismaModel>
   in?: $Enums.AttachmentType[] | Prisma.ListEnumAttachmentTypeFieldRefInput<$PrismaModel>
@@ -512,6 +546,40 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumRewardActionTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel> | $Enums.RewardActionType
+}
+
+export type NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.RewardActionType | Prisma.EnumRewardActionTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.RewardActionType[] | Prisma.ListEnumRewardActionTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumRewardActionTypeWithAggregatesFilter<$PrismaModel> | $Enums.RewardActionType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumRewardActionTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumBadgeRequirementTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel> | $Enums.BadgeRequirementType
+}
+
+export type NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.BadgeRequirementType | Prisma.EnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.BadgeRequirementType[] | Prisma.ListEnumBadgeRequirementTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumBadgeRequirementTypeWithAggregatesFilter<$PrismaModel> | $Enums.BadgeRequirementType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumBadgeRequirementTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumAttachmentTypeFilter<$PrismaModel = never> = {

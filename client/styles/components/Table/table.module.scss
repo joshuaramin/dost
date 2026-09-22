@@ -78,7 +78,7 @@
                 transform 150ms ease;
 
             &:hover {
-                background-color: color(neutral, 200);
+                background-color: color(neutral, 300);
             }
 
             &:active {
@@ -88,6 +88,10 @@
             &:focus-visible {
                 outline: 2px solid #2563eb;
                 outline-offset: 2px;
+            }
+
+            svg {
+                stroke-width: 1.6px;
             }
         }
     }

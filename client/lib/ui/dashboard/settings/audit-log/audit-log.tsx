@@ -24,7 +24,7 @@ export default function AuditLog() {
   const [startCursor, setStartCursor] = useState<string>("");
 
   const { data: ActivityLogsData } = useFormQuery<ActivityLogsInterfaceResult>({
-    key: ["ActivityLogs", token?.data.user_id],
+    key: ["ActivityLogs", token?.data.user_id, endCursor, startCursor, limit],
     url: `maintenance/activity-logs/${token?.data.user_id}`,
     headers,
     params: {
@@ -69,7 +69,7 @@ export default function AuditLog() {
           Review system activities and user actions recorded within Advocaid PH.
         </Paragraph>
       </div>
-      {ActivityLogsData?.totalCount === 0 ? (
+      {ActivityLogsData?.data.totalCount === 0 ? (
         <EmptyState
           title="No audit logs found"
           description="There are currently no audit logs available to display."
@@ -81,7 +81,7 @@ export default function AuditLog() {
               node: {
                 activity_logs_id,
                 created_at,
-                description,
+                decription,
                 is_deleted,
                 type,
               },
@@ -92,15 +92,15 @@ export default function AuditLog() {
                 key={activity_logs_id}
                 activity_logs_id={activity_logs_id}
                 type={type}
-                description={description}
+                description={decription}
               />
             ),
           )}
           <Pagination
             currentPage={currentPage}
             pageSize={limit}
-            totalItems={ActivityLogsData?.totalCount ?? 0}
-            currentItems={ActivityLogsData?.totalCount ?? 0}
+            totalItems={ActivityLogsData?.data.totalCount ?? 0}
+            currentItems={ActivityLogsData?.data.totalCount ?? 0}
             hasNextPage={ActivityLogsData?.data.pageInfo.hasNextPage ?? false}
             hasPrevPage={ActivityLogsData?.data.pageInfo.hasPrevPage ?? false}
             onNext={onHandleNextPage}

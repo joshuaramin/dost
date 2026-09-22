@@ -217,6 +217,9 @@ export type UserWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   user_preference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
+  rewardTransactions?: Prisma.RewardTransactionListRelationFilter
+  userReward?: Prisma.XOR<Prisma.UserRewardNullableScalarRelationFilter, Prisma.UserRewardWhereInput> | null
+  userBadges?: Prisma.UserBadgeListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -239,6 +242,9 @@ export type UserOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   role?: Prisma.RoleOrderByWithRelationInput
   user_preference?: Prisma.UserPreferenceOrderByWithRelationInput
+  rewardTransactions?: Prisma.RewardTransactionOrderByRelationAggregateInput
+  userReward?: Prisma.UserRewardOrderByWithRelationInput
+  userBadges?: Prisma.UserBadgeOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -264,6 +270,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   role?: Prisma.XOR<Prisma.RoleNullableScalarRelationFilter, Prisma.RoleWhereInput> | null
   user_preference?: Prisma.XOR<Prisma.UserPreferenceNullableScalarRelationFilter, Prisma.UserPreferenceWhereInput> | null
+  rewardTransactions?: Prisma.RewardTransactionListRelationFilter
+  userReward?: Prisma.XOR<Prisma.UserRewardNullableScalarRelationFilter, Prisma.UserRewardWhereInput> | null
+  userBadges?: Prisma.UserBadgeListRelationFilter
 }, "user_id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -312,6 +321,9 @@ export type UserCreateInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -332,6 +344,9 @@ export type UserUncheckedCreateInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -352,6 +367,9 @@ export type UserUpdateInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -372,6 +390,9 @@ export type UserUncheckedUpdateInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -516,6 +537,48 @@ export type UserUpdateOneRequiredWithoutProfileNestedInput = {
   upsert?: Prisma.UserUpsertWithoutProfileInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfileInput, Prisma.UserUpdateWithoutProfileInput>, Prisma.UserUncheckedUpdateWithoutProfileInput>
+}
+
+export type UserCreateNestedOneWithoutRewardTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRewardTransactionsInput, Prisma.UserUncheckedCreateWithoutRewardTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRewardTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutRewardTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutRewardTransactionsInput, Prisma.UserUncheckedCreateWithoutRewardTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutRewardTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutRewardTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRewardTransactionsInput, Prisma.UserUpdateWithoutRewardTransactionsInput>, Prisma.UserUncheckedUpdateWithoutRewardTransactionsInput>
+}
+
+export type UserCreateNestedOneWithoutUserRewardInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserRewardInput, Prisma.UserUncheckedCreateWithoutUserRewardInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserRewardInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserRewardNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserRewardInput, Prisma.UserUncheckedCreateWithoutUserRewardInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserRewardInput
+  upsert?: Prisma.UserUpsertWithoutUserRewardInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserRewardInput, Prisma.UserUpdateWithoutUserRewardInput>, Prisma.UserUncheckedUpdateWithoutUserRewardInput>
+}
+
+export type UserCreateNestedOneWithoutUserBadgesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserBadgesInput, Prisma.UserUncheckedCreateWithoutUserBadgesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserBadgesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutUserBadgesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutUserBadgesInput, Prisma.UserUncheckedCreateWithoutUserBadgesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutUserBadgesInput
+  upsert?: Prisma.UserUpsertWithoutUserBadgesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutUserBadgesInput, Prisma.UserUpdateWithoutUserBadgesInput>, Prisma.UserUncheckedUpdateWithoutUserBadgesInput>
 }
 
 export type UserCreateNestedManyWithoutRoleInput = {
@@ -713,6 +776,9 @@ export type UserCreateWithoutUser_preferenceInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutUser_preferenceInput = {
@@ -732,6 +798,9 @@ export type UserUncheckedCreateWithoutUser_preferenceInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutUser_preferenceInput = {
@@ -767,6 +836,9 @@ export type UserUpdateWithoutUser_preferenceInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUser_preferenceInput = {
@@ -786,6 +858,9 @@ export type UserUncheckedUpdateWithoutUser_preferenceInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOTPInput = {
@@ -805,6 +880,9 @@ export type UserCreateWithoutOTPInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOTPInput = {
@@ -824,6 +902,9 @@ export type UserUncheckedCreateWithoutOTPInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOTPInput = {
@@ -859,6 +940,9 @@ export type UserUpdateWithoutOTPInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOTPInput = {
@@ -878,6 +962,9 @@ export type UserUncheckedUpdateWithoutOTPInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -897,6 +984,9 @@ export type UserCreateWithoutProfileInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -916,6 +1006,9 @@ export type UserUncheckedCreateWithoutProfileInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -951,6 +1044,9 @@ export type UserUpdateWithoutProfileInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -970,6 +1066,321 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutRewardTransactionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutRewardTransactionsInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutRewardTransactionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutRewardTransactionsInput, Prisma.UserUncheckedCreateWithoutRewardTransactionsInput>
+}
+
+export type UserUpsertWithoutRewardTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutRewardTransactionsInput, Prisma.UserUncheckedUpdateWithoutRewardTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutRewardTransactionsInput, Prisma.UserUncheckedCreateWithoutRewardTransactionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutRewardTransactionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutRewardTransactionsInput, Prisma.UserUncheckedUpdateWithoutRewardTransactionsInput>
+}
+
+export type UserUpdateWithoutRewardTransactionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutRewardTransactionsInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserRewardInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserRewardInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserRewardInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserRewardInput, Prisma.UserUncheckedCreateWithoutUserRewardInput>
+}
+
+export type UserUpsertWithoutUserRewardInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserRewardInput, Prisma.UserUncheckedUpdateWithoutUserRewardInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserRewardInput, Prisma.UserUncheckedCreateWithoutUserRewardInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserRewardInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserRewardInput, Prisma.UserUncheckedUpdateWithoutUserRewardInput>
+}
+
+export type UserUpdateWithoutUserRewardInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserRewardInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutUserBadgesInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
+  role?: Prisma.RoleCreateNestedOneWithoutUsersInput
+  user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutUserBadgesInput = {
+  user_id?: string
+  email: string
+  is_deleted?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  role_id?: string | null
+  organization_id?: string | null
+  is_active?: boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedCreateNestedManyWithoutUserInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedCreateNestedManyWithoutUserInput
+  EducationResource?: Prisma.EducationResourceUncheckedCreateNestedManyWithoutUserInput
+  Notification?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  OTP?: Prisma.OTPUncheckedCreateNestedManyWithoutUserInput
+  contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
+  reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
+  Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
+  user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutUserBadgesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserBadgesInput, Prisma.UserUncheckedCreateWithoutUserBadgesInput>
+}
+
+export type UserUpsertWithoutUserBadgesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutUserBadgesInput, Prisma.UserUncheckedUpdateWithoutUserBadgesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutUserBadgesInput, Prisma.UserUncheckedCreateWithoutUserBadgesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutUserBadgesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutUserBadgesInput, Prisma.UserUncheckedUpdateWithoutUserBadgesInput>
+}
+
+export type UserUpdateWithoutUserBadgesInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
+  role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
+  user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutUserBadgesInput = {
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  role_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  ActivityLog?: Prisma.ActivityLogUncheckedUpdateManyWithoutUserNestedInput
+  DeviceSession?: Prisma.DeviceSessionUncheckedUpdateManyWithoutUserNestedInput
+  EducationResource?: Prisma.EducationResourceUncheckedUpdateManyWithoutUserNestedInput
+  Notification?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  OTP?: Prisma.OTPUncheckedUpdateManyWithoutUserNestedInput
+  contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
+  reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
+  Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
+  user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRoleInput = {
@@ -989,6 +1400,9 @@ export type UserCreateWithoutRoleInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRoleInput = {
@@ -1008,6 +1422,9 @@ export type UserUncheckedCreateWithoutRoleInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRoleInput = {
@@ -1067,6 +1484,9 @@ export type UserCreateWithoutActivityLogInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivityLogInput = {
@@ -1086,6 +1506,9 @@ export type UserUncheckedCreateWithoutActivityLogInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivityLogInput = {
@@ -1121,6 +1544,9 @@ export type UserUpdateWithoutActivityLogInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivityLogInput = {
@@ -1140,6 +1566,9 @@ export type UserUncheckedUpdateWithoutActivityLogInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationInput = {
@@ -1159,6 +1588,9 @@ export type UserCreateWithoutNotificationInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationInput = {
@@ -1178,6 +1610,9 @@ export type UserUncheckedCreateWithoutNotificationInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationInput = {
@@ -1213,6 +1648,9 @@ export type UserUpdateWithoutNotificationInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationInput = {
@@ -1232,6 +1670,9 @@ export type UserUncheckedUpdateWithoutNotificationInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrganizationInput = {
@@ -1251,6 +1692,9 @@ export type UserCreateWithoutOrganizationInput = {
   Profile?: Prisma.ProfileCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationInput = {
@@ -1270,6 +1714,9 @@ export type UserUncheckedCreateWithoutOrganizationInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationInput = {
@@ -1315,6 +1762,9 @@ export type UserCreateWithoutDeviceSessionInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDeviceSessionInput = {
@@ -1334,6 +1784,9 @@ export type UserUncheckedCreateWithoutDeviceSessionInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDeviceSessionInput = {
@@ -1369,6 +1822,9 @@ export type UserUpdateWithoutDeviceSessionInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDeviceSessionInput = {
@@ -1388,6 +1844,9 @@ export type UserUncheckedUpdateWithoutDeviceSessionInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEducationResourceInput = {
@@ -1407,6 +1866,9 @@ export type UserCreateWithoutEducationResourceInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEducationResourceInput = {
@@ -1426,6 +1888,9 @@ export type UserUncheckedCreateWithoutEducationResourceInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEducationResourceInput = {
@@ -1461,6 +1926,9 @@ export type UserUpdateWithoutEducationResourceInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEducationResourceInput = {
@@ -1480,6 +1948,9 @@ export type UserUncheckedUpdateWithoutEducationResourceInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutContributionsInput = {
@@ -1499,6 +1970,9 @@ export type UserCreateWithoutContributionsInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutContributionsInput = {
@@ -1518,6 +1992,9 @@ export type UserUncheckedCreateWithoutContributionsInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutReviewerInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutContributionsInput = {
@@ -1542,6 +2019,9 @@ export type UserCreateWithoutReviewed_contributionsInput = {
   organization?: Prisma.OrganizationCreateNestedOneWithoutUserInput
   role?: Prisma.RoleCreateNestedOneWithoutUsersInput
   user_preference?: Prisma.UserPreferenceCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReviewed_contributionsInput = {
@@ -1561,6 +2041,9 @@ export type UserUncheckedCreateWithoutReviewed_contributionsInput = {
   contributions?: Prisma.ContributionUncheckedCreateNestedManyWithoutUserInput
   Profile?: Prisma.ProfileUncheckedCreateNestedOneWithoutUserInput
   user_preference?: Prisma.UserPreferenceUncheckedCreateNestedOneWithoutUserInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedCreateNestedManyWithoutUserInput
+  userReward?: Prisma.UserRewardUncheckedCreateNestedOneWithoutUserInput
+  userBadges?: Prisma.UserBadgeUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReviewed_contributionsInput = {
@@ -1596,6 +2079,9 @@ export type UserUpdateWithoutContributionsInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutContributionsInput = {
@@ -1615,6 +2101,9 @@ export type UserUncheckedUpdateWithoutContributionsInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutReviewed_contributionsInput = {
@@ -1645,6 +2134,9 @@ export type UserUpdateWithoutReviewed_contributionsInput = {
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewed_contributionsInput = {
@@ -1664,6 +2156,9 @@ export type UserUncheckedUpdateWithoutReviewed_contributionsInput = {
   contributions?: Prisma.ContributionUncheckedUpdateManyWithoutUserNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyRoleInput = {
@@ -1693,6 +2188,9 @@ export type UserUpdateWithoutRoleInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleInput = {
@@ -1712,6 +2210,9 @@ export type UserUncheckedUpdateWithoutRoleInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutRoleInput = {
@@ -1751,6 +2252,9 @@ export type UserUpdateWithoutOrganizationInput = {
   Profile?: Prisma.ProfileUpdateOneWithoutUserNestedInput
   role?: Prisma.RoleUpdateOneWithoutUsersNestedInput
   user_preference?: Prisma.UserPreferenceUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationInput = {
@@ -1770,6 +2274,9 @@ export type UserUncheckedUpdateWithoutOrganizationInput = {
   reviewed_contributions?: Prisma.ContributionUncheckedUpdateManyWithoutReviewerNestedInput
   Profile?: Prisma.ProfileUncheckedUpdateOneWithoutUserNestedInput
   user_preference?: Prisma.UserPreferenceUncheckedUpdateOneWithoutUserNestedInput
+  rewardTransactions?: Prisma.RewardTransactionUncheckedUpdateManyWithoutUserNestedInput
+  userReward?: Prisma.UserRewardUncheckedUpdateOneWithoutUserNestedInput
+  userBadges?: Prisma.UserBadgeUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1795,6 +2302,8 @@ export type UserCountOutputType = {
   OTP: number
   contributions: number
   reviewed_contributions: number
+  rewardTransactions: number
+  userBadges: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1805,6 +2314,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   OTP?: boolean | UserCountOutputTypeCountOTPArgs
   contributions?: boolean | UserCountOutputTypeCountContributionsArgs
   reviewed_contributions?: boolean | UserCountOutputTypeCountReviewed_contributionsArgs
+  rewardTransactions?: boolean | UserCountOutputTypeCountRewardTransactionsArgs
+  userBadges?: boolean | UserCountOutputTypeCountUserBadgesArgs
 }
 
 /**
@@ -1866,6 +2377,20 @@ export type UserCountOutputTypeCountReviewed_contributionsArgs<ExtArgs extends r
   where?: Prisma.ContributionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountRewardTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RewardTransactionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountUserBadgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserBadgeWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   user_id?: boolean
@@ -1887,6 +2412,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   user_preference?: boolean | Prisma.User$user_preferenceArgs<ExtArgs>
+  rewardTransactions?: boolean | Prisma.User$rewardTransactionsArgs<ExtArgs>
+  userReward?: boolean | Prisma.User$userRewardArgs<ExtArgs>
+  userBadges?: boolean | Prisma.User$userBadgesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1940,6 +2468,9 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   organization?: boolean | Prisma.User$organizationArgs<ExtArgs>
   role?: boolean | Prisma.User$roleArgs<ExtArgs>
   user_preference?: boolean | Prisma.User$user_preferenceArgs<ExtArgs>
+  rewardTransactions?: boolean | Prisma.User$rewardTransactionsArgs<ExtArgs>
+  userReward?: boolean | Prisma.User$userRewardArgs<ExtArgs>
+  userBadges?: boolean | Prisma.User$userBadgesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1965,6 +2496,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
     role: Prisma.$RolePayload<ExtArgs> | null
     user_preference: Prisma.$UserPreferencePayload<ExtArgs> | null
+    rewardTransactions: Prisma.$RewardTransactionPayload<ExtArgs>[]
+    userReward: Prisma.$UserRewardPayload<ExtArgs> | null
+    userBadges: Prisma.$UserBadgePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     user_id: string
@@ -2380,6 +2914,9 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   organization<T extends Prisma.User$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   role<T extends Prisma.User$roleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$roleArgs<ExtArgs>>): Prisma.Prisma__RoleClient<runtime.Types.Result.GetResult<Prisma.$RolePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user_preference<T extends Prisma.User$user_preferenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$user_preferenceArgs<ExtArgs>>): Prisma.Prisma__UserPreferenceClient<runtime.Types.Result.GetResult<Prisma.$UserPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  rewardTransactions<T extends Prisma.User$rewardTransactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$rewardTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RewardTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  userReward<T extends Prisma.User$userRewardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userRewardArgs<ExtArgs>>): Prisma.Prisma__UserRewardClient<runtime.Types.Result.GetResult<Prisma.$UserRewardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  userBadges<T extends Prisma.User$userBadgesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$userBadgesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserBadgePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3059,6 +3596,73 @@ export type User$user_preferenceArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.UserPreferenceInclude<ExtArgs> | null
   where?: Prisma.UserPreferenceWhereInput
+}
+
+/**
+ * User.rewardTransactions
+ */
+export type User$rewardTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RewardTransaction
+   */
+  select?: Prisma.RewardTransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RewardTransaction
+   */
+  omit?: Prisma.RewardTransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RewardTransactionInclude<ExtArgs> | null
+  where?: Prisma.RewardTransactionWhereInput
+  orderBy?: Prisma.RewardTransactionOrderByWithRelationInput | Prisma.RewardTransactionOrderByWithRelationInput[]
+  cursor?: Prisma.RewardTransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RewardTransactionScalarFieldEnum | Prisma.RewardTransactionScalarFieldEnum[]
+}
+
+/**
+ * User.userReward
+ */
+export type User$userRewardArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserReward
+   */
+  select?: Prisma.UserRewardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserReward
+   */
+  omit?: Prisma.UserRewardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserRewardInclude<ExtArgs> | null
+  where?: Prisma.UserRewardWhereInput
+}
+
+/**
+ * User.userBadges
+ */
+export type User$userBadgesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserBadge
+   */
+  select?: Prisma.UserBadgeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserBadge
+   */
+  omit?: Prisma.UserBadgeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserBadgeInclude<ExtArgs> | null
+  where?: Prisma.UserBadgeWhereInput
+  orderBy?: Prisma.UserBadgeOrderByWithRelationInput | Prisma.UserBadgeOrderByWithRelationInput[]
+  cursor?: Prisma.UserBadgeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserBadgeScalarFieldEnum | Prisma.UserBadgeScalarFieldEnum[]
 }
 
 /**
