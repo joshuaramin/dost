@@ -32,30 +32,46 @@ import { RegistrationFormFields } from "@/lib/types/auth.type";
 import da from "zod/v4/locales/da.cjs";
 import { toastError, toastSuccess } from "@/lib/ui/toast";
 import { z } from "zod";
+import { Select } from "@/components/Select/select";
+import { control } from "leaflet";
+import {
+  OrganizationInterface,
+  OrganizationResult,
+} from "@/lib/interface/organization/organization.interface";
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
   const [selectedRoleId, setSelectedRoleId] = useState<string>("");
 
-  const { register, errors, handleSubmit, watch, trigger } = useFormHook({
-    schema: RegistrationSchema,
-    defaultValues: {
-      email: "",
-      first_name: "",
-      last_name: "",
-      location: "",
-      role_id: "",
-      medical_disclaimer: true,
-      privacy_policy: true,
-      terms_and_conditions: true,
-    },
-    shouldUnregister: false,  
-  });
+  const { register, errors, handleSubmit, watch, trigger, control } =
+    useFormHook({
+      schema: RegistrationSchema,
+      defaultValues: {
+        email: "",
+        first_name: "",
+        organization: "",
+        last_name: "",
+        location: "",
+        role_id: "",
+        medical_disclaimer: true,
+        privacy_policy: true,
+        terms_and_conditions: true,
+      },
+      shouldUnregister: false,
+    });
 
-  console.log("Error: ", errors);
   const { data: RoleData } = useFormQuery<RolesAndPermissionResponse>({
     key: ["Roles"],
     url: "maintenance/roles",
+    params: {
+      orderBy: "created_at",
+      sortBy: "desc",
+    },
+  });
+
+  const { data: OrganizationData } = useFormQuery<OrganizationResult>({
+    key: ["Organization"],
+    url: "maintenance/organization",
     params: {
       orderBy: "created_at",
       sortBy: "desc",
@@ -258,6 +274,23 @@ export default function Page() {
               isRequired={true}
               error={errors.location}
             />
+            {(selectedRole?.name === "NGO Agencies" ||
+              selectedRole?.name === "Government" ||
+              selectedRole?.name === "Researcher" ||
+              selectedRole?.name === "Institution Agencies") && (
+              <Select
+                control={control}
+                isRequired={true}
+                label="Organization"
+                name="organization"
+                options={(OrganizationData?.data.edges || []).map(
+                  ({ node: { name, organization_id } }) => ({
+                    label: name,
+                    value: organization_id,
+                  }),
+                )}
+              />
+            )}
           </>
         )}
 

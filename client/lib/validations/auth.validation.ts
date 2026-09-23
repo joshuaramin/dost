@@ -22,6 +22,22 @@ export const RegistrationSchema = z.object({
 
   role_id: z.string().min(1, "Role is required"),
 
+  organization: z
+    .string()
+    .min(1, "Organization is required")
+    .refine(
+      (value) =>
+        [
+          "NGO Agencies",
+          "Government",
+          "Researcher",
+          "Institution Agencies",
+        ].includes(value),
+      {
+        message: "Please select a valid organization.",
+      },
+    ),
+
   terms_and_conditions: z
     .literal(true, {
       error: "You must agree to the Terms and Conditions.",
