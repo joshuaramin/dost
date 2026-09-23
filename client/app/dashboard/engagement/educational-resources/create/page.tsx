@@ -29,10 +29,12 @@ import useFormMutation from "@/lib/hooks/useMutation";
 import headers from "@/lib/utils/headers";
 import ButtonToggle from "@/components/Toggle/buttonToggle";
 import { toastError, toastSuccess } from "@/lib/ui/toast";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [category, setCategory] = useState<string>("");
   const sessions = sessionStore.get();
+  const router = useRouter();
 
   const { data: EducationCategory } = useFormQuery<EducationCategoryResult>({
     key: ["EducationCategory", category],
@@ -85,7 +87,12 @@ export default function Page() {
         user_id: sessions?.data.user_id,
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log(data);
+          const response = data as { data: { slug: string } };
+          router.push(
+            `/dashboard/engagement/educational-resources/${response.data.slug}`,
+          );
           toastSuccess({
             title: "Educational Resource Created Successfully",
             body: "The new educational resource has been added and is now available in the system.",
