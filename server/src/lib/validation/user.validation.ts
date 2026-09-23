@@ -24,4 +24,5 @@ export const RegisterUserSchema = UserSchema.extend({
   first_name: z.string().min(1, "First name is required"),
   last_name: z.string().min(1, "Last name is required"),
   role_id: z.string().min(1, "Role is required"),
+  organization_id: z.string().optional(),
 });

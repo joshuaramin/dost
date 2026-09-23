@@ -8,6 +8,7 @@ import { OTP } from "@/lib/prisma/system/generated/prisma/browser";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { AppError } from "@/lib/common/appError";
 import { generateOTP, hashOTP } from "@/utils/otpGenerator";
+import { renderWelcome } from "@/lib/emails/rendered/welcomeRendered";
 
 const OTPManage = new PrismaCRUDManager<OTP, "otp_id", typeof prisma.oTP>(
   prisma.oTP,
@@ -59,6 +60,59 @@ export const authWorker = new Worker(
     console.log("✅ AFTER SEND EMAIL");
   },
   { connection },
+);
+export const authVerified = new Worker(
+  "registration-email",
+  async (job) => {
+    const { email, token } = job.data;
+
+    const profile = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+      select: {
+        email: true,
+        Profile: {
+          select: {
+            first_name: true,
+            last_name: true,
+          },
+        },
+      },
+    });
+
+    if (!profile) {
+      throw new Error(`User not found: ${email}`);
+    }
+
+    const fullname = [profile.Profile?.first_name, profile.Profile?.last_name]
+      .filter(Boolean)
+      .join(" ");
+
+    const baseUrl =
+      process.env.NODE_ENV === "production"
+        ? process.env.PRODUCTION_URL
+        : process.env.DEVELOPMENT_URL;
+
+    if (!baseUrl) {
+      throw new Error("Application URL is not configured");
+    }
+
+    const activationUrl = `${baseUrl}/auth/verified?token=${encodeURIComponent(token)}`;
+
+    const html = await renderWelcome(fullname, activationUrl);
+
+    await useSES({
+      toAddress: [profile.email],
+      subject: "Account Verification",
+      html,
+    });
+
+    console.log(`EMAIL VERIFICATION SENT: ${profile.email}`);
+  },
+  {
+    connection,
+  },
 );
 
 console.log("🚀 EMAIL WORKER FILE EXECUTED");

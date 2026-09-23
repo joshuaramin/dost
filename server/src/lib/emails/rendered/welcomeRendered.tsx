@@ -1,6 +1,14 @@
 import { render } from "@react-email/render";
 import AdvocaidWelcome from "../templates/welcome";
 
-export const renderWelcome = (link: string, fullname: string) => {
-  return render(<AdvocaidWelcome activationUrl={link} fullname={fullname} />);
+export const renderWelcome = async (
+  fullname: string,
+  activationUrl: string,
+) => {
+  return await render(
+    AdvocaidWelcome({
+      fullname,
+      activationUrl,
+    }),
+  );
 };

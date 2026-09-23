@@ -282,8 +282,8 @@ export default function Page() {
 
       <Button
         size="md"
-        types={countdown > 0 ? "outline" : "filled"}
-        variant={countdown > 0 ? "disabled" : "primary"}
+        types={"outline"}
+        variant={countdown > 0 ? "disabled" : "secondary"}
         className={styles.resend}
         disabled={countdown > 0 || resendMutation.isPending}
         onClick={onHandleResendOTP}

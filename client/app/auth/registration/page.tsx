@@ -38,18 +38,20 @@ import {
   OrganizationInterface,
   OrganizationResult,
 } from "@/lib/interface/organization/organization.interface";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [step, setStep] = useState<number>(1);
   const [selectedRoleId, setSelectedRoleId] = useState<string>("");
 
+  const router = useRouter();
   const { register, errors, handleSubmit, watch, trigger, control } =
     useFormHook({
       schema: RegistrationSchema,
       defaultValues: {
         email: "",
         first_name: "",
-        organization: "",
+        organization_id: "",
         last_name: "",
         location: "",
         role_id: "",
@@ -155,6 +157,7 @@ export default function Page() {
         last_name: data.last_name,
         role_id: data.role_id,
         location: data.location,
+        organization_id: data.organization_id,
       },
       {
         onSuccess: () => {
@@ -162,6 +165,8 @@ export default function Page() {
             title: "User created",
             body: "The user account has been successfully created.",
           });
+
+          router.push("/auth/login");
         },
 
         onError: () => {
@@ -275,14 +280,15 @@ export default function Page() {
               error={errors.location}
             />
             {(selectedRole?.name === "NGO Agencies" ||
-              selectedRole?.name === "Government" ||
+              selectedRole?.name === "Government Agencies" ||
               selectedRole?.name === "Researcher" ||
               selectedRole?.name === "Institution Agencies") && (
               <Select
                 control={control}
                 isRequired={true}
                 label="Organization"
-                name="organization"
+                name="organization_id"
+                error={errors.organization_id}
                 options={(OrganizationData?.data.edges || []).map(
                   ({ node: { name, organization_id } }) => ({
                     label: name,

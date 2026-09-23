@@ -8,6 +8,7 @@ import {
   AuthLogout,
   AuthRegister,
   AuthVerfiy,
+  AuthVerified,
   GetDeviceSessions,
   GetResendOTP,
 } from "@/services/auth.services";
@@ -118,4 +119,32 @@ export const Registration = async (request: Request, response: Response) => {
     success: true,
     timestamp: new Date(),
   });
+};
+
+export const Verified = async (request: Request, response: Response) => {
+  const token = String(request.query.token);
+
+  if (!token) {
+    return response.status(400).json({
+      success: false,
+      message: "Verification token is required.",
+      timestamp: new Date(),
+    });
+  }
+
+  try {
+    const result = await AuthVerified(token);
+
+    return response.status(200).json({
+      ...result,
+      success: true,
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    return response.status(400).json({
+      success: false,
+      message: "Invalid or expired verification token.",
+      timestamp: new Date(),
+    });
+  }
 };
