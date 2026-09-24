@@ -2,6 +2,7 @@ import {
   createOrganization,
   getAllOrganization,
   softDeleteOrganization,
+  updateOrganizatoin,
 } from "@/controller/organization.controller";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import { withAuth } from "@/lib/helpers/useAuth";
@@ -23,13 +24,15 @@ router.post(
   createOrganization,
 );
 
-// //Put
-router.put("/:id", withAuth, asyncHandler(softDeleteOrganization));
+//Put
+router.patch("/:id", withAuth, asyncHandler(softDeleteOrganization));
 //Patch
-router.patch(
+
+router.put(
   "/:id",
   withAuth,
   withPermission("organization-management:update"),
+  updateOrganizatoin,
 );
 
 export default router;

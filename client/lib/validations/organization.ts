@@ -6,3 +6,5 @@ export const OrganizationSchema = z.object({
   address: z.string().min(1, "Address is required"),
   contact: z.string().min(1, "Contact Number is required"),
 });
+
+export const UpdateOrganizationSchema = OrganizationSchema.partial();

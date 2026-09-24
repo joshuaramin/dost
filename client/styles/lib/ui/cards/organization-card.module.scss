@@ -66,6 +66,10 @@
 
 
     form {
+        display: flex;
+        flex-direction: column;
+
+        gap: space(tiny);
 
         .model_footer {
             display: flex;
