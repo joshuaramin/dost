@@ -76,15 +76,6 @@ export const createUser = async (request: Request, response: Response) => {
 
 export const updateUser = async (request: Request, response: Response) => {
   const parsedData = UpdateUserSchema.safeParse(request.body);
-  const file = request.file as Express.MulterS3.File;
-
-  console.log(file);
-
-  if (file.mimetype.startsWith("image/")) {
-    return response.status(400).json({
-      message: "Only image files are allowed",
-    });
-  }
 
   const result = await UpdateUser(parsedData.data);
 

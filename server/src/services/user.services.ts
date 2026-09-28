@@ -105,22 +105,6 @@ export const CreateUser = async (data: any) => {
     },
   });
 
-  await userQueue.add(
-    "send-welcome-email",
-    {
-      email: data.email,
-      fullname: `${data.first_name} ${data.last_name}`,
-    },
-    {
-      attempts: 3,
-      removeOnComplete: true,
-      backoff: {
-        type: "exponential",
-        delay: 3000,
-      },
-    },
-  );
-
   return user;
 };
 

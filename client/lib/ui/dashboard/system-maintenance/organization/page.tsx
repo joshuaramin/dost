@@ -129,10 +129,6 @@ export default function Organization() {
   };
 
   const onHandlePrevPage = () => {
-    setStartCursor(() => startCursor);
-  };
-
-  const onHandleAddNew = () => {
     const pageInfo = data?.data.pageInfo;
 
     if (!pageInfo?.hasPrevPage || !pageInfo.startCursor) {
@@ -143,6 +139,10 @@ export default function Organization() {
     setStartCursor(pageInfo.startCursor);
 
     setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const onHandleAddNew = () => {
+    setOpen((prev) => !prev);
   };
 
   const onHandleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,7 +163,7 @@ export default function Organization() {
         <div style={{ display: "flex", gap: 10, flexDirection: "column" }}>
           <FileUpload
             register={register}
-            label=""
+            label="Logo"
             setValue={setValue}
             accepted={{
               image: ["jpeg", "jpg", "png", "webp"],
@@ -192,7 +192,7 @@ export default function Organization() {
           />
         </div>
       }
-      onHandleCloseToggle={onHandleAddNew}
+      onHandleCloseToggle={() => setOpen((open) => !open)}
       onModalOpenToggle={open}
     >
       <div className={styles.container}>

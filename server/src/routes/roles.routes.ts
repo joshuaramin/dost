@@ -4,6 +4,7 @@ import {
   getAllRoles,
   getRoleBySlug,
   softDeleteRoles,
+  updateRoles,
 } from "@/controller/roles.controller";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import { withAuth } from "@/lib/helpers/useAuth";
@@ -31,6 +32,8 @@ router.patch(
   withPermission("roles-and-permissions:update"),
   asyncHandler(softDeleteRoles),
 );
+
+router.put("/:id", withAuth, asyncHandler(updateRoles));
 
 //Put
 router.put(

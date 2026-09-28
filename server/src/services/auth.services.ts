@@ -10,7 +10,7 @@ import {
 import jwt from "jsonwebtoken";
 import { generateOTP, hashOTP } from "@/utils/otpGenerator";
 import { AppError } from "@/lib/common/appError";
-import { authQueue } from "@/jobs/auth/auth.queue";
+import { authQueue, authVerified } from "@/jobs/auth/auth.queue";
 import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { DeviceSessionInterface } from "@/lib/interface/device-sessions";
 
@@ -253,10 +253,7 @@ export const GetDeviceSessions = async ({
   });
 };
 
-export const GetResendOTP = async (
-  email: string,
-  deviceSession: DeviceSession,
-) => {
+export const GetResendOTP = async (email: string, deviceSession: any) => {
   const user = await UserManage.unique("email", email);
 
   if (!user) {
@@ -295,9 +292,36 @@ export const GetResendOTP = async (
   };
 };
 
+export const AuthVerified = async (token: string) => {
+  const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
+    user_id: string;
+    email: string;
+    type: string;
+  };
+
+  if (payload.type !== "email-verification") {
+    throw new Error("Invalid verification token.");
+  }
+
+  const user = await UserManage.readById(payload.user_id, "user_id");
+
+  if (!user) {
+    throw new Error("User not found.");
+  }
+
+  if (user.is_active) {
+    return user;
+  }
+
+  return UserManage.update("user_id", payload.user_id, {
+    is_active: true,
+  });
+};
+
 export const AuthRegister = async (data: any) => {
-  return UserManage.create({
+  const user = await UserManage.create({
     email: data.email,
+
     Profile: {
       create: {
         first_name: data.first_name,
@@ -305,6 +329,55 @@ export const AuthRegister = async (data: any) => {
         location: data.location,
       },
     },
-    role: { connect: { role_id: data.role_id } },
+
+    role: {
+      connect: {
+        role_id: data.role_id,
+      },
+    },
+
+    ...(data.organization_id && {
+      organization: {
+        connect: {
+          organization_id: data.organization_id,
+        },
+      },
+    }),
   });
+
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is not configured.");
+  }
+
+  const token = jwt.sign(
+    {
+      user_id: user.user_id,
+      email: user.email,
+      type: "email-verification",
+    },
+    jwtSecret,
+  );
+
+  await authVerified.add(
+    "registration-email",
+    {
+      email: user.email,
+      token,
+    },
+    {
+      attempts: 5,
+      backoff: {
+        type: "exponential",
+        delay: 3000,
+      },
+      removeOnComplete: true,
+    },
+  );
+
+  return {
+    user,
+    success: true,
+  };
 };

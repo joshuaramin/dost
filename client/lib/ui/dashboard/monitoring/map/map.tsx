@@ -102,6 +102,11 @@ const canvasRenderer = L.canvas({
   padding: 0.5,
 });
 
+const PHILIPPINES_BOUNDS: L.LatLngBoundsExpression = [
+  [4.2, 116.8],
+  [21.3, 126.6],
+];
+
 function MapController({ mapRef }: MapControllerProps) {
   const map = useMap();
 
@@ -190,7 +195,6 @@ function HeatmapLayer({ features }: HeatmapLayerProps) {
     return () => {
       if (heatLayerRef.current) {
         map.removeLayer(heatLayerRef.current);
-
         heatLayerRef.current = null;
       }
     };
@@ -261,19 +265,14 @@ function NLPPointsLayer({ features }: NLPPointsLayerProps) {
       }
 
       const lng = Number(coordinates[0]);
-
       const lat = Number(coordinates[1]);
 
       const properties = feature.properties ?? {};
 
       const platform = properties.platform ?? "Unknown";
-
       const keyword = properties.keyword ?? "Unknown";
-
       const sentiment = Number(properties.sentiment ?? 0);
-
       const engagement = Number(properties.engagement ?? 0);
-
       const weight = Number(properties.weight ?? 0);
 
       const createdAt = properties.created_at
@@ -336,7 +335,6 @@ function NLPPointsLayer({ features }: NLPPointsLayerProps) {
 
       marker.on("mouseover", () => {
         map.getContainer().style.cursor = "pointer";
-
         marker.openPopup();
       });
 
@@ -350,7 +348,6 @@ function NLPPointsLayer({ features }: NLPPointsLayerProps) {
 
       marker.on("mouseout", () => {
         map.getContainer().style.cursor = "";
-
         marker.closePopup();
       });
 
@@ -365,7 +362,13 @@ function NLPPointsLayer({ features }: NLPPointsLayerProps) {
   return null;
 }
 
-function MunicipalityLabels({ features }: { features: GeoJSONFeature[] }) {
+function MunicipalityLabels({
+  features,
+  selectedProvince,
+}: {
+  features: GeoJSONFeature[];
+  selectedProvince: string | null;
+}) {
   const map = useMap();
 
   const layerRef = useRef<L.LayerGroup | null>(null);
@@ -379,6 +382,10 @@ function MunicipalityLabels({ features }: { features: GeoJSONFeature[] }) {
 
     const updateLabels = () => {
       layerGroup.clearLayers();
+
+      if (!selectedProvince) {
+        return;
+      }
 
       const zoom = map.getZoom();
 
@@ -432,17 +439,15 @@ function MunicipalityLabels({ features }: { features: GeoJSONFeature[] }) {
     updateLabels();
 
     map.on("zoomend", updateLabels);
-
     map.on("moveend", updateLabels);
 
     return () => {
       map.off("zoomend", updateLabels);
-
       map.off("moveend", updateLabels);
 
       layerGroup.clearLayers();
     };
-  }, [map, features]);
+  }, [map, features, selectedProvince]);
 
   return null;
 }
@@ -506,7 +511,6 @@ function getBoundsFromGeometry(geometry: any): L.LatLngBoundsExpression | null {
 
   for (const coordinate of coordinates) {
     const lng = Number(coordinate[0]);
-
     const lat = Number(coordinate[1]);
 
     if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
@@ -514,11 +518,8 @@ function getBoundsFromGeometry(geometry: any): L.LatLngBoundsExpression | null {
     }
 
     minLng = Math.min(minLng, lng);
-
     maxLng = Math.max(maxLng, lng);
-
     minLat = Math.min(minLat, lat);
-
     maxLat = Math.max(maxLat, lat);
   }
 
@@ -555,7 +556,6 @@ function getCenterFromGeometry(geometry: any): [number, number] | null {
 
   for (const coordinate of coordinates) {
     const lng = Number(coordinate[0]);
-
     const lat = Number(coordinate[1]);
 
     if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
@@ -563,11 +563,8 @@ function getCenterFromGeometry(geometry: any): [number, number] | null {
     }
 
     minLng = Math.min(minLng, lng);
-
     maxLng = Math.max(maxLng, lng);
-
     minLat = Math.min(minLat, lat);
-
     maxLat = Math.max(maxLat, lat);
   }
 
@@ -617,7 +614,6 @@ function createPolygonEntries(polygons: GeoJSONFeature[]): PolygonEntry[] {
 
     for (const coordinate of coordinates) {
       const lng = Number(coordinate[0]);
-
       const lat = Number(coordinate[1]);
 
       if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
@@ -625,11 +621,8 @@ function createPolygonEntries(polygons: GeoJSONFeature[]): PolygonEntry[] {
       }
 
       minLng = Math.min(minLng, lng);
-
       maxLng = Math.max(maxLng, lng);
-
       minLat = Math.min(minLat, lat);
-
       maxLat = Math.max(maxLat, lat);
     }
 
@@ -1282,16 +1275,13 @@ export default function SurveillanceMap() {
         <MapContainer
           center={[12.8797, 121.774]}
           zoom={6}
-          minZoom={5}
+          minZoom={6}
           maxZoom={18}
           scrollWheelZoom
           zoomControl
           preferCanvas
-          maxBounds={[
-            [4.0, 116.0],
-            [21.5, 127.0],
-          ]}
-          maxBoundsViscosity={1.0}
+          maxBounds={PHILIPPINES_BOUNDS}
+          maxBoundsViscosity={1}
           style={{
             width: "100%",
             height: "100%",
@@ -1327,7 +1317,10 @@ export default function SurveillanceMap() {
             />
           )}
 
-          <MunicipalityLabels features={municipalityLabelFeatures} />
+          <MunicipalityLabels
+            features={municipalityLabelFeatures}
+            selectedProvince={selectedProvince}
+          />
 
           <HeatmapLayer features={nlpFeatures} />
 

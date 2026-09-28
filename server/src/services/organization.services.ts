@@ -53,6 +53,15 @@ export const CreateOrganization = (data: any) => {
   });
 };
 
+export const UpdateOrganization = (id: string, data: any) => {
+  return OrganizationManage.update("organization_id", id, {
+    address: data.address,
+    contact: data.contact,
+    name: data.name,
+    logo: data.logo,
+  });
+};
+
 export const SoftDeleteOrganization = (data: any) => {
   return OrganizationManage.delete("organization_id", data);
 };

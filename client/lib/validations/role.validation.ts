@@ -10,3 +10,5 @@ export const AddRolePermissionsSchema = z.object({
     .array(z.string().min(1, "Add Permission is required"))
     .min(1, "Add Permission in Role at least one."),
 });
+
+export const UpdateRoleSchema = RolesSchema;

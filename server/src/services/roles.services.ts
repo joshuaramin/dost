@@ -75,6 +75,13 @@ export const CreateRole = async (data: any) => {
   });
 };
 
+export const UpdateRoles = async (id: string, data: any) => {
+  return RoleManage.update("slug", id, {
+    name: data.name,
+    description: data.description,
+  });
+};
+
 export const SoftDeleteRole = async (data: any) => {
   console.log("DATA: ", data);
   return RoleManage.delete("slug", data);

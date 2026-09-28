@@ -1,10 +1,11 @@
-import { RoleSchema } from "@/lib/validation/Role.validation";
+import { RoleSchema, UpdaetRoleSchema } from "@/lib/validation/Role.validation";
 import {
   AddRolePermission,
   CreateRole,
   GetAllRoles,
   GetRoleBySlug,
   SoftDeleteRole,
+  UpdateRoles,
 } from "@/services/roles.services";
 import { Request, Response } from "express";
 
@@ -58,6 +59,28 @@ export const createRoles = async (request: Request, response: Response) => {
   return response.status(200).json({
     ...result,
     timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const updateRoles = async (request: Request, response: Response) => {
+  const id = String(request.params.id);
+
+  const parsedData = UpdaetRoleSchema.safeParse(request.body);
+
+  if (!parsedData.success) {
+    return response.status(400).json({
+      message: "Invalid Schema",
+      schema: parsedData.error.flatten().fieldErrors,
+      timestamp: new Date(),
+    });
+  }
+
+  const result = await UpdateRoles(id, parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(),
     success: true,
   });
 };
