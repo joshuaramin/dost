@@ -29,8 +29,8 @@ router.get(
 //Post
 router.post(
   "/",
-  withAuth,
-  withPermission("resource:create"),
+  // withAuth,
+  // withPermission("resource:create"),
   asyncHandler(createResource),
 );
 
