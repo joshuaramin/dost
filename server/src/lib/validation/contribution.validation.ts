@@ -18,17 +18,29 @@ export const ContributionSentiment = z.enum([
 
 export const ContributionValidation = z.object({
   content: z.string().trim().min(1, "Content is required"),
+
   type: z.string().trim().min(1, "Type is required"),
+
   classification: ContributionClassification.default("PENDING"),
+
   classification_method: ClassificationMethod.optional(),
+
   status: ContributionStatus.default("PENDING"),
-  barangay: z.string().optional(),
-  municipality: z.string().optional(),
-  province: z.string().optional(),
-  region: z.string().optional(),
+
+  barangay: z.string().trim().optional(),
+
+  municipality: z.string().trim().optional(),
+
+  province: z.string().trim().optional(),
+
+  region: z.string().trim().optional(),
+
   sentimemt: ContributionSentiment.optional(),
+
   image_url: z.string().url("Invalid image URL").optional(),
+
   source_url: z.string().url("Invalid source URL").optional(),
+
   confidence_score: z
     .number()
     .min(0, "Confidence score cannot be less than 0")

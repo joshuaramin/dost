@@ -64,7 +64,7 @@ export const createOrganization = async (
       });
     }
     const result = await CreateOrganization({
-      logo: `${process.env.CDN_URL}/${file.key}`,
+      logo: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
       name: parseData.data.name,
       address: parseData.data.address,
       contact: parseData.data.contact,

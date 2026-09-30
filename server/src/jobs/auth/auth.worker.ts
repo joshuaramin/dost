@@ -1,8 +1,9 @@
 import "dotenv/config";
 import { Worker } from "bullmq";
+import nodemailer from "nodemailer";
+
 import { connection } from "@/lib/redis";
 import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
-import useSES from "@/lib/helpers/useSES";
 import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
 import { OTP } from "@/lib/prisma/system/generated/prisma/browser";
 import { prisma } from "@/lib/prisma/system/prisma";
@@ -14,6 +15,31 @@ const OTPManage = new PrismaCRUDManager<OTP, "otp_id", typeof prisma.oTP>(
   prisma.oTP,
   "otp_id",
 );
+
+if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+  throw new Error("SMTP credentials are not configured");
+}
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "Oauth2",
+    user: process.env.SMTP_USER,
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+  },
+});
+
+// Optional: test SMTP connection when worker starts
+transporter
+  .verify()
+  .then(() => {
+    console.log("✅ SMTP server is ready");
+  })
+  .catch((error) => {
+    console.error("❌ SMTP connection failed:", error);
+  });
 
 export const authWorker = new Worker(
   "auth",
@@ -30,13 +56,20 @@ export const authWorker = new Worker(
     });
 
     if (recent >= 3) {
-      throw new AppError("Too many request. Try again later.", 500);
+      throw new AppError("Too many requests. Try again later.", 429);
     }
 
+    // Invalidate old unused OTPs
     await prisma.oTP.updateMany({
-      where: { identifier: email, is_used: false },
-      data: { is_used: true },
+      where: {
+        identifier: email,
+        is_used: false,
+      },
+      data: {
+        is_used: true,
+      },
     });
+
     const code = generateOTP();
     const code_hash = hashOTP(code);
 
@@ -51,16 +84,26 @@ export const authWorker = new Worker(
 
     const html = await renderOTPTemplate(fullname, code);
 
-    await useSES({
-      toAddress: [email],
-      subject: "One-Time Password",
-      html,
-    });
+    try {
+      const info = await transporter.sendMail({
+        from: `"Advocaid PH" <${process.env.SMTP_USER}>`,
+        to: email,
+        subject: "One-Time Password",
+        html,
+      });
 
-    console.log("✅ AFTER SEND EMAIL");
+      console.log("✅ OTP EMAIL SENT:", info.messageId);
+    } catch (error) {
+      console.error("❌ OTP EMAIL FAILED:", error);
+
+      throw new AppError("Failed to send OTP email.", 500);
+    }
   },
-  { connection },
+  {
+    connection,
+  },
 );
+
 export const authVerified = new Worker(
   "registration-email",
   async (job) => {
@@ -102,13 +145,23 @@ export const authVerified = new Worker(
 
     const html = await renderWelcome(fullname, activationUrl);
 
-    await useSES({
-      toAddress: [profile.email],
-      subject: "Account Verification",
-      html,
-    });
+    try {
+      const info = await transporter.sendMail({
+        from: `"Advocaid PH" <${process.env.SMTP_USER}>`,
+        to: profile.email,
+        subject: "Account Verification",
+        html,
+      });
 
-    console.log(`EMAIL VERIFICATION SENT: ${profile.email}`);
+      console.log(
+        `✅ EMAIL VERIFICATION SENT: ${profile.email}`,
+        info.messageId,
+      );
+    } catch (error) {
+      console.error("❌ VERIFICATION EMAIL FAILED:", error);
+
+      throw new AppError("Failed to send verification email.", 500);
+    }
   },
   {
     connection,
