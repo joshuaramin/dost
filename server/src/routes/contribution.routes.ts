@@ -16,7 +16,7 @@ router.get("/:id", withAuth, asyncHandler(getContributionById));
 router.post(
   "/",
   withAuth,
-  upload.single("media"),
+  upload.single("attachment"),
   asyncHandler(createContribution),
 );
 router.patch("/:id", withAuth, asyncHandler(updateContribution));

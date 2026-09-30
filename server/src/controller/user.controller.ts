@@ -1,6 +1,6 @@
 import {
   CreateUserSchema,
-  UpdateUserSchema,
+  UpdateSchema,
   UserSchema,
 } from "@/lib/validation/user.validation";
 import {
@@ -75,9 +75,10 @@ export const createUser = async (request: Request, response: Response) => {
 };
 
 export const updateUser = async (request: Request, response: Response) => {
-  const parsedData = UpdateUserSchema.safeParse(request.body);
+  const id = String(request.params.id);
+  const parsedData = UpdateSchema.safeParse(request.body);
 
-  const result = await UpdateUser(parsedData.data);
+  const result = await UpdateUser(id, parsedData.data);
 
   return response.status(200).json({
     ...result,

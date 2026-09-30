@@ -271,7 +271,7 @@ export const createEducationResources = async (
 
                 file_name: file.originalname,
 
-                file_url: `${process.env.CDN_URL}/${file.key}`,
+                file_url: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid//${file.key}`,
 
                 mime_type: file.mimetype,
 
@@ -380,7 +380,7 @@ export const updateEducationResource = async (
 
               file_name: file.originalname,
 
-              file_url: `${process.env.CDN_URL}/${file.key}`,
+              file_url: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
 
               mime_type: file.mimetype,
 
