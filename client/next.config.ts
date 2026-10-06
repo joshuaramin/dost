@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
         hostname: "d2i0afz2m2bklk.cloudfront.net",
         pathname: "/**", // allow all paths
       },
+      {
+        protocol: "https",
+        hostname: "ajxuatqnkjknuqeszdzz.storage.supabase.co",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "ajxuatqnkjknuqeszdzz.supabase.co",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -1,7 +1,13 @@
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import { AWS_CONFIG } from "../config/aws.config";
 
-const emailSES = new SESClient(AWS_CONFIG);
+const emailSES = new SESClient({
+  ...AWS_CONFIG,
+  credentials: {
+    accessKeyId: AWS_CONFIG.credentials.accessKeyId!,
+    secretAccessKey: AWS_CONFIG.credentials.secretAccessKey!,
+  },
+});
 
 interface Props {
   html: string;

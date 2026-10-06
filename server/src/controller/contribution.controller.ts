@@ -76,20 +76,30 @@ export const createContribution = async (
   request: Request,
   response: Response,
 ) => {
-  const parsedData = await CreateContributionSchema.safeParse(request.body);
+  const file = request.file as Express.MulterS3.File | undefined;
+
+  const parsedData = await CreateContributionSchema.safeParse({
+    ...request.body,
+    ...(file?.key
+      ? {
+          image_url: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
+        }
+      : {}),
+  });
 
   if (!parsedData.success) {
     return response.status(400).json({
       message: "Invalid Schema",
       schema: z.flattenError(parsedData.error),
-      timestamp: new Date(Date.now()),
+      timestamp: new Date(),
     });
   }
 
   const result = await CreateContribution(parsedData.data);
+
   return response.status(200).json({
     ...result,
-    timestamp: new Date(Date.now()),
+    timestamp: new Date(),
     success: true,
   });
 };

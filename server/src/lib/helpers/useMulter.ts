@@ -3,7 +3,13 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import { AWS_CONFIG } from "../config/aws.config";
 
-const s3 = new S3Client(AWS_CONFIG);
+const s3 = new S3Client({
+  ...AWS_CONFIG,
+  credentials: {
+    accessKeyId: AWS_CONFIG.credentials.accessKeyId!,
+    secretAccessKey: AWS_CONFIG.credentials.secretAccessKey!,
+  },
+});
 
 const upload = multer({
   storage: multerS3({

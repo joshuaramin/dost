@@ -81,7 +81,7 @@ export const UpdateResourceById = async (id: string, data: any) => {
 };
 
 export const CreateResource = async (data: any[]) => {
-  return await prisma.$transaction(async (tx) => {
+  return await prisma.$transaction(async (tx: any) => {
     return await Promise.all(
       data.map(async (resource, resourceIndex: number) => {
         const slug = useSlugify(resource.name);

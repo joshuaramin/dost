@@ -81,7 +81,7 @@ export default function AuditLog() {
               node: {
                 activity_logs_id,
                 created_at,
-                decription,
+                description,
                 is_deleted,
                 type,
               },
@@ -92,7 +92,7 @@ export default function AuditLog() {
                 key={activity_logs_id}
                 activity_logs_id={activity_logs_id}
                 type={type}
-                description={decription}
+                description={description}
               />
             ),
           )}

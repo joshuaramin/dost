@@ -1,19 +1,21 @@
 import { MetaInterface } from "../meta.interface";
+import { UserInterface } from "../user/user.interface";
 
-export interface ActivityLogsInterface {
-  activity_logs_id: string;
+export interface FormManagementDataInterface {
+  form_id: string;
   type: string;
   description: string;
+  image_url: string;
   is_deleted: boolean;
-  created_at: string | undefined;
-  updated_at: string | undefined;
+  user: UserInterface;
+  updated_at: any;
+  created_at: any;
 }
-
-export interface ActivityLogsInterfaceResult {
+export interface FormManagementInterfaceResult {
   meta: MetaInterface;
   data: {
     edges: {
-      node: ActivityLogsInterface;
+      node: FormManagementDataInterface;
       cursor: string;
     }[];
     pageInfo: {
@@ -22,7 +24,6 @@ export interface ActivityLogsInterfaceResult {
       hasNextPage: boolean;
       hasPrevPage: boolean;
     };
-
     totalCount: number;
     timestamp: string;
     success: boolean;

@@ -130,6 +130,9 @@ export const CreateContribution = async (data: any) => {
     image_url: data.image_url,
     source_url: data.source_url,
     confidence_score: data.confidence_score,
+    ...(data.attachment && {
+      image_url: data.attachment,
+    }),
     user: {
       connect: {
         user_id: data.user_id,

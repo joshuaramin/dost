@@ -16,7 +16,6 @@ import styles from "@/styles/lib/ui/dashboard/system-maintenance/survey-manageme
 
 import Input from "@/components/Input/input";
 import Button from "@/components/Button/button";
-import ButtonToggle from "@/components/Toggle/buttonToggle";
 import Text from "@/components/Typography/Text/text";
 
 import { SurveyQuestionFormField } from "@/lib/types/survey-management";

@@ -103,7 +103,7 @@ export const AddRolePermission = async (role_id: string, data: any) => {
     rolePermissions: {
       deleteMany: {},
       createMany: {
-        data: existing.map((p) => ({
+        data: existing.map((p: any) => ({
           permission_id: p.permission_id,
         })),
         skipDuplicates: true,

@@ -55,6 +55,7 @@ export const ModelName = {
   UserPreference: 'UserPreference',
   OTP: 'OTP',
   Profile: 'Profile',
+  Form: 'Form',
   RewardPointRule: 'RewardPointRule',
   RewardTransaction: 'RewardTransaction',
   UserReward: 'UserReward',
@@ -152,6 +153,7 @@ export const ProfileScalarFieldEnum = {
   first_name: 'first_name',
   last_name: 'last_name',
   location: 'location',
+  image_url: 'image_url',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',
@@ -159,6 +161,20 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const FormScalarFieldEnum = {
+  form_id: 'form_id',
+  type: 'type',
+  description: 'description',
+  image_url: 'image_url',
+  is_deleted: 'is_deleted',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  user_id: 'user_id'
+} as const
+
+export type FormScalarFieldEnum = (typeof FormScalarFieldEnum)[keyof typeof FormScalarFieldEnum]
 
 
 export const RewardPointRuleScalarFieldEnum = {
@@ -290,7 +306,7 @@ export type RolePermissionScalarFieldEnum = (typeof RolePermissionScalarFieldEnu
 export const ActivityLogScalarFieldEnum = {
   activity_logs_id: 'activity_logs_id',
   type: 'type',
-  decription: 'decription',
+  description: 'description',
   is_deleted: 'is_deleted',
   created_at: 'created_at',
   updated_at: 'updated_at',

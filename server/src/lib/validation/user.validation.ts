@@ -15,9 +15,14 @@ export const CreateUserSchema = UserSchema.extend({
   organization_id: z.string().optional(),
 });
 
-export const UpdateUserSchema = z.object({
-  profile: ProfileSchema.shape,
-});
+export const UpdateSchema = z
+  .object({
+    email: z.string(),
+    first_name: z.string().min(1, "First Name is required"),
+    last_name: z.string().min(1, "Last Name is required"),
+    location: z.string().min(1, "Location is required"),
+  })
+  .partial();
 
 export const RegisterUserSchema = UserSchema.extend({
   first_name: z.string().min(1, "First name is required"),
