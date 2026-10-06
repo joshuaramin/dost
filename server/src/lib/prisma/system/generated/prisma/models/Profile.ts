@@ -29,6 +29,7 @@ export type ProfileMinAggregateOutputType = {
   first_name: string | null
   last_name: string | null
   location: string | null
+  image_url: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -40,6 +41,7 @@ export type ProfileMaxAggregateOutputType = {
   first_name: string | null
   last_name: string | null
   location: string | null
+  image_url: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -51,6 +53,7 @@ export type ProfileCountAggregateOutputType = {
   first_name: number
   last_name: number
   location: number
+  image_url: number
   is_deleted: number
   created_at: number
   updated_at: number
@@ -64,6 +67,7 @@ export type ProfileMinAggregateInputType = {
   first_name?: true
   last_name?: true
   location?: true
+  image_url?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -75,6 +79,7 @@ export type ProfileMaxAggregateInputType = {
   first_name?: true
   last_name?: true
   location?: true
+  image_url?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -86,6 +91,7 @@ export type ProfileCountAggregateInputType = {
   first_name?: true
   last_name?: true
   location?: true
+  image_url?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -170,6 +176,7 @@ export type ProfileGroupByOutputType = {
   first_name: string
   last_name: string
   location: string | null
+  image_url: string | null
   is_deleted: boolean
   created_at: Date
   updated_at: Date
@@ -202,6 +209,7 @@ export type ProfileWhereInput = {
   first_name?: Prisma.StringFilter<"Profile"> | string
   last_name?: Prisma.StringFilter<"Profile"> | string
   location?: Prisma.StringNullableFilter<"Profile"> | string | null
+  image_url?: Prisma.StringNullableFilter<"Profile"> | string | null
   is_deleted?: Prisma.BoolFilter<"Profile"> | boolean
   created_at?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Profile"> | Date | string
@@ -214,6 +222,7 @@ export type ProfileOrderByWithRelationInput = {
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  image_url?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -230,6 +239,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   first_name?: Prisma.StringFilter<"Profile"> | string
   last_name?: Prisma.StringFilter<"Profile"> | string
   location?: Prisma.StringNullableFilter<"Profile"> | string | null
+  image_url?: Prisma.StringNullableFilter<"Profile"> | string | null
   is_deleted?: Prisma.BoolFilter<"Profile"> | boolean
   created_at?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Profile"> | Date | string
@@ -241,6 +251,7 @@ export type ProfileOrderByWithAggregationInput = {
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  image_url?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -258,6 +269,7 @@ export type ProfileScalarWhereWithAggregatesInput = {
   first_name?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   last_name?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   location?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  image_url?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   is_deleted?: Prisma.BoolWithAggregatesFilter<"Profile"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
@@ -269,6 +281,7 @@ export type ProfileCreateInput = {
   first_name: string
   last_name: string
   location?: string | null
+  image_url?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -280,6 +293,7 @@ export type ProfileUncheckedCreateInput = {
   first_name: string
   last_name: string
   location?: string | null
+  image_url?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -291,6 +305,7 @@ export type ProfileUpdateInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -302,6 +317,7 @@ export type ProfileUncheckedUpdateInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,6 +329,7 @@ export type ProfileCreateManyInput = {
   first_name: string
   last_name: string
   location?: string | null
+  image_url?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -324,6 +341,7 @@ export type ProfileUpdateManyMutationInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -334,6 +352,7 @@ export type ProfileUncheckedUpdateManyInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,6 +369,7 @@ export type ProfileCountOrderByAggregateInput = {
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  image_url?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -361,6 +381,7 @@ export type ProfileMaxOrderByAggregateInput = {
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  image_url?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -372,6 +393,7 @@ export type ProfileMinOrderByAggregateInput = {
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  image_url?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -415,6 +437,7 @@ export type ProfileCreateWithoutUserInput = {
   first_name: string
   last_name: string
   location?: string | null
+  image_url?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -425,6 +448,7 @@ export type ProfileUncheckedCreateWithoutUserInput = {
   first_name: string
   last_name: string
   location?: string | null
+  image_url?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -451,6 +475,7 @@ export type ProfileUpdateWithoutUserInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -461,6 +486,7 @@ export type ProfileUncheckedUpdateWithoutUserInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -473,6 +499,7 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   first_name?: boolean
   last_name?: boolean
   location?: boolean
+  image_url?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -485,6 +512,7 @@ export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   first_name?: boolean
   last_name?: boolean
   location?: boolean
+  image_url?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -497,6 +525,7 @@ export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   first_name?: boolean
   last_name?: boolean
   location?: boolean
+  image_url?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -509,13 +538,14 @@ export type ProfileSelectScalar = {
   first_name?: boolean
   last_name?: boolean
   location?: boolean
+  image_url?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profile_id" | "first_name" | "last_name" | "location" | "is_deleted" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profile_id" | "first_name" | "last_name" | "location" | "image_url" | "is_deleted" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -536,6 +566,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     first_name: string
     last_name: string
     location: string | null
+    image_url: string | null
     is_deleted: boolean
     created_at: Date
     updated_at: Date
@@ -968,6 +999,7 @@ export interface ProfileFieldRefs {
   readonly first_name: Prisma.FieldRef<"Profile", 'String'>
   readonly last_name: Prisma.FieldRef<"Profile", 'String'>
   readonly location: Prisma.FieldRef<"Profile", 'String'>
+  readonly image_url: Prisma.FieldRef<"Profile", 'String'>
   readonly is_deleted: Prisma.FieldRef<"Profile", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Profile", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Profile", 'DateTime'>

@@ -8,7 +8,7 @@ export const welcomeQueue = new Worker(
   async (job) => {
     const { email, fullname } = job.data;
 
-    const html = await renderWelcome(fullname);
+    const html = await renderWelcome(fullname, "");
 
     await useSES({
       toAddress: [email],

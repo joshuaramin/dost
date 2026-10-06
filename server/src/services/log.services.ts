@@ -37,7 +37,7 @@ export const GetAllActivityLogs = async (
       type: true,
       activity_logs_id: true,
       created_at: true,
-      decription: true,
+      description: true,
       user: {
         select: { user_id: true },
       },
@@ -48,7 +48,7 @@ export const GetAllActivityLogs = async (
 export const CreateActivityLogs = async (data: any) => {
   return ActivityLogManage.create({
     type: data.type,
-    decription: data.description,
+    description: data.description,
     user: { connect: { user_id: data.user_id } },
   });
 };

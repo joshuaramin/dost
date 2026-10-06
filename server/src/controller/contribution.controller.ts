@@ -80,7 +80,11 @@ export const createContribution = async (
 
   const parsedData = await CreateContributionSchema.safeParse({
     ...request.body,
-    ...(file?.location ? { image_url: file.location } : {}),
+    ...(file?.key
+      ? {
+          image_url: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
+        }
+      : {}),
   });
 
   if (!parsedData.success) {

@@ -26,6 +26,7 @@ import TreatmentHubRouter from "@/routes/treatmenthub.routes";
 import ServiceRouter from "@/routes/services.routes";
 import ContributionRouter from "@/routes/contribution.routes";
 import ActivityRouter from "@/routes/log.routes";
+import FormRouter from "@/routes/form.route";
 
 import { createBullBoard } from "@bull-board/api";
 import { ExpressAdapter } from "@bull-board/express";
@@ -137,6 +138,10 @@ const routeDefinitions = [
   {
     prefix: "/maintenance/activity-logs",
     router: ActivityRouter,
+  },
+  {
+    prefix: "/maintenance/form",
+    router: FormRouter,
   },
 ] as const;
 

@@ -4,8 +4,6 @@ import { prisma } from "@/lib/prisma/system/prisma";
 import { Prisma, User } from "@/lib/prisma/system/generated/prisma/client";
 import { UserWhereInput } from "@/lib/prisma/system/generated/prisma/models";
 import { AppError } from "@/lib/common/appError";
-import { userQueue } from "@/jobs/user/user.queue";
-import { name } from "nodemailer/lib/package-info.js";
 
 const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   prisma.user,
@@ -107,6 +105,26 @@ export const CreateUser = async (data: any) => {
   });
 
   return user;
+};
+
+export const UpdateUserLanguage = (id: string, data: any) => {
+  return UserManage.update("user_id", id, {
+    ...(data.language && {
+      Profile: {
+        update: { language: data.language },
+      },
+    }),
+  });
+};
+
+export const UpdateUserAvatar = (id: string, data: any) => {
+  return UserManage.update("user_id", id, {
+    ...(data.image_url && {
+      Profile: {
+        update: { image_url: data.image_url },
+      },
+    }),
+  });
 };
 
 export const UpdateUser = (id: string, data: any) => {

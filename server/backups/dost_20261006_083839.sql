@@ -267,11 +267,11 @@ SET default_table_access_method = heap;
 CREATE TABLE public."ActivityLog" (
     activity_logs_id text NOT NULL,
     type character varying(50) NOT NULL,
-    decription character varying(100),
     is_deleted boolean DEFAULT false NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    user_id text
+    user_id text,
+    description character varying(100)
 );
 
 
@@ -388,6 +388,24 @@ CREATE TABLE public."EducationTag" (
 ALTER TABLE public."EducationTag" OWNER TO postgres;
 
 --
+-- Name: Form; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Form" (
+    form_id text NOT NULL,
+    type character varying(50) NOT NULL,
+    description text NOT NULL,
+    image_url text,
+    is_deleted boolean DEFAULT false NOT NULL,
+    created_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at timestamp(6) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    user_id text
+);
+
+
+ALTER TABLE public."Form" OWNER TO postgres;
+
+--
 -- Name: Notification; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -472,7 +490,8 @@ CREATE TABLE public."Profile" (
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     user_id text NOT NULL,
-    location text
+    location text,
+    image_url text
 );
 
 
@@ -819,56 +838,71 @@ ALTER TABLE public.user_rewards OWNER TO postgres;
 -- Data for Name: ActivityLog; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."ActivityLog" (activity_logs_id, type, decription, is_deleted, created_at, updated_at, user_id) FROM stdin;
-cmtsaq7on00001wy3uxgeoc0u	LOGIN	User successfully logged into the system.	f	2026-09-08 06:36:09.959	2026-09-08 06:36:09.959	cmqq5tmyi0042osy3p41hgb36
-cmtsayzvj00004vy3axnqp4yn	LOGIN	User successfully logged into the system.	f	2026-09-08 06:42:59.743	2026-09-08 06:42:59.743	cmqq5tmyi0042osy3p41hgb36
-cmtsbbqd400024vy35snynqam	LOGIN	User successfully logged into the system.	f	2026-09-08 06:52:53.944	2026-09-08 06:52:53.944	cmqq5tmyi0042osy3p41hgb36
-cmtwfhkuz0001nty3efk68r6c	LOGIN	User successfully logged into the system.	f	2026-09-11 04:00:29.915	2026-09-11 04:00:29.915	cmqq5tmyi0042osy3p41hgb36
-cmu0gpi0p00014hy3sguxb8ob	LOGIN	User successfully logged into the system.	f	2026-09-13 23:45:43.801	2026-09-13 23:45:43.801	cmqq5tmyi0042osy3p41hgb36
-cmu1wmsz100017ry3v3jp1x1m	LOGIN	User successfully logged into the system.	f	2026-09-14 23:59:18.061	2026-09-14 23:59:18.061	cmqq5tmyi0042osy3p41hgb36
-cmu3cntp20001d9y39ynne2dj	LOGIN	User successfully logged into the system.	f	2026-09-16 00:15:45.686	2026-09-16 00:15:45.686	cmqq5tmyi0042osy3p41hgb36
-cmu3cyc9n0002d9y3wq819kvl	Logged Out	User logged out of the system.	f	2026-09-16 00:23:56.315	2026-09-16 00:23:56.315	cmqq5tmyi0042osy3p41hgb36
-cmu3cyu0s0004d9y3c14hxsml	LOGIN	User successfully logged into the system.	f	2026-09-16 00:24:19.324	2026-09-16 00:24:19.324	cmqq5tmyi0042osy3p41hgb36
-cmu4qt1b30000d3y3ocqxql0h	Logged Out	User logged out of the system.	f	2026-09-16 23:39:29.631	2026-09-16 23:39:29.631	cmqq5tmyi0042osy3p41hgb36
-cmu4rc6wv0001yby3jk6uxmkf	LOGIN	User successfully logged into the system.	f	2026-09-16 23:54:23.359	2026-09-16 23:54:23.359	cmqq5tmyi0042osy3p41hgb36
-cmu4tujik0000j6y3d7lk7pzn	UPDATE	User updated the educational resource testing	f	2026-09-17 01:04:38.732	2026-09-17 01:04:38.732	cmqq5tmyi0042osy3p41hgb36
-cmu4tuo360001j6y3liqh2752	UPDATE	User updated the educational resource testing	f	2026-09-17 01:04:44.658	2026-09-17 01:04:44.658	cmqq5tmyi0042osy3p41hgb36
-cmu4tupgd0002j6y3q8xh3g85	UPDATE	User updated the educational resource testing	f	2026-09-17 01:04:46.429	2026-09-17 01:04:46.429	cmqq5tmyi0042osy3p41hgb36
-cmu4tvhfs0003j6y3knq9ip80	UPDATE	User updated the educational resource asdasdddd	f	2026-09-17 01:05:22.696	2026-09-17 01:05:22.696	cmqq5tmyi0042osy3p41hgb36
-cmu4tw9tk0004j6y3caswihbe	UPDATE	User updated the educational resource asdasdddd	f	2026-09-17 01:05:59.481	2026-09-17 01:05:59.481	cmqq5tmyi0042osy3p41hgb36
-cmu4u24of0000pry3co0z5odk	DELETE	User deleted the educational resource "testing".	f	2026-09-17 01:10:32.751	2026-09-17 01:10:32.751	cmqq5tmyi0042osy3p41hgb36
-cmu4u54bd00002fy3to5zoalv	DELETE	User deleted the educational resource "testing".	f	2026-09-17 01:12:52.249	2026-09-17 01:12:52.249	cmqq5tmyi0042osy3p41hgb36
-cmu50awmc00003zy3u54ew6a7	UPDATE	User updated the status of contribution ID: cmu4xged00000xmy3800311ql.	f	2026-09-17 04:05:19.908	2026-09-17 04:05:19.908	cmqq5tmyi0042osy3p41hgb36
-cmu58gr7o0000oyy3ha8fbloi	DELETE	User deleted the educational resource "asdasdddd".	f	2026-09-17 07:53:49.764	2026-09-17 07:53:49.764	cmqq5tmyi0042osy3p41hgb36
-cmu66vjv00001goy3xvmwtyza	LOGIN	User successfully logged into the system.	f	2026-09-17 23:57:07.02	2026-09-17 23:57:07.02	cmqq5tmyi0042osy3p41hgb36
-cmu6hlbbj0000tey37yblykug	Logged Out	User logged out of the system.	f	2026-09-18 04:57:05.167	2026-09-18 04:57:05.167	cmqq5tmyi0042osy3p41hgb36
-cmu6hs70v0002tey335i9vq62	LOGIN	User successfully logged into the system.	f	2026-09-18 05:02:26.191	2026-09-18 05:02:26.191	cmqq5tmyi0042osy3p41hgb36
-cmuby6erx0001tjy3sb52bwle	LOGIN	User successfully logged into the system.	f	2026-09-22 00:40:14.157	2026-09-22 00:40:14.157	cmqq5tmyi0042osy3p41hgb36
-cmuc3r6dt0000ycy3imrsfau8	DELETE	User deleted the account of Joshua Testing.	f	2026-09-22 03:16:21.137	2026-09-22 03:16:21.137	cmqq5tmyi0042osy3p41hgb36
-cmuc3sq820000x2y3ki6mhlyp	DELETE	User deleted the account of Joshua Testing.	f	2026-09-22 03:17:33.506	2026-09-22 03:17:33.506	cmqq5tmyi0042osy3p41hgb36
-cmuc3wt140001x2y374dok6wq	DELETE	User deleted the account of Joshua Testing.	f	2026-09-22 03:20:43.768	2026-09-22 03:20:43.768	cmqq5tmyi0042osy3p41hgb36
-cmuc3wukp0002x2y3mtr4r2dg	DELETE	User deleted the account of Joshua Rembulat.	f	2026-09-22 03:20:45.769	2026-09-22 03:20:45.769	cmqq5tmyi0042osy3p41hgb36
-cmuc4wznz00015my33tlso7tp	DELETE	User deleted the survey "HIV Knowledge and Awareness Survey".	f	2026-09-22 03:48:51.983	2026-09-22 03:48:51.983	cmqq5tmyi0042osy3p41hgb36
-cmuc4wzw900025my3lcg6c55z	DELETE	User deleted the survey "HIV Knowledge and Awareness Survey".	f	2026-09-22 03:48:52.281	2026-09-22 03:48:52.281	cmqq5tmyi0042osy3p41hgb36
-cmuc51fbx00045my3lgly9k0p	DELETE	User deleted the survey "HIV Perspectives and Community Awareness".	f	2026-09-22 03:52:18.909	2026-09-22 03:52:18.909	cmqq5tmyi0042osy3p41hgb36
-cmuc59dmr00055my3zkjn9g5w	DELETE	User deleted the survey "HIV Knowledge and Awareness Survey".	f	2026-09-22 03:58:29.955	2026-09-22 03:58:29.955	cmqq5tmyi0042osy3p41hgb36
-cmuc6luo200085my37hv0hif7	CREATE	User created a new survey: HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey.	f	2026-09-22 04:36:11.522	2026-09-22 04:36:11.522	cmqq5tmyi0042osy3p41hgb36
-cmuc73fxx0000f2y3uw8xn6g7	DELETE	User deleted the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 04:49:52.245	2026-09-22 04:49:52.245	cmqq5tmyi0042osy3p41hgb36
-cmuc7lj5f0001rgy3tnsqql7f	CREATE	User created a new role: Testing.	f	2026-09-22 05:03:56.211	2026-09-22 05:03:56.211	cmqq5tmyi0042osy3p41hgb36
-cmuc7ta7k000099y3kicmfygj	DELETE	User delete a roel and permission: Testing	f	2026-09-22 05:09:57.872	2026-09-22 05:09:57.872	cmqq5tmyi0042osy3p41hgb36
-cmuc805th000199y33zo1ajkr	DELETE	User deleted the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 05:15:18.773	2026-09-22 05:15:18.773	cmqq5tmyi0042osy3p41hgb36
-cmuc8dpm90000a0y3du4ehq5q	UPDATE	User published the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 05:25:50.961	2026-09-22 05:25:50.961	cmqq5tmyi0042osy3p41hgb36
-cmuc8jd530001a0y307nt6scn	UPDATE	User published the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 05:30:14.727	2026-09-22 05:30:14.727	cmqq5tmyi0042osy3p41hgb36
-cmuc8k9oc0000qpy3j6i944hv	UPDATE	User published the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 05:30:56.892	2026-09-22 05:30:56.892	cmqq5tmyi0042osy3p41hgb36
-cmuc8muth0001qpy3iz2ppawc	UPDATE	User published the survey "HIV Knowledge, Misinformation, Stigma, and Community Engagement Survey".	f	2026-09-22 05:32:57.605	2026-09-22 05:32:57.605	cmqq5tmyi0042osy3p41hgb36
-cmuc8xmah0002qpy36ljibl0t	Logged Out	User logged out of the system.	f	2026-09-22 05:41:19.769	2026-09-22 05:41:19.769	cmqq5tmyi0042osy3p41hgb36
-cmuc9dp300004qpy3tzgshi5s	LOGIN	User successfully logged into the system.	f	2026-09-22 05:53:49.884	2026-09-22 05:53:49.884	cmqq5tmyi0042osy3p41hgb36
-cmuc9kqc60007qpy33xlcqzuo	CREATE	User created a new survey: Misinformation and Digital Discourse.	f	2026-09-22 05:59:18.102	2026-09-22 05:59:18.102	cmqq5tmyi0042osy3p41hgb36
-cmuc9sdag0003xky3t72tvbqr	UPDATE	User published the survey "Misinformation and Digital Discourse".	f	2026-09-22 06:05:14.44	2026-09-22 06:05:14.44	cmqq5tmyi0042osy3p41hgb36
-cmuc9tlay0006xky351lnl2ha	CREATE	User created a new survey: Stigma, Discrimination, and Community Attitudes.	f	2026-09-22 06:06:11.482	2026-09-22 06:06:11.482	cmqq5tmyi0042osy3p41hgb36
-cmucafya900023by37px8ei3n	CREATE	User created a new survey: Solutions and Community Engagement.	f	2026-09-22 06:23:34.737	2026-09-22 06:23:34.737	cmqq5tmyi0042osy3p41hgb36
-cmucahv0n00093by3rb3r3s2t	UPDATE	User published the survey "Stigma, Discrimination, and Community Attitudes".	f	2026-09-22 06:25:03.815	2026-09-22 06:25:03.815	cmqq5tmyi0042osy3p41hgb36
-cmucahzzl000a3by32a4cona7	UPDATE	User published the survey "Solutions and Community Engagement".	f	2026-09-22 06:25:10.257	2026-09-22 06:25:10.257	cmqq5tmyi0042osy3p41hgb36
+COPY public."ActivityLog" (activity_logs_id, type, is_deleted, created_at, updated_at, user_id, description) FROM stdin;
+cmtsaq7on00001wy3uxgeoc0u	LOGIN	f	2026-09-08 06:36:09.959	2026-09-08 06:36:09.959	cmqq5tmyi0042osy3p41hgb36	\N
+cmtsayzvj00004vy3axnqp4yn	LOGIN	f	2026-09-08 06:42:59.743	2026-09-08 06:42:59.743	cmqq5tmyi0042osy3p41hgb36	\N
+cmtsbbqd400024vy35snynqam	LOGIN	f	2026-09-08 06:52:53.944	2026-09-08 06:52:53.944	cmqq5tmyi0042osy3p41hgb36	\N
+cmtwfhkuz0001nty3efk68r6c	LOGIN	f	2026-09-11 04:00:29.915	2026-09-11 04:00:29.915	cmqq5tmyi0042osy3p41hgb36	\N
+cmu0gpi0p00014hy3sguxb8ob	LOGIN	f	2026-09-13 23:45:43.801	2026-09-13 23:45:43.801	cmqq5tmyi0042osy3p41hgb36	\N
+cmu1wmsz100017ry3v3jp1x1m	LOGIN	f	2026-09-14 23:59:18.061	2026-09-14 23:59:18.061	cmqq5tmyi0042osy3p41hgb36	\N
+cmu3cntp20001d9y39ynne2dj	LOGIN	f	2026-09-16 00:15:45.686	2026-09-16 00:15:45.686	cmqq5tmyi0042osy3p41hgb36	\N
+cmu3cyc9n0002d9y3wq819kvl	Logged Out	f	2026-09-16 00:23:56.315	2026-09-16 00:23:56.315	cmqq5tmyi0042osy3p41hgb36	\N
+cmu3cyu0s0004d9y3c14hxsml	LOGIN	f	2026-09-16 00:24:19.324	2026-09-16 00:24:19.324	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4qt1b30000d3y3ocqxql0h	Logged Out	f	2026-09-16 23:39:29.631	2026-09-16 23:39:29.631	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4rc6wv0001yby3jk6uxmkf	LOGIN	f	2026-09-16 23:54:23.359	2026-09-16 23:54:23.359	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4tujik0000j6y3d7lk7pzn	UPDATE	f	2026-09-17 01:04:38.732	2026-09-17 01:04:38.732	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4tuo360001j6y3liqh2752	UPDATE	f	2026-09-17 01:04:44.658	2026-09-17 01:04:44.658	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4tupgd0002j6y3q8xh3g85	UPDATE	f	2026-09-17 01:04:46.429	2026-09-17 01:04:46.429	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4tvhfs0003j6y3knq9ip80	UPDATE	f	2026-09-17 01:05:22.696	2026-09-17 01:05:22.696	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4tw9tk0004j6y3caswihbe	UPDATE	f	2026-09-17 01:05:59.481	2026-09-17 01:05:59.481	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4u24of0000pry3co0z5odk	DELETE	f	2026-09-17 01:10:32.751	2026-09-17 01:10:32.751	cmqq5tmyi0042osy3p41hgb36	\N
+cmu4u54bd00002fy3to5zoalv	DELETE	f	2026-09-17 01:12:52.249	2026-09-17 01:12:52.249	cmqq5tmyi0042osy3p41hgb36	\N
+cmu50awmc00003zy3u54ew6a7	UPDATE	f	2026-09-17 04:05:19.908	2026-09-17 04:05:19.908	cmqq5tmyi0042osy3p41hgb36	\N
+cmu58gr7o0000oyy3ha8fbloi	DELETE	f	2026-09-17 07:53:49.764	2026-09-17 07:53:49.764	cmqq5tmyi0042osy3p41hgb36	\N
+cmu66vjv00001goy3xvmwtyza	LOGIN	f	2026-09-17 23:57:07.02	2026-09-17 23:57:07.02	cmqq5tmyi0042osy3p41hgb36	\N
+cmu6hlbbj0000tey37yblykug	Logged Out	f	2026-09-18 04:57:05.167	2026-09-18 04:57:05.167	cmqq5tmyi0042osy3p41hgb36	\N
+cmu6hs70v0002tey335i9vq62	LOGIN	f	2026-09-18 05:02:26.191	2026-09-18 05:02:26.191	cmqq5tmyi0042osy3p41hgb36	\N
+cmuby6erx0001tjy3sb52bwle	LOGIN	f	2026-09-22 00:40:14.157	2026-09-22 00:40:14.157	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc3r6dt0000ycy3imrsfau8	DELETE	f	2026-09-22 03:16:21.137	2026-09-22 03:16:21.137	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc3sq820000x2y3ki6mhlyp	DELETE	f	2026-09-22 03:17:33.506	2026-09-22 03:17:33.506	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc3wt140001x2y374dok6wq	DELETE	f	2026-09-22 03:20:43.768	2026-09-22 03:20:43.768	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc3wukp0002x2y3mtr4r2dg	DELETE	f	2026-09-22 03:20:45.769	2026-09-22 03:20:45.769	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc4wznz00015my33tlso7tp	DELETE	f	2026-09-22 03:48:51.983	2026-09-22 03:48:51.983	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc4wzw900025my3lcg6c55z	DELETE	f	2026-09-22 03:48:52.281	2026-09-22 03:48:52.281	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc51fbx00045my3lgly9k0p	DELETE	f	2026-09-22 03:52:18.909	2026-09-22 03:52:18.909	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc59dmr00055my3zkjn9g5w	DELETE	f	2026-09-22 03:58:29.955	2026-09-22 03:58:29.955	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc6luo200085my37hv0hif7	CREATE	f	2026-09-22 04:36:11.522	2026-09-22 04:36:11.522	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc73fxx0000f2y3uw8xn6g7	DELETE	f	2026-09-22 04:49:52.245	2026-09-22 04:49:52.245	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc7lj5f0001rgy3tnsqql7f	CREATE	f	2026-09-22 05:03:56.211	2026-09-22 05:03:56.211	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc7ta7k000099y3kicmfygj	DELETE	f	2026-09-22 05:09:57.872	2026-09-22 05:09:57.872	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc805th000199y33zo1ajkr	DELETE	f	2026-09-22 05:15:18.773	2026-09-22 05:15:18.773	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc8dpm90000a0y3du4ehq5q	UPDATE	f	2026-09-22 05:25:50.961	2026-09-22 05:25:50.961	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc8jd530001a0y307nt6scn	UPDATE	f	2026-09-22 05:30:14.727	2026-09-22 05:30:14.727	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc8k9oc0000qpy3j6i944hv	UPDATE	f	2026-09-22 05:30:56.892	2026-09-22 05:30:56.892	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc8muth0001qpy3iz2ppawc	UPDATE	f	2026-09-22 05:32:57.605	2026-09-22 05:32:57.605	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc8xmah0002qpy36ljibl0t	Logged Out	f	2026-09-22 05:41:19.769	2026-09-22 05:41:19.769	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc9dp300004qpy3tzgshi5s	LOGIN	f	2026-09-22 05:53:49.884	2026-09-22 05:53:49.884	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc9kqc60007qpy33xlcqzuo	CREATE	f	2026-09-22 05:59:18.102	2026-09-22 05:59:18.102	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc9sdag0003xky3t72tvbqr	UPDATE	f	2026-09-22 06:05:14.44	2026-09-22 06:05:14.44	cmqq5tmyi0042osy3p41hgb36	\N
+cmuc9tlay0006xky351lnl2ha	CREATE	f	2026-09-22 06:06:11.482	2026-09-22 06:06:11.482	cmqq5tmyi0042osy3p41hgb36	\N
+cmucafya900023by37px8ei3n	CREATE	f	2026-09-22 06:23:34.737	2026-09-22 06:23:34.737	cmqq5tmyi0042osy3p41hgb36	\N
+cmucahv0n00093by3rb3r3s2t	UPDATE	f	2026-09-22 06:25:03.815	2026-09-22 06:25:03.815	cmqq5tmyi0042osy3p41hgb36	\N
+cmucahzzl000a3by32a4cona7	UPDATE	f	2026-09-22 06:25:10.257	2026-09-22 06:25:10.257	cmqq5tmyi0042osy3p41hgb36	\N
+cmueopgbg0001dcy3ev0dse68	LOGIN	f	2026-09-23 22:38:24.988	2026-09-23 22:38:24.988	cmqq5tmyi0042osy3p41hgb36	\N
+cmueqijxa0002djy3kqiixq1n	CREATE	f	2026-09-23 23:29:02.302	2026-09-23 23:29:02.302	cmqq5tmyi0042osy3p41hgb36	\N
+cmues0ktr0000fdy3khxe6d0z	UPDATE	f	2026-09-24 00:11:02.895	2026-09-24 00:11:02.895	cmqq5tmyi0042osy3p41hgb36	\N
+cmues1dcw0001fdy35cwbfczi	UPDATE	f	2026-09-24 00:11:39.872	2026-09-24 00:11:39.872	cmqq5tmyi0042osy3p41hgb36	\N
+cmues1ib40002fdy33nm78yca	UPDATE	f	2026-09-24 00:11:46.288	2026-09-24 00:11:46.288	cmqq5tmyi0042osy3p41hgb36	\N
+cmues24lw0003fdy3wzpwss25	UPDATE	f	2026-09-24 00:12:15.188	2026-09-24 00:12:15.188	cmqq5tmyi0042osy3p41hgb36	\N
+cmues2czu0004fdy3fdo0c6g7	UPDATE	f	2026-09-24 00:12:26.058	2026-09-24 00:12:26.058	cmqq5tmyi0042osy3p41hgb36	\N
+cmues3gyc0005fdy3mwh14taf	UPDATE	f	2026-09-24 00:13:17.844	2026-09-24 00:13:17.844	cmqq5tmyi0042osy3p41hgb36	\N
+cmues3lvl0006fdy3gs3b7vqd	UPDATE	f	2026-09-24 00:13:24.225	2026-09-24 00:13:24.225	cmqq5tmyi0042osy3p41hgb36	\N
+cmues3ork0007fdy3eansmjvz	DELETE	f	2026-09-24 00:13:27.968	2026-09-24 00:13:27.968	cmqq5tmyi0042osy3p41hgb36	\N
+cmug9opjz000171y35uo5ngjf	LOGIN	f	2026-09-25 01:13:28.415	2026-09-25 01:13:28.415	cmqq5tmyi0042osy3p41hgb36	\N
+cmuunh9440002mgy4k0wn2dep	CREATE	f	2026-10-05 02:48:21.604	2026-10-05 02:48:21.604	cmqq5tmyi0042osy3p41hgb36	User created a new user account for Divine Blanco.
+cmuuqk7xb0037vuy4aw7qw9hv	Logged Out	f	2026-10-05 04:14:38.879	2026-10-05 04:14:38.879	cmqq5tmyi0042osy3p41hgb36	User logged out of the system.
+cmuuqks5u0039vuy46miok4sa	LOGIN	f	2026-10-05 04:15:05.106	2026-10-05 04:15:05.106	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmuuuzihf000244y482jt8y84	DELETE	f	2026-10-05 06:18:30.867	2026-10-05 06:18:30.867	cmqq5tmyi0042osy3p41hgb36	User deleted an item.
 \.
 
 
@@ -919,20 +953,15 @@ cmscov5dm0003k8y39l3gev6i	Macintosh	::1	2026-08-04 03:47:53.717	f	f	2026-08-03 0
 cmscoxv9j0004k8y30ycvvm0x	Macintosh	::1	2026-08-04 03:50:00.58	f	f	2026-08-03 03:50:00.583	2026-08-03 03:50:00.583	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmscp0v730000pmy32pl3df7h	Unknown	::1	2026-08-04 03:52:20.452	f	f	2026-08-03 03:52:20.463	2026-08-03 03:52:20.463	cmqq5tmyi0042osy3p41hgb36	Unknown	Desktop	Unknown	PostmanRuntime/7.55.1
 cmscp2yf90000eey3j8jskcgp	Unknown	::1	2026-08-04 03:53:57.945	f	f	2026-08-03 03:53:57.957	2026-08-03 03:53:57.957	cmqq5tmyi0042osy3p41hgb36	Unknown	Desktop	Unknown	PostmanRuntime/7.55.1
-cmscp3yie0000qgy34zw00jbu	Unknown	::1	2026-08-04 03:54:44.715	f	f	2026-08-03 03:54:44.726	2026-08-03 03:54:44.726	cmscot51a0001k8y3urzdecyx	Unknown	Desktop	Unknown	PostmanRuntime/7.55.1
-cmscp5ddi0000uay3x2iakhgq	Macintosh	::1	2026-08-04 03:55:50.635	f	f	2026-08-03 03:55:50.646	2026-08-03 03:55:50.646	cmscot51a0001k8y3urzdecyx	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
-cmscp9apq0001uay3d5wt0goe	Macintosh	::1	2026-08-04 03:58:53.815	f	f	2026-08-03 03:58:53.822	2026-08-03 03:58:53.822	cmscot51a0001k8y3urzdecyx	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmscq8l2a0000ffy3jhzacpxi	Macintosh	::1	2026-08-04 04:26:20.183	f	f	2026-08-03 04:26:20.194	2026-08-03 04:26:20.194	cmscod7oo0007pfy3qxqgtp4u	Safari	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15
 cmscqduym002pffy3s5fkbb75	Macintosh	::1	2026-08-04 04:30:26.298	f	f	2026-08-03 04:30:26.302	2026-08-03 04:30:26.302	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmscxas1r00314by3hqkixazr	Macintosh	::1	2026-08-04 07:43:59.865	f	f	2026-08-03 07:43:59.871	2026-08-03 07:43:59.871	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmse2cmh300002my3w8keda93	Macintosh	::1	2026-08-05 02:53:10.203	f	f	2026-08-04 02:53:10.215	2026-08-04 02:53:10.215	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmsievtz6000014y3r7b2tmzo	Macintosh	::1	2026-08-08 03:55:06.481	f	f	2026-08-07 03:55:06.498	2026-08-07 03:55:06.498	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
-cmsiezs9z000114y3zmwl6mmv	Macintosh	::1	2026-08-08 03:58:10.91	f	f	2026-08-07 03:58:10.919	2026-08-07 03:58:10.919	cmscot51a0001k8y3urzdecyx	Safari	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15
 cmsnx1jt30000oky3ng7zoyap	Macintosh	::1	2026-08-12 00:22:17.208	f	f	2026-08-11 00:22:17.223	2026-08-11 00:22:17.223	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmspesbl30000xiy3wikjiroy	Macintosh	::1	2026-08-13 01:26:45.914	f	f	2026-08-12 01:26:45.927	2026-08-12 01:26:45.927	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmsppbk7c0000lty3q8yzytim	Macintosh	::1	2026-08-13 06:21:39.7	f	f	2026-08-12 06:21:39.72	2026-08-12 06:21:39.72	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmsqwe8xl0000o1y34e5xnb5w	Macintosh	::1	2026-08-14 02:27:28.559	f	f	2026-08-13 02:27:28.569	2026-08-13 02:27:28.569	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
-cmswljmie0000fky3nzy07eef	Macintosh	::1	2026-08-18 02:10:20.713	f	f	2026-08-17 02:10:20.726	2026-08-17 02:10:20.726	cmscot51a0001k8y3urzdecyx	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmswlmtne0001fky3fv5anuwe	Macintosh	::1	2026-08-18 02:12:49.942	f	f	2026-08-17 02:12:49.947	2026-08-17 02:12:49.947	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmt6hgixc0000fby3dl1hslk7	Macintosh	::1	2026-08-25 00:13:39.397	f	f	2026-08-24 00:13:39.408	2026-08-24 00:13:39.408	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
 cmtfdgja9000a74utb7p23px7	Macintosh	::1	2026-08-31 05:31:36.989	f	f	2026-08-30 05:31:36.993	2026-08-30 05:31:36.993	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
@@ -959,6 +988,15 @@ cmu66vju80000goy3ibbmwptm	Macintosh	::1	2026-09-18 23:57:06.971	f	f	2026-09-17 2
 cmu6hs7020001tey3n0io0uhe	Macintosh	::1	2026-09-19 05:02:26.158	f	f	2026-09-18 05:02:26.162	2026-09-18 05:02:26.162	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36
 cmuby6era0000tjy3epvgqkgk	Macintosh	::1	2026-09-23 00:40:14.125	f	f	2026-09-22 00:40:14.134	2026-09-22 00:40:14.134	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36
 cmuc9dp280003qpy3cp6rbnit	Macintosh	::1	2026-09-23 05:53:49.85	f	f	2026-09-22 05:53:49.856	2026-09-22 05:53:49.856	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36
+cmscp3yie0000qgy34zw00jbu	Unknown	::1	2026-08-04 03:54:44.715	f	f	2026-08-03 03:54:44.726	2026-08-03 03:54:44.726	\N	Unknown	Desktop	Unknown	PostmanRuntime/7.55.1
+cmscp5ddi0000uay3x2iakhgq	Macintosh	::1	2026-08-04 03:55:50.635	f	f	2026-08-03 03:55:50.646	2026-08-03 03:55:50.646	\N	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+cmscp9apq0001uay3d5wt0goe	Macintosh	::1	2026-08-04 03:58:53.815	f	f	2026-08-03 03:58:53.822	2026-08-03 03:58:53.822	\N	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+cmsiezs9z000114y3zmwl6mmv	Macintosh	::1	2026-08-08 03:58:10.91	f	f	2026-08-07 03:58:10.919	2026-08-07 03:58:10.919	\N	Safari	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Safari/605.1.15
+cmswljmie0000fky3nzy07eef	Macintosh	::1	2026-08-18 02:10:20.713	f	f	2026-08-17 02:10:20.726	2026-08-17 02:10:20.726	\N	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36
+cmueopgas0000dcy3vb5fiyqn	Macintosh	::1	2026-09-24 22:38:24.955	f	f	2026-09-23 22:38:24.964	2026-09-23 22:38:24.964	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36
+cmug9opj4000071y39jtbvtvn	Macintosh	::1	2026-09-26 01:13:28.361	f	f	2026-09-25 01:13:28.384	2026-09-25 01:13:28.384	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36
+cmuumpvug0000qby4cy7f2rdj	Macintosh	::1	2026-10-06 02:27:04.679	f	f	2026-10-05 02:27:04.696	2026-10-05 02:27:04.696	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmuuqks530038vuy470bry21b	Macintosh	::1	2026-10-06 04:15:05.076	f	f	2026-10-05 04:15:05.079	2026-10-05 04:15:05.079	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
 \.
 
 
@@ -991,8 +1029,6 @@ cmrob7l6000019by3iz0j3wts	Videos	videos	\N	\N	f	2026-07-17 02:19:11.208	2026-07-
 --
 
 COPY public."EducationResource" (education_resource_id, title, content, is_deleted, created_at, updated_at, user_id, slug, category_id, is_featured, published_at, status, summary, type, external_link) FROM stdin;
-cmu3jt2sv0000epy3l8m7fbx4	testing	<p><span style="white-space: pre-wrap;">do be shy, just become a man I need</span></p>	t	2026-09-16 03:35:48.079	2026-09-17 01:12:52.186	cmqq5tmyi0042osy3p41hgb36	testing	cmroauuqj0000lhy3a12v1tdm	f	\N	PUBLISHED	testing	ARTICLE	
-cmu3k5nxq00015xy3uhthuazq	asdasdddd	<p><span style="white-space: pre-wrap;">aasasddd</span></p>	t	2026-09-16 03:45:35.342	2026-09-17 07:53:49.705	cmqq5tmyi0042osy3p41hgb36	asdasdddd	cmroauuqj0000lhy3a12v1tdm	f	\N	PUBLISHED	asdsadasdassadddddasda	ARTICLE	
 \.
 
 
@@ -1019,6 +1055,15 @@ cmroeovl400060wy3ac8biwpt	Youth	youth
 cmroeoxm700070wy34t5lgs5x	Awareness	awareness
 cmroep1u900080wy31sar28d6	Counseling	counseling
 cmroep42o00090wy398qab1dr	Testing	testing
+\.
+
+
+--
+-- Data for Name: Form; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Form" (form_id, type, description, image_url, is_deleted, created_at, updated_at, user_id) FROM stdin;
+cmuuu6g7h000044y4h561zto7	Testing	asdassad		f	2026-10-05 05:55:54.893	2026-10-05 05:55:54.893	cmqq5tmyi0042osy3p41hgb36
 \.
 
 
@@ -1097,6 +1142,14 @@ cmu6hlhy200036yy3zm6dv83d	raminjoshua05@gmail.com	login	2026-09-18 05:07:13.753	
 cmu6hrafg00046yy34sl1d0xn	raminjoshua05@gmail.com	login	2026-09-18 05:11:43.947	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36	\N	2026-09-18 05:01:43.948	16df92eb222c2fb3b3cd72d675f80576d7d3ad503c367ae4c7499c7dd186b92d
 cmuby5zzi0000sey3vecwvmd7	raminjoshua05@gmail.com	login	2026-09-22 00:49:54.987	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-22 00:39:54.991	0adbf920e1c3615e1409b42998569b8e9c64630789f3cfd9365a7e9ce6483bc4
 cmuc9deuw0000dzy389sai9zk	raminjoshua05@gmail.com	login	2026-09-22 06:03:36.63	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-22 05:53:36.632	d57e1ed801af7ba989dc4aa805ff3c5d76a0da545209f718842060de17550190
+cmudh5yhg0000w2y33ye5tk97	adasd@gmail.com	login	2026-09-23 02:29:31.921	t	0	5	\N	\N	\N	2026-09-23 02:19:31.924	edff359660f27361f0db3d75a2160d5c9cd0d705f4baec85e063b70c404eaf6a
+cmudh617r0001w2y3q65ozswz	adasd@gmail.com	login	2026-09-23 02:29:35.463	t	0	5	\N	\N	\N	2026-09-23 02:19:35.463	35c3d51d4f585242674db43e43fdede54542706c682e812164ecf6272e742609
+cmudh663d0002w2y3cl23oe5n	adasd@gmail.com	login	2026-09-23 02:29:41.784	f	0	5	\N	\N	\N	2026-09-23 02:19:41.785	57335d2b6a023f0cf188214861c75b505f4b9bd3a440cfe86de9709c97fb3784
+cmudjdc4100005sy31b504cz2	raminjoshua05@gmail.com	login	2026-09-23 03:31:15.406	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-23 03:21:15.409	b2f8b8dc9f68f12fce20762e928d592a9104566a26db7a0a03886a85940b01c0
+cmueop4kx0000c8y3d57tetax	raminjoshua05@gmail.com	login	2026-09-23 22:48:09.774	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-23 22:38:09.777	867c64462d519c8417f1a7828b7c02cc22f3331ff8a978c1486dc0788f7e4259
+cmug9og3h00005yy30iw7xp5q	raminjoshua05@gmail.com	login	2026-09-25 01:23:16.154	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-25 01:13:16.157	8469d25b229bf314e4c25eaaeb98c4939709cc383f7b0a3a0872767e199b753c
+cmuumpg3000005sy4pt73yfwi	raminjoshua05@gmail.com	login	2026-10-05 02:36:44.265	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-05 02:26:44.268	001d08013a0ebe49f9f6bd6dc61c60e690a608a2c400f905a2a4cd1b9461d3b7
+cmuuqkirf0000uty4k609eon1	raminjoshua05@gmail.com	login	2026-10-05 04:24:52.92	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-05 04:14:52.923	346a759d1630ce750aac3e85387c03790d7c2958494f8c798354c61e18026232
 \.
 
 
@@ -1105,8 +1158,8 @@ cmuc9deuw0000dzy389sai9zk	raminjoshua05@gmail.com	login	2026-09-22 06:03:36.63	t
 --
 
 COPY public."Organization" (organization_id, name, is_deleted, created_at, updated_at, address, contact, logo) FROM stdin;
-cmol5fmjt0001d2utc6jge2ug	National University	f	2026-04-30 07:15:03.017	2026-04-30 07:15:03.017	551 M.F. Jhocson Street, Sampaloc, Manila, Philippines, 1008	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777533302716-NU_shield.svg
 cmol6n0p70002d2uti0z7egl1	Department of Health	t	2026-04-30 07:48:47.563	2026-09-22 03:25:39.66	San Lazaro Compound, Rizal Avenue, Santa Cruz, Manila, Philippines, 1003	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777535326879-Department_of_Health_(DOH)_PHL.svg.png
+cmol5fmjt0001d2utc6jge2ug	National University	t	2026-04-30 07:15:03.017	2026-10-05 06:18:30.832	551 M.F. Jhocson Street, Sampaloc, Manila, Philippines, 1008	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777533302716-NU_shield.svg
 \.
 
 
@@ -1247,6 +1300,12 @@ cmscx98ab00034by394xq96n7	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	cmsc
 cmscx98ab00044by3pfyqb3tz	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	cmscx989z00004by3xkz6ny27	community-contributions:delete	delete
 cmscx98ab00054by357v9c0bj	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	cmscx989z00004by3xkz6ny27	community-contributions:deny	deny
 cmscx98ac00064by3sn1sq76c	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	cmscx989z00004by3xkz6ny27	community-contributions:export	export
+cmuuqjg8t0001vuy4a7kt287a	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:create	create
+cmuuqjg8t0002vuy4cbc5h7q9	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:read	read
+cmuuqjg8t0003vuy4z1y9ailx	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:update	update
+cmuuqjg8t0004vuy4ouenmiiw	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:delete	delete
+cmuuqjg8t0005vuy464k4qb6u	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:deny	deny
+cmuuqjg8t0006vuy4bf1uz014	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:export	export
 \.
 
 
@@ -1254,10 +1313,10 @@ cmscx98ac00064by3sn1sq76c	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	cmsc
 -- Data for Name: Profile; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public."Profile" (profile_id, first_name, last_name, is_deleted, created_at, updated_at, user_id, location) FROM stdin;
-cmqq5tmyv0043osy3cytmcb49	Joshua	Ramin	f	2026-06-23 04:44:12.282	2026-06-23 04:44:12.282	cmqq5tmyi0042osy3p41hgb36	\N
-cmscod7p60008pfy3ndxu641q	Joshua	Rembulat	f	2026-08-03 03:33:56.904	2026-08-03 03:33:56.904	cmscod7oo0007pfy3qxqgtp4u	\N
-cmscot51o0002k8y31826zj7j	Joshua	Testing	f	2026-08-03 03:46:19.966	2026-08-03 03:46:19.966	cmscot51a0001k8y3urzdecyx	\N
+COPY public."Profile" (profile_id, first_name, last_name, is_deleted, created_at, updated_at, user_id, location, image_url) FROM stdin;
+cmqq5tmyv0043osy3cytmcb49	Joshua	Ramin	f	2026-06-23 04:44:12.282	2026-06-23 04:44:12.282	cmqq5tmyi0042osy3p41hgb36	\N	\N
+cmscod7p60008pfy3ndxu641q	Joshua	Rembulat	f	2026-08-03 03:33:56.904	2026-08-03 03:33:56.904	cmscod7oo0007pfy3qxqgtp4u	\N	\N
+cmuunh93t0001mgy4ngiu9h2b	Divine	Blanco	f	2026-10-05 02:48:21.582	2026-10-05 02:48:21.582	cmuunh93i0000mgy4vn45bomj	\N	\N
 \.
 
 
@@ -1296,6 +1355,7 @@ cmqq2r5ue001sosy390ed0pxc	Trends and Analytics	trends-and-analytics	cmqq2r5ue001
 cmqq2r5ul003cosy36wej347r	Resource Management	resource-management	cmqq2r5uj002rosy3euzvmaq0	t	2026-06-23 03:18:17.947	2026-08-03 03:00:34.221	3
 cmscnj68m0000pfy3uxfro9dl	Treatment Hub Management	treatment-hub-management	cmqq2r5uj002rosy3euzvmaq0	f	2026-08-03 03:10:35.35	2026-08-03 03:10:35.35	3
 cmscx989z00004by3xkz6ny27	Community Contributions	community-contributions	cmqq2r5ub0010osy3binpput4	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	3
+cmuuqjg8h0000vuy4l1lh9vpq	Form Management	form-management	cmqq2r5uj002rosy3euzvmaq0	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	6
 \.
 
 
@@ -1311,7 +1371,6 @@ cmqq6jacc002nedy3nemgrb9w	Government Agencies	Represents national and local gove
 cmqq6kc18002oedy34zqwpr8k	NGO Agencies	Represents non-government and civil society organizations involved in humanitarian, development, and community programs. Accesses aggregated reports and approved insights relevant to social impact initiatives. Focused on welfare, outreach, and advocacy work.	f	2026-06-23 05:04:57.836	2026-06-23 05:04:57.836	ngo-agencies
 cmqq5lun2003yosy3elss5zqj	Super Administrator	Has unrestricted access to all system modules, configurations, databases, user accounts, and security controls. Responsible for system governance, role management, audit monitoring, and overall platform administration. 	f	2026-06-23 04:38:08.99	2026-06-23 04:38:08.99	super-administrator
 cmts0k9d5000cjgy3sxg1uiaa	General Public	Intended for individuals who access Advocaid PH to explore publicly available HIV/AIDS-related information, trends, and educational resources. Users can view relevant content and insights designed to promote awareness and understanding of HIV/AIDS without accessing restricted administrative, research, or analytical functions.	f	2026-09-08 01:51:36.041	2026-09-08 01:51:36.041	general-public
-cmuc7lj2a0000rgy3oywpkcao	Testing	asdadsadas	t	2026-09-22 05:03:56.098	2026-09-22 05:09:57.741	testing
 \.
 
 
@@ -1320,57 +1379,6 @@ cmuc7lj2a0000rgy3oywpkcao	Testing	asdadsadas	t	2026-09-22 05:03:56.098	2026-09-2
 --
 
 COPY public."RolePermission" (role_permission_id, role_id, permission_id) FROM stdin;
-cmscx9xzg001p4by3zsfyqhbn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002losy3s3uqbmiv
-cmscx9xzg001q4by3xr1e53qp	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002mosy31hg5hc2b
-cmscx9xzg001r4by3gr9us1y2	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002nosy3fki6pyfp
-cmscx9xzg001s4by3gn79tist	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002oosy3agegbs73
-cmscx9xzg001t4by3yqy1wqa9	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002posy3gkyhrvk5
-cmscx9xzg001u4by3r2vtwp1v	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002qosy35kfr488e
-cmscx9xzg001v4by36oh40y4f	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk002zosy3fvl1ml7v
-cmscx9xzg001w4by37ypk9xai	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0030osy3mbuxsp0t
-cmscx9xzg001x4by30bpz4c5a	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0031osy3wv6douux
-cmscx9xzg001y4by3jp6aihdq	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0032osy3c7lboxy9
-cmscx9xzg001z4by3dj4e1iho	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0033osy3r6f7iicb
-cmscx9xzg00204by3g9qnqnzg	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0034osy3tkjd8kum
-cmscx9xzg00214by3k4slyfgj	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0036osy3l5izd66t
-cmscx9xzg00224by3qq31htis	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0037osy3yb5is1cw
-cmscx9xzg00234by3llp6b9nw	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0038osy32bi1xkpn
-cmscx9xzg00244by30els7k7y	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0039osy3pbvdhzvy
-cmscx9xzg00254by3uh00phfz	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003aosy3fio22ef1
-cmscx9xzg00264by3r1w75bbs	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003bosy3foywoljk
-cmscx9xzg00274by3fkgmyr9u	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003dosy352i8msiv
-cmscx9xzg00284by3ou00hwz1	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003eosy3xdlnq7zi
-cmscx9xzg00294by3d0wdxm5p	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003fosy3de8etrvj
-cmscx9xzg002a4by3tyhxml62	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003gosy3iz76pbdz
-cmscx9xzg002b4by3kbmx3365	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003hosy3074teopk
-cmscx9xzg002c4by3n1x5hn5d	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003iosy3a1r40lha
-cmscx9xzg002d4by3rzm1wfes	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003kosy38kjluf6p
-cmscx9xzg002e4by3487ff755	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003losy3g6gqjx6g
-cmscx9xzg002f4by30rcih4gp	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003mosy3shtyezyq
-cmscx9xzg002g4by3rayzkog2	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003nosy3zvyxb04l
-cmscx9xzg002h4by3vbzpbslh	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003oosy3le9hqeym
-cmscx9xzg002i4by3ey5lix68	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003posy3ds2l2kgs
-cmscx9xzg002j4by3c0gwunc2	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003rosy3n1c096dx
-cmscx9xzg002k4by38n6ujkhd	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003sosy3ele385ih
-cmscx9xzg002l4by3ms86f8fy	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003tosy3vvkx6zq0
-cmscx9xzg002m4by313ha4l85	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003uosy3d0ltepdo
-cmscx9xzg002n4by3o1dqfghi	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003vosy38ty8c4pj
-cmscx9xzg002o4by3j1or0j69	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003wosy31jiwizos
-cmscx9xzg00074by3dtbbki57	cmqq5lun2003yosy3elss5zqj	cmqq2r5u20009osy3ma28n30s
-cmscx9xzg00084by37ol3h31p	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000aosy3pz3559vs
-cmscx9xzg00094by3t653bjyi	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000bosy3qk24zm63
-cmscx9xzg000a4by3py1ov39n	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000cosy3vcfc0157
-cmscx9xzg000b4by3yu5j657b	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000dosy3zeevqtp8
-cmscx9xzg000c4by3y2hbb241	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000eosy3lq857xum
-cmscx9xzg000d4by3w27szrsr	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000nosy340erq7ut
-cmscx9xzg000e4by320gbj96y	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000oosy3xl39h9u3
-cmscx9xzg000f4by3dx86rnzi	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000posy3ypd933a0
-cmscx9xzg000g4by3mwa569hp	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000qosy36n46hoar
-cmscx9xzg000h4by3n600p0x5	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000rosy320wfm9sb
-cmscx9xzg000i4by32ulfwxfy	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000sosy33rg1isxk
-cmscx9xzg000j4by3c1nyop42	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000uosy3odmqijyv
-cmscx9xzg000k4by3uwh5rqwe	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000vosy3frn7ac7v
-cmscx9xzg000l4by3w08lq7tv	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000wosy3cg60cf3l
 cmscxeejg00324by352auwy8l	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u2000aosy3pz3559vs
 cmscxeejg00334by3azyfmynn	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u3000eosy3lq857xum
 cmscxeejg00344by35dya88ds	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u8000oosy3xl39h9u3
@@ -1461,57 +1469,6 @@ cmscxen6t004t4by3yocos8ug	cmqq6inap002ledy3dp4fy667	cmqq2r5um003posy3ds2l2kgs
 cmscxen6t004u4by3pg9wnuck	cmqq6inap002ledy3dp4fy667	cmscnj6920001pfy3qzc13nyx
 cmscxen6t004v4by3pol5ytnt	cmqq6inap002ledy3dp4fy667	cmscnj6920002pfy3ldc3ypq8
 cmscxen6t004w4by3vb7d8gd3	cmqq6inap002ledy3dp4fy667	cmscnj6920003pfy33a5pqkkd
-cmscx9xzg000m4by35n5d24jc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000xosy34awfm7m2
-cmscx9xzg000n4by3q9o20qkq	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000yosy3x4aar7ry
-cmscx9xzg000o4by30yb3wo0d	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000zosy3ya6kkz5o
-cmscx9xzg000p4by3rocq1vnv	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0018osy3xfuslloy
-cmscx9xzg000q4by3gs83glqo	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0019osy30dmv0jke
-cmscx9xzg000r4by3jltvvpy6	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001aosy3fs2w8x19
-cmscx9xzg000s4by31nwgjxfe	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001bosy37h7g4lcp
-cmscx9xzg000t4by37yi9vywp	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001cosy39vxqxapi
-cmscx9xzg000u4by35vcm80oa	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001dosy38ev8tw6o
-cmscx9xzg000v4by37oghuvld	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001fosy37u42cpw4
-cmscx9xzg000w4by3g8uvacfr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001gosy3gdmyo5mr
-cmscx9xzg000x4by3wuyjyrn3	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001hosy3artbtmg0
-cmscx9xzg000y4by3ufjvet0u	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001iosy32ujmhcmm
-cmscx9xzg000z4by3x0hexbe1	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001josy33ufvcmsb
-cmscx9xzg00104by31310wy4c	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001kosy39fk8kb2d
-cmscx9xzg00114by34jz20urd	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001tosy3nzlk5mgn
-cmscx9xzg00124by3bgjr8wf5	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001uosy3zf9jd7i3
-cmscx9xzg00134by30uefnosk	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001vosy3fyt0ftgy
-cmscx9xzg00144by341s9kgdh	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001wosy313w0am9v
-cmscx9xzg00154by3pposj4xf	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001xosy3v172deco
-cmscx9xzg00164by3k213lpwi	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001yosy33d2fuw5i
-cmscx9xzg00174by3eg9z3kbl	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0020osy3nwmyqu2s
-cmscx9xzg00184by3fjg7bzc7	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0021osy3b5ud1cem
-cmscx9xzg00194by3ffpm404d	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0022osy3k0u9htht
-cmscx9xzg001a4by3h8dpqj9b	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0023osy3cakgq4dc
-cmscx9xzg001b4by3wwir7k3p	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0024osy3z5xxxrd4
-cmscx9xzg001c4by3fu4f78dw	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0025osy3zqwa014x
-cmscx9xzg001d4by3m723m1lh	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0027osy3jqlnewq3
-cmscx9xzg001e4by3gmvcwti1	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0028osy3bpjlcra6
-cmscx9xzg001f4by3iigqzsfa	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0029osy3b1p05tyc
-cmscx9xzg001g4by32v9davfg	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002aosy3lwk7wgdk
-cmscx9xzg001h4by39b07ckkx	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002bosy3an3m79mq
-cmscx9xzg001i4by3ak2uecru	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002cosy3nj7mukdv
-cmscx9xzg001j4by31aicqcle	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002eosy3qyx1mb3w
-cmscx9xzg001k4by34k0016th	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002fosy3rtin7h52
-cmscx9xzg001l4by3co7girgo	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002gosy312inp9w3
-cmscx9xzg001m4by314myfh9j	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002hosy3u9kibgrp
-cmscx9xzg001n4by39l2u8c28	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002iosy3r3b38qie
-cmscx9xzg001o4by3tytlgtwc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002josy3zbxuptpy
-cmscx9xzg002p4by3yonyu4zz	cmqq5lun2003yosy3elss5zqj	cmscnj6920001pfy3qzc13nyx
-cmscx9xzg002q4by3ipvpz85t	cmqq5lun2003yosy3elss5zqj	cmscnj6920002pfy3ldc3ypq8
-cmscx9xzg002r4by3k9hwghwg	cmqq5lun2003yosy3elss5zqj	cmscnj6920003pfy33a5pqkkd
-cmscx9xzg002s4by37jsirgsk	cmqq5lun2003yosy3elss5zqj	cmscnj6920004pfy3ithlhecl
-cmscx9xzg002t4by3lfspyrcp	cmqq5lun2003yosy3elss5zqj	cmscnj6920005pfy38peu6ppi
-cmscx9xzg002u4by3atzmkr2t	cmqq5lun2003yosy3elss5zqj	cmscnj6920006pfy3dm6wkuwt
-cmscx9xzg002v4by3ecdcrpoa	cmqq5lun2003yosy3elss5zqj	cmscx98ab00014by3t09bt3ej
-cmscx9xzg002w4by3odwn963g	cmqq5lun2003yosy3elss5zqj	cmscx98ab00024by3bnht0qwk
-cmscx9xzg002x4by3ok4k9pky	cmqq5lun2003yosy3elss5zqj	cmscx98ab00034by394xq96n7
-cmscx9xzg002y4by33964i0ox	cmqq5lun2003yosy3elss5zqj	cmscx98ab00044by3pfyqb3tz
-cmscx9xzg002z4by36ao8r7kz	cmqq5lun2003yosy3elss5zqj	cmscx98ab00054by357v9c0bj
-cmscx9xzg00304by3gqle8gmo	cmqq5lun2003yosy3elss5zqj	cmscx98ac00064by3sn1sq76c
 cmscxen6t004x4by3ctfvaxit	cmqq6inap002ledy3dp4fy667	cmscnj6920004pfy3ithlhecl
 cmscxen6t004y4by3nev4rn1n	cmqq6inap002ledy3dp4fy667	cmscnj6920006pfy3dm6wkuwt
 cmscxen6t004z4by3e4tdfl84	cmqq6inap002ledy3dp4fy667	cmscx98ab00014by3t09bt3ej
@@ -1545,6 +1502,114 @@ cmts0o5yr000kjgy3n2oj5pk7	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uh0028osy3bpjlcra6
 cmts0o5yr000ljgy37smfk4q2	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ui002fosy3rtin7h52
 cmts0o5yr000mjgy3rca7u47y	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00014by3t09bt3ej
 cmts0o5yr000njgy3q74ei72o	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00024by3bnht0qwk
+cmuuqk1cn0007vuy4rghgaeot	cmqq5lun2003yosy3elss5zqj	cmqq2r5u20009osy3ma28n30s
+cmuuqk1cn0008vuy43fno36rt	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000aosy3pz3559vs
+cmuuqk1cn0009vuy4t2akx7lb	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000bosy3qk24zm63
+cmuuqk1cn000avuy4tuei5aa9	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000cosy3vcfc0157
+cmuuqk1cn000bvuy41x3nffy8	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000dosy3zeevqtp8
+cmuuqk1cn000cvuy47lqh9wbq	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000eosy3lq857xum
+cmuuqk1cn000dvuy49jx1qb97	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000nosy340erq7ut
+cmuuqk1cn000evuy4q9kd1njf	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000oosy3xl39h9u3
+cmuuqk1cn000fvuy4i4o9u41r	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000posy3ypd933a0
+cmuuqk1cn000gvuy4ceww02b4	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000qosy36n46hoar
+cmuuqk1cn000hvuy4h0db3cfk	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000rosy320wfm9sb
+cmuuqk1cn000ivuy4gxcbd56q	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000sosy33rg1isxk
+cmuuqk1cn000jvuy4slrvjugi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000uosy3odmqijyv
+cmuuqk1cn000kvuy4ix23a3wl	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000vosy3frn7ac7v
+cmuuqk1cn000lvuy4p52zxlkw	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000wosy3cg60cf3l
+cmuuqk1cn000mvuy4nm5t75qi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000xosy34awfm7m2
+cmuuqk1cn000nvuy4y9djm4od	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000yosy3x4aar7ry
+cmuuqk1cn000ovuy4f0f0hlo6	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000zosy3ya6kkz5o
+cmuuqk1cn000pvuy4k9s141i8	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0018osy3xfuslloy
+cmuuqk1cn000qvuy4s012v8mx	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0019osy30dmv0jke
+cmuuqk1cn000rvuy476qmtbm9	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001aosy3fs2w8x19
+cmuuqk1cn000svuy4cjpogxcm	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001bosy37h7g4lcp
+cmuuqk1cn000tvuy4euae7kms	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001cosy39vxqxapi
+cmuuqk1cn000uvuy4lfpjicqe	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001dosy38ev8tw6o
+cmuuqk1cn000vvuy413fq6irb	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001fosy37u42cpw4
+cmuuqk1cn000wvuy47f8dd75z	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001gosy3gdmyo5mr
+cmuuqk1cn000xvuy4ou75hkz4	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001hosy3artbtmg0
+cmuuqk1cn000yvuy48vk2m7zs	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001iosy32ujmhcmm
+cmuuqk1cn000zvuy4exktjyjl	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001josy33ufvcmsb
+cmuuqk1cn0010vuy4vqh6udrn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001kosy39fk8kb2d
+cmuuqk1cn0011vuy410v1yua6	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001tosy3nzlk5mgn
+cmuuqk1cn0012vuy4u3uv1w7a	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001uosy3zf9jd7i3
+cmuuqk1co0013vuy458i71pct	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001vosy3fyt0ftgy
+cmuuqk1co0014vuy48xqv6b9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001wosy313w0am9v
+cmuuqk1co0015vuy47zb7eeh4	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001xosy3v172deco
+cmuuqk1co0016vuy4h72ryn6v	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001yosy33d2fuw5i
+cmuuqk1co0017vuy4hul8gvmr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0020osy3nwmyqu2s
+cmuuqk1co0018vuy4ql7ih5ob	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0021osy3b5ud1cem
+cmuuqk1co0019vuy4xtlvoshn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0022osy3k0u9htht
+cmuuqk1co001avuy4e5v0oem2	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0023osy3cakgq4dc
+cmuuqk1co001bvuy467m7hkto	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0024osy3z5xxxrd4
+cmuuqk1co001cvuy4ug48ejjc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0025osy3zqwa014x
+cmuuqk1co001dvuy4zqc01gxl	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0027osy3jqlnewq3
+cmuuqk1co001evuy4kcmydb30	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0028osy3bpjlcra6
+cmuuqk1co001fvuy4n579llyz	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0029osy3b1p05tyc
+cmuuqk1co001gvuy41ybgrfjb	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002aosy3lwk7wgdk
+cmuuqk1co001hvuy41wfwnb9t	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002bosy3an3m79mq
+cmuuqk1co001ivuy4qd9eyvl5	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002cosy3nj7mukdv
+cmuuqk1co001jvuy4yilyt6hy	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002eosy3qyx1mb3w
+cmuuqk1co001kvuy47xvjxg7w	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002fosy3rtin7h52
+cmuuqk1co001lvuy4ndhua43w	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002gosy312inp9w3
+cmuuqk1co001mvuy4i6uttvei	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002hosy3u9kibgrp
+cmuuqk1co001nvuy4mvl7rc9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002iosy3r3b38qie
+cmuuqk1co001ovuy4yqu7asnc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002josy3zbxuptpy
+cmuuqk1co001pvuy46gxzh39f	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002losy3s3uqbmiv
+cmuuqk1co001qvuy4sl6c41fc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002mosy31hg5hc2b
+cmuuqk1co001rvuy4pt83ppir	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002nosy3fki6pyfp
+cmuuqk1co001svuy4zrby65zi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002oosy3agegbs73
+cmuuqk1co001tvuy4da691bvp	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002posy3gkyhrvk5
+cmuuqk1co001uvuy4v54bvh9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002qosy35kfr488e
+cmuuqk1co001vvuy4hcvwkpsm	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk002zosy3fvl1ml7v
+cmuuqk1co001wvuy4vigtdv1x	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0030osy3mbuxsp0t
+cmuuqk1co001xvuy43f0wsvds	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0031osy3wv6douux
+cmuuqk1co001yvuy4spl22p3d	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0032osy3c7lboxy9
+cmuuqk1co001zvuy4v5lsfqvq	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0033osy3r6f7iicb
+cmuuqk1co0020vuy4vj2b5aib	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0034osy3tkjd8kum
+cmuuqk1co0021vuy48chu95ak	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0036osy3l5izd66t
+cmuuqk1co0022vuy4fuyr2fv3	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0037osy3yb5is1cw
+cmuuqk1co0023vuy4nc95k0yh	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0038osy32bi1xkpn
+cmuuqk1co0024vuy4lymgmh52	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0039osy3pbvdhzvy
+cmuuqk1co0025vuy4w8wpnjm4	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003aosy3fio22ef1
+cmuuqk1co0026vuy4mirm3vqu	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003bosy3foywoljk
+cmuuqk1co0027vuy4c76swq2s	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003dosy352i8msiv
+cmuuqk1co0028vuy4ilitpqrr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003eosy3xdlnq7zi
+cmuuqk1co0029vuy4xfj22k6v	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003fosy3de8etrvj
+cmuuqk1co002avuy46bh9s3sc	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003gosy3iz76pbdz
+cmuuqk1co002bvuy471ty2exn	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003hosy3074teopk
+cmuuqk1co002cvuy4zk8g8lcc	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003iosy3a1r40lha
+cmuuqk1co002dvuy4ae1magt2	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003kosy38kjluf6p
+cmuuqk1co002evuy4eofunwns	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003losy3g6gqjx6g
+cmuuqk1co002fvuy4alu18rv6	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003mosy3shtyezyq
+cmuuqk1co002gvuy4rnfdk0tw	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003nosy3zvyxb04l
+cmuuqk1co002hvuy4115s4j6r	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003oosy3le9hqeym
+cmuuqk1co002ivuy4a8qak6cn	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003posy3ds2l2kgs
+cmuuqk1co002jvuy45la08w9i	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003rosy3n1c096dx
+cmuuqk1co002kvuy48y6f0biy	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003sosy3ele385ih
+cmuuqk1co002lvuy4lmped4jz	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003tosy3vvkx6zq0
+cmuuqk1co002mvuy44bcaefv7	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003uosy3d0ltepdo
+cmuuqk1co002nvuy4odkk4zod	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003vosy38ty8c4pj
+cmuuqk1co002ovuy46fv9vrc0	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003wosy31jiwizos
+cmuuqk1co002pvuy4zk1olbpu	cmqq5lun2003yosy3elss5zqj	cmscnj6920001pfy3qzc13nyx
+cmuuqk1co002qvuy4xb3azogm	cmqq5lun2003yosy3elss5zqj	cmscnj6920002pfy3ldc3ypq8
+cmuuqk1co002rvuy4ze1e15yc	cmqq5lun2003yosy3elss5zqj	cmscnj6920003pfy33a5pqkkd
+cmuuqk1co002svuy42v2t1an2	cmqq5lun2003yosy3elss5zqj	cmscnj6920004pfy3ithlhecl
+cmuuqk1co002tvuy4gp596wlk	cmqq5lun2003yosy3elss5zqj	cmscnj6920005pfy38peu6ppi
+cmuuqk1co002uvuy4cdly891n	cmqq5lun2003yosy3elss5zqj	cmscnj6920006pfy3dm6wkuwt
+cmuuqk1co002vvuy4u3l3w217	cmqq5lun2003yosy3elss5zqj	cmscx98ab00014by3t09bt3ej
+cmuuqk1co002wvuy4hbi849z1	cmqq5lun2003yosy3elss5zqj	cmscx98ab00024by3bnht0qwk
+cmuuqk1co002xvuy4ue0349hz	cmqq5lun2003yosy3elss5zqj	cmscx98ab00034by394xq96n7
+cmuuqk1co002yvuy431sxg3b7	cmqq5lun2003yosy3elss5zqj	cmscx98ab00044by3pfyqb3tz
+cmuuqk1co002zvuy4cgxkmaw4	cmqq5lun2003yosy3elss5zqj	cmscx98ab00054by357v9c0bj
+cmuuqk1co0030vuy41a9r51c9	cmqq5lun2003yosy3elss5zqj	cmscx98ac00064by3sn1sq76c
+cmuuqk1co0031vuy4pz699xel	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0001vuy4a7kt287a
+cmuuqk1co0032vuy4liame8jy	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0002vuy4cbc5h7q9
+cmuuqk1co0033vuy49t5pgige	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0003vuy4z1y9ailx
+cmuuqk1co0034vuy4ila16hgi	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0004vuy4ouenmiiw
+cmuuqk1co0035vuy4irdhcs2p	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0005vuy464k4qb6u
+cmuuqk1co0036vuy4i74631zj	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0006vuy4bf1uz014
 \.
 
 
@@ -1717,6 +1782,7 @@ cmucag00100053by3ahwiqndk	cmucafy9900003by3jjiidtdm	What features would you want
 cmucah67i00063by3bn11vq4x	cmucafy9900003by3jjiidtdm	How can social media be used positively to improve HIV awareness?	LONG_TEXT	t	5	f	2026-09-22 06:24:31.662	2026-09-22 06:24:37.867
 cmucahej400073by3avg9lhys	cmucafy9900003by3jjiidtdm	What kind of HIV-related support do young people in your community need?	LONG_TEXT	t	6	f	2026-09-22 06:24:42.449	2026-09-22 06:24:47.731
 cmucahmqh00083by3zgxw0pcz	cmucafy9900003by3jjiidtdm	If you could recommend one change to improve HIV awareness and support in your community, what would it be?	LONG_TEXT	t	7	f	2026-09-22 06:24:53.081	2026-09-22 06:24:58.045
+cmuuux6te000144y41sc4imkg	cmuc9tla20004xky3k9lvi8m2		SHORT_TEXT	f	7	t	2026-10-05 06:16:42.434	2026-10-05 06:16:58.016
 \.
 
 
@@ -1742,8 +1808,8 @@ cmuc6pq89000e5my3j2j3xzfw	cmuc6lums00065my3ad9sq9ek	2026-09-22 04:39:12.393
 
 COPY public."User" (user_id, email, is_deleted, created_at, updated_at, role_id, organization_id, is_active) FROM stdin;
 cmqq5tmyi0042osy3p41hgb36	raminjoshua05@gmail.com	f	2026-06-23 04:44:12.282	2026-06-23 04:44:12.282	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	t
-cmscot51a0001k8y3urzdecyx	joshuaramin146@gmail.com	t	2026-08-03 03:46:19.966	2026-09-22 03:20:43.764	cmqq6hvp3002kedy3vxzotiun	cmol6n0p70002d2uti0z7egl1	f
-cmscod7oo0007pfy3qxqgtp4u	t-jrrembulat@national-u.edu.ph	t	2026-08-03 03:33:56.904	2026-09-22 03:20:45.763	cmqq6inap002ledy3dp4fy667	cmol5fmjt0001d2utc6jge2ug	f
+cmscod7oo0007pfy3qxqgtp4u	t-jrrembulat@national-u.edu.ph	f	2026-08-03 03:33:56.904	2026-09-22 03:20:45.763	cmqq6inap002ledy3dp4fy667	cmol5fmjt0001d2utc6jge2ug	t
+cmuunh93i0000mgy4vn45bomj	divineblanco03@gmail.com	f	2026-10-05 02:48:21.582	2026-10-05 02:48:21.582	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	f
 \.
 
 
@@ -1776,6 +1842,8 @@ COPY public.badges (badge_id, name, slug, description, icon_url, requirement_typ
 
 COPY public.contributions (contribution_id, type, content, image_url, source_url, classification, classification_method, confidence_score, status, reviewed_by, reviewed_at, review_reason, created_at, updated_at, user_id, is_deleted, slug, barangay, province, region, municipality, sentiment, language) FROM stdin;
 cmu4xged00000xmy3800311ql	Coumminity Event	asdasdasd	\N	\N	PENDING	MANUAL	\N	APPROVED	cmqq5tmyi0042osy3p41hgb36	\N		2026-09-17 02:45:37.332	2026-09-17 04:05:19.908	cmqq5tmyi0042osy3p41hgb36	f	coumminity-event					NEUTRAL	english
+cmuumxtxj0000yay4ttsrcwvh	Community Event	asdasdasd	https://ajxuatqnkjknuqeszdzz.storage.supabase.co/advocaid/1791167595176-ef97c7c4-3d52-49d5-b00f-9990e200f185.jpeg	\N	PENDING	\N	\N	PENDING	\N	\N	\N	2026-10-05 02:33:15.463	2026-10-05 02:33:15.463	cmqq5tmyi0042osy3p41hgb36	f	community-event					\N	\N
+cmuun2coc0000k8y4weegrt3i	Community Event	asdasdasd	https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/1791167805589-ef97c7c4-3d52-49d5-b00f-9990e200f185.jpeg	\N	PENDING	\N	\N	PENDING	\N	\N	\N	2026-10-05 02:36:46.38	2026-10-05 02:36:46.38	cmqq5tmyi0042osy3p41hgb36	f	community-event					\N	\N
 \.
 
 
@@ -1921,6 +1989,14 @@ ALTER TABLE ONLY public."EducationResource"
 
 ALTER TABLE ONLY public."EducationTag"
     ADD CONSTRAINT "EducationTag_pkey" PRIMARY KEY (education_tag_id);
+
+
+--
+-- Name: Form Form_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Form"
+    ADD CONSTRAINT "Form_pkey" PRIMARY KEY (form_id);
 
 
 --
@@ -2716,6 +2792,14 @@ ALTER TABLE ONLY public."EducationResource"
 
 ALTER TABLE ONLY public."EducationResource"
     ADD CONSTRAINT "EducationResource_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."User"(user_id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- Name: Form Form_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Form"
+    ADD CONSTRAINT "Form_user_id_fkey" FOREIGN KEY (user_id) REFERENCES public."User"(user_id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --

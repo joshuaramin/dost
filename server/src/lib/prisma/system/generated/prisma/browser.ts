@@ -38,6 +38,11 @@ export type OTP = Prisma.OTPModel
  */
 export type Profile = Prisma.ProfileModel
 /**
+ * Model Form
+ * 
+ */
+export type Form = Prisma.FormModel
+/**
  * Model RewardPointRule
  * 
  */

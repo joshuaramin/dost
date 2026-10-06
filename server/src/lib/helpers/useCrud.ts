@@ -37,7 +37,10 @@ type ReadOptions<M extends PrismaDelegate, TCursor> = {
   orderBy?: FindManyArgs<M>["orderBy"];
   direction?: "forward" | "backward";
 };
-
+type QueryOptions<M extends PrismaDelegate> =
+  | { select: FindFirstArgs<M>["select"]; include?: never }
+  | { select?: never; include: FindFirstArgs<M>["include"] }
+  | undefined;
 interface Result<TNode, TCursor = unknown> {
   edges: {
     node: TNode;
@@ -239,55 +242,27 @@ export class PrismaCRUDManager<
 
   async readById<TResult = T>(
     value: T[TIdKey] | string,
-
     key: keyof T = this.idKey,
-
-    options?: Pick<FindFirstArgs<M>, "select" | "include">,
-
+    options?: QueryOptions<M>,
     resolver?: (entity: T) => Promise<TResult>,
   ): Promise<T | TResult | null> {
-    if (options?.select && options?.include) {
-      throw new Error("Cannot use select and include together.");
-    }
-
-    const where = this.hasSoftDelete
-      ? {
-          AND: [
-            {
-              [key]: value,
-            },
-            {
-              is_deleted: false,
-            },
-          ],
-        }
-      : {
-          [key]: value,
-        };
-
+    const where = {
+      [key]: value,
+      ...(this.hasSoftDelete && { is_deleted: false }),
+    };
     const entity = await this.model.findFirst({
       where,
-
-      ...(options?.select && {
-        select: options.select,
-      }),
-
-      ...(options?.include && {
-        include: options.include,
-      }),
+      ...(options?.select !== undefined && { select: options.select }),
+      ...(options?.include !== undefined && { include: options.include }),
     });
-
     if (!entity) {
       return null;
     }
-
     if (resolver) {
       return resolver(entity as T);
     }
-
     return entity as T;
   }
-
   async update<K extends string>(
     key: keyof T = this.idKey,
 

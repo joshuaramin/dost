@@ -9,6 +9,7 @@ import {
   GetUserById,
   SoftDeleteUser,
   UpdateUser,
+  UpdateUserLanguage,
 } from "@/services/user.services";
 import { Request, Response } from "express";
 import z from "zod";
@@ -75,6 +76,35 @@ export const createUser = async (request: Request, response: Response) => {
 };
 
 export const updateUser = async (request: Request, response: Response) => {
+  const id = String(request.params.id);
+  const parsedData = UpdateSchema.safeParse(request.body);
+
+  const result = await UpdateUser(id, parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const userLanguage = async (request: Request, response: Response) => {
+  const id = String(request.params.id);
+  const parsedData = UserSchema.safeParse(request.body);
+
+  const result = await UpdateUserLanguage(id, parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const updateUserProfile = async (
+  request: Request,
+  response: Response,
+) => {
   const id = String(request.params.id);
   const parsedData = UpdateSchema.safeParse(request.body);
 

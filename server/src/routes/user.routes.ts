@@ -4,6 +4,8 @@ import {
   createUser,
   softDeleteUser,
   updateUser,
+  updateUserProfile,
+  userLanguage,
 } from "@/controller/user.controller";
 import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 import { withAuth } from "@/lib/helpers/useAuth";
@@ -45,6 +47,14 @@ router.patch(
   withAuth,
   withPermission("user-management:update"),
   asyncHandler(updateUser),
+);
+
+router.patch("/:id/language", withAuth, asyncHandler(userLanguage));
+router.patch(
+  "/:id/avatar",
+  withAuth,
+  upload.single("avatar"),
+  asyncHandler(updateUserProfile),
 );
 
 router.put(
