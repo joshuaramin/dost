@@ -319,31 +319,75 @@ export const AuthVerified = async (token: string) => {
 };
 
 export const AuthRegister = async (data: any) => {
-  const user = await UserManage.create({
-    email: data.email,
+  const user = await UserManage.create(
+    {
+      email: data.email,
 
-    Profile: {
-      create: {
-        first_name: data.first_name,
-        last_name: data.last_name,
-        location: data.location,
-      },
-    },
-
-    role: {
-      connect: {
-        role_id: data.role_id,
-      },
-    },
-
-    ...(data.organization_id && {
-      organization: {
-        connect: {
-          organization_id: data.organization_id,
+      Profile: {
+        create: {
+          first_name: data.first_name,
+          last_name: data.last_name,
+          location: data.location,
         },
       },
-    }),
-  });
+
+      role: {
+        connect: {
+          role_id: data.role_id,
+        },
+      },
+
+      ...(data.organization_id && {
+        organization: {
+          connect: {
+            organization_id: data.organization_id,
+          },
+        },
+      }),
+      userReward: {
+        create: {
+          total_points: 0,
+          current_level_id: "cmuz4i4u90000i6y409gpft64",
+        },
+      },
+    },
+    {
+      user_id: true,
+      email: true,
+      is_active: true,
+      is_deleted: true,
+      Profile: {
+        select: {
+          first_name: true,
+          last_name: true,
+          location: true,
+          image_url: true,
+        },
+      },
+      user_preference: {
+        select: {
+          created_at: true,
+          email_activity_notifications: true,
+        },
+      },
+      userBadges: {
+        select: {
+          badge_id: true,
+          badge: true,
+        },
+      },
+      userReward: {
+        select: {
+          user_reward_id: true,
+          level: true,
+          total_points: true,
+        },
+      },
+      role: { select: { name: true } },
+      organization: { select: { name: true } },
+      created_at: true,
+    },
+  );
 
   const jwtSecret = process.env.JWT_SECRET;
 

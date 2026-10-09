@@ -27,6 +27,7 @@ import ServiceRouter from "@/routes/services.routes";
 import ContributionRouter from "@/routes/contribution.routes";
 import ActivityRouter from "@/routes/log.routes";
 import FormRouter from "@/routes/form.route";
+import RewardsRouter from "@/routes/rewards.routes";
 
 import { createBullBoard } from "@bull-board/api";
 import { ExpressAdapter } from "@bull-board/express";
@@ -142,6 +143,10 @@ const routeDefinitions = [
   {
     prefix: "/maintenance/form",
     router: FormRouter,
+  },
+  {
+    prefix: "/maintenance/rewards",
+    router: RewardsRouter,
   },
 ] as const;
 

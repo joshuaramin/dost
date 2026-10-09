@@ -9,6 +9,7 @@ import {
   GetUserById,
   SoftDeleteUser,
   UpdateUser,
+  UpdateUserAvatar,
   UpdateUserLanguage,
 } from "@/services/user.services";
 import { Request, Response } from "express";
@@ -71,7 +72,7 @@ export const createUser = async (request: Request, response: Response) => {
   return response.status(200).json({
     ...result,
     timestamp: new Date(Date.now()),
-    success: true,
+  success: true,
   });
 };
 
@@ -106,9 +107,18 @@ export const updateUserProfile = async (
   response: Response,
 ) => {
   const id = String(request.params.id);
-  const parsedData = UpdateSchema.safeParse(request.body);
+  // const parsedData = UpdateSchema.safeParse(request.body);
 
-  const result = await UpdateUser(id, parsedData.data);
+  const file = request.file as Express.MulterS3.File;
+
+  if (!file) {
+    return { message: "No file uploaded" };
+  }
+
+  const result = await UpdateUserAvatar(
+    id,
+    `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
+  );
 
   return response.status(200).json({
     ...result,

@@ -122,9 +122,15 @@ export class PrismaCRUDManager<
     });
   }
 
-  async create(data: CreateArgs<M>["data"]): Promise<T> {
+  async create(
+    data: CreateArgs<M>["data"],
+    select?: CreateArgs<M>["select"],
+    include?: CreateArgs<M>["include"],
+  ): Promise<T> {
     return this.model.create({
       data,
+      select,
+      include,
     });
   }
 

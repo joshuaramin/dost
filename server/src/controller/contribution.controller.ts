@@ -11,7 +11,6 @@ import {
 } from "@/services/contribution.services";
 import { Request, Response } from "express";
 import z from "zod";
-import id from "zod/v4/locales/id.cjs";
 
 export const getAllContributions = async (
   request: Request,
