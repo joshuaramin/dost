@@ -154,6 +154,7 @@ export const UpdateContributeById = async (data: any) => {
       review_reason: data.review_reason,
       reviewed_at: data.review_at,
       sentiment: data.sentiment,
+      ...(data.status === "APPROVEDE" && {}),
       reviewer: {
         connect: { user_id: data.user_id },
       },
