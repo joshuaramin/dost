@@ -21,6 +21,7 @@ export const GetAllTreatmentHub = async ({
   before,
   filter: { orderBy, search, sortBy },
   psgc_code,
+  service_id,
 }: TreatmentHubInterface) => {
   let where: treatment_hubsWhereInput = {
     is_deleted: false,
@@ -31,6 +32,9 @@ export const GetAllTreatmentHub = async ({
       regions: {
         psgc_code: { contains: psgc_code, mode: "insensitive" },
       },
+    }),
+    ...(service_id && {
+      services: { every: { service_id } },
     }),
   };
 

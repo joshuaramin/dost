@@ -15,20 +15,21 @@ import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
 const router = express.Router();
 
 //reward
-router.get("/", asyncHandler(getAllRewardLevel));
-router.get("/:id", asyncHandler(getRewardLevelById));
-router.post("/", asyncHandler(createReward));
+router.get("/", withAuth, asyncHandler(getAllRewardLevel));
+router.get("/badge", withAuth, asyncHandler(getAllBadge));
+router.get("/rule", withAuth, asyncHandler(getAllRewardPointRule));
+router.get("/badge/:id", withAuth, asyncHandler(getBadgeId));
+router.get("/:id", withAuth, asyncHandler(getRewardLevelById));
+
+router.post("/", withAuth, asyncHandler(createReward));
 router.patch("/:id", () => {});
 router.put("/:id", () => {});
 
 //rule
-router.get("/rule", asyncHandler(getAllRewardPointRule));
-router.post("/rule", asyncHandler(createRuleReward));
+router.post("/rule", withAuth, asyncHandler(createRuleReward));
 
 //badge
-router.get("/badge", asyncHandler(getAllBadge));
-router.get("/badge/:id", asyncHandler(getBadgeId));
-router.post("/badge", asyncHandler(createBadge));
+router.post("/badge", withAuth, asyncHandler(createBadge));
 router.patch("/badge/:id", () => {});
 router.put("/badge/:id", () => {});
 

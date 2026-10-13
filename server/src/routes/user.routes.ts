@@ -17,12 +17,7 @@ import express from "express";
 const router = express.Router();
 
 //Get
-router.get(
-  "/",
-  withAuth,
-  withPermission("user-management:read"),
-  asyncHandler(getAllUsers),
-);
+router.get("/", withAuth, asyncHandler(getAllUsers));
 
 router.get(
   "/:id",
@@ -42,12 +37,7 @@ router.post(
 
 //Patch
 
-router.patch(
-  "/:id",
-  withAuth,
-  withPermission("user-management:update"),
-  asyncHandler(updateUser),
-);
+router.patch("/:id", withAuth, asyncHandler(updateUser));
 
 router.patch("/:id/language", withAuth, asyncHandler(userLanguage));
 router.patch(

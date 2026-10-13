@@ -47,7 +47,7 @@ const RewardRulePointManage = new PrismaCRUDManager<
   RewardPointRule,
   "reward_point_rule_id",
   typeof prisma.rewardPointRule
->(prisma.rewardPointRule, "reward_point_rule_id");
+>(prisma.rewardPointRule, "reward_point_rule_id", false);
 
 export const GetAllBadge = ({
   after,
