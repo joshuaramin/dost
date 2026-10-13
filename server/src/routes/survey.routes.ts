@@ -21,7 +21,7 @@ const router = express.Router();
 router.get(
   "/",
   withAuth,
-  withPermission("survey-management:read"),
+  withPermission(["survey-management:read", "survey:read"]),
   asyncHandler(getAllSurvey),
 );
 router.get("/:id", withAuth, asyncHandler(getSurveyById));

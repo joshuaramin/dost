@@ -65,6 +65,8 @@ export const GetAllUsers = ({
           last_name: true,
           location: true,
           image_url: true,
+          created_at: true,
+          updated_at: true,
         },
       },
       user_preference: {
@@ -146,6 +148,7 @@ export const CreateUser = async (data: any) => {
         create: {
           first_name: data.first_name,
           last_name: data.last_name,
+          location: data.location,
         },
       },
       role: {

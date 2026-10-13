@@ -1,9 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 
+type PermissionMode = "OR" | "AND";
+
 export function checkPermission(
   user: Express.Request["user"],
-  permission: string,
-) {
+  permissions: string[],
+  mode: PermissionMode = "OR",
+): boolean {
   if (!user) {
     return false;
   }
@@ -13,13 +16,33 @@ export function checkPermission(
     return true;
   }
 
-  return user.permissions.includes(permission);
+  const userPermissions = user.permissions ?? [];
+
+  if (mode === "AND") {
+    return permissions.every((permission) =>
+      userPermissions.includes(permission),
+    );
+  }
+
+  return permissions.some((permission) => userPermissions.includes(permission));
 }
 
 export const withPermission =
-  (permission: string) => (req: Request, res: Response, next: NextFunction) => {
+  (permissions: string | string[], mode: PermissionMode = "OR") =>
+  (req: Request, res: Response, next: NextFunction) => {
     try {
-      const allowed = checkPermission(req.user, permission);
+      const requiredPermissions = Array.isArray(permissions)
+        ? permissions
+        : [permissions];
+
+      if (requiredPermissions.length === 0) {
+        return res.status(500).json({
+          success: false,
+          message: "No permissions configured",
+        });
+      }
+
+      const allowed = checkPermission(req.user, requiredPermissions, mode);
 
       if (!allowed) {
         return res.status(403).json({
@@ -28,7 +51,7 @@ export const withPermission =
         });
       }
 
-      next();
+      return next();
     } catch (error) {
       console.error("PERMISSION ERROR:", error);
 

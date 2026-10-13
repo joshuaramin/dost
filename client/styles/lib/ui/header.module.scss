@@ -7,6 +7,23 @@
 .container {
     width: 100%;
 
+    .header_nav {
+        width: 100%;
+        padding: 1em 10rem;
+        background-color: color(primary, 500);
+        border-bottom: 0.5px solid color(secondary, 500);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 15px;
+
+        a {
+            font-size: font-size(base);
+            color: color(base, white);
+            text-decoration: none;
+        }
+    }
+
     .main {
         width: 100%;
         display: flex;

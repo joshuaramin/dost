@@ -2,22 +2,21 @@
 
 import { PrimaryFont, SecondaryFont } from "@/lib/typography";
 import styles from "./page.module.scss";
-import Image from 'next/image'
+import Image from "next/image";
 
 //lib and hooks
 import Header from "@/lib/ui/header";
 import TitleWrapper from "@/lib/ui/titleWrapper";
 import Footer from "@/lib/ui/footer";
-import SurveillanceMap from "@/lib/ui/home/map";
 import useFormQuery from "@/lib/hooks/useQuery";
 import EducationResourceCard from "@/lib/ui/cards/education-reosurce-card";
 import { OrganizationResult } from "@/lib/interface/organization/organization.interface";
 import { EducationalResourceResult } from "@/lib/interface/education-resource/educational-resources.interface";
+import SurveillanceMapClient from "@/lib/ui/home/map-client";
 import { Personnel } from "@/lib/utils/personel";
 
-
-//components 
-import Title from '@/components/Typography/Title/title'
+//components
+import Title from "@/components/Typography/Title/title";
 import Avatar from "@/components/Avatar/avatar";
 import Grid from "@/components/Grid/grid";
 import Text from "@/components/Typography/Text/text";
@@ -25,90 +24,119 @@ import Paragraph from "@/components/Typography/Paragraph/paragraph";
 import SkeletonCard from "@/lib/ui/loading/SkeletonCard";
 import Button from "@/components/Button/button";
 
-
-
 export default function Home() {
-
-
-  const { data: OrganizationData } = useFormQuery<OrganizationResult>({ 
+  const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
     url: "maintenance/organization",
-  }); 
-
-  const { data: EducationalResourceData, isLoading: EducationLoading } = useFormQuery<EducationalResourceResult>({
-    key: ["EducationalResources"],
-    url: "maintenance/educational-resource",
-    params: { 
-      status: "PUBLISHED"
-    }
   });
 
+  const { data: EducationalResourceData, isLoading: EducationLoading } =
+    useFormQuery<EducationalResourceResult>({
+      key: ["EducationalResources"],
+      url: "maintenance/educational-resource",
+      params: {
+        status: "PUBLISHED",
+      },
+    });
 
   return (
     <div className={styles.container}>
       <Header />
       <section>
-        {/* <TitleWrapper title="ADVOCACY RESEARCH PROGRAM" /> */}
         <div className={styles.pageTitle}>
-          <h2>Transforming Digital Conversations into <span style={{
-            color: "#FFB633"
-          }}>HIV INTELLIGENCE</span></h2>
-          {/* <h2>into <span style={{
-            color: "#ffbd59"
-          }}>HIV INTELLIGENCE</span></h2> */}
+          <h2>
+            Transforming Digital Conversations into{" "}
+            <span
+              style={{
+                color: "#FFB633",
+              }}
+            >
+              HIV INTELLIGENCE
+            </span>
+          </h2>
           <h2>Through Geospatial AI for Public Health Surveillance</h2>
         </div>
         <p className={SecondaryFont.className} style={{ textAlign: "justify" }}>
-          AI-powered geospatial public health surveillance for monitoring HIV discourse, misinformation, stigma, and regional trends across the Philippines.
+          AI-powered geospatial public health surveillance for monitoring HIV
+          discourse, misinformation, stigma, and regional trends across the
+          Philippines.
         </p>
-          <div className={styles.buttons}>
-          <Button type="button" size="md" variant="primary">Explore the Methodology</Button>
-          <Button type="button" size="md" variant="primary">View Research Data</Button>
+        <div className={styles.buttons}>
+          <Button type="button" size="md" variant="primary">
+            Explore the Methodology
+          </Button>
+          <Button type="button" size="md" variant="primary">
+            View Research Data
+          </Button>
         </div>
       </section>
       <section>
         <TitleWrapper title="Surveillance Map" />
-        <SurveillanceMap />
-        <div style={{
-          padding: '10px 0'
-        }}>
-          <Text size="sm" style={{ fontStyle: "italic",  color: "#808080"  }}>Disclaimer: This feature is intended for viewing the hotspot only. It is provided for display and monitoring purposes and does not allow any configuration changes or modifications to the hotspot settings.</Text>
-
+        <SurveillanceMapClient />
+        <div
+          style={{
+            padding: "10px 0",
+          }}
+        >
+          <Text size="sm" style={{ fontStyle: "italic", color: "#808080" }}>
+            Disclaimer: This feature is intended for viewing the hotspot only.
+            It is provided for display and monitoring purposes and does not
+            allow any configuration changes or modifications to the hotspot
+            settings.
+          </Text>
         </div>
-    </section>
+      </section>
       <section>
         <TitleWrapper title="Educational Resources" />
         <Grid gap={10} max={"1fr"} min={430}>
-        {EducationLoading  ? Array.from({ length: 6}).map((node, index) => (
-          <SkeletonCard  key={index} /> 
-        )) : EducationalResourceData?.data.edges.map(({ node: { external_link, thumbnail, slug,type, summary, title}}, index) => (
-          <EducationResourceCard
-                key={index}
-                summary={summary}
-                thumbnail={thumbnail}
-                slug={slug}
-                type={type}
-                title={title}
-                route={
-                  type === "EXTERNAL_LINK"
-                    ? external_link
-                    : `/educational-resources/${slug}`
-                }
-              />
-          ))}
+          {EducationLoading
+            ? Array.from({ length: 6 }).map((node, index) => (
+                <SkeletonCard key={index} />
+              ))
+            : EducationalResourceData?.data.edges.map(
+                (
+                  {
+                    node: {
+                      external_link,
+                      thumbnail,
+                      slug,
+                      type,
+                      summary,
+                      title,
+                    },
+                  },
+                  index,
+                ) => (
+                  <EducationResourceCard
+                    key={index}
+                    summary={summary}
+                    thumbnail={thumbnail}
+                    slug={slug}
+                    type={type}
+                    title={title}
+                    route={
+                      type === "EXTERNAL_LINK"
+                        ? external_link
+                        : `/educational-resources/${slug}`
+                    }
+                  />
+                ),
+              )}
         </Grid>
       </section>
       <section>
         <TitleWrapper title="METHODOLOGY" />
 
-        {/* <Title size="md">A Four-Stage of Intelligence Pipeline</Title>
-        <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
-        From raw digital signal to targeted field deployment — each stage is designed for rigor, reproducibility, and ethical compliance.
-        </Paragraph> */}
+        <Title size="md">A Four-Stage of Intelligence Pipeline</Title>
+        <Paragraph
+          className={SecondaryFont.className}
+          style={{ textAlign: "justify" }}
+        >
+          From raw digital signal to targeted field deployment — each stage is
+          designed for rigor, reproducibility, and ethical compliance.
+        </Paragraph>
         <div className={styles.gridContainer}>
-          {
-          [
-          
+          {[
             {
               name: "Digital Signal Collection",
               description:
@@ -128,18 +156,24 @@ export default function Home() {
               name: "Public Health Surveillance",
               description:
                 "The analyzed data is presented through real-time dashboards and intelligence reports, enabling health agencies, local government units, researchers, and advocacy organizations to monitor trends, prioritize interventions, combat misinformation, and strengthen evidence-based HIV prevention strategies.",
-            }
-          
+            },
           ].map((item, index) => (
             <div key={index} className={styles.methodologyItem}>
               <div>
                 <div className={styles.stage}>
-                  <span className={PrimaryFont.className}>Stage 0{index + 1}</span>
+                  <span className={PrimaryFont.className}>
+                    Stage 0{index + 1}
+                  </span>
                 </div>
                 {/* <br/> */}
-                <Title className={PrimaryFont.className} size="sm">{item.name}</Title>
+                <Title className={PrimaryFont.className} size="sm">
+                  {item.name}
+                </Title>
               </div>
-              <Paragraph className={SecondaryFont.className} style={{ textAlign: "justify" }}>
+              <Paragraph
+                className={SecondaryFont.className}
+                style={{ textAlign: "justify" }}
+              >
                 {item.description}
               </Paragraph>
             </div>
@@ -149,44 +183,58 @@ export default function Home() {
 
       <section>
         <TitleWrapper title="Research Partners" />
-      <Grid max={50} min={100}>
-              {OrganizationData?.data.edges.map(({node: {logo }}, index) => (
+        <Grid max={50} min={100}>
+          {OrganizationData?.data.edges.map(({ node: { logo } }, index) => (
             <div key={index}>
-              <Avatar src={logo} variant="xl"/>
+              <Avatar src={logo} variant="xl" />
             </div>
           ))}
-      </Grid>
+        </Grid>
       </section>
 
       <section>
         <TitleWrapper title="The Team" />
-          <div className={styles.teamHeader}>
-             <Title size="lg" style={{color: "#35408E"}}>Research & Advocates</Title>
-                <Paragraph className={SecondaryFont.className} style={{marginBottom: 10, textAlign: "justify"}}>
-                Advocaid is built by a multidisciplinary team of student researchers, faculty advisers, and government health partners — united by the shared goal of ending the Philippine HIV epidemic through better intelligence.
-              </Paragraph>
-          </div>
+        <div className={styles.teamHeader}>
+          <Title size="lg" style={{ color: "#35408E" }}>
+            Research & Advocates
+          </Title>
+          <Paragraph
+            className={SecondaryFont.className}
+            style={{ marginBottom: 10, textAlign: "justify" }}
+          >
+            Advocaid is built by a multidisciplinary team of student
+            researchers, faculty advisers, and government health partners —
+            united by the shared goal of ending the Philippine HIV epidemic
+            through better intelligence.
+          </Paragraph>
+        </div>
 
-        <Grid max={"1fr"}  min={300}gap={20}>
-          {Personnel.map(({name, info } ) => (
-            info.map(({name, position, url}, index) => (
-            <div className={styles.team_card} key={index}>
-              <div className={styles.avatar}>
-                <Image src={url ?? ""} alt={name} layout="fill" objectFit="cover" objectPosition="top"/>
+        <Grid max={"1fr"} min={300} gap={20}>
+          {Personnel.map(({ name, info }) =>
+            info.map(({ name, position, url }, index) => (
+              <div className={styles.team_card} key={index}>
+                <div className={styles.avatar}>
+                  <Image
+                    src={url ?? ""}
+                    alt={name}
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="top"
+                  />
+                </div>
+                <div className={styles.divider}></div>
+                <div className={styles.sub_team_card}>
+                  <h1 style={{ fontWeight: 900 }}>{name}</h1>
+                  <Text size="sm">{position}</Text>
+                </div>
               </div>
-              <div className={styles.divider}></div>
-              <div className={styles.sub_team_card}>
-                <h1 style={{ fontWeight: 900 }} >{name}</h1>
-                <Text size="sm">{position}</Text>
-              </div>
-          </div>
-            ))
-        ))}
+            )),
+          )}
         </Grid>
-        </section>
-      <br/>
-      <br/>
-      <br/>
+      </section>
+      <br />
+      <br />
+      <br />
       <Footer />
     </div>
   );

@@ -903,6 +903,17 @@ cmuunh9440002mgy4k0wn2dep	CREATE	f	2026-10-05 02:48:21.604	2026-10-05 02:48:21.6
 cmuuqk7xb0037vuy4aw7qw9hv	Logged Out	f	2026-10-05 04:14:38.879	2026-10-05 04:14:38.879	cmqq5tmyi0042osy3p41hgb36	User logged out of the system.
 cmuuqks5u0039vuy46miok4sa	LOGIN	f	2026-10-05 04:15:05.106	2026-10-05 04:15:05.106	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
 cmuuuzihf000244y482jt8y84	DELETE	f	2026-10-05 06:18:30.867	2026-10-05 06:18:30.867	cmqq5tmyi0042osy3p41hgb36	User deleted an item.
+cmv4nbfu20001yyy56ci52cb8	LOGIN	f	2026-10-12 02:41:32.138	2026-10-12 02:41:32.138	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmv4slbak006zr5y5ymzclwoj	LOGIN	f	2026-10-12 05:09:10.892	2026-10-12 05:09:10.892	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmv4slqi00070r5y5i2hrjem4	DELETE	f	2026-10-12 05:09:30.6	2026-10-12 05:09:30.6	cmqq5tmyi0042osy3p41hgb36	User deleted the account of Joshua Ramin.
+cmv4smg5n0074r5y58mm5cx7b	CREATE	f	2026-10-12 05:10:03.851	2026-10-12 05:10:03.851	cmqq5tmyi0042osy3p41hgb36	User created a new user account for Joshua Rembulat.
+cmv4u31br007ar5y57dpk9dh8	LOGIN	f	2026-10-12 05:50:57.399	2026-10-12 05:50:57.399	cmv4smg4e0071r5y5jxxinmof	User successfully logged into the system.
+cmv4u5wzz007cr5y55xi34czs	LOGIN	f	2026-10-12 05:53:11.759	2026-10-12 05:53:11.759	cmv4smg4e0071r5y5jxxinmof	User successfully logged into the system.
+cmv4u8hlx007dr5y5ihoadqdt	Logged Out	f	2026-10-12 05:55:11.781	2026-10-12 05:55:11.781	cmv4smg4e0071r5y5jxxinmof	User logged out of the system.
+cmv4ua70h007fr5y5t3u9zqom	LOGIN	f	2026-10-12 05:56:31.361	2026-10-12 05:56:31.361	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmv4y0rsw007vr5y5kr9b81c6	LOGIN	f	2026-10-12 07:41:10.208	2026-10-12 07:41:10.208	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmv5urq9t00014cy5h0szy1jr	LOGIN	f	2026-10-12 22:57:55.649	2026-10-12 22:57:55.649	cmqq5tmyi0042osy3p41hgb36	User successfully logged into the system.
+cmv5vx2010001fny5oeeltr8e	LOGIN	f	2026-10-12 23:30:03.745	2026-10-12 23:30:03.745	cmv4smg4e0071r5y5jxxinmof	User successfully logged into the system.
 \.
 
 
@@ -997,6 +1008,14 @@ cmueopgas0000dcy3vb5fiyqn	Macintosh	::1	2026-09-24 22:38:24.955	f	f	2026-09-23 2
 cmug9opj4000071y39jtbvtvn	Macintosh	::1	2026-09-26 01:13:28.361	f	f	2026-09-25 01:13:28.384	2026-09-25 01:13:28.384	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36
 cmuumpvug0000qby4cy7f2rdj	Macintosh	::1	2026-10-06 02:27:04.679	f	f	2026-10-05 02:27:04.696	2026-10-05 02:27:04.696	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
 cmuuqks530038vuy470bry21b	Macintosh	::1	2026-10-06 04:15:05.076	f	f	2026-10-05 04:15:05.079	2026-10-05 04:15:05.079	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4nbftb0000yyy516kmn2yb	Macintosh	::1	2026-10-13 02:41:32.094	f	f	2026-10-12 02:41:32.111	2026-10-12 02:41:32.111	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4slb9y006yr5y5s6kmk1tp	Macintosh	::1	2026-10-13 05:09:10.866	f	f	2026-10-12 05:09:10.87	2026-10-12 05:09:10.87	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4u31az0079r5y563hn9y3r	Macintosh	::1	2026-10-13 05:50:57.368	f	f	2026-10-12 05:50:57.371	2026-10-12 05:50:57.371	cmv4smg4e0071r5y5jxxinmof	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4u5wz5007br5y510bpyzmx	Macintosh	::1	2026-10-13 05:53:11.725	f	f	2026-10-12 05:53:11.729	2026-10-12 05:53:11.729	cmv4smg4e0071r5y5jxxinmof	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4ua6zn007er5y55mlplam2	Macintosh	::1	2026-10-13 05:56:31.328	f	f	2026-10-12 05:56:31.331	2026-10-12 05:56:31.331	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv4y0rs1007ur5y54ukuuypb	Macintosh	::1	2026-10-13 07:41:10.171	f	f	2026-10-12 07:41:10.177	2026-10-12 07:41:10.177	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36
+cmv5urq9300004cy5m6t6qx94	Macintosh	::1	2026-10-13 22:57:55.608	f	f	2026-10-12 22:57:55.623	2026-10-12 22:57:55.623	cmqq5tmyi0042osy3p41hgb36	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
+cmv5vx1zc0000fny5ty51ks86	Macintosh	::1	2026-10-13 23:30:03.702	f	f	2026-10-12 23:30:03.72	2026-10-12 23:30:03.72	cmv4smg4e0071r5y5jxxinmof	Chrome	Desktop	macOS	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36
 \.
 
 
@@ -1029,6 +1048,10 @@ cmrob7l6000019by3iz0j3wts	Videos	videos	\N	\N	f	2026-07-17 02:19:11.208	2026-07-
 --
 
 COPY public."EducationResource" (education_resource_id, title, content, is_deleted, created_at, updated_at, user_id, slug, category_id, is_featured, published_at, status, summary, type, external_link) FROM stdin;
+cmv4staci0075r5y5r7o1xf8z	Understanding HIV/AIDS: Prevention, Testing, and Treatment	<p><span style="white-space: pre-wrap;">What Is HIV?</span></p><p><span style="white-space: pre-wrap;">Human Immunodeficiency Virus (HIV) is a virus that attacks the body's immune system, particularly CD4 cells, which help the body fight infections. Without proper treatment, HIV can weaken the immune system over time.</span></p><p><span style="white-space: pre-wrap;">What Is AIDS?</span></p><p><span style="white-space: pre-wrap;">Acquired Immunodeficiency Syndrome (AIDS) is the most advanced stage of HIV infection. Not everyone with HIV develops AIDS. With early diagnosis and effective antiretroviral therapy (ART), people living with HIV can maintain their health and live long, fulfilling lives.</span></p><p><span style="white-space: pre-wrap;">How Is HIV Transmitted?</span></p><p><span style="white-space: pre-wrap;">HIV can be transmitted through certain body fluids, including blood, semen, vaginal fluids, rectal fluids, and breast milk. Common routes of transmission include:</span></p><ul><li value="1"><span style="white-space: pre-wrap;">Having sex without effective HIV prevention measures.</span></li><li value="2"><span style="white-space: pre-wrap;">Sharing needles or other equipment used to inject drugs.</span></li><li value="3"><span style="white-space: pre-wrap;">Transmission from a pregnant person living with HIV to their child during pregnancy, childbirth, or breastfeeding.</span></li></ul><p><span style="white-space: pre-wrap;">HIV is not transmitted through hugging, shaking hands, sharing food, using the same toilet, or mosquito bites.</span></p><p><span style="white-space: pre-wrap;">How Can HIV Be Prevented?</span></p><p><span style="white-space: pre-wrap;">Several measures can help prevent HIV transmission:</span></p><ul><li value="1"><b><strong style="white-space: pre-wrap;">Use condoms:</strong></b><span style="white-space: pre-wrap;"> Correct and consistent use helps reduce the risk of HIV and other sexually transmitted infections.</span></li><li value="2"><b><strong style="white-space: pre-wrap;">Consider PrEP:</strong></b><span style="white-space: pre-wrap;"> Pre-exposure prophylaxis is medication that can greatly reduce the risk of acquiring HIV when taken as prescribed.</span></li><li value="3"><b><strong style="white-space: pre-wrap;">Consider PEP:</strong></b><span style="white-space: pre-wrap;"> Post-exposure prophylaxis is emergency medication that must be started as soon as possible, within 72 hours after a possible exposure, and taken as prescribed.</span></li><li value="4"><b><strong style="white-space: pre-wrap;">Avoid sharing needles:</strong></b><span style="white-space: pre-wrap;"> Use sterile equipment.</span></li><li value="5"><b><strong style="white-space: pre-wrap;">Get tested:</strong></b><span style="white-space: pre-wrap;"> Knowing your HIV status helps you make informed decisions and access appropriate care.</span></li></ul><p><span style="white-space: pre-wrap;">Why Is HIV Testing Important?</span></p><p><span style="white-space: pre-wrap;">HIV testing is the only way to know your HIV status. Early testing allows people who test positive to begin treatment promptly and helps those who test negative understand their prevention options. A healthcare professional can explain the testing window period and whether follow-up testing is necessary.</span></p><p><span style="white-space: pre-wrap;">HIV Treatment and Living Well</span></p><p><span style="white-space: pre-wrap;">Antiretroviral therapy (ART) suppresses HIV and protects the immune system. When a person living with HIV takes treatment consistently and achieves and maintains an undetectable viral load, they do not transmit HIV through sex. This is known as </span><b><strong style="white-space: pre-wrap;">Undetectable = Untransmittable (U=U)</strong></b><span style="white-space: pre-wrap;">.</span></p><p><span style="white-space: pre-wrap;">People living with HIV deserve respectful, confidential healthcare and support without discrimination.</span></p><p><span style="white-space: pre-wrap;">Key Takeaway</span></p><p><span style="white-space: pre-wrap;">HIV is preventable and treatable. Accurate information, regular testing, access to effective treatment, and compassionate support can help protect individuals and communities. HIV status does not define a person's worth, and stigma should never prevent anyone from seeking healthcare.</span></p><p><span style="white-space: pre-wrap;">Tags</span></p><p><span style="white-space: pre-wrap;">HIV, AIDS, HIV Awareness, Sexual Health, HIV Prevention, HIV Testing, Antiretroviral Therapy, PrEP, PEP, U=U, Public Health, Health Education, Stigma Reduction, Community Awareness</span></p>	f	2026-10-12 05:15:22.914	2026-10-12 05:15:22.914	cmqq5tmyi0042osy3p41hgb36	understanding-hivaids-prevention-testing-and-treatment	cmrob313t00000ey3tc8o20yb	f	\N	PUBLISHED	Learn the difference between HIV and AIDS, how HIV is transmitted, and the importance of prevention, early testing, and proper treatment. This educational resource promotes awareness, reduces stigma, and encourages informed decisions about sexual health.	ARTICLE	undefined
+cmv4sv5s90076r5y575tvpi9e	HIV Transmission: Facts vs. Myths	<p><span style="white-space: pre-wrap;">HIV is transmitted through specific body fluids, including blood, semen, vaginal fluids, rectal fluids, and breast milk, when the virus enters another person's body through an appropriate route.</span></p><p><b><strong style="white-space: pre-wrap;">How HIV can be transmitted:</strong></b></p><ul><li value="1"><span style="white-space: pre-wrap;">Through anal or vaginal sex when effective prevention measures are not used.</span></li><li value="2"><span style="white-space: pre-wrap;">By sharing needles or other injection equipment contaminated with HIV.</span></li><li value="3"><span style="white-space: pre-wrap;">From a parent living with HIV to their child during pregnancy, childbirth, or breastfeeding.</span></li></ul><p><b><strong style="white-space: pre-wrap;">How HIV cannot be transmitted:</strong></b></p><ul><li value="1"><span style="white-space: pre-wrap;">Hugging, shaking hands, or casual physical contact.</span></li><li value="2"><span style="white-space: pre-wrap;">Sharing meals, utensils, or drinking glasses.</span></li><li value="3"><span style="white-space: pre-wrap;">Using the same toilet or swimming pool.</span></li><li value="4"><span style="white-space: pre-wrap;">Coughing, sneezing, or mosquito bites.</span></li></ul><p><span style="white-space: pre-wrap;">HIV cannot be spread through everyday social interactions. Understanding these facts helps people make informed decisions and treat people living with HIV with respect.</span></p><p><b><strong style="white-space: pre-wrap;">Tags:</strong></b><span style="white-space: pre-wrap;"> HIV Transmission, HIV Myths, HIV Facts, HIV Awareness, Health Education, Stigma Reduction</span></p>	f	2026-10-12 05:16:50.313	2026-10-12 05:16:50.313	cmqq5tmyi0042osy3p41hgb36	hiv-transmission-facts-vs-myths	cmrob3i8r00020ey3t1g8ka0p	f	\N	PUBLISHED	Separate facts from common misconceptions about HIV transmission. Learn how HIV spreads, how it does not spread, and why accurate information helps prevent stigma and discrimination.	ARTICLE	undefined
+cmv4swuqa0077r5y512p17cbg	The Importance of Regular HIV Testing	<p><span style="white-space: pre-wrap;">HIV testing is an important part of maintaining sexual health. Because HIV may not cause noticeable symptoms for years, a person cannot determine their HIV status based on how they feel or look.</span></p><p><b><strong style="white-space: pre-wrap;">Benefits of HIV testing:</strong></b></p><ul><li value="1"><span style="white-space: pre-wrap;">Allows people with HIV to access treatment as early as possible.</span></li><li value="2"><span style="white-space: pre-wrap;">Helps people who test negative explore prevention options.</span></li><li value="3"><span style="white-space: pre-wrap;">Supports informed decisions about relationships and sexual health.</span></li><li value="4"><span style="white-space: pre-wrap;">Helps reduce HIV transmission through early diagnosis and treatment.</span></li></ul><p><span style="white-space: pre-wrap;">Different HIV tests have different window periods, meaning they may take different amounts of time after exposure to detect infection. A negative result immediately after a possible exposure may not rule out HIV. Follow the testing provider's guidance on repeat testing.</span></p><p><span style="white-space: pre-wrap;">HIV testing services should protect privacy and provide accurate information, counseling, and referrals for treatment when needed.</span></p><p><b><strong style="white-space: pre-wrap;">Tags:</strong></b><span style="white-space: pre-wrap;"> HIV Testing, Early Diagnosis, Sexual Health, HIV Prevention, Public Health, Health Awareness</span></p>	f	2026-10-12 05:18:09.298	2026-10-12 05:18:09.298	cmqq5tmyi0042osy3p41hgb36	the-importance-of-regular-hiv-testing	cmrob3i8r00020ey3t1g8ka0p	f	\N	PUBLISHED	HIV testing helps individuals understand their HIV status, access treatment early, and make informed decisions about their health and relationships.\r\n\r\n	ARTICLE	undefined
+cmv4sxjdb0078r5y5eghuo7q4	Understanding PrEP and PEP for HIV Prevention	<p><span style="white-space: pre-wrap;">PrEP and PEP are medications used to help prevent HIV, but they serve different purposes.</span></p><p><b><strong style="white-space: pre-wrap;">What is PrEP?</strong></b></p><p><span style="white-space: pre-wrap;">Pre-exposure prophylaxis is medication taken by people who do not have HIV to reduce their chance of acquiring it. It is intended for people who may have an increased likelihood of exposure. A healthcare provider can help determine the appropriate option and schedule.</span></p><p><b><strong style="white-space: pre-wrap;">What is PEP?</strong></b></p><p><span style="white-space: pre-wrap;">Post-exposure prophylaxis is emergency medication used after a possible HIV exposure. It must be started as soon as possible and no later than 72 hours after exposure. It is generally taken for 28 days under medical supervision.</span></p><p><b><strong style="white-space: pre-wrap;">Remember:</strong></b></p><ul><li value="1"><span style="white-space: pre-wrap;">PrEP is used before potential exposure.</span></li><li value="2"><span style="white-space: pre-wrap;">PEP is used after a potential exposure.</span></li><li value="3"><span style="white-space: pre-wrap;">Neither medication should replace professional medical advice.</span></li><li value="4"><span style="white-space: pre-wrap;">If a possible exposure occurred within the past 72 hours, seek urgent medical care.</span></li></ul><p><span style="white-space: pre-wrap;">Knowing these prevention options can help people take timely action and protect their health.</span></p><p><b><strong style="white-space: pre-wrap;">Tags:</strong></b><span style="white-space: pre-wrap;"> PrEP, PEP, HIV Prevention, HIV Medication, Sexual Health, HIV Awareness, Preventive Healthcare</span></p>	f	2026-10-12 05:18:41.231	2026-10-12 05:18:41.231	cmqq5tmyi0042osy3p41hgb36	understanding-prep-and-pep-for-hiv-prevention	cmrob3i8r00020ey3t1g8ka0p	f	\N	PUBLISHED	Discover how pre-exposure prophylaxis (PrEP) and post-exposure prophylaxis (PEP) can help prevent HIV infection and why timing and medical guidance matter.\r\n\r\n	ARTICLE	undefined
 \.
 
 
@@ -1150,6 +1173,15 @@ cmueop4kx0000c8y3d57tetax	raminjoshua05@gmail.com	login	2026-09-23 22:48:09.774	
 cmug9og3h00005yy30iw7xp5q	raminjoshua05@gmail.com	login	2026-09-25 01:23:16.154	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36	\N	2026-09-25 01:13:16.157	8469d25b229bf314e4c25eaaeb98c4939709cc383f7b0a3a0872767e199b753c
 cmuumpg3000005sy4pt73yfwi	raminjoshua05@gmail.com	login	2026-10-05 02:36:44.265	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-05 02:26:44.268	001d08013a0ebe49f9f6bd6dc61c60e690a608a2c400f905a2a4cd1b9461d3b7
 cmuuqkirf0000uty4k609eon1	raminjoshua05@gmail.com	login	2026-10-05 04:24:52.92	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-05 04:14:52.923	346a759d1630ce750aac3e85387c03790d7c2958494f8c798354c61e18026232
+cmv4nb1e90000j7y4n0hm2q6t	raminjoshua05@gmail.com	login	2026-10-12 02:51:13.422	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 02:41:13.425	36e8b8a5ee23499f70dfd5f101f8b29e73778e041d19a2cdb8b89add19ceeeca
+cmv4skz180001j7y49h198m50	raminjoshua05@gmail.com	login	2026-10-12 05:18:55.003	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 05:08:55.004	63462190c1b5f08afe87514543dc86d568e45f841ad02c7f680e542fcfd2bf1d
+cmv4tuq3g0002j7y45yfn8g7v	raminjoshua8@gmail.com	login	2026-10-12 05:54:29.594	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 05:44:29.596	39b5a555aeb1c67120d63d80d60ddc63f5009a06b2676001e3f65af082c3b3bb
+cmv4u2pfh0003j7y4s3i7v4rx	raminjoshua8@gmail.com	login	2026-10-12 06:00:41.98	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 05:50:41.981	c493876c3d339eb0571f4bbf146fdb42f148c00c75aca67cb10e975964c1f206
+cmv4u5l510004j7y42dum6wrq	raminjoshua8@gmail.com	login	2026-10-12 06:02:56.388	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 05:52:56.389	518e0387a6984cbc01c52d2683a39f736b3109d21b1b8d145a4214840266dd17
+cmv4u9up50005j7y46crcj6qy	raminjoshua05@gmail.com	login	2026-10-12 06:06:15.4	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 05:56:15.401	23956e8ee32984b0027a6a2ac8b341194e56cc897cf8c2ff44510d8d2df5d263
+cmv4xzzoj0006j7y4sn6ozyre	raminjoshua05@gmail.com	login	2026-10-12 07:50:33.762	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.0.0 Safari/537.36	\N	2026-10-12 07:40:33.763	caafb280692e124606a02f25834030e58228841852d17c406ef2eed93a135959
+cmv5ur3xq000038y5mplvlkw4	raminjoshua05@gmail.com	login	2026-10-12 23:07:26.698	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36	\N	2026-10-12 22:57:26.702	564b171b35e0856c1510ba876c3af29148052ae794f9a59a40762d62c02824fc
+cmv5vwneg000138y5rz9fqywz	raminjoshua8@gmail.com	login	2026-10-12 23:39:44.824	t	0	5	::1	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36	\N	2026-10-12 23:29:44.824	4fb092638db3beb0176cbae16fe1717d4616a6644ee82fe9ed9f4e9bc8a74868
 \.
 
 
@@ -1158,8 +1190,8 @@ cmuuqkirf0000uty4k609eon1	raminjoshua05@gmail.com	login	2026-10-05 04:24:52.92	t
 --
 
 COPY public."Organization" (organization_id, name, is_deleted, created_at, updated_at, address, contact, logo) FROM stdin;
-cmol6n0p70002d2uti0z7egl1	Department of Health	t	2026-04-30 07:48:47.563	2026-09-22 03:25:39.66	San Lazaro Compound, Rizal Avenue, Santa Cruz, Manila, Philippines, 1003	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777535326879-Department_of_Health_(DOH)_PHL.svg.png
-cmol5fmjt0001d2utc6jge2ug	National University	t	2026-04-30 07:15:03.017	2026-10-05 06:18:30.832	551 M.F. Jhocson Street, Sampaloc, Manila, Philippines, 1008	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777533302716-NU_shield.svg
+cmol6n0p70002d2uti0z7egl1	Department of Health	f	2026-04-30 07:48:47.563	2026-09-22 03:25:39.66	San Lazaro Compound, Rizal Avenue, Santa Cruz, Manila, Philippines, 1003	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777535326879-Department_of_Health_(DOH)_PHL.svg.png
+cmol5fmjt0001d2utc6jge2ug	National University	f	2026-04-30 07:15:03.017	2026-10-05 06:18:30.832	551 M.F. Jhocson Street, Sampaloc, Manila, Philippines, 1008	(+63) 949 9999 999	https://d2i0afz2m2bklk.cloudfront.net/1777533302716-NU_shield.svg
 \.
 
 
@@ -1306,6 +1338,12 @@ cmuuqjg8t0003vuy4z1y9ailx	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuu
 cmuuqjg8t0004vuy4ouenmiiw	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:delete	delete
 cmuuqjg8t0005vuy464k4qb6u	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:deny	deny
 cmuuqjg8t0006vuy4bf1uz014	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	cmuuqjg8h0000vuy4l1lh9vpq	form-management:export	export
+cmv4sj7v80001r5y5ugp7a3mb	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:create	create
+cmv4sj7v80002r5y54tna2vpf	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:read	read
+cmv4sj7v80003r5y5e0fykb99	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:update	update
+cmv4sj7v80004r5y5u9klmaf8	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:delete	delete
+cmv4sj7v80005r5y5phj51jd5	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:deny	deny
+cmv4sj7v80006r5y5btp2gtac	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	cmv4sj7uw0000r5y54m3nzsmw	leaderboard:export	export
 \.
 
 
@@ -1318,6 +1356,7 @@ cmqq5tmyv0043osy3cytmcb49	Joshua	Ramin	f	2026-06-23 04:44:12.282	2026-06-23 04:4
 cmscod7p60008pfy3ndxu641q	Joshua	Rembulat	f	2026-08-03 03:33:56.904	2026-08-03 03:33:56.904	cmscod7oo0007pfy3qxqgtp4u	\N	\N
 cmuunh93t0001mgy4ngiu9h2b	Divine	Blanco	f	2026-10-05 02:48:21.582	2026-10-05 02:48:21.582	cmuunh93i0000mgy4vn45bomj	\N	\N
 cmuz5qtsw00017ey45bxyy3uw	Joshua	Ramin	f	2026-10-08 06:30:46.098	2026-10-08 06:30:46.098	cmuz5qtsi00007ey49pee9gdc	\N	\N
+cmv4smg4x0072r5y5857q4l41	Joshua	Rembulat	f	2026-10-12 05:10:03.806	2026-10-12 05:10:03.806	cmv4smg4e0071r5y5jxxinmof	\N	\N
 \.
 
 
@@ -1357,6 +1396,7 @@ cmqq2r5ul003cosy36wej347r	Resource Management	resource-management	cmqq2r5uj002ro
 cmscnj68m0000pfy3uxfro9dl	Treatment Hub Management	treatment-hub-management	cmqq2r5uj002rosy3euzvmaq0	f	2026-08-03 03:10:35.35	2026-08-03 03:10:35.35	3
 cmscx989z00004by3xkz6ny27	Community Contributions	community-contributions	cmqq2r5ub0010osy3binpput4	f	2026-08-03 07:42:47.591	2026-08-03 07:42:47.591	3
 cmuuqjg8h0000vuy4l1lh9vpq	Form Management	form-management	cmqq2r5uj002rosy3euzvmaq0	f	2026-10-05 04:14:02.993	2026-10-05 04:14:02.993	6
+cmv4sj7uw0000r5y54m3nzsmw	Leaderboard	leaderboard	cmqq2r5ub0010osy3binpput4	f	2026-10-12 05:07:33.128	2026-10-12 05:07:33.128	4
 \.
 
 
@@ -1380,237 +1420,249 @@ cmts0k9d5000cjgy3sxg1uiaa	General Public	Intended for individuals who access Adv
 --
 
 COPY public."RolePermission" (role_permission_id, role_id, permission_id) FROM stdin;
-cmscxeejg00324by352auwy8l	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u2000aosy3pz3559vs
-cmscxeejg00334by3azyfmynn	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u3000eosy3lq857xum
-cmscxeejg00344by35dya88ds	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u8000oosy3xl39h9u3
-cmscxeejg00354by3uvadfjrq	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u8000sosy33rg1isxk
-cmscxeejg00364by336jj89ns	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ua000vosy3frn7ac7v
-cmscxeejg00374by3hh0nnrdm	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ua000zosy3ya6kkz5o
-cmscxeejg00384by3t3pexu9t	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc0018osy3xfuslloy
-cmscxeejg00394by39g79gc15	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc0019osy30dmv0jke
-cmscxeejg003a4by38k6wfgbj	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001aosy3fs2w8x19
-cmscxeejg003b4by3uz9owlkl	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001bosy37h7g4lcp
-cmscxeejg003c4by3hzn1hmkn	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001cosy39vxqxapi
-cmscxeejg003d4by3fb9aajpu	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001dosy38ev8tw6o
-cmscxeejg003e4by3p6m0lafz	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001fosy37u42cpw4
-cmscxeejg003f4by3rm6poi6f	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001gosy3gdmyo5mr
-cmscxeejg003g4by325m0lfmg	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001hosy3artbtmg0
-cmscxeejg003h4by3jc5o3x61	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001iosy32ujmhcmm
-cmscxeejg003i4by36n6kul9y	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001josy33ufvcmsb
-cmscxeejg003j4by34sr4rn5x	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001kosy39fk8kb2d
-cmscxeejg003k4by35dfzkd6s	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uf001uosy3zf9jd7i3
-cmscxeejg003l4by3m7t4z3kv	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uf001yosy33d2fuw5i
-cmscxeejg003m4by350rkvras	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ug0021osy3b5ud1cem
-cmscxeejg003n4by3sv1mewy3	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ug0025osy3zqwa014x
-cmscxeejg003o4by3lvyfnecf	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uh0028osy3bpjlcra6
-cmscxeejg003p4by3ozglt559	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uh002cosy3nj7mukdv
-cmscxeejg003q4by3gvpr4wzs	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002fosy3rtin7h52
-cmscxeejg003r4by3j64o57hs	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002josy3zbxuptpy
-cmscxeejg003s4by3r8mln21r	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002mosy31hg5hc2b
-cmscxeejg003t4by3cm6l2wc2	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002qosy35kfr488e
-cmscxeejg003u4by3aumetyau	cmqq6hvp3002kedy3vxzotiun	cmscx98ab00014by3t09bt3ej
-cmscxeejg003v4by3h108tt47	cmqq6hvp3002kedy3vxzotiun	cmscx98ab00024by3bnht0qwk
-cmscxeejg003w4by3521p2wxy	cmqq6hvp3002kedy3vxzotiun	cmscx98ac00064by3sn1sq76c
-cmscxf13p00524by32k5e9710	cmqq6j0h0002medy3azmkz1uj	cmqq2r5u2000aosy3pz3559vs
-cmscxf13p00534by3qbamm5mh	cmqq6j0h0002medy3azmkz1uj	cmqq2r5u8000oosy3xl39h9u3
-cmscxf13p00544by3mbrpy6xq	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ua000vosy3frn7ac7v
-cmscxf13p00554by3u8cx86zw	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uc0019osy30dmv0jke
-cmscxf13p00564by3o77j8yh4	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ud001gosy3gdmyo5mr
-cmscxf13p00574by366i0wbu1	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uf001uosy3zf9jd7i3
-cmscxf13p00584by3vy0m2nqu	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ug0021osy3b5ud1cem
-cmscxf13p00594by32efnlk3c	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uh0028osy3bpjlcra6
-cmscxf13p005a4by3bdk3cf32	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ui002fosy3rtin7h52
-cmscxf13p005b4by3ci97rxyk	cmqq6j0h0002medy3azmkz1uj	cmscx98ab00014by3t09bt3ej
-cmscxf13p005c4by3lsp8fk3d	cmqq6j0h0002medy3azmkz1uj	cmscx98ab00024by3bnht0qwk
-cmscxgpn1005u4by37hdybn3d	cmqq6jacc002nedy3nemgrb9w	cmqq2r5u2000aosy3pz3559vs
-cmscxgpn1005v4by3abfypx8k	cmqq6jacc002nedy3nemgrb9w	cmqq2r5u8000oosy3xl39h9u3
-cmscxgpn1005w4by3az9yuqrx	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ua000vosy3frn7ac7v
-cmscxgpn1005x4by39qstuhzj	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uc0019osy30dmv0jke
-cmscxgpn1005y4by31wloser9	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ud001gosy3gdmyo5mr
-cmscxgpn1005z4by365qlne9n	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uf001uosy3zf9jd7i3
-cmscxgpn100604by32g400gox	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ug0021osy3b5ud1cem
-cmscxgpn100614by34k6vme1p	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uh0028osy3bpjlcra6
-cmscxgpn100624by3djrpe3s0	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ui002fosy3rtin7h52
-cmscxgpn100634by3s8vqw8xy	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ui002mosy31hg5hc2b
-cmscxgpn100644by3jo4tf1mx	cmqq6jacc002nedy3nemgrb9w	cmscx98ab00014by3t09bt3ej
-cmscxgpn100654by3dpy0mp1u	cmqq6jacc002nedy3nemgrb9w	cmscx98ab00024by3bnht0qwk
-cmscxen6t003x4by3aw3gp0k9	cmqq6inap002ledy3dp4fy667	cmqq2r5u2000aosy3pz3559vs
-cmscxen6t003y4by3wur6tvst	cmqq6inap002ledy3dp4fy667	cmqq2r5u8000oosy3xl39h9u3
-cmscxen6t003z4by3njcbld3x	cmqq6inap002ledy3dp4fy667	cmqq2r5ua000vosy3frn7ac7v
-cmscxen6t00404by3wp8h7doj	cmqq6inap002ledy3dp4fy667	cmqq2r5uc0018osy3xfuslloy
-cmscxen6t00414by36zgdz0o7	cmqq6inap002ledy3dp4fy667	cmqq2r5uc0019osy30dmv0jke
-cmscxen6t00424by3g7ifgff4	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001aosy3fs2w8x19
-cmscxen6t00434by3ym4f0yqu	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001bosy37h7g4lcp
-cmscxen6t00444by30xidgqja	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001dosy38ev8tw6o
-cmscxen6t00454by3slj9ets7	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001fosy37u42cpw4
-cmscxen6t00464by3garp82tf	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001gosy3gdmyo5mr
-cmscxen6t00474by379koggp2	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001hosy3artbtmg0
-cmscxen6t00484by39z0zzedn	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001iosy32ujmhcmm
-cmscxen6t00494by34xh1qlz9	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001kosy39fk8kb2d
-cmscxen6t004a4by3q8r8anr8	cmqq6inap002ledy3dp4fy667	cmqq2r5uf001uosy3zf9jd7i3
-cmscxen6t004b4by3alb36rbc	cmqq6inap002ledy3dp4fy667	cmqq2r5uf001yosy33d2fuw5i
-cmscxen6t004c4by3eib8jvd6	cmqq6inap002ledy3dp4fy667	cmqq2r5ug0021osy3b5ud1cem
-cmscxen6t004d4by3sg8xbyae	cmqq6inap002ledy3dp4fy667	cmqq2r5ug0025osy3zqwa014x
-cmscxen6t004e4by3695lwl4s	cmqq6inap002ledy3dp4fy667	cmqq2r5uh0028osy3bpjlcra6
-cmscxen6t004f4by336v8wmsx	cmqq6inap002ledy3dp4fy667	cmqq2r5uh002cosy3nj7mukdv
-cmscxen6t004g4by3nzj0o31o	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002fosy3rtin7h52
-cmscxen6t004h4by3gjapmko1	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002josy3zbxuptpy
-cmscxen6t004i4by3l6g1fi0r	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002mosy31hg5hc2b
-cmscxen6t004j4by32kzntj3u	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002qosy35kfr488e
-cmscxen6t004k4by3gu8tfxch	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0036osy3l5izd66t
-cmscxen6t004l4by3tznds101	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0037osy3yb5is1cw
-cmscxen6t004m4by3wky2azwr	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0038osy32bi1xkpn
-cmscxen6t004n4by35ugs6e8k	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0039osy3pbvdhzvy
-cmscxen6t004o4by3qpf9nkqa	cmqq6inap002ledy3dp4fy667	cmqq2r5ul003bosy3foywoljk
-cmscxen6t004p4by3ikjsebku	cmqq6inap002ledy3dp4fy667	cmqq2r5um003kosy38kjluf6p
-cmscxen6t004q4by3neistwso	cmqq6inap002ledy3dp4fy667	cmqq2r5um003losy3g6gqjx6g
-cmscxen6t004r4by3kc650d19	cmqq6inap002ledy3dp4fy667	cmqq2r5um003mosy3shtyezyq
-cmscxen6t004s4by3ovvtcy37	cmqq6inap002ledy3dp4fy667	cmqq2r5um003nosy3zvyxb04l
-cmscxen6t004t4by3yocos8ug	cmqq6inap002ledy3dp4fy667	cmqq2r5um003posy3ds2l2kgs
-cmscxen6t004u4by3pg9wnuck	cmqq6inap002ledy3dp4fy667	cmscnj6920001pfy3qzc13nyx
-cmscxen6t004v4by3pol5ytnt	cmqq6inap002ledy3dp4fy667	cmscnj6920002pfy3ldc3ypq8
-cmscxen6t004w4by3vb7d8gd3	cmqq6inap002ledy3dp4fy667	cmscnj6920003pfy33a5pqkkd
-cmscxen6t004x4by3ctfvaxit	cmqq6inap002ledy3dp4fy667	cmscnj6920004pfy3ithlhecl
-cmscxen6t004y4by3nev4rn1n	cmqq6inap002ledy3dp4fy667	cmscnj6920006pfy3dm6wkuwt
-cmscxen6t004z4by3e4tdfl84	cmqq6inap002ledy3dp4fy667	cmscx98ab00014by3t09bt3ej
-cmscxen6t00504by3jcq1b7c1	cmqq6inap002ledy3dp4fy667	cmscx98ab00024by3bnht0qwk
-cmscxen6t00514by33mr4qtu3	cmqq6inap002ledy3dp4fy667	cmscx98ac00064by3sn1sq76c
-cmscxfqtk005d4by3gd7u3hvm	cmqq6kc18002oedy34zqwpr8k	cmqq2r5u2000aosy3pz3559vs
-cmscxfqtk005e4by39h9q6ubk	cmqq6kc18002oedy34zqwpr8k	cmqq2r5u8000oosy3xl39h9u3
-cmscxfqtk005f4by3713ues7g	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ua000vosy3frn7ac7v
-cmscxfqtk005g4by35e1itgun	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uc0019osy30dmv0jke
-cmscxfqtk005h4by3pca14ocf	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ud001gosy3gdmyo5mr
-cmscxfqtk005i4by3wndhz1qs	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uf001uosy3zf9jd7i3
-cmscxfqtk005j4by3q4ak6df7	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uf001yosy33d2fuw5i
-cmscxfqtk005k4by377y2mppf	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ug0021osy3b5ud1cem
-cmscxfqtk005l4by392rexx1i	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ug0025osy3zqwa014x
-cmscxfqtk005m4by3607q5lhv	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uh0028osy3bpjlcra6
-cmscxfqtk005n4by32gvgngf3	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uh002cosy3nj7mukdv
-cmscxfqtk005o4by3rvs8t2oi	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002fosy3rtin7h52
-cmscxfqtk005p4by34iufus31	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002josy3zbxuptpy
-cmscxfqtk005q4by3virahpaf	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002mosy31hg5hc2b
-cmscxfqtk005r4by3jgj8c8sh	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002qosy35kfr488e
-cmscxfqtk005s4by3zaifhqek	cmqq6kc18002oedy34zqwpr8k	cmscx98ab00014by3t09bt3ej
-cmscxfqtk005t4by3ahs6n6ys	cmqq6kc18002oedy34zqwpr8k	cmscx98ab00024by3bnht0qwk
-cmts0o5yr000djgy31bf14vnh	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5u2000aosy3pz3559vs
-cmts0o5yr000ejgy3o67gq92l	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5u8000oosy3xl39h9u3
-cmts0o5yr000fjgy38e0n31m3	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ua000vosy3frn7ac7v
-cmts0o5yr000gjgy36ahrbhd2	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uc0019osy30dmv0jke
-cmts0o5yr000hjgy3xhwd9d8b	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ud001gosy3gdmyo5mr
-cmts0o5yr000ijgy3036xu693	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uf001uosy3zf9jd7i3
-cmts0o5yr000jjgy3c351pzgo	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ug0021osy3b5ud1cem
-cmts0o5yr000kjgy3n2oj5pk7	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uh0028osy3bpjlcra6
-cmts0o5yr000ljgy37smfk4q2	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ui002fosy3rtin7h52
-cmts0o5yr000mjgy3rca7u47y	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00014by3t09bt3ej
-cmts0o5yr000njgy3q74ei72o	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00024by3bnht0qwk
-cmuuqk1cn0007vuy4rghgaeot	cmqq5lun2003yosy3elss5zqj	cmqq2r5u20009osy3ma28n30s
-cmuuqk1cn0008vuy43fno36rt	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000aosy3pz3559vs
-cmuuqk1cn0009vuy4t2akx7lb	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000bosy3qk24zm63
-cmuuqk1cn000avuy4tuei5aa9	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000cosy3vcfc0157
-cmuuqk1cn000bvuy41x3nffy8	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000dosy3zeevqtp8
-cmuuqk1cn000cvuy47lqh9wbq	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000eosy3lq857xum
-cmuuqk1cn000dvuy49jx1qb97	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000nosy340erq7ut
-cmuuqk1cn000evuy4q9kd1njf	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000oosy3xl39h9u3
-cmuuqk1cn000fvuy4i4o9u41r	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000posy3ypd933a0
-cmuuqk1cn000gvuy4ceww02b4	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000qosy36n46hoar
-cmuuqk1cn000hvuy4h0db3cfk	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000rosy320wfm9sb
-cmuuqk1cn000ivuy4gxcbd56q	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000sosy33rg1isxk
-cmuuqk1cn000jvuy4slrvjugi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000uosy3odmqijyv
-cmuuqk1cn000kvuy4ix23a3wl	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000vosy3frn7ac7v
-cmuuqk1cn000lvuy4p52zxlkw	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000wosy3cg60cf3l
-cmuuqk1cn000mvuy4nm5t75qi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000xosy34awfm7m2
-cmuuqk1cn000nvuy4y9djm4od	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000yosy3x4aar7ry
-cmuuqk1cn000ovuy4f0f0hlo6	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000zosy3ya6kkz5o
-cmuuqk1cn000pvuy4k9s141i8	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0018osy3xfuslloy
-cmuuqk1cn000qvuy4s012v8mx	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0019osy30dmv0jke
-cmuuqk1cn000rvuy476qmtbm9	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001aosy3fs2w8x19
-cmuuqk1cn000svuy4cjpogxcm	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001bosy37h7g4lcp
-cmuuqk1cn000tvuy4euae7kms	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001cosy39vxqxapi
-cmuuqk1cn000uvuy4lfpjicqe	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001dosy38ev8tw6o
-cmuuqk1cn000vvuy413fq6irb	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001fosy37u42cpw4
-cmuuqk1cn000wvuy47f8dd75z	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001gosy3gdmyo5mr
-cmuuqk1cn000xvuy4ou75hkz4	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001hosy3artbtmg0
-cmuuqk1cn000yvuy48vk2m7zs	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001iosy32ujmhcmm
-cmuuqk1cn000zvuy4exktjyjl	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001josy33ufvcmsb
-cmuuqk1cn0010vuy4vqh6udrn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001kosy39fk8kb2d
-cmuuqk1cn0011vuy410v1yua6	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001tosy3nzlk5mgn
-cmuuqk1cn0012vuy4u3uv1w7a	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001uosy3zf9jd7i3
-cmuuqk1co0013vuy458i71pct	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001vosy3fyt0ftgy
-cmuuqk1co0014vuy48xqv6b9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001wosy313w0am9v
-cmuuqk1co0015vuy47zb7eeh4	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001xosy3v172deco
-cmuuqk1co0016vuy4h72ryn6v	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001yosy33d2fuw5i
-cmuuqk1co0017vuy4hul8gvmr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0020osy3nwmyqu2s
-cmuuqk1co0018vuy4ql7ih5ob	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0021osy3b5ud1cem
-cmuuqk1co0019vuy4xtlvoshn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0022osy3k0u9htht
-cmuuqk1co001avuy4e5v0oem2	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0023osy3cakgq4dc
-cmuuqk1co001bvuy467m7hkto	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0024osy3z5xxxrd4
-cmuuqk1co001cvuy4ug48ejjc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0025osy3zqwa014x
-cmuuqk1co001dvuy4zqc01gxl	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0027osy3jqlnewq3
-cmuuqk1co001evuy4kcmydb30	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0028osy3bpjlcra6
-cmuuqk1co001fvuy4n579llyz	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0029osy3b1p05tyc
-cmuuqk1co001gvuy41ybgrfjb	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002aosy3lwk7wgdk
-cmuuqk1co001hvuy41wfwnb9t	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002bosy3an3m79mq
-cmuuqk1co001ivuy4qd9eyvl5	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002cosy3nj7mukdv
-cmuuqk1co001jvuy4yilyt6hy	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002eosy3qyx1mb3w
-cmuuqk1co001kvuy47xvjxg7w	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002fosy3rtin7h52
-cmuuqk1co001lvuy4ndhua43w	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002gosy312inp9w3
-cmuuqk1co001mvuy4i6uttvei	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002hosy3u9kibgrp
-cmuuqk1co001nvuy4mvl7rc9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002iosy3r3b38qie
-cmuuqk1co001ovuy4yqu7asnc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002josy3zbxuptpy
-cmuuqk1co001pvuy46gxzh39f	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002losy3s3uqbmiv
-cmuuqk1co001qvuy4sl6c41fc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002mosy31hg5hc2b
-cmuuqk1co001rvuy4pt83ppir	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002nosy3fki6pyfp
-cmuuqk1co001svuy4zrby65zi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002oosy3agegbs73
-cmuuqk1co001tvuy4da691bvp	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002posy3gkyhrvk5
-cmuuqk1co001uvuy4v54bvh9h	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002qosy35kfr488e
-cmuuqk1co001vvuy4hcvwkpsm	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk002zosy3fvl1ml7v
-cmuuqk1co001wvuy4vigtdv1x	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0030osy3mbuxsp0t
-cmuuqk1co001xvuy43f0wsvds	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0031osy3wv6douux
-cmuuqk1co001yvuy4spl22p3d	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0032osy3c7lboxy9
-cmuuqk1co001zvuy4v5lsfqvq	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0033osy3r6f7iicb
-cmuuqk1co0020vuy4vj2b5aib	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0034osy3tkjd8kum
-cmuuqk1co0021vuy48chu95ak	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0036osy3l5izd66t
-cmuuqk1co0022vuy4fuyr2fv3	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0037osy3yb5is1cw
-cmuuqk1co0023vuy4nc95k0yh	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0038osy32bi1xkpn
-cmuuqk1co0024vuy4lymgmh52	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0039osy3pbvdhzvy
-cmuuqk1co0025vuy4w8wpnjm4	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003aosy3fio22ef1
-cmuuqk1co0026vuy4mirm3vqu	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003bosy3foywoljk
-cmuuqk1co0027vuy4c76swq2s	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003dosy352i8msiv
-cmuuqk1co0028vuy4ilitpqrr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003eosy3xdlnq7zi
-cmuuqk1co0029vuy4xfj22k6v	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003fosy3de8etrvj
-cmuuqk1co002avuy46bh9s3sc	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003gosy3iz76pbdz
-cmuuqk1co002bvuy471ty2exn	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003hosy3074teopk
-cmuuqk1co002cvuy4zk8g8lcc	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003iosy3a1r40lha
-cmuuqk1co002dvuy4ae1magt2	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003kosy38kjluf6p
-cmuuqk1co002evuy4eofunwns	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003losy3g6gqjx6g
-cmuuqk1co002fvuy4alu18rv6	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003mosy3shtyezyq
-cmuuqk1co002gvuy4rnfdk0tw	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003nosy3zvyxb04l
-cmuuqk1co002hvuy4115s4j6r	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003oosy3le9hqeym
-cmuuqk1co002ivuy4a8qak6cn	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003posy3ds2l2kgs
-cmuuqk1co002jvuy45la08w9i	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003rosy3n1c096dx
-cmuuqk1co002kvuy48y6f0biy	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003sosy3ele385ih
-cmuuqk1co002lvuy4lmped4jz	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003tosy3vvkx6zq0
-cmuuqk1co002mvuy44bcaefv7	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003uosy3d0ltepdo
-cmuuqk1co002nvuy4odkk4zod	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003vosy38ty8c4pj
-cmuuqk1co002ovuy46fv9vrc0	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003wosy31jiwizos
-cmuuqk1co002pvuy4zk1olbpu	cmqq5lun2003yosy3elss5zqj	cmscnj6920001pfy3qzc13nyx
-cmuuqk1co002qvuy4xb3azogm	cmqq5lun2003yosy3elss5zqj	cmscnj6920002pfy3ldc3ypq8
-cmuuqk1co002rvuy4ze1e15yc	cmqq5lun2003yosy3elss5zqj	cmscnj6920003pfy33a5pqkkd
-cmuuqk1co002svuy42v2t1an2	cmqq5lun2003yosy3elss5zqj	cmscnj6920004pfy3ithlhecl
-cmuuqk1co002tvuy4gp596wlk	cmqq5lun2003yosy3elss5zqj	cmscnj6920005pfy38peu6ppi
-cmuuqk1co002uvuy4cdly891n	cmqq5lun2003yosy3elss5zqj	cmscnj6920006pfy3dm6wkuwt
-cmuuqk1co002vvuy4u3l3w217	cmqq5lun2003yosy3elss5zqj	cmscx98ab00014by3t09bt3ej
-cmuuqk1co002wvuy4hbi849z1	cmqq5lun2003yosy3elss5zqj	cmscx98ab00024by3bnht0qwk
-cmuuqk1co002xvuy4ue0349hz	cmqq5lun2003yosy3elss5zqj	cmscx98ab00034by394xq96n7
-cmuuqk1co002yvuy431sxg3b7	cmqq5lun2003yosy3elss5zqj	cmscx98ab00044by3pfyqb3tz
-cmuuqk1co002zvuy4cgxkmaw4	cmqq5lun2003yosy3elss5zqj	cmscx98ab00054by357v9c0bj
-cmuuqk1co0030vuy41a9r51c9	cmqq5lun2003yosy3elss5zqj	cmscx98ac00064by3sn1sq76c
-cmuuqk1co0031vuy4pz699xel	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0001vuy4a7kt287a
-cmuuqk1co0032vuy4liame8jy	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0002vuy4cbc5h7q9
-cmuuqk1co0033vuy49t5pgige	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0003vuy4z1y9ailx
-cmuuqk1co0034vuy4ila16hgi	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0004vuy4ouenmiiw
-cmuuqk1co0035vuy4irdhcs2p	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0005vuy464k4qb6u
-cmuuqk1co0036vuy4i74631zj	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0006vuy4bf1uz014
+cmv4sjsxk0007r5y5w0hcazwq	cmqq5lun2003yosy3elss5zqj	cmqq2r5u20009osy3ma28n30s
+cmv4sjsxk0008r5y58zo7f6t4	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000aosy3pz3559vs
+cmv4sjsxk0009r5y53oba4qpw	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000bosy3qk24zm63
+cmv4sjsxk000ar5y5xq6v4ze3	cmqq5lun2003yosy3elss5zqj	cmqq2r5u2000cosy3vcfc0157
+cmv4sjsxk000br5y5sf56kckb	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000dosy3zeevqtp8
+cmv4sjsxk000cr5y524bl9isd	cmqq5lun2003yosy3elss5zqj	cmqq2r5u3000eosy3lq857xum
+cmv4sjsxk000dr5y535pkvrwj	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000nosy340erq7ut
+cmv4sjsxk000er5y5uzgl78a5	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000oosy3xl39h9u3
+cmv4sjsxk000fr5y5gn6j2oqw	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000posy3ypd933a0
+cmv4sjsxk000gr5y5cssg72gp	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000qosy36n46hoar
+cmv4sjsxk000hr5y5vwbkubq7	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000rosy320wfm9sb
+cmv4sjsxk000ir5y53kqoh6qq	cmqq5lun2003yosy3elss5zqj	cmqq2r5u8000sosy33rg1isxk
+cmv4sjsxk000jr5y5zg86uvdb	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000uosy3odmqijyv
+cmv4sjsxk000kr5y5thlv0523	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000vosy3frn7ac7v
+cmv4sjsxk000lr5y5ozud98d3	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000wosy3cg60cf3l
+cmv4sjsxk000mr5y52hs75s5v	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000xosy34awfm7m2
+cmv4sjsxk000nr5y5kubt8usd	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000yosy3x4aar7ry
+cmv4sjsxk000or5y5los4exye	cmqq5lun2003yosy3elss5zqj	cmqq2r5ua000zosy3ya6kkz5o
+cmv4sjsxk000pr5y5ez62rnyt	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0018osy3xfuslloy
+cmv4sjsxk000qr5y5y18a5liy	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc0019osy30dmv0jke
+cmv4sjsxk000rr5y52jwx9bno	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001aosy3fs2w8x19
+cmv4sjsxk000sr5y5kje0ib4c	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001bosy37h7g4lcp
+cmv4sjsxk000tr5y57fhb1i51	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001cosy39vxqxapi
+cmv4sjsxk000ur5y5xqdtre5g	cmqq5lun2003yosy3elss5zqj	cmqq2r5uc001dosy38ev8tw6o
+cmv4sjsxk000vr5y5gzhexo3d	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001fosy37u42cpw4
+cmv4sjsxk000wr5y5jmctu63n	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001gosy3gdmyo5mr
+cmv4sjsxk000xr5y5bpvn8cdq	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001hosy3artbtmg0
+cmv4sjsxk000yr5y5r4pu0o6s	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001iosy32ujmhcmm
+cmv4sjsxk000zr5y581nvzkie	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001josy33ufvcmsb
+cmv4sjsxk0010r5y513an4pbc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ud001kosy39fk8kb2d
+cmv4sjsxk0011r5y5lzfk6kne	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001tosy3nzlk5mgn
+cmv4sjsxk0012r5y59pv1qck1	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001uosy3zf9jd7i3
+cmv4sjsxk0013r5y5cronom32	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001vosy3fyt0ftgy
+cmv4sjsxk0014r5y5q5r7iu3j	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001wosy313w0am9v
+cmv4sjsxk0015r5y5koup63qu	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001xosy3v172deco
+cmv4sjsxk0016r5y548c0lw6g	cmqq5lun2003yosy3elss5zqj	cmqq2r5uf001yosy33d2fuw5i
+cmv4sjsxk0017r5y51scwo6f6	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0020osy3nwmyqu2s
+cmv4sjsxk0018r5y50it1rngr	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0021osy3b5ud1cem
+cmv4sjsxk0019r5y5bazj4v7c	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0022osy3k0u9htht
+cmv4sjsxk001ar5y5w9829a03	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0023osy3cakgq4dc
+cmv4sjsxk001br5y5dhpyj7vm	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0024osy3z5xxxrd4
+cmv4sjsxk001cr5y5jsno0z4c	cmqq5lun2003yosy3elss5zqj	cmqq2r5ug0025osy3zqwa014x
+cmv4sjsxk001dr5y5h5fd7oai	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0027osy3jqlnewq3
+cmv4sjsxk001er5y57mogd9jx	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0028osy3bpjlcra6
+cmv4sjsxk001fr5y54x51a6zc	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh0029osy3b1p05tyc
+cmv4sjsxk001gr5y57xsy5xu2	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002aosy3lwk7wgdk
+cmv4sjsxk001hr5y5miwjwusu	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002bosy3an3m79mq
+cmv4sjsxk001ir5y5ms1yj3ap	cmqq5lun2003yosy3elss5zqj	cmqq2r5uh002cosy3nj7mukdv
+cmv4sjsxk001jr5y5l94sipa1	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002eosy3qyx1mb3w
+cmv4sjsxk001kr5y58f0xaujq	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002fosy3rtin7h52
+cmv4sjsxk001lr5y5djk7ktlh	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002gosy312inp9w3
+cmv4skfqn004wr5y51ntgo7tf	cmqq6inap002ledy3dp4fy667	cmqq2r5u2000aosy3pz3559vs
+cmv4skfqn004xr5y5uhfuokvl	cmqq6inap002ledy3dp4fy667	cmqq2r5u8000oosy3xl39h9u3
+cmv4skfqn004yr5y5upnjyixu	cmqq6inap002ledy3dp4fy667	cmqq2r5ua000vosy3frn7ac7v
+cmv4skfqn004zr5y5l16yrc1x	cmqq6inap002ledy3dp4fy667	cmqq2r5uc0018osy3xfuslloy
+cmv4skfqn0050r5y5yaym4w7p	cmqq6inap002ledy3dp4fy667	cmqq2r5uc0019osy30dmv0jke
+cmv4skfqn0051r5y5e96tqh9r	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001aosy3fs2w8x19
+cmv4skfqn0052r5y5ffvprkkn	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001bosy37h7g4lcp
+cmv4skfqo0053r5y5fwb9csex	cmqq6inap002ledy3dp4fy667	cmqq2r5uc001dosy38ev8tw6o
+cmv4skfqo0054r5y57wpcpqti	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001fosy37u42cpw4
+cmv4skfqo0055r5y50je1wr5f	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001gosy3gdmyo5mr
+cmv4skfqo0056r5y522q39z9g	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001hosy3artbtmg0
+cmv4skfqo0057r5y5jss37z42	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001iosy32ujmhcmm
+cmv4skfqo0058r5y5vvs7qzdy	cmqq6inap002ledy3dp4fy667	cmqq2r5ud001kosy39fk8kb2d
+cmv4skfqo0059r5y51yk2r1o5	cmqq6inap002ledy3dp4fy667	cmqq2r5uf001uosy3zf9jd7i3
+cmv4skfqo005ar5y5cfe9zyf0	cmqq6inap002ledy3dp4fy667	cmqq2r5uf001yosy33d2fuw5i
+cmv4skfqo005br5y5lxcnfn9t	cmqq6inap002ledy3dp4fy667	cmqq2r5ug0021osy3b5ud1cem
+cmv4skfqo005cr5y55c7ix0o6	cmqq6inap002ledy3dp4fy667	cmqq2r5ug0025osy3zqwa014x
+cmv4skfqo005dr5y54t73d7y7	cmqq6inap002ledy3dp4fy667	cmqq2r5uh0028osy3bpjlcra6
+cmv4skfqo005er5y56b1q163r	cmqq6inap002ledy3dp4fy667	cmqq2r5uh002cosy3nj7mukdv
+cmv4skfqo005fr5y5d46fbmjr	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002fosy3rtin7h52
+cmv4skfqo005gr5y5orbsri6m	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002josy3zbxuptpy
+cmv4skfqo005hr5y5qfcyqtju	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002mosy31hg5hc2b
+cmv4skfqo005ir5y5znckkcad	cmqq6inap002ledy3dp4fy667	cmqq2r5ui002qosy35kfr488e
+cmv4sjsxk001mr5y5cpsxsidd	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002hosy3u9kibgrp
+cmv4sjsxk001nr5y5f977kugi	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002iosy3r3b38qie
+cmv4sjsxk001or5y5n0ov4al5	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002josy3zbxuptpy
+cmv4sjsxk001pr5y5ex8e0hb6	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002losy3s3uqbmiv
+cmv4sjsxk001qr5y5nm4l0n6b	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002mosy31hg5hc2b
+cmv4sjsxk001rr5y5l90xv3ug	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002nosy3fki6pyfp
+cmv4sjsxk001sr5y5rorkp0py	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002oosy3agegbs73
+cmv4sjsxk001tr5y5mdijhf8x	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002posy3gkyhrvk5
+cmv4sjsxk001ur5y5r69lfocy	cmqq5lun2003yosy3elss5zqj	cmqq2r5ui002qosy35kfr488e
+cmv4sjsxk001vr5y5u3v00ehr	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk002zosy3fvl1ml7v
+cmv4sjsxk001wr5y5hqhjmi1a	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0030osy3mbuxsp0t
+cmv4sjsxk001xr5y5yvuw4r1u	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0031osy3wv6douux
+cmv4sjsxk001yr5y5niov2oix	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0032osy3c7lboxy9
+cmv4sjsxk001zr5y5c4r8phsa	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0033osy3r6f7iicb
+cmv4sjsxk0020r5y5wregehgd	cmqq5lun2003yosy3elss5zqj	cmqq2r5uk0034osy3tkjd8kum
+cmv4sjsxk0021r5y51e744j3d	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0036osy3l5izd66t
+cmv4sjsxk0022r5y5l4ykmzpg	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0037osy3yb5is1cw
+cmv4sjsxk0023r5y54v7l42oc	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0038osy32bi1xkpn
+cmv4sjsxk0024r5y5voro6egn	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul0039osy3pbvdhzvy
+cmv4sjsxk0025r5y5ahr87vml	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003aosy3fio22ef1
+cmv4sjsxk0026r5y5ai9c6rak	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003bosy3foywoljk
+cmv4sjsxk0027r5y5nymhj9se	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003dosy352i8msiv
+cmv4sjsxk0028r5y5iphpxbip	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003eosy3xdlnq7zi
+cmv4sjsxk0029r5y5l419ktw4	cmqq5lun2003yosy3elss5zqj	cmqq2r5ul003fosy3de8etrvj
+cmv4sjsxk002ar5y51l7i1001	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003gosy3iz76pbdz
+cmv4sjsxk002br5y51hlvrqmp	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003hosy3074teopk
+cmv4sjsxk002cr5y566ksuenk	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003iosy3a1r40lha
+cmv4sjsxk002dr5y5irvxns8z	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003kosy38kjluf6p
+cmv4sjsxk002er5y5dgbl3bkv	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003losy3g6gqjx6g
+cmv4sjsxk002fr5y5k7o0kt8n	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003mosy3shtyezyq
+cmv4sjsxk002gr5y5egybon11	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003nosy3zvyxb04l
+cmv4sjsxk002hr5y500fbxron	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003oosy3le9hqeym
+cmv4sjsxk002ir5y5lchsrm4a	cmqq5lun2003yosy3elss5zqj	cmqq2r5um003posy3ds2l2kgs
+cmv4sjsxk002jr5y5n4kz63aa	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003rosy3n1c096dx
+cmv4sjsxl002kr5y5g8px4vam	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003sosy3ele385ih
+cmv4sjsxl002lr5y5j5ht8wrm	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003tosy3vvkx6zq0
+cmv4sjsxl002mr5y509d0mlb1	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003uosy3d0ltepdo
+cmv4sjsxl002nr5y5o3h4b7zc	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003vosy38ty8c4pj
+cmv4sjsxl002or5y5t4a8gn5m	cmqq5lun2003yosy3elss5zqj	cmqq2r5un003wosy31jiwizos
+cmv4sjsxl002pr5y5ylzlcd4t	cmqq5lun2003yosy3elss5zqj	cmscnj6920001pfy3qzc13nyx
+cmv4sjsxl002qr5y5ueuarauy	cmqq5lun2003yosy3elss5zqj	cmscnj6920002pfy3ldc3ypq8
+cmv4sjsxl002rr5y5ko6dh9tp	cmqq5lun2003yosy3elss5zqj	cmscnj6920003pfy33a5pqkkd
+cmv4sjsxl002sr5y5z56ktpxn	cmqq5lun2003yosy3elss5zqj	cmscnj6920004pfy3ithlhecl
+cmv4sjsxl002tr5y5pumjq7si	cmqq5lun2003yosy3elss5zqj	cmscnj6920005pfy38peu6ppi
+cmv4sjsxl002ur5y5lbdrwwkg	cmqq5lun2003yosy3elss5zqj	cmscnj6920006pfy3dm6wkuwt
+cmv4sjsxl002vr5y5nte4nmpg	cmqq5lun2003yosy3elss5zqj	cmscx98ab00014by3t09bt3ej
+cmv4sjsxl002wr5y5mzi1x5o9	cmqq5lun2003yosy3elss5zqj	cmscx98ab00024by3bnht0qwk
+cmv4sjsxl002xr5y55mjc5yru	cmqq5lun2003yosy3elss5zqj	cmscx98ab00034by394xq96n7
+cmv4sjsxl002yr5y5ekdgcc7r	cmqq5lun2003yosy3elss5zqj	cmscx98ab00044by3pfyqb3tz
+cmv4sjsxl002zr5y5zsdp7unf	cmqq5lun2003yosy3elss5zqj	cmscx98ab00054by357v9c0bj
+cmv4sjsxl0030r5y5i7y27o0c	cmqq5lun2003yosy3elss5zqj	cmscx98ac00064by3sn1sq76c
+cmv4skfqo005jr5y5zenyu2vf	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0036osy3l5izd66t
+cmv4skfqo005kr5y537jhdg8c	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0037osy3yb5is1cw
+cmv4skfqo005lr5y53p08i3cn	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0038osy32bi1xkpn
+cmv4skfqo005mr5y5h5m3nsxn	cmqq6inap002ledy3dp4fy667	cmqq2r5ul0039osy3pbvdhzvy
+cmv4skfqo005nr5y5jrrdmm1i	cmqq6inap002ledy3dp4fy667	cmqq2r5ul003bosy3foywoljk
+cmv4skfqo005or5y5tic3ojyv	cmqq6inap002ledy3dp4fy667	cmqq2r5um003kosy38kjluf6p
+cmv4skfqo005pr5y56ltib63c	cmqq6inap002ledy3dp4fy667	cmqq2r5um003losy3g6gqjx6g
+cmv4skfqo005qr5y5w9tuk9pn	cmqq6inap002ledy3dp4fy667	cmqq2r5um003mosy3shtyezyq
+cmv4skfqo005rr5y5o82ubmmc	cmqq6inap002ledy3dp4fy667	cmqq2r5um003nosy3zvyxb04l
+cmv4skfqo005sr5y5mrvx0cc5	cmqq6inap002ledy3dp4fy667	cmqq2r5um003posy3ds2l2kgs
+cmv4skfqo005tr5y5byqkdo3h	cmqq6inap002ledy3dp4fy667	cmscnj6920001pfy3qzc13nyx
+cmv4skfqo005ur5y5erynvixv	cmqq6inap002ledy3dp4fy667	cmscnj6920002pfy3ldc3ypq8
+cmv4skfqo005vr5y5zofa8n2w	cmqq6inap002ledy3dp4fy667	cmscnj6920003pfy33a5pqkkd
+cmv4skfqo005wr5y59rsa9f24	cmqq6inap002ledy3dp4fy667	cmscnj6920004pfy3ithlhecl
+cmv4skfqo005xr5y5noujnkke	cmqq6inap002ledy3dp4fy667	cmscnj6920006pfy3dm6wkuwt
+cmv4skfqo005yr5y5befb1631	cmqq6inap002ledy3dp4fy667	cmscx98ab00014by3t09bt3ej
+cmv4skfqo005zr5y5xqyz5eug	cmqq6inap002ledy3dp4fy667	cmscx98ab00024by3bnht0qwk
+cmv4skfqo0060r5y5gah8c5dd	cmqq6inap002ledy3dp4fy667	cmscx98ac00064by3sn1sq76c
+cmv4skfqo0061r5y5zaqs2azp	cmqq6inap002ledy3dp4fy667	cmv4sj7v80002r5y54tna2vpf
+cmv4skkaj0062r5y51vcovfjr	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u2000aosy3pz3559vs
+cmv4skkaj0063r5y5o8hifxgx	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u3000eosy3lq857xum
+cmv4skkaj0064r5y55fk5dtcd	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u8000oosy3xl39h9u3
+cmv4skkaj0065r5y5804xc23h	cmqq6hvp3002kedy3vxzotiun	cmqq2r5u8000sosy33rg1isxk
+cmv4skkaj0066r5y5pm0sy0uf	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ua000vosy3frn7ac7v
+cmv4skkaj0067r5y53uwh7m5p	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ua000zosy3ya6kkz5o
+cmv4skkaj0068r5y5mx71yxea	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc0018osy3xfuslloy
+cmv4skkaj0069r5y570ccs9uy	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc0019osy30dmv0jke
+cmv4skkaj006ar5y5n4biqa0f	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001aosy3fs2w8x19
+cmv4skkaj006br5y5jayfu2y5	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001bosy37h7g4lcp
+cmv4skkaj006cr5y53uwoviud	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001cosy39vxqxapi
+cmv4skkaj006dr5y5w1umdur7	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uc001dosy38ev8tw6o
+cmv4skkak006er5y59f5ioe0j	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001fosy37u42cpw4
+cmv4skkak006fr5y5f13a2fqc	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001gosy3gdmyo5mr
+cmv4skkak006gr5y5fmurqzev	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001hosy3artbtmg0
+cmv4skkak006hr5y5lnyvoyni	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001iosy32ujmhcmm
+cmv4skkak006ir5y505qqmjve	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001josy33ufvcmsb
+cmv4skkak006jr5y5nx8pwlyx	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ud001kosy39fk8kb2d
+cmv4skkak006kr5y5tgg7mb08	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uf001uosy3zf9jd7i3
+cmv4skkak006lr5y5njh42qt2	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uf001yosy33d2fuw5i
+cmv4skkak006mr5y5xhph24jw	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ug0021osy3b5ud1cem
+cmv4skkak006nr5y54rekdd07	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ug0025osy3zqwa014x
+cmv4skkak006or5y5ujp7s4r7	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uh0028osy3bpjlcra6
+cmv4skkak006pr5y5qhzdqlkd	cmqq6hvp3002kedy3vxzotiun	cmqq2r5uh002cosy3nj7mukdv
+cmv4skkak006qr5y56gczhodj	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002fosy3rtin7h52
+cmv4skkak006rr5y58ofzklte	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002josy3zbxuptpy
+cmv4skkak006sr5y5e568puoi	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002mosy31hg5hc2b
+cmv4skkak006tr5y5lhj4fpmy	cmqq6hvp3002kedy3vxzotiun	cmqq2r5ui002qosy35kfr488e
+cmv4skkak006ur5y5vncz9ikg	cmqq6hvp3002kedy3vxzotiun	cmscx98ab00014by3t09bt3ej
+cmv4skkak006vr5y5z4u8grnm	cmqq6hvp3002kedy3vxzotiun	cmscx98ab00024by3bnht0qwk
+cmv4skkak006wr5y5051plom4	cmqq6hvp3002kedy3vxzotiun	cmscx98ac00064by3sn1sq76c
+cmv4skkak006xr5y5sd2jf0ua	cmqq6hvp3002kedy3vxzotiun	cmv4sj7v80002r5y54tna2vpf
+cmv4sjsxl0031r5y5azlypjy9	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0001vuy4a7kt287a
+cmv4sjsxl0032r5y52jgmk6wb	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0002vuy4cbc5h7q9
+cmv4sjsxl0033r5y58rrs4c11	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0003vuy4z1y9ailx
+cmv4sjsxl0034r5y5rpd7ayzk	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0004vuy4ouenmiiw
+cmv4sjsxl0035r5y558ufwh06	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0005vuy464k4qb6u
+cmv4sjsxl0036r5y5vxjdqb8l	cmqq5lun2003yosy3elss5zqj	cmuuqjg8t0006vuy4bf1uz014
+cmv4sjsxl0037r5y5fct52ble	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80001r5y5ugp7a3mb
+cmv4sjsxl0038r5y5uxn6y8yb	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80002r5y54tna2vpf
+cmv4sjsxl0039r5y5oysyipzs	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80003r5y5e0fykb99
+cmv4sjsxl003ar5y5xi60c9cy	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80004r5y5u9klmaf8
+cmv4sjsxl003br5y5z0qp0e44	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80005r5y5phj51jd5
+cmv4sjsxl003cr5y5uvtuebrp	cmqq5lun2003yosy3elss5zqj	cmv4sj7v80006r5y5btp2gtac
+cmv4sjy9m003dr5y56mgkowww	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5u2000aosy3pz3559vs
+cmv4sjy9m003er5y52zk4fo5p	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5u8000oosy3xl39h9u3
+cmv4sjy9m003fr5y5as9ufsyn	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ua000vosy3frn7ac7v
+cmv4sjy9m003gr5y5p7x9emyh	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uc0019osy30dmv0jke
+cmv4sjy9m003hr5y5f16kuftb	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ud001gosy3gdmyo5mr
+cmv4sjy9m003ir5y5zn6cyp9j	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uf001uosy3zf9jd7i3
+cmv4sjy9m003jr5y5bda10c6v	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ug0021osy3b5ud1cem
+cmv4sjy9m003kr5y57irpnu4x	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5uh0028osy3bpjlcra6
+cmv4sjy9m003lr5y5t0syyqiu	cmts0k9d5000cjgy3sxg1uiaa	cmqq2r5ui002fosy3rtin7h52
+cmv4sjy9m003mr5y5a73jw1iy	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00014by3t09bt3ej
+cmv4sjy9m003nr5y5y77iscvw	cmts0k9d5000cjgy3sxg1uiaa	cmscx98ab00024by3bnht0qwk
+cmv4sjy9m003or5y5rnv6voui	cmts0k9d5000cjgy3sxg1uiaa	cmv4sj7v80002r5y54tna2vpf
+cmv4sk1ks003pr5y5r7blme2e	cmqq6kc18002oedy34zqwpr8k	cmqq2r5u2000aosy3pz3559vs
+cmv4sk1ks003qr5y5nyjc6jov	cmqq6kc18002oedy34zqwpr8k	cmqq2r5u8000oosy3xl39h9u3
+cmv4sk1ks003rr5y5adehwyc5	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ua000vosy3frn7ac7v
+cmv4sk1ks003sr5y5wgw59hrr	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uc0019osy30dmv0jke
+cmv4sk1ks003tr5y53lf2uqro	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ud001gosy3gdmyo5mr
+cmv4sk1ks003ur5y5r5lxscvw	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uf001uosy3zf9jd7i3
+cmv4sk1ks003vr5y5r09bf2yt	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uf001yosy33d2fuw5i
+cmv4sk1ks003wr5y5inw7bkxp	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ug0021osy3b5ud1cem
+cmv4sk1ks003xr5y53i534sgj	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ug0025osy3zqwa014x
+cmv4sk1ks003yr5y5k7uclre2	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uh0028osy3bpjlcra6
+cmv4sk1ks003zr5y57ly2wr37	cmqq6kc18002oedy34zqwpr8k	cmqq2r5uh002cosy3nj7mukdv
+cmv4sk1ks0040r5y53arkff2s	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002fosy3rtin7h52
+cmv4sk1kt0041r5y5ge21218s	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002josy3zbxuptpy
+cmv4sk1kt0042r5y5fk3uz361	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002mosy31hg5hc2b
+cmv4sk1kt0043r5y5jbh4i8o9	cmqq6kc18002oedy34zqwpr8k	cmqq2r5ui002qosy35kfr488e
+cmv4sk1kt0044r5y5es8ls28i	cmqq6kc18002oedy34zqwpr8k	cmscx98ab00014by3t09bt3ej
+cmv4sk1kt0045r5y5y9xwp6o9	cmqq6kc18002oedy34zqwpr8k	cmscx98ab00024by3bnht0qwk
+cmv4sk1kt0046r5y5g41f0ngc	cmqq6kc18002oedy34zqwpr8k	cmv4sj7v80002r5y54tna2vpf
+cmv4sk4m60047r5y5ntjz61j6	cmqq6jacc002nedy3nemgrb9w	cmqq2r5u2000aosy3pz3559vs
+cmv4sk4m60048r5y5ykm7xan6	cmqq6jacc002nedy3nemgrb9w	cmqq2r5u8000oosy3xl39h9u3
+cmv4sk4m60049r5y5dtlavitd	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ua000vosy3frn7ac7v
+cmv4sk4m6004ar5y5zhinvnjd	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uc0019osy30dmv0jke
+cmv4sk4m6004br5y5wfzc9zon	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ud001gosy3gdmyo5mr
+cmv4sk4m6004cr5y5gzu8pih4	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uf001uosy3zf9jd7i3
+cmv4sk4m6004dr5y550tlfnm9	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ug0021osy3b5ud1cem
+cmv4sk4m6004er5y5xr6wzh58	cmqq6jacc002nedy3nemgrb9w	cmqq2r5uh0028osy3bpjlcra6
+cmv4sk4m6004fr5y5onfmrfgb	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ui002fosy3rtin7h52
+cmv4sk4m6004gr5y5ro8fy6h8	cmqq6jacc002nedy3nemgrb9w	cmqq2r5ui002mosy31hg5hc2b
+cmv4sk4m6004hr5y5ckniovtt	cmqq6jacc002nedy3nemgrb9w	cmscx98ab00014by3t09bt3ej
+cmv4sk4m6004ir5y5u40y3asj	cmqq6jacc002nedy3nemgrb9w	cmscx98ab00024by3bnht0qwk
+cmv4sk4m6004jr5y5y6yi6voy	cmqq6jacc002nedy3nemgrb9w	cmv4sj7v80002r5y54tna2vpf
+cmv4skca8004kr5y5nx2zjrj0	cmqq6j0h0002medy3azmkz1uj	cmqq2r5u2000aosy3pz3559vs
+cmv4skca8004lr5y5axsb0fle	cmqq6j0h0002medy3azmkz1uj	cmqq2r5u8000oosy3xl39h9u3
+cmv4skca8004mr5y52a6s6h04	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ua000vosy3frn7ac7v
+cmv4skca8004nr5y5tri51mec	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uc0019osy30dmv0jke
+cmv4skca8004or5y5qbcy358g	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ud001gosy3gdmyo5mr
+cmv4skca8004pr5y5ty7x0w3q	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uf001uosy3zf9jd7i3
+cmv4skca8004qr5y5zy6tox72	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ug0021osy3b5ud1cem
+cmv4skca8004rr5y5re5eeimy	cmqq6j0h0002medy3azmkz1uj	cmqq2r5uh0028osy3bpjlcra6
+cmv4skca8004sr5y564ysgvrt	cmqq6j0h0002medy3azmkz1uj	cmqq2r5ui002fosy3rtin7h52
+cmv4skca8004tr5y5g8sey7wh	cmqq6j0h0002medy3azmkz1uj	cmscx98ab00014by3t09bt3ej
+cmv4skca8004ur5y5ijg6kmeq	cmqq6j0h0002medy3azmkz1uj	cmscx98ab00024by3bnht0qwk
+cmv4skca8004vr5y5m0e3dz8d	cmqq6j0h0002medy3azmkz1uj	cmv4sj7v80002r5y54tna2vpf
 \.
 
 
@@ -1710,6 +1762,18 @@ cmuc6pq8l000h5my3u72uuwq9	cmuc6pq89000e5my3j2j3xzfw	cmuc6mipg000a5my3uxmj09st	Wa
 cmuc6pq8l000i5my3l526rhf2	cmuc6pq89000e5my3j2j3xzfw	cmuc6mp0b000b5my3gc72as8r	sa clinic, at sa mga seminar ng mga DOH	\N	2026-09-22 04:39:12.393	2026-09-22 04:39:12.393
 cmuc6pq8l000j5my3r1z16bjk	cmuc6pq89000e5my3j2j3xzfw	cmuc6mrgx000c5my3ftmspkhc	Wala, halos lahat kasi sa social media nag popost ng misinformation	\N	2026-09-22 04:39:12.393	2026-09-22 04:39:12.393
 cmuc6pq8l000k5my3ueakgrat	cmuc6pq89000e5my3j2j3xzfw	cmuc6msy6000d5my3pf8tq8zr	di ko alam	\N	2026-09-22 04:39:12.393	2026-09-22 04:39:12.393
+cmv4uapxm007hr5y5hf3ttpap	cmv4uapxa007gr5y5ikxb6g1i	cmuc6lun900075my3qeuiw3qg	sa	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4uapxn007ir5y5elyggln4	cmv4uapxa007gr5y5ikxb6g1i	cmuc6m8bt00095my3z240ytmo	asdasd	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4uapxn007jr5y51wubajzr	cmv4uapxa007gr5y5ikxb6g1i	cmuc6mipg000a5my3uxmj09st	asdasd	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4uapxn007kr5y52gmizeie	cmv4uapxa007gr5y5ikxb6g1i	cmuc6mp0b000b5my3gc72as8r	asdasd	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4uapxn007lr5y5u7gcrv1d	cmv4uapxa007gr5y5ikxb6g1i	cmuc6mrgx000c5my3ftmspkhc	asdasd	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4uapxn007mr5y5gm4pghwy	cmv4uapxa007gr5y5ikxb6g1i	cmuc6msy6000d5my3pf8tq8zr	asdasd	\N	2026-10-12 05:56:55.87	2026-10-12 05:56:55.87
+cmv4ubcd2007or5y569228app	cmv4ubccq007nr5y5mrbbf7vh	cmuc6lun900075my3qeuiw3qg	asdasd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
+cmv4ubcd2007pr5y5p73w1hsg	cmv4ubccq007nr5y5mrbbf7vh	cmuc6m8bt00095my3z240ytmo	sdsdssasd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
+cmv4ubcd2007qr5y59nqi7izd	cmv4ubccq007nr5y5mrbbf7vh	cmuc6mipg000a5my3uxmj09st	sadsd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
+cmv4ubcd2007rr5y5gakc9yqn	cmv4ubccq007nr5y5mrbbf7vh	cmuc6mp0b000b5my3gc72as8r	dasdasd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
+cmv4ubcd2007sr5y50iz0cxzo	cmv4ubccq007nr5y5mrbbf7vh	cmuc6mrgx000c5my3ftmspkhc	asdasd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
+cmv4ubcd2007tr5y5uzf67evj	cmv4ubccq007nr5y5mrbbf7vh	cmuc6msy6000d5my3pf8tq8zr	asdasd	\N	2026-10-12 05:57:24.938	2026-10-12 05:57:24.938
 \.
 
 
@@ -1800,6 +1864,8 @@ cmu4wxyhk0000ppy36n0cnqfs	cmtmc4k8b00010ry3uu6uzch8	2026-09-17 02:31:16.952
 cmu6maldv0003tey3jqctt3ld	cmtmc4k8b00010ry3uu6uzch8	2026-09-18 07:08:43.075
 cmuc2ddyz00004zy33lotegv0	cmtmc4k8b00010ry3uu6uzch8	2026-09-22 02:37:38.171
 cmuc6pq89000e5my3j2j3xzfw	cmuc6lums00065my3ad9sq9ek	2026-09-22 04:39:12.393
+cmv4uapxa007gr5y5ikxb6g1i	cmuc6lums00065my3ad9sq9ek	2026-10-12 05:56:55.87
+cmv4ubccq007nr5y5mrbbf7vh	cmuc6lums00065my3ad9sq9ek	2026-10-12 05:57:24.938
 \.
 
 
@@ -1811,7 +1877,8 @@ COPY public."User" (user_id, email, is_deleted, created_at, updated_at, role_id,
 cmqq5tmyi0042osy3p41hgb36	raminjoshua05@gmail.com	f	2026-06-23 04:44:12.282	2026-06-23 04:44:12.282	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	t
 cmscod7oo0007pfy3qxqgtp4u	t-jrrembulat@national-u.edu.ph	f	2026-08-03 03:33:56.904	2026-09-22 03:20:45.763	cmqq6inap002ledy3dp4fy667	cmol5fmjt0001d2utc6jge2ug	t
 cmuunh93i0000mgy4vn45bomj	divineblanco03@gmail.com	f	2026-10-05 02:48:21.582	2026-10-05 02:48:21.582	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	f
-cmuz5qtsi00007ey49pee9gdc	raminjoshua05@gmailasdasds.com	f	2026-10-08 06:30:46.098	2026-10-08 06:30:46.098	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	f
+cmuz5qtsi00007ey49pee9gdc	raminjoshua05@gmailasdasds.com	t	2026-10-08 06:30:46.098	2026-10-12 05:09:30.597	cmqq5lun2003yosy3elss5zqj	cmol5fmjt0001d2utc6jge2ug	f
+cmv4smg4e0071r5y5jxxinmof	raminjoshua8@gmail.com	f	2026-10-12 05:10:03.806	2026-10-12 05:10:03.806	cmqq6hvp3002kedy3vxzotiun	cmol5fmjt0001d2utc6jge2ug	f
 \.
 
 
@@ -1929,6 +1996,7 @@ COPY public.user_preferences (preference_id, default_language, email_notificatio
 
 COPY public.user_rewards (user_reward_id, user_id, total_points, current_level_id, created_at, updated_at) FROM stdin;
 cmuz5qtsz00027ey48bfdvzw3	cmuz5qtsi00007ey49pee9gdc	0	cmuz4i4u90000i6y409gpft64	2026-10-08 06:30:46.098	2026-10-08 06:30:46.098
+cmv4smg510073r5y5nhi9epft	cmv4smg4e0071r5y5jxxinmof	0	cmuz4i4u90000i6y409gpft64	2026-10-12 05:10:03.806	2026-10-12 05:10:03.806
 \.
 
 
