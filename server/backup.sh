@@ -10,6 +10,10 @@ docker compose exec -T db pg_dump -U postgres -d dost > "backups/dost_${TIMESTAM
 docker compose exec -T db pg_dump -U postgres -d geodb > "backups/geodb_${TIMESTAMP}.sql"
 
 
+docker compose exec -T db pg_dump -U postgres -d nlp > "backups/nlp${TIMESTAMP}.sql"
+
+
 echo "Backup completed:"
 echo "backups/dost_${TIMESTAMP}.dump"
 echo "backups/geodb_${TIMESTAMP}.dump"
+echo "backups/nlp${TIMESTAMP}.dump"
