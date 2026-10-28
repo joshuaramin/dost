@@ -16,18 +16,18 @@ import "leaflet.heat";
 
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import { point } from "@turf/helpers";
+import { TbMinus, TbPlus } from "react-icons/tb";
 
 import styles from "@/styles/lib/ui/home/surveillance.module.scss";
 import useFormQuery from "@/lib/hooks/useQuery";
-import Title from "../title";
 import Text from "@/components/Typography/Text/text";
+import Title from "@/components/Typography/Title/title";
 import headers from "@/lib/utils/headers";
 
 import {
   TreatmentHubInterface,
   TreatmentHubResult,
 } from "@/lib/interface/treatment-hub/treatment-hub.interface";
-
 type Province = {
   code: string;
   name: string;
@@ -39,6 +39,19 @@ type Region = {
   region_name: string;
   bounds: unknown;
   provinces: Province[];
+};
+
+type TreatmentHubFilter = "all" | "active";
+
+type GeoJSONFeature = {
+  type: "Feature";
+  properties?: Record<string, any>;
+  geometry: any;
+};
+
+type FeatureCollection = {
+  type: "FeatureCollection";
+  features: GeoJSONFeature[];
 };
 
 type HeatmapFeature = {
@@ -56,17 +69,6 @@ type HeatmapFeature = {
     type: "Point";
     coordinates: [number, number];
   };
-};
-
-type GeoJSONFeature = {
-  type: "Feature";
-  properties?: Record<string, any>;
-  geometry: any;
-};
-
-type FeatureCollection = {
-  type: "FeatureCollection";
-  features: GeoJSONFeature[];
 };
 
 type MapControllerProps = {
@@ -99,6 +101,260 @@ const legends = [
 ];
 
 const canvasRenderer = L.canvas({ padding: 0.5 });
+
+function MyLocationControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    let locationLayer: L.LayerGroup | null = null;
+    let isRequestingLocation = false;
+
+    const control = new L.Control({ position: "topright" });
+
+    const showMessage = (message: string) => {
+      window.alert(message);
+    };
+
+    const locate = async () => {
+      if (!navigator.geolocation) {
+        showMessage("Your browser does not support location services.");
+        return;
+      }
+
+      if (!window.isSecureContext) {
+        showMessage(
+          "Location requires HTTPS or localhost. Open your application using http://localhost:3000.",
+        );
+        return;
+      }
+
+      if (isRequestingLocation) return;
+
+      isRequestingLocation = true;
+
+      try {
+        if (navigator.permissions?.query) {
+          const permission = await navigator.permissions.query({
+            name: "geolocation",
+          });
+
+          console.info("[MyLocation] Permission state:", permission.state);
+
+          if (permission.state === "denied") {
+            showMessage(
+              "Location access is blocked.\n\n" +
+                "1. Open chrome://settings/content/location\n" +
+                "2. Allow sites to ask for your location.\n" +
+                "3. Remove localhost from the blocked list, if present.\n" +
+                "4. Reload this page and try again.",
+            );
+
+            return;
+          }
+        }
+      } catch (error) {
+        console.warn("[MyLocation] Could not check permission:", error);
+      }
+
+      if (locationLayer) {
+        map.removeLayer(locationLayer);
+        locationLayer = null;
+      }
+
+      console.info("[MyLocation] Requesting device location...");
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          isRequestingLocation = false;
+
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const accuracy = position.coords.accuracy;
+
+          console.info("[MyLocation] Position received:", {
+            latitude,
+            longitude,
+            accuracy,
+          });
+
+          const latLng = L.latLng(latitude, longitude);
+
+          locationLayer = L.layerGroup().addTo(map);
+
+          const accuracyCircle = L.circle(latLng, {
+            radius: accuracy,
+            color: "#2563eb",
+            weight: 1.5,
+            fillColor: "#3b82f6",
+            fillOpacity: 0.12,
+            interactive: false,
+          });
+
+          const locationIcon = L.divIcon({
+            className: "",
+            html: `
+              <div style="
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: #2563eb;
+                border: 4px solid #ffffff;
+                box-shadow: 0 0 0 2px #2563eb, 0 2px 8px rgba(0,0,0,0.3);
+                box-sizing: border-box;
+              "></div>
+            `,
+            iconSize: [22, 22],
+            iconAnchor: [11, 11],
+          });
+
+          const locationMarker = L.marker(latLng, {
+            icon: locationIcon,
+            title: "Your current location",
+            keyboard: true,
+            riseOnHover: true,
+            zIndexOffset: 10000,
+          });
+
+          const popupContent = `
+            <div style="
+              min-width: 190px;
+              font-family: Arial, sans-serif;
+              font-size: 13px;
+              line-height: 1.7;
+            ">
+              <strong style="font-size: 14px;">
+                Your Current Location
+              </strong>
+              <div>
+                <strong>Latitude:</strong> ${latitude.toFixed(6)}
+              </div>
+              <div>
+                <strong>Longitude:</strong> ${longitude.toFixed(6)}
+              </div>
+              <div>
+                <strong>Accuracy:</strong> approximately ${Math.round(accuracy)} meters
+              </div>
+            </div>
+          `;
+
+          locationMarker.bindPopup(popupContent);
+
+          locationLayer.addLayer(accuracyCircle);
+          locationLayer.addLayer(locationMarker);
+
+          map.flyTo(latLng, Math.max(map.getZoom(), 16), {
+            animate: true,
+            duration: 1,
+          });
+
+          locationMarker.openPopup();
+        },
+        (error) => {
+          isRequestingLocation = false;
+
+          console.error("[MyLocation] Geolocation failed:", {
+            code: error.code,
+            message: error.message,
+          });
+
+          let message: string;
+
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              message =
+                "Location access was denied. Open Chrome site settings for localhost and set Location to Allow.";
+              break;
+
+            case error.POSITION_UNAVAILABLE:
+              message =
+                "Your device could not determine your location. Enable macOS Location Services and try again.";
+              break;
+
+            case error.TIMEOUT:
+              message =
+                "The location request timed out. Try again with Wi-Fi enabled and check macOS Location Services.";
+              break;
+
+            default:
+              message =
+                "An unknown location error occurred. Check the browser console for details.";
+          }
+
+          showMessage(message);
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 30000,
+          maximumAge: 0,
+        },
+      );
+    };
+
+    control.onAdd = () => {
+      const container = L.DomUtil.create("div", "leaflet-bar");
+
+      const button = L.DomUtil.create("button", "", container);
+
+      button.type = "button";
+      button.title = "Show my current location";
+      button.setAttribute("aria-label", "Show my current location");
+
+      button.innerHTML = `
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="3" />
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 2v2" />
+          <path d="M12 20v2" />
+          <path d="M2 12h2" />
+          <path d="M20 12h2" />
+        </svg>
+      `;
+
+      Object.assign(button.style, {
+        width: "40px",
+        height: "40px",
+        padding: "0",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#ffffff",
+        color: "#35408e",
+        border: "none",
+        cursor: "pointer",
+      });
+
+      L.DomEvent.disableClickPropagation(container);
+      L.DomEvent.disableScrollPropagation(container);
+      L.DomEvent.on(button, "click", locate);
+
+      return container;
+    };
+
+    control.addTo(map);
+
+    return () => {
+      control.remove();
+
+      if (locationLayer) {
+        map.removeLayer(locationLayer);
+        locationLayer = null;
+      }
+    };
+  }, [map]);
+
+  return null;
+}
 
 function escapeHTML(value: string): string {
   return value
@@ -180,18 +436,17 @@ function getBoundsFromGeoJSON(input: any): L.LatLngBounds | null {
   if (!input) return null;
 
   if (input.type === "FeatureCollection") {
-    const features = input.features ?? [];
-    const combinedBounds = L.latLngBounds([]);
+    const bounds = L.latLngBounds([]);
 
-    for (const feature of features) {
-      const bounds = getBoundsFromGeoJSON(feature);
+    for (const feature of input.features ?? []) {
+      const featureBounds = getBoundsFromGeoJSON(feature);
 
-      if (bounds?.isValid()) {
-        combinedBounds.extend(bounds);
+      if (featureBounds?.isValid()) {
+        bounds.extend(featureBounds);
       }
     }
 
-    return combinedBounds.isValid() ? combinedBounds : null;
+    return bounds.isValid() ? bounds : null;
   }
 
   if (input.type === "Feature") {
@@ -228,7 +483,6 @@ function getRiskColor(weight: number): string {
   if (weight > 100) return "#ef4444";
   if (weight > 75) return "#f97316";
   if (weight > 50) return "#facc15";
-  if (weight > 25) return "#22c55e";
   if (weight > 0) return "#22c55e";
 
   return "#94a3b8";
@@ -236,7 +490,6 @@ function getRiskColor(weight: number): string {
 
 function getProvinceStyle(feature?: any): L.PathOptions {
   const weight = Number(feature?.properties?.nlp_weight ?? 0);
-
   const color = getRiskColor(weight);
 
   return {
@@ -245,33 +498,32 @@ function getProvinceStyle(feature?: any): L.PathOptions {
     weight: 1.5,
     opacity: 0.9,
     fillColor: color,
-    fillOpacity: 0.025,
+    fillOpacity: 0.04,
   };
 }
 
 function getMunicipalityStyle(feature?: any): L.PathOptions {
   const weight = Number(feature?.properties?.nlp_weight ?? 0);
-
   const color = getRiskColor(weight);
 
   return {
     renderer: canvasRenderer,
     color,
-    weight: 0.7,
-    opacity: 0.7,
+    weight: 0.8,
+    opacity: 0.75,
     fillColor: color,
-    fillOpacity: 0.01,
+    fillOpacity: 0.025,
   };
 }
 
 function getRegionStyle(): L.PathOptions {
   return {
     renderer: canvasRenderer,
-    color: "#1e293b",
+    color: "#64748b",
     weight: 1,
     opacity: 0.7,
-    fillColor: "#3b82f6",
-    fillOpacity: 0.005,
+    fillColor: "#94a3b8",
+    fillOpacity: 0.01,
   };
 }
 
@@ -281,7 +533,15 @@ function MapController({ mapRef }: MapControllerProps) {
   useEffect(() => {
     mapRef.current = map;
 
+    const invalidate = () => {
+      map.invalidateSize({ pan: false });
+    };
+
+    const timeout = window.setTimeout(invalidate, 100);
+
     return () => {
+      window.clearTimeout(timeout);
+
       if (mapRef.current === map) {
         mapRef.current = null;
       }
@@ -300,7 +560,7 @@ function DynamicGeoJSON({
 }: DynamicGeoJSONProps) {
   const layerRef = useRef<L.GeoJSON | null>(null);
 
-  const handleRef = useCallback((layer: L.GeoJSON | null) => {
+  const setLayerRef = useCallback((layer: L.GeoJSON | null) => {
     layerRef.current = layer;
   }, []);
 
@@ -318,7 +578,7 @@ function DynamicGeoJSON({
 
   return (
     <GeoJSON
-      ref={handleRef}
+      ref={setLayerRef}
       data={
         {
           type: "FeatureCollection",
@@ -333,69 +593,67 @@ function DynamicGeoJSON({
   );
 }
 
-function TreatmentHubsLayer({ hubs }: { hubs: TreatmentHubInterface[] }) {
+function TreatmentHubsLayer({
+  hubs,
+  visible,
+}: {
+  hubs: TreatmentHubInterface[];
+  visible: boolean;
+}) {
   const map = useMap();
 
-  const validHubs = useMemo(() => {
-    return hubs.filter((hub) => {
+  useEffect(() => {
+    if (!visible) return;
+
+    const layerGroup = L.layerGroup();
+
+    const hubIcon = L.divIcon({
+      className: styles.treatment_hub_marker,
+      html: `
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="25"
+      height="25"
+      viewBox="0 0 24 24"
+      fill="#35408e"
+      stroke="#ffffff"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+      <circle cx="12" cy="10" r="2.5" fill="#ffffff" stroke="#ffffff" />
+    </svg>
+  `,
+      iconSize: [36, 36],
+      iconAnchor: [18, 35],
+      popupAnchor: [0, -35],
+    });
+
+    for (const hub of hubs) {
       if (
         hub.latitude == null ||
         hub.longitude == null ||
         String(hub.latitude).trim() === "" ||
         String(hub.longitude).trim() === ""
       ) {
-        return false;
+        continue;
       }
 
       const lat = Number(hub.latitude);
       const lng = Number(hub.longitude);
 
-      return (
-        Number.isFinite(lat) &&
-        Number.isFinite(lng) &&
-        lat >= -90 &&
-        lat <= 90 &&
-        lng >= -180 &&
-        lng <= 180
-      );
-    });
-  }, [hubs]);
-
-  useEffect(() => {
-    const layerGroup = L.layerGroup().addTo(map);
-
-    const treatmentHubIcon = L.divIcon({
-      className: styles.treatment_hub_marker,
-      html: `
-        <div style="
-          width: 34px;
-          height: 34px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #35408E;
-          border: 2px solid #ffffff;
-          border-radius: 50% 50% 50% 0;
-          transform: rotate(-45deg);
-          box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-        ">
-          <span style="
-            display: block;
-            transform: rotate(45deg);
-            font-size: 18px;
-            line-height: 1;
-            color: white;
-          ">✚</span>
-        </div>
-      `,
-      iconSize: [34, 34],
-      iconAnchor: [17, 34],
-      popupAnchor: [0, -32],
-    });
-
-    for (const hub of validHubs) {
-      const lat = Number(hub.latitude);
-      const lng = Number(hub.longitude);
+      if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lng) ||
+        lat < -90 ||
+        lat > 90 ||
+        lng < -180 ||
+        lng > 180
+      ) {
+        continue;
+      }
 
       const serviceNames =
         hub.services
@@ -403,134 +661,102 @@ function TreatmentHubsLayer({ hubs }: { hubs: TreatmentHubInterface[] }) {
           .filter((name): name is string => Boolean(name)) ?? [];
 
       const servicesHTML = serviceNames.length
-        ? serviceNames
-            .map(
-              (serviceName) =>
-                `<li style="margin-bottom:3px;">${escapeHTML(serviceName)}</li>`,
-            )
-            .join("")
+        ? serviceNames.map((name) => `<li>${escapeHTML(name)}</li>`).join("")
         : "<li>Not specified</li>";
 
       const name = escapeHTML(hub.name || "Unnamed Treatment Hub");
-
       const address = escapeHTML(hub.address || "Not available");
-
-      const province = escapeHTML(hub.provinces?.name_1 || "Not available");
-
       const municipality = escapeHTML(
         hub.municipalities?.name_2 || "Not available",
       );
-
+      const province = escapeHTML(hub.provinces?.name_1 || "Not available");
       const region = escapeHTML(hub.regions?.name || "Not available");
-
       const status = escapeHTML(hub.status || "Unknown");
-
-      const email = escapeHTML(hub.email || "Not available");
-
       const contact = escapeHTML(hub.contact_number || "Not available");
-
+      const email = escapeHTML(hub.email || "Not available");
+      const hours = escapeHTML(hub.operating_hours || "Not specified");
       const website = getSafeWebsiteUrl(hub.website);
-
-      const operatingHours = escapeHTML(hub.operating_hours || "Not specified");
-
       const isActive = status.toUpperCase() === "ACTIVE";
 
-      const popupContent = `
-        <div style="
-          min-width: 240px;
-          max-width: 320px;
-          font-family: Arial, sans-serif;
-          font-size: 13px;
-          line-height: 1.5;
-        ">
-          <div style="
-            font-size: 15px;
-            font-weight: 700;
-            color: #35408E;
-            margin-bottom: 8px;
-          ">
-            ${name}
-          </div>
+      const emailHTML = hub.email
+        ? `<a href="mailto:${encodeURIComponent(hub.email)}">${email}</a>`
+        : email;
 
-          <div style="margin-bottom: 6px;">
+      const websiteHTML = website
+        ? `
+          <div class="treatment-popup-row">
+            <strong>Website:</strong>
+            <a
+              href="${website}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Visit website
+            </a>
+          </div>
+        `
+        : "";
+
+      const popupContent = `
+        <div class="treatment-popup">
+          <div class="treatment-popup-title">${name}</div>
+
+          <div class="treatment-popup-row">
             <strong>Status:</strong>
-            <span style="
-              color: ${isActive ? "#16a34a" : "#64748b"};
-              font-weight: 600;
-            ">
+            <span class="${
+              isActive ? "treatment-status-active" : "treatment-status-inactive"
+            }">
               ${status}
             </span>
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Address:</strong><br />
             ${address}
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Municipality:</strong> ${municipality}
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Province:</strong> ${province}
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Region:</strong> ${region}
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Services:</strong>
-            <ul style="margin: 3px 0 0; padding-left: 20px;">
+            <ul class="treatment-popup-services">
               ${servicesHTML}
             </ul>
           </div>
 
-          <div style="margin-bottom: 6px;">
+          <div class="treatment-popup-row">
             <strong>Contact:</strong> ${contact}
           </div>
 
-          <div style="margin-bottom: 6px;">
-            <strong>Email:</strong>
-            ${
-              hub.email
-                ? `<a href="mailto:${encodeURIComponent(hub.email)}">${email}</a>`
-                : email
-            }
+          <div class="treatment-popup-row">
+            <strong>Email:</strong> ${emailHTML}
           </div>
 
-          <div style="margin-bottom: 6px;">
-            <strong>Operating Hours:</strong> ${operatingHours}
+          <div class="treatment-popup-row">
+            <strong>Operating hours:</strong> ${hours}
           </div>
 
-          ${
-            website
-              ? `<div style="margin-bottom: 6px;">
-                  <strong>Website:</strong>
-                  <a
-                    href="${website}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >Visit website</a>
-                </div>`
-              : ""
-          }
+          ${websiteHTML}
 
-          <div style="
-            border-top: 1px solid #e2e8f0;
-            padding-top: 6px;
-            margin-top: 8px;
-            color: #64748b;
-            font-size: 11px;
-          ">
+          <div class="treatment-popup-coordinates">
             Coordinates: ${lat.toFixed(5)}, ${lng.toFixed(5)}
           </div>
         </div>
       `;
 
       const marker = L.marker([lat, lng], {
-        icon: treatmentHubIcon,
-        title: hub.name,
+        icon: hubIcon,
+        title: hub.name || "Treatment Hub",
         keyboard: true,
         riseOnHover: true,
       });
@@ -538,23 +764,24 @@ function TreatmentHubsLayer({ hubs }: { hubs: TreatmentHubInterface[] }) {
       marker.bindPopup(popupContent, {
         maxWidth: 340,
         minWidth: 250,
-        closeButton: true,
         autoPan: true,
       });
 
       marker.bindTooltip(name, {
         direction: "top",
-        offset: [0, -30],
+        offset: [0, -36],
       });
 
-      marker.addTo(layerGroup);
+      layerGroup.addLayer(marker);
     }
+
+    layerGroup.addTo(map);
 
     return () => {
       layerGroup.clearLayers();
       map.removeLayer(layerGroup);
     };
-  }, [map, validHubs]);
+  }, [map, hubs, visible]);
 
   return null;
 }
@@ -636,6 +863,7 @@ function NLPPointsLayer({ features }: { features: HeatmapFeature[] }) {
 
   useEffect(() => {
     const layerGroup = L.layerGroup().addTo(map);
+    const container = map.getContainer();
 
     for (const feature of features) {
       const coordinates = feature.geometry?.coordinates;
@@ -659,75 +887,64 @@ function NLPPointsLayer({ features }: { features: HeatmapFeature[] }) {
       }
 
       const properties = feature.properties ?? {};
-
       const platform = String(properties.platform ?? "Unknown");
-
       const keyword = String(properties.keyword ?? "Unknown");
-
       const sentiment = Number(properties.sentiment ?? 0);
-
       const engagement = Number(properties.engagement ?? 0);
-
       const weight = Number(properties.weight ?? 0);
 
-      const createdAt = properties.created_at
-        ? new Date(String(properties.created_at)).toLocaleString()
-        : "Unknown";
+      const timestamp = properties.created_at
+        ? new Date(properties.created_at)
+        : null;
 
-      const safeDate =
-        createdAt !== "Unknown" &&
-        !Number.isNaN(new Date(String(properties.created_at)).getTime())
-          ? escapeHTML(createdAt)
+      const date =
+        timestamp && !Number.isNaN(timestamp.getTime())
+          ? escapeHTML(timestamp.toLocaleString())
           : "Unknown";
 
       const marker = L.circleMarker([lat, lng], {
         renderer: canvasRenderer,
         radius: 6,
         stroke: false,
-        fillColor: "#000000",
+        fillColor: "#000",
         fillOpacity: 0,
         interactive: true,
       });
 
       marker.bindPopup(
         `
-          <div style="min-width:220px;">
-            <div style="
-              font-weight:700;
-              font-size:14px;
-              margin-bottom:10px;
-            ">
-              NLP Surveillance
+          <div class="nlp-popup">
+            <strong>NLP Surveillance</strong>
+
+            <div>
+              <b>Platform:</b> ${escapeHTML(platform)}
             </div>
 
-            <div style="margin-bottom:5px;">
-              <strong>Platform:</strong>
-              ${escapeHTML(platform)}
+            <div>
+              <b>Keyword:</b> ${escapeHTML(keyword)}
             </div>
 
-            <div style="margin-bottom:5px;">
-              <strong>Keyword:</strong>
-              ${escapeHTML(keyword)}
-            </div>
-
-            <div style="margin-bottom:5px;">
-              <strong>Sentiment:</strong>
+            <div>
+              <b>Sentiment:</b>
               ${Number.isFinite(sentiment) ? sentiment.toFixed(2) : "N/A"}
             </div>
 
-            <div style="margin-bottom:5px;">
-              <strong>Engagement:</strong>
-              ${Number.isFinite(engagement) ? engagement.toLocaleString() : "N/A"}
+            <div>
+              <b>Engagement:</b>
+              ${
+                Number.isFinite(engagement)
+                  ? engagement.toLocaleString()
+                  : "N/A"
+              }
             </div>
 
-            <div style="margin-bottom:5px;">
-              <strong>Risk Weight:</strong>
+            <div>
+              <b>Risk Weight:</b>
               ${Number.isFinite(weight) ? weight : "N/A"}
             </div>
 
             <div>
-              <strong>Date:</strong>
-              ${safeDate}
+              <b>Date:</b> ${date}
             </div>
           </div>
         `,
@@ -738,23 +955,24 @@ function NLPPointsLayer({ features }: { features: HeatmapFeature[] }) {
         },
       );
 
-      marker.on("mouseover", () => {
-        map.getContainer().style.cursor = "pointer";
+      const openPopup = (event: L.LeafletMouseEvent) => {
+        container.style.cursor = "pointer";
         marker.openPopup();
-      });
+        marker.getPopup()?.setLatLng(event.latlng);
+      };
 
-      marker.on("mousemove", (event: L.LeafletMouseEvent) => {
-        const popup = marker.getPopup();
+      const movePopup = (event: L.LeafletMouseEvent) => {
+        marker.getPopup()?.setLatLng(event.latlng);
+      };
 
-        if (popup) {
-          popup.setLatLng(event.latlng);
-        }
-      });
-
-      marker.on("mouseout", () => {
-        map.getContainer().style.cursor = "";
+      const closePopup = () => {
+        container.style.cursor = "";
         marker.closePopup();
-      });
+      };
+
+      marker.on("mouseover", openPopup);
+      marker.on("mousemove", movePopup);
+      marker.on("mouseout", closePopup);
 
       layerGroup.addLayer(marker);
     }
@@ -762,7 +980,7 @@ function NLPPointsLayer({ features }: { features: HeatmapFeature[] }) {
     return () => {
       layerGroup.clearLayers();
       map.removeLayer(layerGroup);
-      map.getContainer().style.cursor = "";
+      container.style.cursor = "";
     };
   }, [map, features]);
 
@@ -791,22 +1009,21 @@ function MunicipalityLabels({ features }: { features: GeoJSONFeature[] }) {
 
         if (!mapBounds.contains(latLng)) continue;
 
-        const properties = feature.properties ?? {};
-        const name = getFeatureName(properties);
+        const name = getFeatureName(feature.properties ?? {});
 
         if (!name) continue;
 
-        const marker = L.marker(latLng, {
-          interactive: false,
-          icon: L.divIcon({
-            className: styles.municipality_label,
-            html: `<span>${escapeHTML(name)}</span>`,
-            iconSize: [0, 0],
-            iconAnchor: [0, 0],
+        layerGroup.addLayer(
+          L.marker(latLng, {
+            interactive: false,
+            icon: L.divIcon({
+              className: styles.municipality_label,
+              html: `<span>${escapeHTML(name)}</span>`,
+              iconSize: [0, 0],
+              iconAnchor: [0, 0],
+            }),
           }),
-        });
-
-        layerGroup.addLayer(marker);
+        );
       }
     };
 
@@ -830,7 +1047,7 @@ function createPolygonEntries(polygons: GeoJSONFeature[]): PolygonEntry[] {
   const entries: PolygonEntry[] = [];
 
   for (const feature of polygons) {
-    const code = feature?.properties?.code;
+    const code = feature.properties?.code;
 
     if (code == null || code === "") continue;
 
@@ -861,18 +1078,18 @@ function aggregateNLPWeights(
   features: HeatmapFeature[],
 ): Map<string, number> {
   const weights = new Map<string, number>();
-  const polygonEntries = createPolygonEntries(polygons);
+  const entries = createPolygonEntries(polygons);
 
-  for (const polygon of polygonEntries) {
+  for (const polygon of entries) {
     weights.set(polygon.code, 0);
   }
 
-  if (polygonEntries.length === 0 || features.length === 0) {
+  if (!entries.length || !features.length) {
     return weights;
   }
 
-  for (const nlpFeature of features) {
-    const coordinates = nlpFeature.geometry?.coordinates;
+  for (const feature of features) {
+    const coordinates = feature.geometry?.coordinates;
 
     if (!Array.isArray(coordinates) || coordinates.length !== 2) {
       continue;
@@ -880,8 +1097,7 @@ function aggregateNLPWeights(
 
     const lng = Number(coordinates[0]);
     const lat = Number(coordinates[1]);
-
-    const weight = Number(nlpFeature.properties?.weight ?? 0);
+    const weight = Number(feature.properties?.weight ?? 0);
 
     if (
       !Number.isFinite(lng) ||
@@ -893,7 +1109,7 @@ function aggregateNLPWeights(
 
     const nlpPoint = point([lng, lat]);
 
-    for (const polygon of polygonEntries) {
+    for (const polygon of entries) {
       const { minLng, maxLng, minLat, maxLat } = polygon.bbox;
 
       if (lng < minLng || lng > maxLng || lat < minLat || lat > maxLat) {
@@ -907,7 +1123,7 @@ function aggregateNLPWeights(
           break;
         }
       } catch {
-        continue;
+        // Ignore malformed polygon features.
       }
     }
   }
@@ -922,7 +1138,7 @@ function addNLPWeightsToPolygons(
   const weights = aggregateNLPWeights(polygons, features);
 
   return polygons.map((feature) => {
-    const code = feature?.properties?.code;
+    const code = feature.properties?.code;
 
     return {
       ...feature,
@@ -936,6 +1152,15 @@ function addNLPWeightsToPolygons(
 
 export default function SurveillanceMap() {
   const mapRef = useRef<L.Map | null>(null);
+
+  const [isHierarchyExpanded, setIsHierarchyExpanded] = useState(true);
+
+  const [showTreatmentHubs, setShowTreatmentHubs] = useState(true);
+
+  const [treatmentHubFilter, setTreatmentHubFilter] =
+    useState<TreatmentHubFilter>("all");
+
+  const [isHubControlsExpanded, setIsHubControlsExpanded] = useState(true);
 
   const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
 
@@ -963,7 +1188,7 @@ export default function SurveillanceMap() {
     key: ["TreatmentHub"],
     url: "maintenance/treatment-hub",
     headers,
-    params: { limit: 500 },
+    params: { limit: 1000 },
   });
 
   const regions = GeomData?.data?.regions;
@@ -977,35 +1202,45 @@ export default function SurveillanceMap() {
 
     return edges
       .map((edge) => edge?.node)
-      .filter((hub) => Boolean(hub?.treatment_hub_id && hub?.name));
+      .filter((hub): hub is TreatmentHubInterface =>
+        Boolean(hub?.treatment_hub_id && hub?.name),
+      );
   }, [TreatmentHubData]);
 
-  const validTreatmentHubCount = useMemo(
-    () =>
-      treatmentHubs.filter((hub) => {
-        if (
-          hub.latitude == null ||
-          hub.longitude == null ||
-          String(hub.latitude).trim() === "" ||
-          String(hub.longitude).trim() === ""
-        ) {
-          return false;
-        }
+  const validTreatmentHubs = useMemo(() => {
+    return treatmentHubs.filter((hub) => {
+      if (
+        hub.latitude == null ||
+        hub.longitude == null ||
+        String(hub.latitude).trim() === "" ||
+        String(hub.longitude).trim() === ""
+      ) {
+        return false;
+      }
 
-        const lat = Number(hub.latitude);
-        const lng = Number(hub.longitude);
+      const lat = Number(hub.latitude);
+      const lng = Number(hub.longitude);
 
-        return (
-          Number.isFinite(lat) &&
-          Number.isFinite(lng) &&
-          lat >= -90 &&
-          lat <= 90 &&
-          lng >= -180 &&
-          lng <= 180
-        );
-      }).length,
-    [treatmentHubs],
-  );
+      return (
+        Number.isFinite(lat) &&
+        Number.isFinite(lng) &&
+        lat >= -90 &&
+        lat <= 90 &&
+        lng >= -180 &&
+        lng <= 180
+      );
+    });
+  }, [treatmentHubs]);
+
+  const filteredTreatmentHubs = useMemo(() => {
+    if (treatmentHubFilter === "active") {
+      return validTreatmentHubs.filter(
+        (hub) => String(hub.status ?? "").toUpperCase() === "ACTIVE",
+      );
+    }
+
+    return validTreatmentHubs;
+  }, [validTreatmentHubs, treatmentHubFilter]);
 
   const nlpFeatures = useMemo<HeatmapFeature[]>(() => {
     const features = NLPData?.data?.features;
@@ -1038,17 +1273,11 @@ export default function SurveillanceMap() {
   }, [NLPData]);
 
   const provinceFeatures = useMemo<GeoJSONFeature[]>(() => {
-    if (!Array.isArray(provinces?.features)) {
-      return [];
-    }
-
-    return provinces.features;
+    return Array.isArray(provinces?.features) ? provinces.features : [];
   }, [provinces]);
 
   const filteredMunicipalities = useMemo<GeoJSONFeature[]>(() => {
-    if (!Array.isArray(municipalities?.features)) {
-      return [];
-    }
+    if (!Array.isArray(municipalities?.features)) return [];
 
     if (!selectedProvince) {
       return municipalities.features;
@@ -1088,7 +1317,6 @@ export default function SurveillanceMap() {
     return filteredMunicipalities
       .map((feature: any) => {
         const properties = feature.properties ?? {};
-
         const name = getFeatureName(properties);
 
         if (!name || !getCenterFromGeometry(feature.geometry)) {
@@ -1107,9 +1335,7 @@ export default function SurveillanceMap() {
   }, [filteredMunicipalities]);
 
   const regionGeoJSON = useMemo<FeatureCollection | null>(() => {
-    if (!Array.isArray(regions?.features)) {
-      return null;
-    }
+    if (!Array.isArray(regions?.features)) return null;
 
     return {
       type: "FeatureCollection",
@@ -1127,9 +1353,7 @@ export default function SurveillanceMap() {
   }, [coloredProvinces]);
 
   const municipalityGeoJSON = useMemo<FeatureCollection | null>(() => {
-    if (!coloredMunicipalities.length) {
-      return null;
-    }
+    if (!coloredMunicipalities.length) return null;
 
     return {
       type: "FeatureCollection",
@@ -1142,15 +1366,10 @@ export default function SurveillanceMap() {
 
     const features = coloredProvinces.filter(
       (feature) =>
-        String(feature?.properties?.code) === String(selectedProvince),
+        String(feature.properties?.code) === String(selectedProvince),
     );
 
-    if (!features.length) return null;
-
-    return {
-      type: "FeatureCollection",
-      features,
-    };
+    return features.length ? { type: "FeatureCollection", features } : null;
   }, [coloredProvinces, selectedProvince]);
 
   const selectedMunicipalityGeoJSON = useMemo<FeatureCollection | null>(() => {
@@ -1158,22 +1377,17 @@ export default function SurveillanceMap() {
 
     const features = coloredMunicipalities.filter(
       (feature) =>
-        String(feature?.properties?.code) === String(selectedMunicipality),
+        String(feature.properties?.code) === String(selectedMunicipality),
     );
 
-    if (!features.length) return null;
-
-    return {
-      type: "FeatureCollection",
-      features,
-    };
+    return features.length ? { type: "FeatureCollection", features } : null;
   }, [coloredMunicipalities, selectedMunicipality]);
 
   const zoomToBounds = useCallback(
     (
       inputBounds: any,
       code?: string,
-      type: "province" | "municipality" = "province",
+      type: "region" | "province" | "municipality" = "province",
     ) => {
       const map = mapRef.current;
 
@@ -1183,9 +1397,13 @@ export default function SurveillanceMap() {
 
       if (!bounds?.isValid()) return;
 
+      if (type === "region") {
+        setSelectedProvince(null);
+        setSelectedMunicipality(null);
+      }
+
       if (type === "province") {
         setSelectedProvince(code != null ? String(code) : null);
-
         setSelectedMunicipality(null);
       }
 
@@ -1204,18 +1422,13 @@ export default function SurveillanceMap() {
 
   const provinceOnEachFeature = useCallback((feature: any, layer: L.Layer) => {
     const name = getFeatureName(feature?.properties);
-
     const weight = Number(feature?.properties?.nlp_weight ?? 0);
 
     layer.bindTooltip(
-      `<div>
-          <strong>${escapeHTML(name)}</strong><br />
-          NLP Risk Weight: ${weight.toFixed(2)}
-        </div>`,
-      {
-        sticky: true,
-        direction: "top",
-      },
+      `<strong>${escapeHTML(name)}</strong><br />NLP Risk Weight: ${
+        Number.isFinite(weight) ? weight.toFixed(2) : "0.00"
+      }`,
+      { sticky: true, direction: "top" },
     );
 
     layer.on({
@@ -1224,25 +1437,19 @@ export default function SurveillanceMap() {
 
         target.setStyle({
           weight: 3,
-          color: "#35408E",
-          fillOpacity: 0.08,
+          color: "#35408e",
+          fillOpacity: 0.1,
         });
 
         target.bringToFront();
       },
 
       mouseout: (event) => {
-        const target = event.target as L.Path;
-
-        target.setStyle(getProvinceStyle(feature));
+        (event.target as L.Path).setStyle(getProvinceStyle(feature));
       },
 
       click: (event) => {
         const target = event.target as L.Polygon;
-        const map = mapRef.current;
-
-        if (!map) return;
-
         const code = feature?.properties?.code;
 
         if (code != null) {
@@ -1253,7 +1460,7 @@ export default function SurveillanceMap() {
         const bounds = target.getBounds();
 
         if (bounds.isValid()) {
-          map.fitBounds(bounds, {
+          mapRef.current?.fitBounds(bounds, {
             padding: [40, 40],
             duration: 0.8,
             maxZoom: 10,
@@ -1266,18 +1473,13 @@ export default function SurveillanceMap() {
   const municipalityOnEachFeature = useCallback(
     (feature: any, layer: L.Layer) => {
       const name = getFeatureName(feature?.properties);
-
       const weight = Number(feature?.properties?.nlp_weight ?? 0);
 
       layer.bindTooltip(
-        `<div>
-          <strong>${escapeHTML(name)}</strong><br />
-          NLP Risk Weight: ${weight.toFixed(2)}
-        </div>`,
-        {
-          sticky: true,
-          direction: "top",
-        },
+        `<strong>${escapeHTML(name)}</strong><br />NLP Risk Weight: ${
+          Number.isFinite(weight) ? weight.toFixed(2) : "0.00"
+        }`,
+        { sticky: true, direction: "top" },
       );
 
       layer.on({
@@ -1286,25 +1488,19 @@ export default function SurveillanceMap() {
 
           target.setStyle({
             weight: 2,
-            color: "#35408E",
-            fillOpacity: 0.08,
+            color: "#35408e",
+            fillOpacity: 0.1,
           });
 
           target.bringToFront();
         },
 
         mouseout: (event) => {
-          const target = event.target as L.Path;
-
-          target.setStyle(getMunicipalityStyle(feature));
+          (event.target as L.Path).setStyle(getMunicipalityStyle(feature));
         },
 
         click: (event) => {
           const target = event.target as L.Polygon;
-          const map = mapRef.current;
-
-          if (!map) return;
-
           const code = feature?.properties?.code;
 
           if (code != null) {
@@ -1314,7 +1510,7 @@ export default function SurveillanceMap() {
           const bounds = target.getBounds();
 
           if (bounds.isValid()) {
-            map.fitBounds(bounds, {
+            mapRef.current?.fitBounds(bounds, {
               padding: [30, 30],
               duration: 0.6,
               maxZoom: 12,
@@ -1328,63 +1524,151 @@ export default function SurveillanceMap() {
 
   return (
     <div className={styles.container}>
-      {/* ADMINISTRATIVE HIERARCHY */}
+      <aside
+        className={`${styles.col1} ${
+          isHierarchyExpanded ? styles.col1_expanded : ""
+        }`}
+      >
+        <div className={styles.header_column}>
+          <Title size="sm">Administrative Region</Title>
 
-      <div className={styles.col1}>
-        <Title title="Administrative Hierarchy" />
+          <button
+            type="button"
+            onClick={() => setIsHierarchyExpanded((previous) => !previous)}
+            aria-label={
+              isHierarchyExpanded
+                ? "Collapse administrative hierarchy"
+                : "Expand administrative hierarchy"
+            }
+            aria-expanded={isHierarchyExpanded}
+          >
+            {isHierarchyExpanded ? <TbMinus size={22} /> : <TbPlus size={22} />}
+          </button>
+        </div>
 
-        <div className={styles.regions}>
-          {RegionLoading
-            ? null
-            : RegionData?.data?.data?.map((region: Region) => (
+        {isHierarchyExpanded && (
+          <div className={styles.regions}>
+            {RegionLoading ? (
+              <p className={styles.loading_text}>Loading regions...</p>
+            ) : Array.isArray(RegionData?.data?.data) ? (
+              RegionData.data.data.map((region: Region) => (
                 <div key={region.region_code}>
-                  <div
-                    style={{
-                      fontWeight: 700,
-                      padding: 8,
-                      cursor: "pointer",
-                      backgroundColor: "#35408E",
-                      color: "white",
-                    }}
-                    onClick={() => {
-                      setSelectedProvince(null);
-                      setSelectedMunicipality(null);
-
-                      zoomToBounds(region.bounds);
-                    }}
+                  <button
+                    type="button"
+                    className={styles.region_item}
+                    onClick={() =>
+                      zoomToBounds(region.bounds, undefined, "region")
+                    }
                   >
                     {region.region_name}
-                  </div>
+                  </button>
 
-                  {region.provinces?.map((province: Province) => (
-                    <div
+                  {region.provinces?.map((province) => (
+                    <button
+                      type="button"
                       key={province.code}
-                      style={{
-                        padding: 10,
-                        paddingLeft: 25,
-                        cursor: "pointer",
-                        borderRadius: 5,
-                        color:
-                          selectedProvince === province.code
-                            ? "black"
-                            : "#35408E",
-                        background:
-                          selectedProvince === province.code
-                            ? "rgb(192, 192, 199)"
-                            : "transparent",
-                        opacity: 0.9,
-                      }}
+                      className={`${styles.province_item} ${
+                        selectedProvince === province.code
+                          ? styles.province_item_selected
+                          : ""
+                      }`}
                       onClick={() =>
                         zoomToBounds(province.bounds, province.code, "province")
                       }
                     >
                       {province.name}
-                    </div>
+                    </button>
                   ))}
                 </div>
-              ))}
+              ))
+            ) : (
+              <p className={styles.loading_text}>
+                No administrative data available.
+              </p>
+            )}
+          </div>
+        )}
+      </aside>
+      <aside className={styles.treatment_hub_column}>
+        <div className={styles.map_controls}>
+          <div className={styles.map_controls_header}>
+            <div>
+              <strong>Treatment Hubs</strong>
+
+              <div className={styles.map_controls_subtitle}>
+                {showTreatmentHubs
+                  ? `${filteredTreatmentHubs.length} of ${validTreatmentHubs.length} mapped`
+                  : "Markers hidden"}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className={styles.map_controls_collapse}
+              onClick={() => setIsHubControlsExpanded((previous) => !previous)}
+              aria-label={
+                isHubControlsExpanded
+                  ? "Collapse treatment hub controls"
+                  : "Expand treatment hub controls"
+              }
+              aria-expanded={isHubControlsExpanded}
+            >
+              {isHubControlsExpanded ? (
+                <TbMinus size={20} />
+              ) : (
+                <TbPlus size={20} />
+              )}
+            </button>
+          </div>
+
+          {isHubControlsExpanded && (
+            <div className={styles.map_controls_body}>
+              <label className={styles.map_toggle}>
+                <input
+                  type="checkbox"
+                  checked={showTreatmentHubs}
+                  onChange={(event) =>
+                    setShowTreatmentHubs(event.target.checked)
+                  }
+                />
+
+                <span>Show treatment hubs</span>
+              </label>
+
+              {/* <select
+                id="treatment-hub-filter"
+                className={styles.map_filter_select}
+                value={treatmentHubFilter}
+                onChange={(event) =>
+                  setTreatmentHubFilter(
+                    event.target.value as TreatmentHubFilter,
+                  )
+                }
+                disabled={!showTreatmentHubs}
+              >
+                <option value="all">All hubs</option>
+                <option value="active">Active hubs only</option>
+              </select> */}
+
+              <div className={styles.map_controls_footer}>
+                <span
+                  className={`${styles.hub_status_dot} ${
+                    showTreatmentHubs ? styles.hub_status_enabled : ""
+                  }`}
+                />
+
+                <span>
+                  {!showTreatmentHubs
+                    ? "Treatment Hub layer is off"
+                    : treatmentHubFilter === "active"
+                      ? "Showing active locations"
+                      : "Showing all locations"}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      </aside>
 
       <div className={styles.col2}>
         <MapContainer
@@ -1395,16 +1679,13 @@ export default function SurveillanceMap() {
           scrollWheelZoom
           zoomControl
           preferCanvas
-          maxBounds={[
-            [4.0, 116.0],
-            [21.5, 127.0],
-          ]}
-          maxBoundsViscosity={1.0}
+          maxBoundsViscosity={1}
           style={{
             width: "100%",
             height: "100%",
           }}
         >
+          <MyLocationControl />
           <MapController mapRef={mapRef} />
 
           <TileLayer
@@ -1415,13 +1696,9 @@ export default function SurveillanceMap() {
             keepBuffer={2}
           />
 
-          {/* REGIONS */}
-
           {regionGeoJSON && (
             <DynamicGeoJSON data={regionGeoJSON} style={getRegionStyle} />
           )}
-
-          {/* PROVINCES */}
 
           {provinceGeoJSON && (
             <DynamicGeoJSON
@@ -1431,8 +1708,6 @@ export default function SurveillanceMap() {
             />
           )}
 
-          {/* MUNICIPALITIES */}
-
           {municipalityGeoJSON && (
             <DynamicGeoJSON
               data={municipalityGeoJSON}
@@ -1441,51 +1716,42 @@ export default function SurveillanceMap() {
             />
           )}
 
-          {/* MUNICIPALITY LABELS */}
-
           <MunicipalityLabels features={municipalityLabelFeatures} />
-
-          {/* NLP HEATMAP */}
 
           <HeatmapLayer features={nlpFeatures} />
 
-          {/* NLP POINTS */}
-
           <NLPPointsLayer features={nlpFeatures} />
 
-          {/* TREATMENT HUBS */}
-
-          <TreatmentHubsLayer hubs={treatmentHubs} />
-
-          {/* SELECTED PROVINCE */}
+          <TreatmentHubsLayer
+            hubs={filteredTreatmentHubs}
+            visible={showTreatmentHubs}
+          />
 
           {selectedProvinceGeoJSON && (
             <GeoJSON
               data={selectedProvinceGeoJSON as any}
               style={{
                 renderer: canvasRenderer,
-                color: "#35408E",
+                color: "#35408e",
                 weight: 3,
                 opacity: 1,
-                fillColor: "#35408E",
-                fillOpacity: 0.05,
+                fillColor: "#35408e",
+                fillOpacity: 0.07,
                 interactive: false,
               }}
             />
           )}
-
-          {/* SELECTED MUNICIPALITY */}
 
           {selectedMunicipalityGeoJSON && (
             <GeoJSON
               data={selectedMunicipalityGeoJSON as any}
               style={{
                 renderer: canvasRenderer,
-                color: "#35408E",
+                color: "#35408e",
                 weight: 3,
                 opacity: 1,
-                fillColor: "#35408E",
-                fillOpacity: 0.05,
+                fillColor: "#35408e",
+                fillOpacity: 0.07,
                 interactive: false,
               }}
             />
@@ -1493,53 +1759,25 @@ export default function SurveillanceMap() {
         </MapContainer>
       </div>
 
-      {/* RISK LEGEND */}
-
       <div className={styles.legends}>
         {legends.map((legend) => (
           <div className={styles.legends_card} key={legend.label}>
-            <div className={`${styles.indicator} ${styles[legend.color]}`} />
+            <span className={`${styles.indicator} ${styles[legend.color]}`} />
 
-            <Text style={{ color: "#35408E" }} size="sm">
+            <Text style={{ color: "#35408e" }} size="sm">
               {legend.label}
             </Text>
           </div>
         ))}
       </div>
 
-      {/* TREATMENT HUB COUNT */}
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "8px 12px",
-          color: "#35408E",
-          fontSize: 13,
-        }}
-      >
-        <span
-          style={{
-            width: 16,
-            height: 16,
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "#35408E",
-            color: "#ffffff",
-            borderRadius: "50%",
-            fontSize: 11,
-            fontWeight: 700,
-          }}
-        >
-          +
-        </span>
+      <div className={styles.treatment_hub_count}>
+        <span className={styles.treatment_hub_count_icon}>✚</span>
 
         <span>
-          Treatment Hubs: {validTreatmentHubCount} mapped
-          {" / "}
-          {treatmentHubs.length} fetched
+          Treatment Hubs: {showTreatmentHubs ? filteredTreatmentHubs.length : 0}{" "}
+          visible / {validTreatmentHubs.length} mapped / {treatmentHubs.length}{" "}
+          fetched
         </span>
       </div>
     </div>

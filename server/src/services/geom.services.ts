@@ -2,51 +2,74 @@ import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
 import { geodb } from "@/lib/prisma/geospatial/prisma";
 import { formatMultiAdminToGeoJSON } from "@/lib/common/formatRegionToGeoJSON";
 import { regions } from "@/lib/prisma/geospatial/generated/prisma/client";
+import { redis } from "@/lib/redis/test-redis";
+
+const GEO_TTL_SECONDS = 60 * 60 * 24; // 24 hours
 
 export const GetAllAdminGeo = async () => {
+  const cacheKey = "advocaid:geo:admin:v1";
+
+  const cached = await redis.get(cacheKey);
+
+  if (cached) {
+    return JSON.parse(cached);
+  }
+
   const rows = await geodb.$queryRawUnsafe<any[]>(`
-    SELECT 
-  'region' AS level,
-  r.psgc_code AS code,
-  r.name,
-  NULL::text AS province_code,
-  ST_AsGeoJSON(r.geom)::json AS geom
-FROM geo.regions r
+    SELECT
+      'region' AS level,
+      r.psgc_code AS code,
+      r.name,
+      NULL::text AS province_code,
+      ST_AsGeoJSON(
+        ST_SnapToGrid(
+          ST_SimplifyPreserveTopology(r.geom, 0.002),
+          0.001
+        ),
+        6
+      )::json AS geom
+    FROM geo.regions r
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-  'province' AS level,
-  p.gid_1 AS code,
-  p.name_1 AS name,
-  NULL::text AS province_code,
-  ST_AsGeoJSON(p.geom)::json AS geom
-FROM geo.provinces p
+    SELECT
+      'province' AS level,
+      p.gid_1 AS code,
+      p.name_1 AS name,
+      NULL::text AS province_code,
+      ST_AsGeoJSON(
+        ST_SnapToGrid(
+          ST_SimplifyPreserveTopology(p.geom, 0.002),
+          0.001
+        ),
+        6
+      )::json AS geom
+    FROM geo.provinces p
 
-UNION ALL
+    UNION ALL
 
-SELECT 
-  'municipality' AS level,
-m.gid_2 AS code,
-  m.name_2 AS name,
-  p.gid_1 AS province_code,
-  ST_AsGeoJSON(m.geom)::json AS geom
-FROM geo.municipalities m
-LEFT JOIN geo.provinces p
-  ON ST_Within(m.geom, p.geom)
-
-UNION ALL
-
-SELECT 
-  'barangays' AS level,
-  b.gid_3 AS code,
-  b.name_3 AS name,
-  NULL::text AS province_code,
-  ST_AsGeoJSON(b.geom)::json AS geom
-FROM geo.barangays b;
+    SELECT
+      'municipality' AS level,
+      m.gid_2 AS code,
+      m.name_2 AS name,
+      p.gid_1 AS province_code,
+      ST_AsGeoJSON(
+        ST_SnapToGrid(
+          ST_SimplifyPreserveTopology(m.geom, 0.002),
+          0.001
+        ),
+        6
+      )::json AS geom
+    FROM geo.municipalities m
+    LEFT JOIN geo.provinces p
+      ON ST_Within(m.geom, p.geom);
   `);
 
-  return formatMultiAdminToGeoJSON(rows);
+  const result = formatMultiAdminToGeoJSON(rows);
+
+  await redis.set(cacheKey, JSON.stringify(result), "EX", GEO_TTL_SECONDS);
+
+  return result;
 };
 
 export const GetRegionHierarchy = async () => {
@@ -63,7 +86,6 @@ export const GetRegionHierarchy = async () => {
             'name', p.name_1,
             'bounds', ST_AsGeoJSON(ST_Envelope(p.geom))::json,
 
-            -- 🔥 ADD MUNICIPALITIES INSIDE PROVINCES
             'municipality', (
               SELECT COALESCE(
                 json_agg(

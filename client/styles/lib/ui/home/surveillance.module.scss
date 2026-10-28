@@ -1,316 +1,867 @@
-@use "@/styles/mixins.module" as *;
-@use "@/styles/variables.module" as *;
-@use "@/styles/colors.module" as *;
-@use "@/styles/spacing.module" as *;
-@use "@/styles/radius.module" as *;
-
 .container {
-    width: 100%;
-    height: 900px;
     position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 500px;
     overflow: hidden;
-    border: 2px solid color(neutral, 301);
-    border-radius: radius(sm);
-    margin: 0;
-    background: color(base, white);
+    isolation: isolate;
+    background: #f1f5f9;
 
+    // Administrative hierarchy panel
     .col1 {
         position: absolute;
+        top: 16px;
+        left: 16px;
         z-index: 1000;
-        top: 20px;
-        left: 20px;
 
-        width: 400px;
-        max-width: calc(100% - 40px);
+        display: flex;
+        flex-direction: column;
 
-        padding: 0 20px;
+        width: 260px;
+        max-width: calc(100% - 32px);
+        max-height: calc(100% - 32px);
+        overflow: hidden;
 
-        background-color: color(base, white);
-        border: 1px solid color(neutral, 200);
-        border-radius: radius(tiny);
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgb(15 23 42 / 12%);
 
-        color: color(base, black);
+        transition: width 180ms ease;
 
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
-
-        h1 {
-            margin: 0;
-            padding: 20px 0 10px 0;
-
-            border-bottom: 1px solid #ccc;
-
-            font-size: font-size(lg);
-            color: color(primary, 500);
+        &.col1_expanded {
+            width: 260px;
         }
 
-        .regions {
-            width: 100%;
-            height: 400px;
-
-            padding-top: 10px;
-            padding-left: 15px;
-            padding-right: 5px;
-            padding-bottom: 10px;
-
-            overflow-y: auto;
-            overflow-x: hidden;
-
-            scrollbar-width: thin;
-
-            &::-webkit-scrollbar {
-                width: 6px;
-            }
-
-            &::-webkit-scrollbar-track {
-                background: transparent;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background: color(neutral, 301);
-                border-radius: 10px;
-            }
-
-            &::-webkit-scrollbar-thumb:hover {
-                background: color(neutral, 400);
-            }
-        }
-
-        .col1_container {
-            width: 100%;
-
-            .province {
-                width: 100%;
-            }
-        }
-
-        @include down(md) {
-            top: 10px;
-            left: 10px;
-
-            width: calc(100% - 20px);
-            max-width: none;
-
-            padding: 0 15px;
-
-            h1 {
-                padding: 15px 0 10px 0;
-                font-size: font-size(tiny);
-            }
-
-            .regions {
-                height: 280px;
-                padding-left: 5px;
-            }
+        &:not(.col1_expanded) {
+            width: 260px;
         }
     }
 
+    // Full map wrapper — must not share styles with the treatment hub panel
     .col2 {
         position: absolute;
         inset: 0;
+        z-index: 1;
 
         width: 100%;
         height: 100%;
 
-        overflow: hidden;
-
-        border-radius: radius(sm);
-
         :global(.leaflet-container) {
             width: 100%;
             height: 100%;
-
-            background: #e5e7eb;
+            min-height: 100%;
+            background: #e9eef2;
             font-family: inherit;
+            z-index: 1;
         }
 
-        :global(.leaflet-control-zoom) {
-            border: 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-
-        :global(.leaflet-control-zoom a) {
-            width: 34px;
-            height: 34px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: color(base, white);
-            color: color(primary, 500);
-
-            border: 0;
-            border-bottom: 1px solid color(neutral, 200);
-
-            font-size: 18px;
-            line-height: 1;
-
-            transition:
-                background-color 0.2s ease,
-                color 0.2s ease;
-        }
-
-        :global(.leaflet-control-zoom a:hover) {
-            background: color(neutral, 100);
-            color: color(primary, 600);
-        }
-
-        :global(.leaflet-control-attribution) {
-            font-size: 10px;
-            background: rgba(255, 255, 255, 0.85);
+        :global(.leaflet-top),
+        :global(.leaflet-bottom) {
+            z-index: 800;
         }
 
         :global(.leaflet-popup-content-wrapper) {
-            border-radius: radius(tiny);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+            border-radius: 10px;
         }
 
         :global(.leaflet-popup-content) {
-            margin: 14px 16px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: color(base, black);
-        }
-
-        :global(.leaflet-popup-tip) {
-            box-shadow: none;
-        }
-
-        :global(.leaflet-tooltip) {
-            border: 1px solid color(neutral, 200);
-            border-radius: radius(tiny);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-
-            color: color(base, black);
-            background: color(base, white);
-
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        :global(.leaflet-tooltip-top::before) {
-            border-top-color: color(base, white);
-        }
-
-        @include down(md) {
-            position: relative;
-            min-height: 900px;
+            margin: 12px 14px;
         }
     }
 
-    .legends {
+    // Floating treatment hub controls
+    .treatment_hub_column {
         position: absolute;
-        z-index: 1000;
+        top: 16px;
+        right: 16px;
+        z-index: 1100;
 
-        left: 0;
-        bottom: 0;
+        width: 300px;
+        max-width: calc(100% - 32px);
+        max-height: calc(100% - 32px);
 
         display: flex;
-        align-items: center;
-
-        gap: 20px;
-
-        padding: 12px 20px;
-
-        background: color(base, white);
-        border-top-right-radius: 10px;
-
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
-
-        .legends_card {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            .indicator {
-                width: 12px;
-                height: 12px;
-
-                border-radius: 50%;
-                flex-shrink: 0;
-
-                &.success {
-                    background: color(success, 500);
-                }
-
-                &.warning {
-                    background: color(secondary, 500);
-                }
-
-                &.danger {
-                    background: color(error, 500);
-                }
-            }
-
-            text {
-                color: color(primary, 500);
-            }
-        }
-
-        @include down(md) {
-            right: 0;
-
-            justify-content: center;
-
-            gap: 15px;
-
-            padding: 10px 15px;
-
-            border-top-left-radius: 10px;
-            border-top-right-radius: 0;
-
-            .legends_card {
-                gap: 6px;
-            }
-        }
-    }
-
-    .municipality_label {
-        background: transparent;
-        border: 0;
-        pointer-events: none;
-    }
-
-    .municipality_tooltip {
-        margin: 0;
-
-        padding: 0;
-
-        background: transparent;
-        border: 0;
-        box-shadow: none;
-
-        color: #1e293b;
-
-        font-size: 10px;
-        font-weight: 500;
-
-        white-space: nowrap;
-        pointer-events: none;
-    }
-
-    :global(.leaflet-tooltip.municipality_tooltip) {
-        background: transparent;
-        border: 0;
-        box-shadow: none;
-    }
-
-    :global(.leaflet-tooltip.municipality_tooltip::before) {
-        display: none;
-    }
-
-    @include down(md) {
-        height: 700px;
+        flex-direction: column;
+        min-width: 0;
 
         overflow: hidden;
 
-        .col1 {
-            position: absolute;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgb(15 23 42 / 14%);
+
+        box-sizing: border-box;
+
+        .map_controls {
+            min-width: 0;
+            min-height: 0;
+            overflow: hidden;
         }
 
-        .col2 {
-            position: absolute;
-            inset: 0;
+        .map_controls_header {
+            min-width: 0;
+
+            >div {
+                min-width: 0;
+            }
+
+            strong {
+                overflow-wrap: anywhere;
+            }
+        }
+
+        .map_controls_body {
+            min-width: 0;
+            max-height: calc(100vh - 180px);
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .map_filter_select {
+            box-sizing: border-box;
+            max-width: 100%;
+        }
+    }
+
+    // Administrative hierarchy header
+    .header_column {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        flex-shrink: 0;
+        padding: 14px;
+
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+
+        button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+
+            width: 32px;
+            height: 32px;
+            padding: 0;
+
+            color: #475569;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            cursor: pointer;
+
+            &:hover {
+                color: #1e293b;
+                background: #f1f5f9;
+            }
+
+            &:focus-visible {
+                outline: 3px solid rgb(37 99 235 / 20%);
+                outline-offset: 2px;
+            }
+        }
+    }
+
+    // Region and province list
+    .regions {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        min-height: 0;
+        padding: 10px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .region_item,
+    .province_item {
+        display: block;
+        width: 100%;
+        padding: 9px 10px;
+
+        color: #334155;
+        font: inherit;
+        font-size: 12px;
+        line-height: 1.5;
+        text-align: left;
+
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+
+        cursor: pointer;
+        overflow-wrap: anywhere;
+
+        transition:
+            color 150ms ease,
+            background-color 150ms ease;
+
+        &:hover {
+            color: #35408e;
+            background: #f1f5f9;
+        }
+
+        &:focus-visible {
+            outline: 2px solid #93c5fd;
+            outline-offset: 1px;
+        }
+    }
+
+    .region_item {
+        color: #1e293b;
+        font-weight: 600;
+    }
+
+    .province_item {
+        padding-left: 22px;
+        color: #64748b;
+    }
+
+    .province_item_selected {
+        color: #35408e;
+        font-weight: 600;
+        background: #eef2ff;
+    }
+
+    .loading_text {
+        margin: 0;
+        padding: 12px 10px;
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    // Treatment hub controls
+    .map_controls {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .map_controls_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        padding: 13px 14px;
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+
+        strong {
+            display: block;
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+    }
+
+    .map_controls_subtitle {
+        margin-top: 3px;
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+
+    .map_controls_collapse {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        width: 32px;
+        height: 32px;
+        padding: 0;
+
+        color: #475569;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 7px;
+        cursor: pointer;
+
+        &:hover {
+            background: #f1f5f9;
+        }
+
+        &:focus-visible {
+            outline: 3px solid rgb(37 99 235 / 20%);
+            outline-offset: 2px;
+        }
+    }
+
+    .map_controls_body {
+        display: flex;
+        flex-direction: column;
+        gap: 13px;
+
+        min-height: 0;
+        padding: 14px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+    }
+
+    .map_toggle {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+
+        color: #334155;
+        font-size: 12px;
+        line-height: 1.5;
+        cursor: pointer;
+
+        input {
+            flex-shrink: 0;
+            width: 15px;
+            height: 15px;
+            margin: 2px 0 0;
+            accent-color: #35408e;
+            cursor: pointer;
+        }
+
+        span {
+            overflow-wrap: anywhere;
+        }
+    }
+
+    .map_filter_label {
+        margin-bottom: -7px;
+        color: #475569;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .map_filter_select {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        min-height: 38px;
+        padding: 8px 10px;
+
+        color: #334155;
+        font: inherit;
+        font-size: 12px;
+
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        border-radius: 7px;
+        outline: none;
+
+        &:focus {
+            border-color: #35408e;
+            box-shadow: 0 0 0 3px rgb(53 64 142 / 12%);
+        }
+
+        &:disabled {
+            color: #94a3b8;
+            background: #f8fafc;
+            cursor: not-allowed;
+        }
+    }
+
+    .map_controls_footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        padding-top: 11px;
+        color: #64748b;
+        font-size: 11px;
+        line-height: 1.5;
+
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .hub_status_dot {
+        flex-shrink: 0;
+        width: 8px;
+        height: 8px;
+
+        background: #94a3b8;
+        border-radius: 50%;
+    }
+
+    .hub_status_enabled {
+        background: #22c55e;
+        box-shadow: 0 0 0 3px rgb(34 197 94 / 12%);
+    }
+
+    // Risk legend
+    .legends {
+        position: absolute;
+        right: 16px;
+        bottom: 54px;
+        z-index: 900;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        max-width: calc(100% - 32px);
+    }
+
+    .legends_card {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+
+        padding: 8px 11px;
+
+        background: rgb(255 255 255 / 95%);
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgb(15 23 42 / 8%);
+        backdrop-filter: blur(4px);
+    }
+
+    .indicator {
+        flex-shrink: 0;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+    }
+
+    .success {
+        background: #22c55e;
+    }
+
+    .warning {
+        background: #facc15;
+    }
+
+    .danger {
+        background: #ef4444;
+    }
+
+    // Treatment hub count indicator
+    .treatment_hub_count {
+        position: absolute;
+        right: 16px;
+        bottom: 12px;
+        z-index: 900;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        max-width: calc(100% - 32px);
+        padding: 9px 12px;
+
+        color: #334155;
+        font-size: 11px;
+        line-height: 1.5;
+
+        background: rgb(255 255 255 / 96%);
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgb(15 23 42 / 8%);
+        backdrop-filter: blur(4px);
+    }
+
+    .treatment_hub_count_icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        width: 22px;
+        height: 22px;
+
+        color: #fff;
+        font-size: 15px;
+        background: #35408e;
+        border-radius: 6px;
+    }
+}
+
+// --------------------------------------------------
+// Leaflet marker and popup styles
+// --------------------------------------------------
+
+.treatment_hub_marker {
+    background: transparent;
+    border: 0;
+}
+
+:global(.treatment-hub-pin) {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+    box-sizing: border-box;
+
+    color: #fff;
+    background: #35408e;
+    border: 2px solid #fff;
+    border-radius: 50% 50% 50% 0;
+
+    box-shadow: 0 3px 8px rgb(15 23 42 / 35%);
+
+    // Rotate the circle to create the pointed map-pin shape.
+    transform: rotate(-45deg);
+}
+
+:global(.treatment-hub-pin-icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 24px;
+
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1;
+
+    // Keep the medical cross upright inside the rotated pin.
+    transform: rotate(45deg);
+}
+
+:global(.treatment-popup) {
+    min-width: 220px;
+    max-width: 300px;
+
+    color: #334155;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+:global(.treatment-popup-title) {
+    margin-bottom: 9px;
+    padding-bottom: 8px;
+
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+:global(.treatment-popup-row) {
+    margin-bottom: 7px;
+
+    strong {
+        color: #475569;
+        font-weight: 600;
+    }
+
+    a {
+        color: #35408e;
+        text-decoration: underline;
+        overflow-wrap: anywhere;
+    }
+
+    a:hover {
+        color: #1d4ed8;
+    }
+}
+
+:global(.treatment-popup-services) {
+    margin: 5px 0 0;
+    padding-left: 19px;
+
+    li {
+        margin-bottom: 2px;
+    }
+}
+
+:global(.treatment-status-active) {
+    display: inline-block;
+    padding: 2px 7px;
+
+    color: #166534;
+    font-size: 10px;
+    font-weight: 600;
+
+    background: #dcfce7;
+    border-radius: 999px;
+}
+
+:global(.treatment-status-inactive) {
+    display: inline-block;
+    padding: 2px 7px;
+
+    color: #991b1b;
+    font-size: 10px;
+    font-weight: 600;
+
+    background: #fee2e2;
+    border-radius: 999px;
+}
+
+:global(.treatment-popup-coordinates) {
+    margin-top: 10px;
+    padding-top: 8px;
+
+    color: #64748b;
+    font-size: 10px;
+
+    border-top: 1px solid #e2e8f0;
+}
+
+:global(.nlp-popup) {
+    min-width: 150px;
+    color: #334155;
+    font-size: 12px;
+    line-height: 1.7;
+
+    strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #1e293b;
+        font-size: 13px;
+    }
+}
+
+// Municipality labels rendered using Leaflet divIcon
+.municipality_label {
+    background: transparent;
+    border: 0;
+
+    span {
+        display: inline-block;
+        padding: 2px 4px;
+
+        color: #334155;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+
+        background: rgb(255 255 255 / 72%);
+        border-radius: 3px;
+        text-shadow:
+            0 0 2px #fff,
+            0 0 3px #fff;
+
+        pointer-events: none;
+    }
+}
+
+// --------------------------------------------------
+// Responsive layouts
+// --------------------------------------------------
+
+@media (max-width: 1024px) {
+    .container {
+        .col1 {
+            width: 230px;
+        }
+
+        .col1.col1_expanded {
+            width: 230px;
+        }
+
+        .treatment_hub_column {
+            width: 260px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        height: 600px;
+        min-height: 420px;
+
+        .col1 {
+            top: 10px;
+            left: 10px;
+            max-height: calc(100% - 20px);
+        }
+
+        .col1.col1_expanded {
+            width: 210px;
+        }
+
+        .treatment_hub_column {
+            top: 10px;
+            right: 10px;
+            width: 240px;
+            max-width: calc(100% - 20px);
+            max-height: calc(100% - 20px);
+        }
+
+        .legends {
+            right: 10px;
+            bottom: 50px;
+            gap: 5px;
+        }
+
+        .legends_card {
+            gap: 5px;
+            padding: 7px 9px;
+        }
+
+        .treatment_hub_count {
+            right: 10px;
+            bottom: 10px;
+            font-size: 10px;
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .container {
+        height: 560px;
+        min-height: 400px;
+
+        // Keep the hierarchy compact so it doesn't cover the entire map.
+        .col1 {
+            top: 8px;
+            left: 8px;
+            width: 190px;
+            max-width: calc(50% - 12px);
+            max-height: 42%;
+        }
+
+        .col1.col1_expanded {
+            width: 190px;
+        }
+
+        .header_column {
+            gap: 5px;
+            padding: 8px;
+
+            button {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .regions {
+            padding: 6px;
+        }
+
+        .region_item,
+        .province_item {
+            padding: 6px;
+            font-size: 11px;
+        }
+
+        .province_item {
+            padding-left: 12px;
+        }
+
+        // Treatment hub panel occupies the right side on small screens.
+        .treatment_hub_column {
+            top: 8px;
+            right: 8px;
+            width: 190px;
+            max-width: calc(50% - 12px);
+            max-height: 42%;
+        }
+
+        .map_controls_header {
+            gap: 5px;
+            padding: 8px;
+
+            strong {
+                font-size: 12px;
+            }
+        }
+
+        .map_controls_subtitle {
+            font-size: 10px;
+        }
+
+        .map_controls_collapse {
+            width: 27px;
+            height: 27px;
+        }
+
+        .map_controls_body {
+            gap: 9px;
+            padding: 8px;
+        }
+
+        .map_toggle,
+        .map_filter_label,
+        .map_filter_select {
+            font-size: 11px;
+        }
+
+        .map_filter_select {
+            min-height: 32px;
+            padding: 5px;
+        }
+
+        .map_controls_footer {
+            gap: 5px;
+            padding-top: 7px;
+            font-size: 9px;
+        }
+
+        .legends {
+            right: 8px;
+            bottom: 48px;
+            left: 8px;
+            justify-content: center;
+            max-width: none;
+        }
+
+        .legends_card {
+            padding: 6px 8px;
+        }
+
+        .treatment_hub_count {
+            right: 8px;
+            bottom: 8px;
+            left: 8px;
+            justify-content: center;
+            max-width: none;
+            padding: 6px 8px;
+            font-size: 10px;
+        }
+    }
+}
+
+@media (max-width: 360px) {
+    .container {
+
+        .col1,
+        .col1.col1_expanded {
+            width: 155px;
+        }
+
+        .treatment_hub_column {
+            width: 155px;
+        }
+
+        .header_column {
+            padding: 6px;
+        }
+
+        .map_controls_header {
+            padding: 6px;
+        }
+
+        .map_controls_body {
+            padding: 6px;
+        }
+
+        .legends_card {
+            gap: 4px;
+            padding: 5px 6px;
         }
     }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import MapUI from "@/lib/ui/dashboard/monitoring/map/map";
+import SurveillanceMapClient from "@/lib/ui/home/map-client";
 
 export default function Page() {
-  return <MapUI />;
+  return <SurveillanceMapClient />;
 }

@@ -7,6 +7,6 @@ export default defineConfig({
     path: "migrations",
   },
   datasource: {
-    url: env("DATABASE_URL"),
+    url: env("DATABASE_URL_POOLED"),
   },
 });

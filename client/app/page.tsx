@@ -70,14 +70,10 @@ export default function Home() {
           </Button>
         </div>
       </section>
-      <section>
+      <section className={styles.mapSection}>
         <TitleWrapper title="Surveillance Map" />
         <SurveillanceMapClient />
-        <div
-          style={{
-            padding: "10px 0",
-          }}
-        >
+        <div className={styles.mapDisclaimer}>
           <Text size="sm" style={{ fontStyle: "italic", color: "#808080" }}>
             Disclaimer: This feature is intended for viewing the hotspot only.
             It is provided for display and monitoring purposes and does not
@@ -183,12 +179,66 @@ export default function Home() {
 
       <section>
         <TitleWrapper title="Research Partners" />
-        <Grid max={50} min={100}>
-          {OrganizationData?.data.edges.map(({ node: { logo } }, index) => (
-            <div key={index}>
-              <Avatar src={logo} variant="xl" />
-            </div>
-          ))}
+        <Grid gap={50} max={200} min={100}>
+          {OrganizationData?.data.edges.map(
+            ({ node: { logo, name } }, index) => (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+                key={index}
+              >
+                <Avatar src={logo} variant="xxxl" />
+                <Text
+                  style={{ textAlign: "center", fontWeight: "bolder" }}
+                  size="md"
+                >
+                  {name}
+                </Text>
+              </div>
+            ),
+          )}
+        </Grid>
+      </section>
+
+      <section>
+        <TitleWrapper title="Funding and Institutional Support" />
+
+        <Grid gap={50}>
+          <div className={styles.organization}>
+            <Image
+              src="/assets/dost_pchrd.png"
+              alt="Philippine Council for Health Research and Development seal"
+              height={145}
+              width={150}
+              style={{ objectFit: "contain" }}
+            />
+
+            <Title size="md">
+              Philippine Council for Health Research and Development
+            </Title>
+            <Paragraph>
+              DOST agency supporting health research and development.
+            </Paragraph>
+          </div>
+
+          <div className={styles.organization}>
+            <Image
+              src="/assets/dost_seal.webp"
+              alt="Department of Science and Technology seal"
+              height={125}
+              width={150}
+              style={{ objectFit: "contain" }}
+            />
+
+            <Title size="md">Department of Science and Technology</Title>
+            <Paragraph>
+              Advancing science, technology, and innovation in the Philippines.
+            </Paragraph>
+          </div>
         </Grid>
       </section>
 

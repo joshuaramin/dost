@@ -259,7 +259,7 @@ export default function OrganizationCard({
           </div>
         )}
         <div className={styles.header_col1}>
-          <Avatar variant="lg" src={logo} />
+          <Avatar variant="xl" src={logo} />
           {canDelete && (
             <button onClick={onHandleToggle}>
               <TbDots size={18} />
