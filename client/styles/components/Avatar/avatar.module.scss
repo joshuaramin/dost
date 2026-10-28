@@ -1,9 +1,3 @@
-@use "@/styles/mixins.module" as *;
-@use "@/styles/variables.module" as *;
-@use "@/styles/colors.module" as *;
-@use "@/styles/spacing.module" as *;
-@use "@/styles/radius.module" as *;
-
 .container {
     width: 45px;
     height: 45px;
@@ -18,12 +12,14 @@
     font-size: 12px;
     font-weight: 500;
     color: #333;
+    flex-shrink: 0;
 }
 
 .container img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .sm {
@@ -32,18 +28,18 @@
 }
 
 .md {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 
 .lg {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
 }
 
 .xl {
-    width: 96px;
-    height: 96px;
+    width: 64px;
+    height: 64px;
 }
 
 .xxl {
@@ -52,6 +48,6 @@
 }
 
 .xxxl {
-    height: 120;
-    width: 120;
+    width: 120px;
+    height: 120px;
 }

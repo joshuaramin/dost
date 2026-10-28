@@ -124,7 +124,14 @@ export const GetUserById = async (data: any) => {
           total_points: true,
         },
       },
-      ActivityLog: true,
+      ActivityLog: {
+        select: {
+          activity_logs_id: true,
+          description: true,
+          type: true,
+          is_deleted: true,
+        },
+      },
       DeviceSession: true,
       user_preference: {
         select: {
@@ -196,14 +203,27 @@ export const UpdateUserLanguage = (id: string, data: any) => {
   });
 };
 
-export const UpdateUserAvatar = (id: string, data: any) => {
-  return UserManage.update("user_id", id, {
-    ...(data.image_url && {
-      Profile: {
-        update: { image_url: data.image_url },
+export const UpdateUserAvatar = async (id: string, image_url: string) => {
+  if (!id) {
+    throw new AppError("User ID is required", 400);
+  }
+  if (!image_url) {
+    throw new AppError("Image URL is required", 400);
+  }
+  console.log("[AVATAR SERVICE] Updating user:", id);
+  console.log("[AVATAR SERVICE] Image URL:", image_url);
+
+  const updatedUser = await UserManage.update("user_id", id, {
+    Profile: {
+      update: {
+        image_url,
       },
-    }),
+    },
   });
+
+  console.log("[AVATAR SERVICE] Updated user:", updatedUser);
+
+  return updatedUser;
 };
 
 export const UpdateUser = (id: string, data: any) => {

@@ -1,8 +1,10 @@
-import Template from '@/lib/ui/template';
-import React from 'react'
+import Template from "@/lib/ui/template";
+import React from "react";
 
 export default function Page() {
-    return (
-        <Template title="Notifications"></Template>
-    )
+  return (
+    <Template title="Notifications">
+      <div></div>
+    </Template>
+  );
 }

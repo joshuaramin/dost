@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React from "react"
+import React from "react";
 import {
   TbArrowDown,
   TbArrowUp,
@@ -13,47 +13,48 @@ import {
   TbShieldExclamation,
   TbTrendingUp,
   TbUsers,
-} from "react-icons/tb"
+} from "react-icons/tb";
 
 // components
-import Text from "@/components/Typography/Text/text"
-import Title from "@/components/Typography/Title/title"
-import TitleWrapper from "../../titleWrapper"
-import SurveillanceMap from "../../home/map"
-import Template from "../../template"
+import Text from "@/components/Typography/Text/text";
+import Title from "@/components/Typography/Title/title";
+import TitleWrapper from "../../titleWrapper";
+import SurveillanceMap from "../../home/map";
+import Template from "../../template";
 
 // styles
-import styles from "@/styles/lib/ui/dashboard/main/overview.module.scss"
+import styles from "@/styles/lib/ui/dashboard/main/overview.module.scss";
+import SurveillanceMapClient from "../../home/map-client";
 
 type Metric = {
-  title: string
-  value: string
-  description: string
-  percentage: string
-  trend: "up" | "down"
-  icon: React.ReactNode
-}
+  title: string;
+  value: string;
+  description: string;
+  percentage: string;
+  trend: "up" | "down";
+  icon: React.ReactNode;
+};
 
 type Trend = {
-  title: string
-  value: string
-  percentage: string
-}
+  title: string;
+  value: string;
+  percentage: string;
+};
 
 type RiskArea = {
-  name: string
-  province: string
-  mentions: number
-  risk: "High" | "Moderate" | "Low"
-  percentage: string
-}
+  name: string;
+  province: string;
+  mentions: number;
+  risk: "High" | "Moderate" | "Low";
+  percentage: string;
+};
 
 type Activity = {
-  title: string
-  description: string
-  time: string
-  type: "misinformation" | "trend" | "referral" | "analysis"
-}
+  title: string;
+  description: string;
+  time: string;
+  type: "misinformation" | "trend" | "referral" | "analysis";
+};
 
 const metrics: Metric[] = [
   {
@@ -88,7 +89,7 @@ const metrics: Metric[] = [
     trend: "up",
     icon: <TbUsers size={32} />,
   },
-]
+];
 
 const hotTopics: Trend[] = [
   {
@@ -111,7 +112,7 @@ const hotTopics: Trend[] = [
     value: "7.4K",
     percentage: "+47%",
   },
-]
+];
 
 const riskAreas: RiskArea[] = [
   {
@@ -149,7 +150,7 @@ const riskAreas: RiskArea[] = [
     risk: "Low",
     percentage: "8.4%",
   },
-]
+];
 
 const activities: Activity[] = [
   {
@@ -160,13 +161,15 @@ const activities: Activity[] = [
   },
   {
     title: "#HIVAwareness is trending",
-    description: "Mention volume increased significantly over the last 24 hours.",
+    description:
+      "Mention volume increased significantly over the last 24 hours.",
     time: "34 minutes ago",
     type: "trend",
   },
   {
     title: "Testing referral threshold reached",
-    description: "A high-risk area generated more than 500 potential referrals.",
+    description:
+      "A high-risk area generated more than 500 potential referrals.",
     time: "1 hour ago",
     type: "referral",
   },
@@ -176,34 +179,34 @@ const activities: Activity[] = [
     time: "2 hours ago",
     type: "analysis",
   },
-]
+];
 
 function getActivityIcon(type: Activity["type"]) {
   switch (type) {
     case "misinformation":
-      return <TbShieldExclamation size={22} />
+      return <TbShieldExclamation size={22} />;
 
     case "trend":
-      return <TbTrendingUp size={22} />
+      return <TbTrendingUp size={22} />;
 
     case "referral":
-      return <TbUsers size={22} />
+      return <TbUsers size={22} />;
 
     default:
-      return <TbCircleCheck size={22} />
+      return <TbCircleCheck size={22} />;
   }
 }
 
 function getRiskClass(risk: RiskArea["risk"]) {
   switch (risk) {
     case "High":
-      return styles.high
+      return styles.high;
 
     case "Moderate":
-      return styles.moderate
+      return styles.moderate;
 
     default:
-      return styles.low
+      return styles.low;
   }
 }
 
@@ -215,21 +218,14 @@ export default function Overview() {
     >
       <section className={styles.section}>
         <div className={styles.section_header}>
-          <Text size="sm">
-            Last updated: Today
-          </Text>
+          <Text size="sm">Last updated: Today</Text>
         </div>
 
         <div className={styles.metrics}>
           {metrics.map((metric) => (
-            <div
-              className={styles.metric_card}
-              key={metric.title}
-            >
+            <div className={styles.metric_card} key={metric.title}>
               <div className={styles.metric_header}>
-                <div className={styles.icon}>
-                  {metric.icon}
-                </div>
+                <div className={styles.icon}>{metric.icon}</div>
 
                 <div className={styles.metric_trend}>
                   {metric.trend === "up" ? (
@@ -245,17 +241,11 @@ export default function Overview() {
               </div>
 
               <div className={styles.metric_body}>
-                <Text size="sm">
-                  {metric.title}
-                </Text>
+                <Text size="sm">{metric.title}</Text>
 
-                <Title size="lg">
-                  {metric.value}
-                </Title>
+                <Title size="lg">{metric.value}</Title>
 
-                <Text size="sm">
-                  {metric.description}
-                </Text>
+                <Text size="sm">{metric.description}</Text>
               </div>
             </div>
           ))}
@@ -267,23 +257,16 @@ export default function Overview() {
 
         <div className={styles.trends}>
           {hotTopics.map((topic) => (
-            <div
-              className={styles.trend_card}
-              key={topic.title}
-            >
+            <div className={styles.trend_card} key={topic.title}>
               <div className={styles.trend_icon}>
                 <TbTrendingUp size={22} />
               </div>
 
               <div className={styles.trend_content}>
-                <Title size="md">
-                  {topic.title}
-                </Title>
+                <Title size="md">{topic.title}</Title>
 
                 <div className={styles.trend_footer}>
-                  <Text size="sm">
-                    {topic.value} mentions
-                  </Text>
+                  <Text size="sm">{topic.value} mentions</Text>
 
                   <span>
                     <TbArrowUp size={15} />
@@ -302,7 +285,7 @@ export default function Overview() {
         <TitleWrapper title="Geospatial Intelligence" />
 
         <div className={styles.map_wrapper}>
-          <SurveillanceMap />
+          <SurveillanceMapClient />
         </div>
       </section>
 
@@ -311,9 +294,7 @@ export default function Overview() {
           <div className={styles.panel}>
             <div className={styles.panel_header}>
               <div>
-                <Title size="md">
-                  High-Risk Areas
-                </Title>
+                <Title size="md">High-Risk Areas</Title>
 
                 <Text size="sm">
                   Locations with elevated HIV-related activity
@@ -335,13 +316,9 @@ export default function Overview() {
                     </div>
 
                     <div>
-                      <Title size="sm">
-                        {area.name}
-                      </Title>
+                      <Title size="sm">{area.name}</Title>
 
-                      <Text size="sm">
-                        {area.province}
-                      </Text>
+                      <Text size="sm">{area.province}</Text>
                     </div>
                   </div>
 
@@ -352,7 +329,7 @@ export default function Overview() {
 
                     <span
                       className={`${styles.risk_badge} ${getRiskClass(
-                        area.risk
+                        area.risk,
                       )}`}
                     >
                       {area.risk}
@@ -366,13 +343,9 @@ export default function Overview() {
           <div className={styles.panel}>
             <div className={styles.panel_header}>
               <div>
-                <Title size="md">
-                  Sentiment Overview
-                </Title>
+                <Title size="md">Sentiment Overview</Title>
 
-                <Text size="sm">
-                  Overall sentiment across analyzed content
-                </Text>
+                <Text size="sm">Overall sentiment across analyzed content</Text>
               </div>
 
               <TbChartDonut size={24} />
@@ -381,50 +354,32 @@ export default function Overview() {
             <div className={styles.sentiment}>
               <div className={styles.sentiment_item}>
                 <div>
-                  <Text size="sm">
-                    Positive
-                  </Text>
+                  <Text size="sm">Positive</Text>
 
-                  <Title size="lg">
-                    42.8%
-                  </Title>
+                  <Title size="lg">42.8%</Title>
                 </div>
 
-                <Text size="sm">
-                  59,920 posts
-                </Text>
+                <Text size="sm">59,920 posts</Text>
               </div>
 
               <div className={styles.sentiment_item}>
                 <div>
-                  <Text size="sm">
-                    Neutral
-                  </Text>
+                  <Text size="sm">Neutral</Text>
 
-                  <Title size="lg">
-                    38.6%
-                  </Title>
+                  <Title size="lg">38.6%</Title>
                 </div>
 
-                <Text size="sm">
-                  54,040 posts
-                </Text>
+                <Text size="sm">54,040 posts</Text>
               </div>
 
               <div className={styles.sentiment_item}>
                 <div>
-                  <Text size="sm">
-                    Negative
-                  </Text>
+                  <Text size="sm">Negative</Text>
 
-                  <Title size="lg">
-                    18.6%
-                  </Title>
+                  <Title size="lg">18.6%</Title>
                 </div>
 
-                <Text size="sm">
-                  26,040 posts
-                </Text>
+                <Text size="sm">26,040 posts</Text>
               </div>
             </div>
           </div>
@@ -437,9 +392,7 @@ export default function Overview() {
         <div className={styles.panel}>
           <div className={styles.panel_header}>
             <div>
-              <Title size="md">
-                Priority Barangays
-              </Title>
+              <Title size="md">Priority Barangays</Title>
 
               <Text size="sm">
                 Barangays requiring closer monitoring based on current activity
@@ -506,21 +459,15 @@ export default function Overview() {
                 className={styles.table_row}
                 key={`${barangay.barangay}-${barangay.municipality}`}
               >
-                <Text size="sm">
-                  {barangay.barangay}
-                </Text>
+                <Text size="sm">{barangay.barangay}</Text>
 
-                <Text size="sm">
-                  {barangay.municipality}
-                </Text>
+                <Text size="sm">{barangay.municipality}</Text>
 
-                <Text size="sm">
-                  {barangay.mentions}
-                </Text>
+                <Text size="sm">{barangay.mentions}</Text>
 
                 <span
                   className={`${styles.risk_badge} ${getRiskClass(
-                    barangay.risk as RiskArea["risk"]
+                    barangay.risk as RiskArea["risk"],
                   )}`}
                 >
                   {barangay.risk}
@@ -552,18 +499,12 @@ export default function Overview() {
               </div>
 
               <div className={styles.activity_content}>
-                <Title size="sm">
-                  {activity.title}
-                </Title>
+                <Title size="sm">{activity.title}</Title>
 
-                <Text size="sm">
-                  {activity.description}
-                </Text>
+                <Text size="sm">{activity.description}</Text>
               </div>
 
-              <Text size="sm">
-                {activity.time}
-              </Text>
+              <Text size="sm">{activity.time}</Text>
             </div>
           ))}
         </div>
@@ -576,9 +517,7 @@ export default function Overview() {
           </div>
 
           <div>
-            <Title size="sm">
-              Surveillance attention required
-            </Title>
+            <Title size="sm">Surveillance attention required</Title>
 
             <Text size="sm">
               24 high-risk zones and 8 emerging misinformation clusters
@@ -588,5 +527,5 @@ export default function Overview() {
         </div>
       </section>
     </Template>
-  )
+  );
 }

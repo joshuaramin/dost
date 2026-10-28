@@ -1,6 +1,14 @@
 import SettingsPage from "@/lib/ui/dashboard/settings/page";
-import React from "react";
+import { Suspense } from "react";
 
-export default function Page() {
-  return <SettingsPage />;
+export default function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ activeTab: string }>;
+}) {
+  return (
+    <Suspense>
+      <SettingsPage />;
+    </Suspense>
+  );
 }

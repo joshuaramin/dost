@@ -43,7 +43,7 @@ router.patch("/:id/language", withAuth, asyncHandler(userLanguage));
 router.patch(
   "/:id/avatar",
   withAuth,
-  upload.single("avatar"),
+  upload.single("image_url"),
   asyncHandler(updateUserProfile),
 );
 

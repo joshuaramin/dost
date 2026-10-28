@@ -1,45 +1,81 @@
 import "dotenv/config";
 import { Worker } from "bullmq";
-import nodemailer from "nodemailer";
 
 import { connection } from "@/lib/redis";
 import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
+import { renderWelcome } from "@/lib/emails/rendered/welcomeRendered";
 import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
 import { OTP } from "@/lib/prisma/system/generated/prisma/browser";
 import { prisma } from "@/lib/prisma/system/prisma";
 import { AppError } from "@/lib/common/appError";
 import { generateOTP, hashOTP } from "@/utils/otpGenerator";
-import { renderWelcome } from "@/lib/emails/rendered/welcomeRendered";
 
 const OTPManage = new PrismaCRUDManager<OTP, "otp_id", typeof prisma.oTP>(
   prisma.oTP,
   "otp_id",
 );
 
-if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-  throw new Error("SMTP credentials are not configured");
+const SENDLIB_URL = "https://sendliberty.com/api/send";
+const SENDLIB_KEY = process.env.SENDLIB_KEY;
+const SENDLIB_FROM_EMAIL = process.env.SENDLIB_FROM_EMAIL;
+
+if (!SENDLIB_KEY) {
+  throw new Error("SENDLIB_KEY is not configured");
 }
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "Oauth2",
-    user: process.env.SMTP_USER,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-  },
-});
+if (!SENDLIB_FROM_EMAIL) {
+  throw new Error("SENDLIB_FROM_EMAIL is not configured");
+}
 
-// Optional: test SMTP connection when worker starts
-transporter
-  .verify()
-  .then(() => {
-    console.log("✅ SMTP server is ready");
-  })
-  .catch((error) => {
-    console.error("❌ SMTP connection failed:", error);
+interface SendEmailOptions {
+  to: string;
+  subject: string;
+  html: string;
+}
+
+async function sendEmail({
+  to,
+  subject,
+  html,
+}: SendEmailOptions): Promise<unknown> {
+  const response = await fetch(SENDLIB_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${SENDLIB_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: `Advocaid PH <niceradvocaid@gmail.com>`,
+      to,
+      subject,
+      html,
+    }),
+    signal: AbortSignal.timeout(15_000),
   });
+
+  const responseText = await response.text();
+
+  let result: unknown;
+
+  try {
+    result = responseText ? JSON.parse(responseText) : null;
+  } catch {
+    result = responseText;
+  }
+
+  if (!response.ok) {
+    console.error("Sendliberty API request failed:", {
+      status: response.status,
+      response: result,
+    });
+
+    throw new Error(`Sendliberty API returned HTTP ${response.status}`);
+  }
+
+  console.log(`Email request accepted for ${to}.`);
+
+  return result;
+}
 
 export const authWorker = new Worker(
   "auth",
@@ -59,7 +95,6 @@ export const authWorker = new Worker(
       throw new AppError("Too many requests. Try again later.", 429);
     }
 
-    // Invalidate old unused OTPs
     await prisma.oTP.updateMany({
       where: {
         identifier: email,
@@ -85,16 +120,15 @@ export const authWorker = new Worker(
     const html = await renderOTPTemplate(fullname, code);
 
     try {
-      const info = await transporter.sendMail({
-        from: `"Advocaid PH" <${process.env.SMTP_USER}>`,
+      const result = await sendEmail({
         to: email,
         subject: "One-Time Password",
         html,
       });
 
-      console.log("✅ OTP EMAIL SENT:", info.messageId);
+      return result;
     } catch (error) {
-      console.error("❌ OTP EMAIL FAILED:", error);
+      console.error("OTP email delivery request failed:", error);
 
       throw new AppError("Failed to send OTP email.", 500);
     }
@@ -146,19 +180,15 @@ export const authVerified = new Worker(
     const html = await renderWelcome(fullname, activationUrl);
 
     try {
-      const info = await transporter.sendMail({
-        from: `"Advocaid PH" <${process.env.SMTP_USER}>`,
+      const result = await sendEmail({
         to: profile.email,
         subject: "Account Verification",
         html,
       });
 
-      console.log(
-        `✅ EMAIL VERIFICATION SENT: ${profile.email}`,
-        info.messageId,
-      );
+      return result;
     } catch (error) {
-      console.error("❌ VERIFICATION EMAIL FAILED:", error);
+      console.error("Account verification email request failed:", error);
 
       throw new AppError("Failed to send verification email.", 500);
     }
@@ -168,4 +198,11 @@ export const authVerified = new Worker(
   },
 );
 
-console.log("🚀 EMAIL WORKER FILE EXECUTED");
+authWorker.on("error", (error) => {
+  console.error("[Auth Worker] Error:", error.message);
+});
+
+authVerified.on("error", (error) => {
+  console.error("[Registration Worker] Error:", error.message);
+});
+console.log("🚀 Email workers initialized");

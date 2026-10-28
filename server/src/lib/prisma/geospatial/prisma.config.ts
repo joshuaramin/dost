@@ -7,6 +7,6 @@ export default defineConfig({
     path: "migrations",
   },
   datasource: {
-    url: env("DATABASE_GEO_DB_URL"),
+    url: env("DATABASE_URL_POOLED_GEO_DB"),
   },
 });
