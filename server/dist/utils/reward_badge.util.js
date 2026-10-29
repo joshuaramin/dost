@@ -1,93 +1,90 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Rule = exports.RuleEnum = exports.Reward = exports.badge = exports.requirement_type = void 0;
-exports.requirement_type = {
+export const requirement_type = {
     APPROVED_CONTRIBUTIONS: "APPROVED_CONTRIBUTIONS",
     APPROVED_MISINFORMATION: "APPROVED_MISINFORMATION",
     APPROVED_MEDIA: "APPROVED_MEDIA",
     TOTAL_POINTS: "TOTAL_POINTS",
 };
-exports.badge = [
+export const badge = [
     {
         name: "First Contribution",
         description: "Awarded after the user's first approved contribution.",
-        requirement_type: exports.requirement_type.APPROVED_CONTRIBUTIONS,
+        requirement_type: requirement_type.APPROVED_CONTRIBUTIONS,
         requirement_value: 1,
     },
     {
         name: "Community Voice",
         description: "Awarded after 10 approved contributions.",
-        requirement_type: exports.requirement_type.APPROVED_CONTRIBUTIONS,
+        requirement_type: requirement_type.APPROVED_CONTRIBUTIONS,
         requirement_value: 10,
     },
     {
         name: "Active Contributor",
         description: "Awarded after 50 approved contributions.",
-        requirement_type: exports.requirement_type.APPROVED_CONTRIBUTIONS,
+        requirement_type: requirement_type.APPROVED_CONTRIBUTIONS,
         requirement_value: 50,
     },
     {
         name: "Community Advocate",
         description: "Awarded after 100 approved contributions.",
-        requirement_type: exports.requirement_type.APPROVED_CONTRIBUTIONS,
+        requirement_type: requirement_type.APPROVED_CONTRIBUTIONS,
         requirement_value: 100,
     },
     {
         name: "Misinformation Fighter",
         description: "Awarded after 5 approved misinformation reports.",
-        requirement_type: exports.requirement_type.APPROVED_MISINFORMATION,
+        requirement_type: requirement_type.APPROVED_MISINFORMATION,
         requirement_value: 5,
     },
     {
         name: "Truth Defender",
         description: "Awarded after 25 approved misinformation reports.",
-        requirement_type: exports.requirement_type.APPROVED_MISINFORMATION,
+        requirement_type: requirement_type.APPROVED_MISINFORMATION,
         requirement_value: 25,
     },
     {
         name: "Misinformation Guardian",
         description: "Awarded after 100 approved misinformation reports.",
-        requirement_type: exports.requirement_type.APPROVED_MISINFORMATION,
+        requirement_type: requirement_type.APPROVED_MISINFORMATION,
         requirement_value: 100,
     },
     {
         name: "Media Contributor",
         description: "Awarded after 10 approved media contributions.",
-        requirement_type: exports.requirement_type.APPROVED_MEDIA,
+        requirement_type: requirement_type.APPROVED_MEDIA,
         requirement_value: 10,
     },
     {
         name: "Media Creator",
         description: "Awarded after 50 approved media contributions.",
-        requirement_type: exports.requirement_type.APPROVED_MEDIA,
+        requirement_type: requirement_type.APPROVED_MEDIA,
         requirement_value: 50,
     },
     {
         name: "Point Collector",
         description: "Awarded after earning 5,000 total points.",
-        requirement_type: exports.requirement_type.TOTAL_POINTS,
+        requirement_type: requirement_type.TOTAL_POINTS,
         requirement_value: 5000,
     },
     {
         name: "Rising Advocate",
         description: "Awarded after earning 10,000 total points.",
-        requirement_type: exports.requirement_type.TOTAL_POINTS,
+        requirement_type: requirement_type.TOTAL_POINTS,
         requirement_value: 10000,
     },
     {
         name: "Community Champion",
         description: "Awarded after earning 50,000 total points.",
-        requirement_type: exports.requirement_type.TOTAL_POINTS,
+        requirement_type: requirement_type.TOTAL_POINTS,
         requirement_value: 50000,
     },
     {
         name: "Community Guardian",
         description: "Awarded after earning 100,000 total points.",
-        requirement_type: exports.requirement_type.TOTAL_POINTS,
+        requirement_type: requirement_type.TOTAL_POINTS,
         requirement_value: 100000,
     },
 ];
-exports.Reward = [
+export const Reward = [
     {
         name: "Newcomer",
         description: "A new member who has started participating in the community.",
@@ -139,24 +136,24 @@ exports.Reward = [
         min_points: 100000,
     },
 ];
-exports.RuleEnum = {
+export const RuleEnum = {
     EXPERIENCE: "EXPERIENCE",
     MISINFORMATION: "MISINFORMATION",
     MEDIA: "MEDIA",
 };
-exports.Rule = [
+export const Rule = [
     {
-        action_type: exports.RuleEnum.EXPERIENCE,
+        action_type: RuleEnum.EXPERIENCE,
         points: 100,
         is_active: true,
     },
     {
-        action_type: exports.RuleEnum.MISINFORMATION,
+        action_type: RuleEnum.MISINFORMATION,
         points: 250,
         is_active: true,
     },
     {
-        action_type: exports.RuleEnum.MEDIA,
+        action_type: RuleEnum.MEDIA,
         points: 150,
         is_active: true,
     },

@@ -1,6 +1,6 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { SurveyInterface } from "@/lib/interface/survey.interface";
-import { prisma } from "@/lib/prisma/system/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { SurveyInterface } from "../lib/interface/survey.interface.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 import {
   Prisma,
   Survey,
@@ -8,10 +8,10 @@ import {
   QuestionOption,
   SurveyAnswer,
   SurveyResponse,
-} from "@/lib/prisma/system/generated/prisma/client";
-import { SurveyWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { AppError } from "@/lib/common/appError";
-import useSlugify from "@/lib/helpers/useSlugify";
+} from "../lib/prisma/system/generated/prisma/client.js";
+import { SurveyWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { AppError } from "../lib/common/appError.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
 import { tuple } from "zod";
 
 const SurveyManage = new PrismaCRUDManager<

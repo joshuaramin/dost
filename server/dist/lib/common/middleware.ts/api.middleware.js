@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createApiVersionMiddleware = createApiVersionMiddleware;
-function createApiVersionMiddleware(config) {
+export function createApiVersionMiddleware(config) {
     const { supported, defaultVersion, deprecated = {}, headerName = "x-api-version", customHeader, rejectUnsupported = true, } = config;
     const latestVersion = supported[supported.length - 1];
     return function apiVersionMiddleware(req, res, next) {

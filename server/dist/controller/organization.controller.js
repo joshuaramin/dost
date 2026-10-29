@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.softDeleteOrganization = exports.updateOrganizatoin = exports.createOrganization = exports.getAllOrganization = void 0;
-const organization_services_1 = require("../services/organization.services.js");
-const organization_validation_1 = require("../lib/validation/organization.validation.js");
-const getAllOrganization = async (request, response) => {
+import { CreateOrganization, GetAllOrganization, SoftDeleteOrganization, UpdateOrganization, } from "../services/organization.services.js";
+import { OrganizationSchema, OrganizationUpdateSchema, } from "../lib/validation/organization.validation.js";
+export const getAllOrganization = async (request, response) => {
     const { sortBy, orderBy, limit, search, after, before } = request.query;
-    const result = await (0, organization_services_1.GetAllOrganization)({
+    const result = await GetAllOrganization({
         limit: limit,
         after: after,
         before: before,
@@ -21,10 +18,9 @@ const getAllOrganization = async (request, response) => {
         success: true,
     });
 };
-exports.getAllOrganization = getAllOrganization;
-const createOrganization = async (request, response) => {
+export const createOrganization = async (request, response) => {
     try {
-        const parseData = organization_validation_1.OrganizationSchema.safeParse(request.body);
+        const parseData = OrganizationSchema.safeParse(request.body);
         if (!parseData.success) {
             return response.status(400).json({
                 message: "Invalid Schema",
@@ -44,7 +40,7 @@ const createOrganization = async (request, response) => {
                 message: "Only image files are allowed",
             });
         }
-        const result = await (0, organization_services_1.CreateOrganization)({
+        const result = await CreateOrganization({
             logo: `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/advocaid/${file.key}`,
             name: parseData.data.name,
             address: parseData.data.address,
@@ -64,12 +60,11 @@ const createOrganization = async (request, response) => {
         });
     }
 };
-exports.createOrganization = createOrganization;
-const updateOrganizatoin = async (request, response) => {
+export const updateOrganizatoin = async (request, response) => {
     try {
         const id = String(request.params.id);
         const body = request.body;
-        const parseData = organization_validation_1.OrganizationUpdateSchema.safeParse(body);
+        const parseData = OrganizationUpdateSchema.safeParse(body);
         if (!parseData.success) {
             return response.status(400).json({
                 message: "Invalid Schema",
@@ -88,7 +83,7 @@ const updateOrganizatoin = async (request, response) => {
                 message: "Only image files are allowed",
             });
         }
-        const result = await (0, organization_services_1.UpdateOrganization)(id, {
+        const result = await UpdateOrganization(id, {
             logo: `${process.env.CDN_URL}/${file.key}`,
             name: parseData.data.name,
             address: parseData.data.address,
@@ -107,14 +102,12 @@ const updateOrganizatoin = async (request, response) => {
         });
     }
 };
-exports.updateOrganizatoin = updateOrganizatoin;
-const softDeleteOrganization = async (request, response) => {
+export const softDeleteOrganization = async (request, response) => {
     const id = String(request.params.id);
-    const result = await (0, organization_services_1.SoftDeleteOrganization)(id);
+    const result = await SoftDeleteOrganization(id);
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.softDeleteOrganization = softDeleteOrganization;

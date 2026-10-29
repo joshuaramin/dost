@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllDeviceSesisonByUserId = void 0;
-const deviceSession_services_1 = require("../services/deviceSession.services.js");
-const getAllDeviceSesisonByUserId = async (request, response) => {
+import { GetAllDeviceSession } from "../services/deviceSession.services.js";
+export const getAllDeviceSesisonByUserId = async (request, response) => {
     try {
         const id = String(request.params.id);
         const { limit, after, orderBy, sortBy, search, before, user_id } = request.query;
-        const result = await (0, deviceSession_services_1.GetAllDeviceSession)(id, {
+        const result = await GetAllDeviceSession(id, {
             after: after,
             before: before,
             filter: {
@@ -31,4 +28,3 @@ const getAllDeviceSesisonByUserId = async (request, response) => {
         });
     }
 };
-exports.getAllDeviceSesisonByUserId = getAllDeviceSesisonByUserId;

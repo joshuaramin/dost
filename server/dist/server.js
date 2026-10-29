@@ -1,32 +1,28 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.app = void 0;
-const tslib_1 = require("tslib");
-const dotenv_1 = tslib_1.__importDefault(require("dotenv"));
-const express_1 = tslib_1.__importDefault(require("express"));
-const cors_1 = tslib_1.__importDefault(require("cors"));
-const express_rate_limit_1 = tslib_1.__importDefault(require("express-rate-limit"));
-dotenv_1.default.config();
-const routes_1 = require("./utils/routes.js");
-const api_middleware_1 = require("./lib/common/middleware.ts/api.middleware.js");
-const useAuth_1 = require("./lib/helpers/useAuth.js");
-const errorHandler_1 = require("./lib/common/middleware.ts/errorHandler");
-const roles_routes_1 = tslib_1.__importDefault(require("./routes/roles.routes.js"));
-const user_routes_1 = tslib_1.__importDefault(require("./routes/user.routes.js"));
-const auth_routes_1 = tslib_1.__importDefault(require("./routes/auth.routes.js"));
-const resource_routes_1 = tslib_1.__importDefault(require("./routes/resource.routes.js"));
-const geom_routes_1 = tslib_1.__importDefault(require("./routes/geom.routes.js"));
-const nlp_routes_1 = tslib_1.__importDefault(require("./routes/nlp.routes.js"));
-const organization_routes_1 = tslib_1.__importDefault(require("./routes/organization.routes.js"));
-const educational_resources_routes_1 = tslib_1.__importDefault(require("./routes/educational-resources.routes.js"));
-const survey_routes_1 = tslib_1.__importDefault(require("./routes/survey.routes.js"));
-const treatmenthub_routes_1 = tslib_1.__importDefault(require("./routes/treatmenthub.routes.js"));
-const services_routes_1 = tslib_1.__importDefault(require("./routes/services.routes.js"));
-const contribution_routes_1 = tslib_1.__importDefault(require("./routes/contribution.routes.js"));
-const log_routes_1 = tslib_1.__importDefault(require("./routes/log.routes.js"));
-const form_route_1 = tslib_1.__importDefault(require("./routes/form.route.js"));
-const rewards_routes_1 = tslib_1.__importDefault(require("./routes/rewards.routes.js"));
-exports.app = (0, express_1.default)();
+import dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import expressRateLimiter from "express-rate-limit";
+dotenv.config();
+import { printEndpoints } from "./utils/routes.js";
+import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
+import { withAuth } from "./lib/helpers/useAuth.js";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
+import RolesRouter from "./routes/roles.routes.js";
+import UserRouter from "./routes/user.routes.js";
+import AuthRouter from "./routes/auth.routes.js";
+import ResourceRouter from "./routes/resource.routes.js";
+import RegionRouter from "./routes/geom.routes.js";
+import NlpRouter from "./routes/nlp.routes.js";
+import OrganizationRouter from "./routes/organization.routes.js";
+import EducationResourceRouter from "./routes/educational-resources.routes.js";
+import SurveyRouter from "./routes/survey.routes.js";
+import TreatmentHubRouter from "./routes/treatmenthub.routes.js";
+import ServiceRouter from "./routes/services.routes.js";
+import ContributionRouter from "./routes/contribution.routes.js";
+import ActivityRouter from "./routes/log.routes.js";
+import FormRouter from "./routes/form.route.js";
+import RewardsRouter from "./routes/rewards.routes.js";
+export const app = express();
 /**
  * CORS
  * Configure FRONTEND_URL in Vercel environment variables
@@ -40,7 +36,7 @@ const allowedOrigins = [
             .filter(Boolean)
         : []),
 ];
-exports.app.use((0, cors_1.default)({
+app.use(cors({
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
     origin: (origin, callback) => {
@@ -51,7 +47,7 @@ exports.app.use((0, cors_1.default)({
         return callback(new Error(`CORS blocked request from origin: ${origin}`));
     },
 }));
-exports.app.use((0, api_middleware_1.createApiVersionMiddleware)({
+app.use(createApiVersionMiddleware({
     supported: ["2026-02-26"],
     defaultVersion: "2026-02-26",
     deprecated: {
@@ -60,9 +56,9 @@ exports.app.use((0, api_middleware_1.createApiVersionMiddleware)({
         },
     },
 }));
-exports.app.use(express_1.default.json());
-exports.app.use(express_1.default.urlencoded({ extended: true }));
-exports.app.use((0, express_rate_limit_1.default)({
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(expressRateLimiter({
     limit: 1000,
     windowMs: 60_000,
     standardHeaders: true,
@@ -73,7 +69,7 @@ exports.app.use((0, express_rate_limit_1.default)({
  * Health check
  * Does not require authentication or a database connection.
  */
-exports.app.get("/", (_req, res) => {
+app.get("/", (_req, res) => {
     res.status(200).json({
         name: "DOST API",
         status: "ok",
@@ -83,7 +79,7 @@ exports.app.get("/", (_req, res) => {
 /**
  * API version test
  */
-exports.app.get("/test-version", useAuth_1.withAuth, (req, res) => {
+app.get("/test-version", withAuth, (req, res) => {
     res.status(200).json({
         message: "API versioning works!",
         api_version: req.apiVersionInfo,
@@ -93,37 +89,37 @@ exports.app.get("/test-version", useAuth_1.withAuth, (req, res) => {
  * Route definitions
  */
 const routeDefinitions = [
-    { prefix: "/maintenance/contribution", router: contribution_routes_1.default },
-    { prefix: "/maintenance/users", router: user_routes_1.default },
-    { prefix: "/maintenance/resource", router: resource_routes_1.default },
+    { prefix: "/maintenance/contribution", router: ContributionRouter },
+    { prefix: "/maintenance/users", router: UserRouter },
+    { prefix: "/maintenance/resource", router: ResourceRouter },
     {
         prefix: "/maintenance/educational-resource",
-        router: educational_resources_routes_1.default,
+        router: EducationResourceRouter,
     },
-    { prefix: "/maintenance/survey", router: survey_routes_1.default },
-    { prefix: "/maintenance/roles", router: roles_routes_1.default },
-    { prefix: "/auth", router: auth_routes_1.default },
-    { prefix: "/maintenance/geospatial", router: geom_routes_1.default },
-    { prefix: "/maintenance/services", router: services_routes_1.default },
-    { prefix: "/maintenance/nlp", router: nlp_routes_1.default },
-    { prefix: "/maintenance/organization", router: organization_routes_1.default },
-    { prefix: "/maintenance/treatment-hub", router: treatmenthub_routes_1.default },
-    { prefix: "/maintenance/activity-logs", router: log_routes_1.default },
-    { prefix: "/maintenance/form", router: form_route_1.default },
-    { prefix: "/maintenance/rewards", router: rewards_routes_1.default },
+    { prefix: "/maintenance/survey", router: SurveyRouter },
+    { prefix: "/maintenance/roles", router: RolesRouter },
+    { prefix: "/auth", router: AuthRouter },
+    { prefix: "/maintenance/geospatial", router: RegionRouter },
+    { prefix: "/maintenance/services", router: ServiceRouter },
+    { prefix: "/maintenance/nlp", router: NlpRouter },
+    { prefix: "/maintenance/organization", router: OrganizationRouter },
+    { prefix: "/maintenance/treatment-hub", router: TreatmentHubRouter },
+    { prefix: "/maintenance/activity-logs", router: ActivityRouter },
+    { prefix: "/maintenance/form", router: FormRouter },
+    { prefix: "/maintenance/rewards", router: RewardsRouter },
 ];
 for (const { prefix, router } of routeDefinitions) {
-    exports.app.use(prefix, router);
+    app.use(prefix, router);
 }
 /**
  * Centralized error handler.
  * Must be registered after all routes.
  */
-exports.app.use(errorHandler_1.errorHandler);
+app.use(errorHandler);
 /**
  * Print routes for local debugging.
  */
 if (process.env.NODE_ENV !== "production") {
-    (0, routes_1.printEndpoints)(routeDefinitions);
+    printEndpoints(routeDefinitions);
 }
-exports.default = exports.app;
+export default app;

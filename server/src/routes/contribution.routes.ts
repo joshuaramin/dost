@@ -3,10 +3,10 @@ import {
   getContributionById,
   updateContribution,
   createContribution,
-} from "@/controller/contribution.controller";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
-import upload from "@/lib/helpers/useMulter";
+} from "../controller/contribution.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import upload from "../lib/helpers/useMulter.js";
 import express from "express";
 
 const router = express.Router();

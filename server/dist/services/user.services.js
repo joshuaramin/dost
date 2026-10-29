@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SoftDeleteUser = exports.UpdateUser = exports.UpdateUserAvatar = exports.UpdateUserLanguage = exports.CreateUser = exports.GetUserById = exports.GetAllUsers = void 0;
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/system/prisma.js");
-const appError_1 = require("../lib/common/appError.js");
-const UserManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.user, "user_id");
-const GetAllUsers = ({ limit, after, before, filter: { orderBy, search, sortBy }, organization_id, role_id, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { AppError } from "../lib/common/appError.js";
+const UserManage = new PrismaCRUDManager(prisma.user, "user_id");
+export const GetAllUsers = ({ limit, after, before, filter: { orderBy, search, sortBy }, organization_id, role_id, }) => {
     let where = {
         is_deleted: false,
         ...(organization_id && {
@@ -82,8 +79,7 @@ const GetAllUsers = ({ limit, after, before, filter: { orderBy, search, sortBy }
         },
     });
 };
-exports.GetAllUsers = GetAllUsers;
-const GetUserById = async (data) => {
+export const GetUserById = async (data) => {
     return UserManage.readById(data, "user_id", {
         select: {
             email: true,
@@ -130,11 +126,10 @@ const GetUserById = async (data) => {
         },
     });
 };
-exports.GetUserById = GetUserById;
-const CreateUser = async (data) => {
+export const CreateUser = async (data) => {
     const existingUser = await UserManage.readById(data.email, "email");
     if (existingUser)
-        throw new appError_1.AppError("Email address is already exist", 409);
+        throw new AppError("Email address is already exist", 409);
     const user = UserManage.create({
         email: data.email,
         Profile: {
@@ -175,8 +170,7 @@ const CreateUser = async (data) => {
     });
     return user;
 };
-exports.CreateUser = CreateUser;
-const UpdateUserLanguage = (id, data) => {
+export const UpdateUserLanguage = (id, data) => {
     return UserManage.update("user_id", id, {
         ...(data.language && {
             Profile: {
@@ -185,13 +179,12 @@ const UpdateUserLanguage = (id, data) => {
         }),
     });
 };
-exports.UpdateUserLanguage = UpdateUserLanguage;
-const UpdateUserAvatar = async (id, image_url) => {
+export const UpdateUserAvatar = async (id, image_url) => {
     if (!id) {
-        throw new appError_1.AppError("User ID is required", 400);
+        throw new AppError("User ID is required", 400);
     }
     if (!image_url) {
-        throw new appError_1.AppError("Image URL is required", 400);
+        throw new AppError("Image URL is required", 400);
     }
     console.log("[AVATAR SERVICE] Updating user:", id);
     console.log("[AVATAR SERVICE] Image URL:", image_url);
@@ -205,8 +198,7 @@ const UpdateUserAvatar = async (id, image_url) => {
     console.log("[AVATAR SERVICE] Updated user:", updatedUser);
     return updatedUser;
 };
-exports.UpdateUserAvatar = UpdateUserAvatar;
-const UpdateUser = (id, data) => {
+export const UpdateUser = (id, data) => {
     return UserManage.update("user_id", id, {
         ...(data.email && {
             email: data.email,
@@ -224,9 +216,7 @@ const UpdateUser = (id, data) => {
         }),
     });
 };
-exports.UpdateUser = UpdateUser;
-const SoftDeleteUser = async (data) => {
+export const SoftDeleteUser = async (data) => {
     console.log(data);
     return UserManage.delete("user_id", data);
 };
-exports.SoftDeleteUser = SoftDeleteUser;

@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { geodb } from "@/lib/prisma/geospatial/prisma";
-import { formatMultiAdminToGeoJSON } from "@/lib/common/formatRegionToGeoJSON";
-import { regions } from "@/lib/prisma/geospatial/generated/prisma/client";
-import { redis } from "@/lib/redis/test-redis";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { geodb } from "../lib/prisma/geospatial/prisma.js";
+import { formatMultiAdminToGeoJSON } from "../lib/common/formatRegionToGeoJSON.js";
+import { regions } from "../lib/prisma/geospatial/generated/prisma/client.js";
+import { redis } from "../lib/redis/test-redis.js";
 
 const GEO_TTL_SECONDS = 60 * 60 * 24; // 24 hours
 

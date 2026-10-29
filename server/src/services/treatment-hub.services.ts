@@ -1,13 +1,13 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { geodb } from "@/lib/prisma/geospatial/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { geodb } from "../lib/prisma/geospatial/prisma.js";
 import {
   Prisma,
   treatment_hubs,
-} from "@/lib/prisma/geospatial/generated/prisma/client";
-import { treatment_hubsWhereInput } from "@/lib/prisma/geospatial/generated/prisma/models";
-import { AppError } from "@/lib/common/appError";
-import { TreatmentHubInterface } from "@/lib/interface/treatment-hub.interface";
-import useSlugify from "@/lib/helpers/useSlugify";
+} from "../lib/prisma/geospatial/generated/prisma/client.js";
+import { treatment_hubsWhereInput } from "../lib/prisma/geospatial/generated/prisma/models.js";
+import { AppError } from "../lib/common/appError.js";
+import { TreatmentHubInterface } from "../lib/interface/treatment-hub.interface.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
 
 const TreatmentHubManage = new PrismaCRUDManager<
   treatment_hubs,

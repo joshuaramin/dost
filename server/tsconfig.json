@@ -9,11 +9,9 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "jsx": "react-jsx",
-
     "noEmit": false,
     "rootDir": "./src",
     "outDir": "./dist",
-
     "lib": [ "ES2023" ],
     "target": "ESNext",
     "module": "NodeNext",
@@ -26,6 +24,8 @@
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": [ "src/**/*.ts", "src/**/*.tsx" ],
+  "include": [ "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts" ],
   "exclude": [ "node_modules", "dist" ]
 }

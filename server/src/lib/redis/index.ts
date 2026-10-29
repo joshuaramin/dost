@@ -1,7 +1,7 @@
 import "dotenv/config";
 
 import { Queue } from "bullmq";
-import Redis from "ioredis";
+import { Redis } from "ioredis";
 import type { ConnectionOptions } from "bullmq";
 
 export const connection = new Redis({

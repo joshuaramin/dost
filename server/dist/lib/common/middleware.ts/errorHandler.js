@@ -1,11 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.errorHandler = void 0;
-const appError_1 = require("../appError");
-const errorHandler = (err, req, res, next) => {
+import { AppError } from "../appError.js";
+export const errorHandler = (err, req, res, next) => {
     console.error("🔥 ERROR:", err);
     // AppError (controlled)
-    if (err instanceof appError_1.AppError) {
+    if (err instanceof AppError) {
         return res.status(err.statusCode).json({
             success: false,
             message: err.message,
@@ -17,4 +14,3 @@ const errorHandler = (err, req, res, next) => {
         message: "Internal Server Error",
     });
 };
-exports.errorHandler = errorHandler;

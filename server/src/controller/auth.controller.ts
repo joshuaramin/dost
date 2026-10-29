@@ -2,7 +2,7 @@ import {
   CreateUserSchema,
   RegisterUserSchema,
   UserSchema,
-} from "@/lib/validation/user.validation";
+} from "../lib/validation/user.validation.js";
 import {
   AuthLogin,
   AuthLogout,
@@ -11,8 +11,8 @@ import {
   AuthVerified,
   GetDeviceSessions,
   GetResendOTP,
-} from "@/services/auth.services";
-import { getDeviceInfo } from "@/utils/deviceParser";
+} from "..//services/auth.services.js";
+import { getDeviceInfo } from "../utils/deviceParser.js";
 import { Response, Request } from "express";
 
 import UAPARSER from "ua-parser-js";

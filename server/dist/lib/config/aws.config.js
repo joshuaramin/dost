@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AWS_CONFIG = void 0;
-exports.AWS_CONFIG = {
+export const AWS_CONFIG = {
     forcePathStyle: true,
     endpoint: process.env.AWS_ENDPOINT,
     region: process.env.AWS_REGION,

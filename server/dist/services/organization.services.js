@@ -1,12 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SoftDeleteOrganization = exports.UpdateOrganization = exports.CreateOrganization = exports.GetAllOrganization = void 0;
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/system/prisma.js");
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 // Manage
-const OrganizationManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.organization, "organization_id");
+const OrganizationManage = new PrismaCRUDManager(prisma.organization, "organization_id");
 // Functions
-const GetAllOrganization = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
+export const GetAllOrganization = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
     let where = {
         is_deleted: false,
         ...(search && {
@@ -29,8 +26,7 @@ const GetAllOrganization = ({ after, before, filter: { orderBy, search, sortBy }
         },
     });
 };
-exports.GetAllOrganization = GetAllOrganization;
-const CreateOrganization = (data) => {
+export const CreateOrganization = (data) => {
     return OrganizationManage.create({
         logo: data.logo,
         name: data.name,
@@ -38,8 +34,7 @@ const CreateOrganization = (data) => {
         address: data.address,
     });
 };
-exports.CreateOrganization = CreateOrganization;
-const UpdateOrganization = (id, data) => {
+export const UpdateOrganization = (id, data) => {
     return OrganizationManage.update("organization_id", id, {
         address: data.address,
         contact: data.contact,
@@ -47,8 +42,6 @@ const UpdateOrganization = (id, data) => {
         logo: data.logo,
     });
 };
-exports.UpdateOrganization = UpdateOrganization;
-const SoftDeleteOrganization = (data) => {
+export const SoftDeleteOrganization = (data) => {
     return OrganizationManage.delete("organization_id", data);
 };
-exports.SoftDeleteOrganization = SoftDeleteOrganization;

@@ -6,27 +6,27 @@ import type { Request, Response } from "express";
 
 dotenv.config();
 
-import { printEndpoints } from "@/utils/routes";
-import { createApiVersionMiddleware } from "@/lib/common/middleware.ts/api.middleware";
-import { responseWrapperMiddleware } from "@/lib/common/middleware.ts/reponse.middleware";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
+import { printEndpoints } from "./utils/routes.js";
+import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
+import { responseWrapperMiddleware } from "./lib/common/middleware.ts/reponse.middleware.js";
+import { withAuth } from "./lib/helpers/useAuth.js";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
 
-import RolesRouter from "@/routes/roles.routes";
-import UserRouter from "@/routes/user.routes";
-import AuthRouter from "@/routes/auth.routes";
-import ResourceRouter from "@/routes/resource.routes";
-import RegionRouter from "@/routes/geom.routes";
-import NlpRouter from "@/routes/nlp.routes";
-import OrganizationRouter from "@/routes/organization.routes";
-import EducationResourceRouter from "@/routes/educational-resources.routes";
-import SurveyRouter from "@/routes/survey.routes";
-import TreatmentHubRouter from "@/routes/treatmenthub.routes";
-import ServiceRouter from "@/routes/services.routes";
-import ContributionRouter from "@/routes/contribution.routes";
-import ActivityRouter from "@/routes/log.routes";
-import FormRouter from "@/routes/form.route";
-import RewardsRouter from "@/routes/rewards.routes";
+import RolesRouter from "./routes/roles.routes.js";
+import UserRouter from "./routes/user.routes.js";
+import AuthRouter from "./routes/auth.routes.js";
+import ResourceRouter from "./routes/resource.routes.js";
+import RegionRouter from "./routes/geom.routes.js";
+import NlpRouter from "./routes/nlp.routes.js";
+import OrganizationRouter from "./routes/organization.routes.js";
+import EducationResourceRouter from "./routes/educational-resources.routes.js";
+import SurveyRouter from "./routes/survey.routes.js";
+import TreatmentHubRouter from "./routes/treatmenthub.routes.js";
+import ServiceRouter from "./routes/services.routes.js";
+import ContributionRouter from "./routes/contribution.routes.js";
+import ActivityRouter from "./routes/log.routes.js";
+import FormRouter from "./routes/form.route.js";
+import RewardsRouter from "./routes/rewards.routes.js";
 
 export const app = express();
 

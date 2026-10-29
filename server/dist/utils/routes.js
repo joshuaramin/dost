@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.printEndpoints = exports.getEndpoints = exports.getRouterEndpoints = void 0;
 const normalizePath = (path) => {
     if (!path) {
         return "/";
@@ -46,16 +43,13 @@ const walkRouter = (stack, prefix) => {
     }
     return routes;
 };
-const getRouterEndpoints = (router, prefix) => {
+export const getRouterEndpoints = (router, prefix) => {
     return walkRouter(getRouterStack(router), prefix);
 };
-exports.getRouterEndpoints = getRouterEndpoints;
-const getEndpoints = (routeDefinitions) => {
-    return routeDefinitions.flatMap(({ router, prefix }) => (0, exports.getRouterEndpoints)(router, prefix));
+export const getEndpoints = (routeDefinitions) => {
+    return routeDefinitions.flatMap(({ router, prefix }) => getRouterEndpoints(router, prefix));
 };
-exports.getEndpoints = getEndpoints;
-const printEndpoints = (routeDefinitions) => {
-    const routes = (0, exports.getEndpoints)(routeDefinitions);
+export const printEndpoints = (routeDefinitions) => {
+    const routes = getEndpoints(routeDefinitions);
     console.table(routes);
 };
-exports.printEndpoints = printEndpoints;

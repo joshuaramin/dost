@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateForm = exports.GetFormById = exports.GetAllForm = void 0;
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/system/prisma.js");
-const FormManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.form, "form_id");
-const GetAllForm = ({ after, before, filter: { orderBy, search, sortBy }, limit, type, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+const FormManage = new PrismaCRUDManager(prisma.form, "form_id");
+export const GetAllForm = ({ after, before, filter: { orderBy, search, sortBy }, limit, type, }) => {
     let where = {
         is_deleted: false,
         ...(type && {
@@ -26,8 +23,7 @@ const GetAllForm = ({ after, before, filter: { orderBy, search, sortBy }, limit,
         },
     });
 };
-exports.GetAllForm = GetAllForm;
-const GetFormById = async (id) => {
+export const GetFormById = async (id) => {
     return await FormManage.readById({
         where: { form_id: id, is_deleted: false },
         select: {
@@ -39,8 +35,7 @@ const GetFormById = async (id) => {
         },
     });
 };
-exports.GetFormById = GetFormById;
-const CreateForm = async (data) => {
+export const CreateForm = async (data) => {
     return await FormManage.create({
         description: data.description,
         image_url: data.image_url,
@@ -48,4 +43,3 @@ const CreateForm = async (data) => {
         user: { connect: { user_id: data.user_id } },
     });
 };
-exports.CreateForm = CreateForm;

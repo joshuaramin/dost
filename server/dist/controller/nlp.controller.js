@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllHeatMapGeo = void 0;
-const nlp_services_1 = require("../services/nlp.services.js");
-const getAllHeatMapGeo = async (request, response) => {
+import { GetGroupedHeatMapGeo } from "../services/nlp.services.js";
+export const getAllHeatMapGeo = async (request, response) => {
     try {
-        const result = await (0, nlp_services_1.GetGroupedHeatMapGeo)();
+        const result = await GetGroupedHeatMapGeo();
         return response.status(200).json({
             ...result,
             timestamp: new Date(Date.now()),
@@ -20,4 +17,3 @@ const getAllHeatMapGeo = async (request, response) => {
         });
     }
 };
-exports.getAllHeatMapGeo = getAllHeatMapGeo;

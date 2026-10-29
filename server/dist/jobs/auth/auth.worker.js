@@ -1,16 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.authVerified = exports.authWorker = void 0;
-require("dotenv/config");
-const bullmq_1 = require("bullmq");
-const redis_1 = require("../../lib/redis/index.js");
-const otpRendered_1 = require("../../lib/emails/rendered/otpRendered.js");
-const welcomeRendered_1 = require("../../lib/emails/rendered/welcomeRendered.js");
-const useCrud_1 = require("../../lib/helpers/useCrud.js");
-const prisma_1 = require("../../lib/prisma/system/prisma.js");
-const appError_1 = require("../../lib/common/appError.js");
-const otpGenerator_1 = require("../../utils/otpGenerator.js");
-const OTPManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.oTP, "otp_id");
+import "dotenv/config";
+import { Worker } from "bullmq";
+import { connection } from "../../lib/redis/index.js";
+import { renderOTPTemplate } from "../../lib/emails/rendered/otpRendered.js";
+import { renderWelcome } from "../../lib/emails/rendered/welcomeRendered.js";
+import { PrismaCRUDManager } from "../../lib/helpers/useCrud.js";
+import { prisma } from "../../lib/prisma/system/prisma.js";
+import { AppError } from "../../lib/common/appError.js";
+import { generateOTP, hashOTP } from "../../utils/otpGenerator.js";
+const OTPManage = new PrismaCRUDManager(prisma.oTP, "otp_id");
 const SENDLIB_URL = "https://sendliberty.com/api/send";
 const SENDLIB_KEY = process.env.SENDLIB_KEY;
 const SENDLIB_FROM_EMAIL = process.env.SENDLIB_FROM_EMAIL;
@@ -53,9 +50,9 @@ async function sendEmail({ to, subject, html, }) {
     console.log(`Email request accepted for ${to}.`);
     return result;
 }
-exports.authWorker = new bullmq_1.Worker("auth", async (job) => {
+export const authWorker = new Worker("auth", async (job) => {
     const { fullname, ip, email, userAgent } = job.data;
-    const recent = await prisma_1.prisma.oTP.count({
+    const recent = await prisma.oTP.count({
         where: {
             identifier: email,
             created_at: {
@@ -64,9 +61,9 @@ exports.authWorker = new bullmq_1.Worker("auth", async (job) => {
         },
     });
     if (recent >= 3) {
-        throw new appError_1.AppError("Too many requests. Try again later.", 429);
+        throw new AppError("Too many requests. Try again later.", 429);
     }
-    await prisma_1.prisma.oTP.updateMany({
+    await prisma.oTP.updateMany({
         where: {
             identifier: email,
             is_used: false,
@@ -75,8 +72,8 @@ exports.authWorker = new bullmq_1.Worker("auth", async (job) => {
             is_used: true,
         },
     });
-    const code = (0, otpGenerator_1.generateOTP)();
-    const code_hash = (0, otpGenerator_1.hashOTP)(code);
+    const code = generateOTP();
+    const code_hash = hashOTP(code);
     await OTPManage.create({
         identifier: email,
         type: "login",
@@ -85,7 +82,7 @@ exports.authWorker = new bullmq_1.Worker("auth", async (job) => {
         ip_address: ip,
         user_agent: userAgent,
     });
-    const html = await (0, otpRendered_1.renderOTPTemplate)(fullname, code);
+    const html = await renderOTPTemplate(fullname, code);
     try {
         const result = await sendEmail({
             to: email,
@@ -96,14 +93,14 @@ exports.authWorker = new bullmq_1.Worker("auth", async (job) => {
     }
     catch (error) {
         console.error("OTP email delivery request failed:", error);
-        throw new appError_1.AppError("Failed to send OTP email.", 500);
+        throw new AppError("Failed to send OTP email.", 500);
     }
 }, {
-    connection: redis_1.connection,
+    connection,
 });
-exports.authVerified = new bullmq_1.Worker("registration-email", async (job) => {
+export const authVerified = new Worker("registration-email", async (job) => {
     const { email, token } = job.data;
-    const profile = await prisma_1.prisma.user.findUnique({
+    const profile = await prisma.user.findUnique({
         where: {
             email,
         },
@@ -130,7 +127,7 @@ exports.authVerified = new bullmq_1.Worker("registration-email", async (job) => 
         throw new Error("Application URL is not configured");
     }
     const activationUrl = `${baseUrl}/auth/verified?token=${encodeURIComponent(token)}`;
-    const html = await (0, welcomeRendered_1.renderWelcome)(fullname, activationUrl);
+    const html = await renderWelcome(fullname, activationUrl);
     try {
         const result = await sendEmail({
             to: profile.email,
@@ -141,15 +138,15 @@ exports.authVerified = new bullmq_1.Worker("registration-email", async (job) => 
     }
     catch (error) {
         console.error("Account verification email request failed:", error);
-        throw new appError_1.AppError("Failed to send verification email.", 500);
+        throw new AppError("Failed to send verification email.", 500);
     }
 }, {
-    connection: redis_1.connection,
+    connection,
 });
-exports.authWorker.on("error", (error) => {
+authWorker.on("error", (error) => {
     console.error("[Auth Worker] Error:", error.message);
 });
-exports.authVerified.on("error", (error) => {
+authVerified.on("error", (error) => {
     console.error("[Registration Worker] Error:", error.message);
 });
 console.log("🚀 Email workers initialized");

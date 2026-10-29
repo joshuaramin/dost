@@ -1,9 +1,9 @@
 import {
   getAllActivityLogs,
   createActivityLgos,
-} from "@/controller/log.controller";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
+} from "../controller/log.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
 import express from "express";
 
 const router = express.Router();

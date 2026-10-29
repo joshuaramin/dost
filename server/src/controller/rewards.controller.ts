@@ -7,7 +7,7 @@ import {
   GetAllRewardRules,
   GetBadgeById,
   GetRewardLevelById,
-} from "@/services/rewards.services";
+} from "../services/rewards.services.js";
 
 import { Request, Response } from "express";
 

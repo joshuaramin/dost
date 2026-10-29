@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { AppError } from "@/lib/common/appError";
-import { FormInterface } from "@/lib/interface/form.interface";
-import { FormWhereInput } from "@/lib/prisma/system/generated/prisma/models";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { AppError } from "../lib/common/appError.js";
+import { FormInterface } from "../lib/interface/form.interface.js";
+import { FormWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
 import { id } from "zod/v4/locales/index.js";
 
 const FormManage = new PrismaCRUDManager(prisma.form, "form_id");

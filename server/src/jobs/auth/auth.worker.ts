@@ -1,14 +1,14 @@
 import "dotenv/config";
 import { Worker } from "bullmq";
 
-import { connection } from "@/lib/redis";
-import { renderOTPTemplate } from "@/lib/emails/rendered/otpRendered";
-import { renderWelcome } from "@/lib/emails/rendered/welcomeRendered";
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { OTP } from "@/lib/prisma/system/generated/prisma/browser";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { AppError } from "@/lib/common/appError";
-import { generateOTP, hashOTP } from "@/utils/otpGenerator";
+import { connection } from "../../lib/redis/index.js";
+import { renderOTPTemplate } from "../../lib/emails/rendered/otpRendered.js";
+import { renderWelcome } from "../../lib/emails/rendered/welcomeRendered.js";
+import { PrismaCRUDManager } from "../../lib/helpers/useCrud.js";
+import { OTP } from "../../lib/prisma/system/generated/prisma/browser.js";
+import { prisma } from "../../lib/prisma/system/prisma.js";
+import { AppError } from "../../lib/common/appError.js";
+import { generateOTP, hashOTP } from "../../utils/otpGenerator.js";
 
 const OTPManage = new PrismaCRUDManager<OTP, "otp_id", typeof prisma.oTP>(
   prisma.oTP,

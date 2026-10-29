@@ -1,11 +1,11 @@
-import { withAuth } from "@/lib/helpers/useAuth";
-import { withPermission } from "@/lib/helpers/usePermission";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
 import express from "express";
 import {
   createTreatmentHub,
   getAllTreatmentHub,
   getTreatmentHubById,
-} from "@/controller/treatment-hub.controller";
+} from "../controller/treatment-hub.controller.js";
 
 const router = express.Router();
 

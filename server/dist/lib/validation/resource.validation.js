@@ -1,18 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddSubResourceSchema = exports.ResourceSchema = void 0;
-const tslib_1 = require("tslib");
-const zod_1 = tslib_1.__importDefault(require("zod"));
-exports.ResourceSchema = zod_1.default.array(zod_1.default.object({
-    name: zod_1.default.string().trim().min(1),
-    order: zod_1.default.number().positive().optional(),
-    children: zod_1.default
-        .array(zod_1.default.object({
-        name: zod_1.default.string().trim().min(1),
+import z from "zod";
+export const ResourceSchema = z.array(z.object({
+    name: z.string().trim().min(1),
+    order: z.number().positive().optional(),
+    children: z
+        .array(z.object({
+        name: z.string().trim().min(1),
     }))
         .optional(),
 }));
-exports.AddSubResourceSchema = zod_1.default.object({
-    name: zod_1.default.string().min(1, "Sub Resource name is required"),
-    order: zod_1.default.number().positive(),
+export const AddSubResourceSchema = z.object({
+    name: z.string().min(1, "Sub Resource name is required"),
+    order: z.number().positive(),
 });

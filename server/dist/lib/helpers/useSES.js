@@ -1,19 +1,17 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const client_ses_1 = require("@aws-sdk/client-ses");
-const aws_config_1 = require("../config/aws.config");
-const emailSES = new client_ses_1.SESClient({
-    ...aws_config_1.AWS_CONFIG,
+import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+import { AWS_CONFIG } from "../config/aws.config.js";
+const emailSES = new SESClient({
+    ...AWS_CONFIG,
     credentials: {
-        accessKeyId: aws_config_1.AWS_CONFIG.credentials.accessKeyId,
-        secretAccessKey: aws_config_1.AWS_CONFIG.credentials.secretAccessKey,
+        accessKeyId: AWS_CONFIG.credentials.accessKeyId,
+        secretAccessKey: AWS_CONFIG.credentials.secretAccessKey,
     },
 });
 const sendEmailSES = async ({ html, subject, bccAddress, ccAddress, toAddress, }) => {
     if (!toAddress || toAddress.length === 0) {
         throw new Error("At least one recipient is required in toAddress");
     }
-    const command = new client_ses_1.SendEmailCommand({
+    const command = new SendEmailCommand({
         Source: "ADVOCAID <raminjoshua05@gmail.com>",
         Destination: {
             ToAddresses: toAddress ?? [],
@@ -41,4 +39,4 @@ const sendEmailSES = async ({ html, subject, bccAddress, ccAddress, toAddress, }
         throw error;
     }
 };
-exports.default = sendEmailSES;
+export default sendEmailSES;

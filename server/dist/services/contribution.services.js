@@ -1,12 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.SoftDeleteContribution = exports.UpdateContributeById = exports.CreateContribution = exports.GetContributionById = exports.GetAllContributions = void 0;
-const tslib_1 = require("tslib");
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/system/prisma.js");
-const useSlugify_1 = tslib_1.__importDefault(require("../lib/helpers/useSlugify.js"));
-const ContributionManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.contribution, "contribution_id");
-const GetAllContributions = async ({ after, before, classification, method: classification_method, status, type, limit, filter: { orderBy, sortBy, search }, sentiment, language, user_id, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+const ContributionManage = new PrismaCRUDManager(prisma.contribution, "contribution_id");
+export const GetAllContributions = async ({ after, before, classification, method: classification_method, status, type, limit, filter: { orderBy, sortBy, search }, sentiment, language, user_id, }) => {
     let where = {
         ...(sentiment && {
             sentiment,
@@ -72,8 +68,7 @@ const GetAllContributions = async ({ after, before, classification, method: clas
         },
     });
 };
-exports.GetAllContributions = GetAllContributions;
-const GetContributionById = async (contribution_id) => {
+export const GetContributionById = async (contribution_id) => {
     return ContributionManage.readById(contribution_id, "contribution_id", {
         select: {
             contribution_id: true,
@@ -94,11 +89,10 @@ const GetContributionById = async (contribution_id) => {
         },
     });
 };
-exports.GetContributionById = GetContributionById;
-const CreateContribution = async (data) => {
+export const CreateContribution = async (data) => {
     return ContributionManage.create({
         content: data.content,
-        slug: (0, useSlugify_1.default)(data.type),
+        slug: useSlugify(data.type),
         type: data.type,
         classification: data.classification,
         barangay: data.barangay || "",
@@ -120,8 +114,7 @@ const CreateContribution = async (data) => {
         },
     });
 };
-exports.CreateContribution = CreateContribution;
-const UpdateContributeById = async (data) => {
+export const UpdateContributeById = async (data) => {
     console.log(data);
     return await ContributionManage.update("contribution_id", data.contribution_id, {
         status: data.status,
@@ -137,8 +130,6 @@ const UpdateContributeById = async (data) => {
         },
     });
 };
-exports.UpdateContributeById = UpdateContributeById;
-const SoftDeleteContribution = async (contribution_id) => {
+export const SoftDeleteContribution = async (contribution_id) => {
     return ContributionManage.delete("contribution_id", contribution_id);
 };
-exports.SoftDeleteContribution = SoftDeleteContribution;

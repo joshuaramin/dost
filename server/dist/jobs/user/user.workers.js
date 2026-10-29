@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.welcomeQueue = void 0;
-const bullmq_1 = require("bullmq");
-const redis_1 = require("../../lib/redis/index.js");
-const welcomeRendered_1 = require("../../lib/emails/rendered/welcomeRendered.js");
+import { Worker } from "bullmq";
+import { connection } from "../../lib/redis/index.js";
+import { renderWelcome } from "../../lib/emails/rendered/welcomeRendered.js";
 const SENDLIB_URL = "https://sendliberty.com/api/send";
 const SENDLIB_KEY = process.env.SENDLIB_KEY;
 const SENDLIB_FROM_EMAIL = process.env.SENDLIB_FROM_EMAIL;
@@ -13,9 +10,9 @@ if (!SENDLIB_KEY) {
 if (!SENDLIB_FROM_EMAIL) {
     throw new Error("SENDLIB_FROM_EMAIL is not configured");
 }
-exports.welcomeQueue = new bullmq_1.Worker("welcome", async (job) => {
+export const welcomeQueue = new Worker("welcome", async (job) => {
     const { email, fullname } = job.data;
-    const html = await (0, welcomeRendered_1.renderWelcome)(fullname, "");
+    const html = await renderWelcome(fullname, "");
     const response = await fetch(SENDLIB_URL, {
         method: "POST",
         headers: {
@@ -47,5 +44,5 @@ exports.welcomeQueue = new bullmq_1.Worker("welcome", async (job) => {
     }
     console.log(`Email request accepted for ${email}.`);
     return result;
-}, { connection: redis_1.connection });
+}, { connection });
 console.log("🚀 WELCOME EMAIL EXECUTED");

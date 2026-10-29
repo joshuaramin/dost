@@ -1,4 +1,4 @@
-import { BasicArgs } from "./basicargs";
+import { BasicArgs } from "./basicargs.js";
 
 export interface RewardPointRuleInterface extends BasicArgs {}
 export interface RewardTransaction extends BasicArgs {}

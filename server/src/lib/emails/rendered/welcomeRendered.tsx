@@ -1,5 +1,5 @@
 import { render } from "@react-email/render";
-import AdvocaidWelcome from "../templates/welcome";
+import AdvocaidWelcome from "../templates/welcome.js";
 
 export const renderWelcome = async (
   fullname: string,

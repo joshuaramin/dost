@@ -1,4 +1,4 @@
-import { getAllHeatMapGeo } from "@/controller/nlp.controller";
+import { getAllHeatMapGeo } from "../controller/nlp.controller.js";
 import express from "express";
 
 const router = express.Router();

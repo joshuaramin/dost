@@ -1,14 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddRolePermission = exports.SoftDeleteRole = exports.UpdateRoles = exports.CreateRole = exports.GetRoleBySlug = exports.GetAllRoles = void 0;
-const tslib_1 = require("tslib");
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const useSlugify_1 = tslib_1.__importDefault(require("../lib/helpers/useSlugify.js"));
-const prisma_1 = require("../lib/prisma/system/prisma.js");
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 // Manage
-const RoleManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.role, "role_id");
+const RoleManage = new PrismaCRUDManager(prisma.role, "role_id");
 // Functions
-const GetAllRoles = ({ limit, filter: { orderBy, search, sortBy }, after, before, }) => {
+export const GetAllRoles = ({ limit, filter: { orderBy, search, sortBy }, after, before, }) => {
     let where = {
         is_deleted: false,
         ...(search && {
@@ -47,8 +43,7 @@ const GetAllRoles = ({ limit, filter: { orderBy, search, sortBy }, after, before
         },
     });
 };
-exports.GetAllRoles = GetAllRoles;
-const GetRoleBySlug = async (data) => {
+export const GetRoleBySlug = async (data) => {
     return RoleManage.readById(data, "slug", {
         select: {
             name: true,
@@ -57,31 +52,27 @@ const GetRoleBySlug = async (data) => {
         },
     });
 };
-exports.GetRoleBySlug = GetRoleBySlug;
-const CreateRole = async (data) => {
+export const CreateRole = async (data) => {
     return RoleManage.create({
         name: data.name,
-        slug: (0, useSlugify_1.default)(data.name),
+        slug: useSlugify(data.name),
         description: data.description,
     });
 };
-exports.CreateRole = CreateRole;
-const UpdateRoles = async (id, data) => {
+export const UpdateRoles = async (id, data) => {
     return RoleManage.update("slug", id, {
         name: data.name,
         description: data.description,
     });
 };
-exports.UpdateRoles = UpdateRoles;
-const SoftDeleteRole = async (data) => {
+export const SoftDeleteRole = async (data) => {
     console.log("DATA: ", data);
     return RoleManage.delete("slug", data);
 };
-exports.SoftDeleteRole = SoftDeleteRole;
-const AddRolePermission = async (role_id, data) => {
+export const AddRolePermission = async (role_id, data) => {
     console.log("Role ID: ", role_id);
     console.log("Body: ", data);
-    const existing = await prisma_1.prisma.permission.findMany({
+    const existing = await prisma.permission.findMany({
         where: { permission_id: { in: data.permissions } },
         select: { permission_id: true },
     });
@@ -99,4 +90,3 @@ const AddRolePermission = async (role_id, data) => {
         },
     });
 };
-exports.AddRolePermission = AddRolePermission;

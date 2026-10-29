@@ -1,19 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const organization_controller_1 = require("../controller/organization.controller.js");
-const asyncHandler_1 = require("../lib/common/middleware.ts/asyncHandler.js");
-const useAuth_1 = require("../lib/helpers/useAuth.js");
-const useMulter_1 = tslib_1.__importDefault(require("../lib/helpers/useMulter.js"));
-const usePermission_1 = require("../lib/helpers/usePermission.js");
-const express_1 = tslib_1.__importDefault(require("express"));
-const router = express_1.default.Router();
+import { createOrganization, getAllOrganization, softDeleteOrganization, updateOrganizatoin, } from "../controller/organization.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import upload from "../lib/helpers/useMulter.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
+import express from "express";
+const router = express.Router();
 //Get
-router.get("/", organization_controller_1.getAllOrganization);
+router.get("/", getAllOrganization);
 //Post
-router.post("/", useAuth_1.withAuth, (0, usePermission_1.withPermission)("organization-management:create"), useMulter_1.default.single("logo"), organization_controller_1.createOrganization);
+router.post("/", withAuth, withPermission("organization-management:create"), upload.single("logo"), createOrganization);
 //Put
-router.patch("/:id", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(organization_controller_1.softDeleteOrganization));
+router.patch("/:id", withAuth, asyncHandler(softDeleteOrganization));
 //Patch
-router.put("/:id", useAuth_1.withAuth, (0, usePermission_1.withPermission)("organization-management:update"), organization_controller_1.updateOrganizatoin);
-exports.default = router;
+router.put("/:id", withAuth, withPermission("organization-management:update"), updateOrganizatoin);
+export default router;

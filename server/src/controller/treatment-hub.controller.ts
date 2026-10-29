@@ -3,8 +3,8 @@ import {
   CreateTreatmentHub,
   GetAllTreatmentHub,
   GetTreatmentHubBySlug,
-} from "@/services/treatment-hub.services";
-import { CreateTreatmentHubSchema } from "@/lib/validation/treatment-hub.validation";
+} from "../services/treatment-hub.services.js";
+import { CreateTreatmentHubSchema } from "../lib/validation/treatment-hub.validation.js";
 import { z } from "zod";
 
 export const getAllTreatmentHub = async (

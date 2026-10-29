@@ -1,10 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.withAuth = withAuth;
-const tslib_1 = require("tslib");
-const jsonwebtoken_1 = tslib_1.__importDefault(require("jsonwebtoken"));
+import jwt from "jsonwebtoken";
 const VALID_API_KEYS = (process.env.API_KEYS || "testing").split(",");
-function withAuth(req, res, next) {
+export function withAuth(req, res, next) {
     const JWT_SECRET = process.env.JWT_SECRET;
     if (!JWT_SECRET) {
         console.error("JWT_SECRET is missing.");
@@ -31,7 +27,7 @@ function withAuth(req, res, next) {
     }
     const token = authHeader.substring(7);
     try {
-        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET, {
+        const decoded = jwt.verify(token, JWT_SECRET, {
             algorithms: ["HS512"],
         });
         req.user = decoded;

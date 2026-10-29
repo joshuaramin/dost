@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
-import { connection } from "@/lib/redis";
-import { renderWelcome } from "@/lib/emails/rendered/welcomeRendered";
+import { connection } from "../../lib/redis/index.js";
+import { renderWelcome } from "../../lib/emails/rendered/welcomeRendered.js";
 
 const SENDLIB_URL = "https://sendliberty.com/api/send";
 const SENDLIB_KEY = process.env.SENDLIB_KEY;

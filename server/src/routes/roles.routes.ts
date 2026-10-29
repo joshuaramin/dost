@@ -5,10 +5,10 @@ import {
   getRoleBySlug,
   softDeleteRoles,
   updateRoles,
-} from "@/controller/roles.controller";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { withPermission } from "@/lib/helpers/usePermission";
+} from "../controller/roles.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
 import express from "express";
 
 const router = express.Router();

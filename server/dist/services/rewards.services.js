@@ -1,16 +1,12 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateRewardRules = exports.GetAllRewardRules = exports.CreateRewardLevel = exports.GetRewardLevelById = exports.GetAllRewardLevel = exports.SoftDeleteBadge = exports.UpdateBadge = exports.CreateBadge = exports.GetBadgeById = exports.GetAllBadge = void 0;
-const tslib_1 = require("tslib");
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const useSlugify_1 = tslib_1.__importDefault(require("../lib/helpers/useSlugify.js"));
-const prisma_1 = require("../lib/prisma/system/prisma.js");
-const reward_badge_util_1 = require("../utils/reward_badge.util.js");
-const RewardLevelManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.rewardLevel, "reward_level_id", false);
-const BadgeManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.badge, "badge_id", false);
-const UserBadgeMange = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.userBadge, "user_badge_id", false);
-const RewardRulePointManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.rewardPointRule, "reward_point_rule_id", false);
-const GetAllBadge = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { Reward, badge, Rule } from "../utils/reward_badge.util.js";
+const RewardLevelManage = new PrismaCRUDManager(prisma.rewardLevel, "reward_level_id", false);
+const BadgeManage = new PrismaCRUDManager(prisma.badge, "badge_id", false);
+const UserBadgeMange = new PrismaCRUDManager(prisma.userBadge, "user_badge_id", false);
+const RewardRulePointManage = new PrismaCRUDManager(prisma.rewardPointRule, "reward_point_rule_id", false);
+export const GetAllBadge = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
     let where = {
         is_active: true,
         ...(search && {
@@ -45,32 +41,27 @@ const GetAllBadge = ({ after, before, filter: { orderBy, search, sortBy }, limit
         },
     });
 };
-exports.GetAllBadge = GetAllBadge;
-const GetBadgeById = (data) => {
+export const GetBadgeById = (data) => {
     return BadgeManage.readById(data, "badge_id");
 };
-exports.GetBadgeById = GetBadgeById;
-const CreateBadge = async () => {
-    return Promise.all(reward_badge_util_1.badge.map(({ name, description, requirement_type, requirement_value }) => BadgeManage.create({
+export const CreateBadge = async () => {
+    return Promise.all(badge.map(({ name, description, requirement_type, requirement_value }) => BadgeManage.create({
         name,
         description,
         requirement_type,
         requirement_value,
-        slug: (0, useSlugify_1.default)(name),
+        slug: useSlugify(name),
         icon_url: "",
         is_active: true,
     })));
 };
-exports.CreateBadge = CreateBadge;
-const UpdateBadge = (id, data) => {
+export const UpdateBadge = (id, data) => {
     return BadgeManage.update("badge_id", id, data);
 };
-exports.UpdateBadge = UpdateBadge;
-const SoftDeleteBadge = (data) => {
+export const SoftDeleteBadge = (data) => {
     return BadgeManage.delete("badge_id", data);
 };
-exports.SoftDeleteBadge = SoftDeleteBadge;
-const GetAllRewardLevel = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
+export const GetAllRewardLevel = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
     let where = {
         is_active: true,
     };
@@ -99,8 +90,7 @@ const GetAllRewardLevel = ({ after, before, filter: { orderBy, search, sortBy },
         },
     });
 };
-exports.GetAllRewardLevel = GetAllRewardLevel;
-const GetRewardLevelById = (data) => {
+export const GetRewardLevelById = (data) => {
     return RewardLevelManage.readById(data, "reward_level_id", {
         select: {
             name: true,
@@ -111,9 +101,8 @@ const GetRewardLevelById = (data) => {
         },
     });
 };
-exports.GetRewardLevelById = GetRewardLevelById;
-const CreateRewardLevel = () => {
-    return Promise.all(reward_badge_util_1.Reward.map(({ name, description, min_points }, index) => {
+export const CreateRewardLevel = () => {
+    return Promise.all(Reward.map(({ name, description, min_points }, index) => {
         RewardLevelManage.create({
             name,
             min_points,
@@ -122,8 +111,7 @@ const CreateRewardLevel = () => {
         });
     }));
 };
-exports.CreateRewardLevel = CreateRewardLevel;
-const GetAllRewardRules = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
+export const GetAllRewardRules = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
     let where = {
         is_active: true,
     };
@@ -143,9 +131,8 @@ const GetAllRewardRules = ({ after, before, filter: { orderBy, search, sortBy },
         limit,
     });
 };
-exports.GetAllRewardRules = GetAllRewardRules;
-const CreateRewardRules = () => {
-    return Promise.all(reward_badge_util_1.Rule.map(({ action_type, is_active, points }) => {
+export const CreateRewardRules = () => {
+    return Promise.all(Rule.map(({ action_type, is_active, points }) => {
         RewardRulePointManage.create({
             action_type,
             is_active,
@@ -153,4 +140,3 @@ const CreateRewardRules = () => {
         });
     }));
 };
-exports.CreateRewardRules = CreateRewardRules;

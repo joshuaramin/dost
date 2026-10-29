@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.responseWrapperMiddleware = responseWrapperMiddleware;
-function responseWrapperMiddleware(req, res, next) {
+export function responseWrapperMiddleware(req, res, next) {
     const originalJson = res.json.bind(res);
     res.json = function (body) {
         const meta = {

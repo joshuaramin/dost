@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PrismaCRUDManager = void 0;
 const ResultFn = (props) => props;
-class PrismaCRUDManager {
+export class PrismaCRUDManager {
     model;
     idKey;
     hasSoftDelete;
@@ -171,4 +168,3 @@ class PrismaCRUDManager {
         });
     }
 }
-exports.PrismaCRUDManager = PrismaCRUDManager;

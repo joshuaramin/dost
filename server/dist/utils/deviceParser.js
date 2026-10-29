@@ -1,11 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDeviceInfo = void 0;
-const tslib_1 = require("tslib");
-const ua_parser_js_1 = tslib_1.__importDefault(require("ua-parser-js"));
-const getDeviceInfo = (req) => {
+import UAParser from "ua-parser-js";
+export const getDeviceInfo = (req) => {
     const userAgent = req.headers["user-agent"] || "";
-    const parser = new ua_parser_js_1.default.UAParser(userAgent);
+    const parser = new UAParser.UAParser(userAgent);
     const ua = parser.getResult();
     return {
         ip_address: req.headers["x-forwarded-for"]?.split(",")[0] ||
@@ -20,4 +16,3 @@ const getDeviceInfo = (req) => {
         is_revoked: false,
     };
 };
-exports.getDeviceInfo = getDeviceInfo;

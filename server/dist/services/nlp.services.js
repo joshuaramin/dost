@@ -1,9 +1,6 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetGroupedHeatMapGeo = void 0;
-const prisma_1 = require("../lib/prisma/nlp/prisma.js");
-const GetGroupedHeatMapGeo = async () => {
-    const result = await prisma_1.nlpdb.$queryRaw `
+import { nlpdb } from "../lib/prisma/nlp/prisma.js";
+export const GetGroupedHeatMapGeo = async () => {
+    const result = await nlpdb.$queryRaw `
     SELECT
       id,
       platform,
@@ -37,4 +34,3 @@ const GetGroupedHeatMapGeo = async () => {
         })),
     };
 };
-exports.GetGroupedHeatMapGeo = GetGroupedHeatMapGeo;

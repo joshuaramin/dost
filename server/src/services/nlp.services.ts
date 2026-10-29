@@ -1,4 +1,4 @@
-import { nlpdb } from "@/lib/prisma/nlp/prisma";
+import { nlpdb } from "../lib/prisma/nlp/prisma.js";
 
 export const GetGroupedHeatMapGeo = async () => {
   const result = await nlpdb.$queryRaw<
@@ -33,12 +33,12 @@ export const GetGroupedHeatMapGeo = async () => {
     type: "FeatureCollection",
     features: result
       .filter(
-        (item) =>
+        (item: any) =>
           item.geometry?.type === "Point" &&
           Array.isArray(item.geometry.coordinates) &&
           item.geometry.coordinates.length >= 2,
       )
-      .map((item) => ({
+      .map((item: any) => ({
         type: "Feature",
         properties: {
           id: item.id,

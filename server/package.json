@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"pnpm run server:dev\" \"pnpm run workers:dev\"",
     "server:dev": "tsx watch src/local-server.ts",

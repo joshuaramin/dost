@@ -1,4 +1,4 @@
-import { GetGroupedHeatMapGeo } from "@/services/nlp.services";
+import { GetGroupedHeatMapGeo } from "../services/nlp.services.js";
 import { Request, Response } from "express";
 
 export const getAllHeatMapGeo = async (

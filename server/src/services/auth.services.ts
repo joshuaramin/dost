@@ -1,18 +1,18 @@
 import "dotenv/config";
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { prisma } from "@/lib/prisma/system/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 import {
   ActivityLog,
   DeviceSession,
   OTP,
   User,
-} from "@/lib/prisma/system/generated/prisma/client";
+} from "../lib/prisma/system/generated/prisma/client.js";
 import jwt from "jsonwebtoken";
-import { generateOTP, hashOTP } from "@/utils/otpGenerator";
-import { AppError } from "@/lib/common/appError";
-import { authQueue, authVerified } from "@/jobs/auth/auth.queue";
-import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { DeviceSessionInterface } from "@/lib/interface/device-sessions";
+import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
+import { AppError } from "../lib/common/appError.js";
+import { authQueue, authVerified } from "../jobs/auth/auth.queue.js";
+import { DeviceSessionWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 
 interface DeviceSessions {
   device_name: string;

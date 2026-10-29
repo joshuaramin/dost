@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRegionsHierachy = exports.getBarangays = exports.getMunicipalities = exports.getProvinces = exports.getRegions = exports.getAllGeom = void 0;
-const geom_services_1 = require("../services/geom.services.js");
-const getAllGeom = async (_req, res) => {
+import { GetAllAdminGeo, GetRegions, GetProvinces, GetMunicipalities, GetRegionHierarchy, GetBarangays, } from "../services/geom.services.js";
+export const getAllGeom = async (_req, res) => {
     try {
-        const result = await (0, geom_services_1.GetAllAdminGeo)();
+        const result = await GetAllAdminGeo();
         return res.status(200).json({
             success: true,
             timestamp: new Date().toISOString(),
@@ -20,10 +17,9 @@ const getAllGeom = async (_req, res) => {
         });
     }
 };
-exports.getAllGeom = getAllGeom;
-const getRegions = async (_req, res) => {
+export const getRegions = async (_req, res) => {
     try {
-        const data = await (0, geom_services_1.GetRegions)();
+        const data = await GetRegions();
         return res.status(200).json({
             success: true,
             data,
@@ -39,11 +35,10 @@ const getRegions = async (_req, res) => {
         });
     }
 };
-exports.getRegions = getRegions;
-const getProvinces = async (req, res) => {
+export const getProvinces = async (req, res) => {
     try {
         const { region_code } = req.query;
-        const data = await (0, geom_services_1.GetProvinces)(Number(region_code));
+        const data = await GetProvinces(Number(region_code));
         return res.status(200).json({
             success: true,
             data,
@@ -59,8 +54,7 @@ const getProvinces = async (req, res) => {
         });
     }
 };
-exports.getProvinces = getProvinces;
-const getMunicipalities = async (req, res) => {
+export const getMunicipalities = async (req, res) => {
     try {
         const { province_code } = req.query;
         if (!province_code || typeof province_code !== "string") {
@@ -70,7 +64,7 @@ const getMunicipalities = async (req, res) => {
                 timestamp: new Date().toISOString(),
             });
         }
-        const data = await (0, geom_services_1.GetMunicipalities)(province_code);
+        const data = await GetMunicipalities(province_code);
         return res.status(200).json({
             success: true,
             data,
@@ -86,11 +80,10 @@ const getMunicipalities = async (req, res) => {
         });
     }
 };
-exports.getMunicipalities = getMunicipalities;
-const getBarangays = async (req, res) => {
+export const getBarangays = async (req, res) => {
     try {
         const { municipality_code } = req.query;
-        const data = await (0, geom_services_1.GetBarangays)(Number(municipality_code));
+        const data = await GetBarangays(Number(municipality_code));
         return res.status(200).json({
             success: true,
             data,
@@ -106,10 +99,9 @@ const getBarangays = async (req, res) => {
         });
     }
 };
-exports.getBarangays = getBarangays;
-const getRegionsHierachy = async (request, response) => {
+export const getRegionsHierachy = async (request, response) => {
     try {
-        const data = await (0, geom_services_1.GetRegionHierarchy)();
+        const data = await GetRegionHierarchy();
         return response.status(200).json({
             success: true,
             data,
@@ -121,4 +113,3 @@ const getRegionsHierachy = async (request, response) => {
         return response.status(500).json({});
     }
 };
-exports.getRegionsHierachy = getRegionsHierachy;

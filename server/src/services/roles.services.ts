@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import useSlugify from "@/lib/helpers/useSlugify";
-import { RoleInterface } from "@/lib/interface/roles.interface";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { Prisma, Role } from "@/lib/prisma/system/generated/prisma/client";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { RoleInterface } from "../lib/interface/roles.interface.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { Prisma, Role } from "../lib/prisma/system/generated/prisma/client.js";
 
 // Manage
 

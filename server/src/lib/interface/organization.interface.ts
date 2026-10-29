@@ -1,3 +1,2 @@
-import { BasicArgs } from "./basicargs";
-
+import { BasicArgs } from "./basicargs.js";
 export interface OrganizationInterface extends BasicArgs {}

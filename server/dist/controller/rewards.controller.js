@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createRuleReward = exports.getAllRewardPointRule = exports.createReward = exports.getRewardLevelById = exports.getAllRewardLevel = exports.createBadge = exports.getBadgeId = exports.getAllBadge = void 0;
-const rewards_services_1 = require("../services/rewards.services.js");
-const getAllBadge = async (request, response) => {
+import { CreateBadge, CreateRewardLevel, CreateRewardRules, GetAllBadge, GetAllRewardLevel, GetAllRewardRules, GetBadgeById, GetRewardLevelById, } from "../services/rewards.services.js";
+export const getAllBadge = async (request, response) => {
     const { after, orderBy, search, sortBy, limit, before } = request.query;
-    const result = await (0, rewards_services_1.GetAllBadge)({
+    const result = await GetAllBadge({
         after: after,
         before: before,
         filter: {
@@ -20,29 +17,26 @@ const getAllBadge = async (request, response) => {
         success: true,
     });
 };
-exports.getAllBadge = getAllBadge;
-const getBadgeId = async (request, response) => {
+export const getBadgeId = async (request, response) => {
     const id = String(request.params.id);
-    const result = await (0, rewards_services_1.GetBadgeById)(id);
+    const result = await GetBadgeById(id);
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.getBadgeId = getBadgeId;
-const createBadge = async (request, response) => {
-    const result = await (0, rewards_services_1.CreateBadge)();
+export const createBadge = async (request, response) => {
+    const result = await CreateBadge();
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.createBadge = createBadge;
-const getAllRewardLevel = async (request, response) => {
+export const getAllRewardLevel = async (request, response) => {
     const { after, orderBy, search, sortBy, limit, before } = request.query;
-    const result = await (0, rewards_services_1.GetAllRewardLevel)({
+    const result = await GetAllRewardLevel({
         after: after,
         before: before,
         filter: {
@@ -58,31 +52,28 @@ const getAllRewardLevel = async (request, response) => {
         success: true,
     });
 };
-exports.getAllRewardLevel = getAllRewardLevel;
-const getRewardLevelById = async (request, response) => {
+export const getRewardLevelById = async (request, response) => {
     const id = String(request.params.id);
-    const result = await (0, rewards_services_1.GetRewardLevelById)(id);
+    const result = await GetRewardLevelById(id);
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.getRewardLevelById = getRewardLevelById;
 /// Reward Level
-const createReward = async (request, response) => {
-    const result = await (0, rewards_services_1.CreateRewardLevel)();
+export const createReward = async (request, response) => {
+    const result = await CreateRewardLevel();
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.createReward = createReward;
 //RuleReward
-const getAllRewardPointRule = async (request, response) => {
+export const getAllRewardPointRule = async (request, response) => {
     const { after, orderBy, search, sortBy, limit, before } = request.query;
-    const result = await (0, rewards_services_1.GetAllRewardRules)({
+    const result = await GetAllRewardRules({
         after: after,
         before: before,
         filter: {
@@ -98,13 +89,11 @@ const getAllRewardPointRule = async (request, response) => {
         success: true,
     });
 };
-exports.getAllRewardPointRule = getAllRewardPointRule;
-const createRuleReward = async (request, response) => {
-    const result = await (0, rewards_services_1.CreateRewardRules)();
+export const createRuleReward = async (request, response) => {
+    const result = await CreateRewardRules();
     return response.status(200).json({
         ...result,
         timestamp: new Date(Date.now()),
         success: true,
     });
 };
-exports.createRuleReward = createRuleReward;

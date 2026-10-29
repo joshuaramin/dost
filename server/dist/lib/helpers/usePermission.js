@@ -1,8 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.withPermission = void 0;
-exports.checkPermission = checkPermission;
-function checkPermission(user, permissions, mode = "OR") {
+export function checkPermission(user, permissions, mode = "OR") {
     if (!user) {
         return false;
     }
@@ -16,7 +12,7 @@ function checkPermission(user, permissions, mode = "OR") {
     }
     return permissions.some((permission) => userPermissions.includes(permission));
 }
-const withPermission = (permissions, mode = "OR") => (req, res, next) => {
+export const withPermission = (permissions, mode = "OR") => (req, res, next) => {
     try {
         const requiredPermissions = Array.isArray(permissions)
             ? permissions
@@ -44,4 +40,3 @@ const withPermission = (permissions, mode = "OR") => (req, res, next) => {
         });
     }
 };
-exports.withPermission = withPermission;

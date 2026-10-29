@@ -1,4 +1,7 @@
-import { RoleSchema, UpdaetRoleSchema } from "@/lib/validation/Role.validation";
+import {
+  RoleSchema,
+  UpdaetRoleSchema,
+} from "../lib/validation/Role.validation.js";
 import {
   AddRolePermission,
   CreateRole,
@@ -6,7 +9,7 @@ import {
   GetRoleBySlug,
   SoftDeleteRole,
   UpdateRoles,
-} from "@/services/roles.services";
+} from "../services/roles.services.js";
 import { Request, Response } from "express";
 
 export const getAllRoles = async (request: Request, response: Response) => {

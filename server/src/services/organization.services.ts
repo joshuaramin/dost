@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { OrganizationInterface } from "@/lib/interface/organization.interface";
-import { Organization } from "@/lib/prisma/system/generated/prisma/client";
-import { OrganizationWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { prisma } from "@/lib/prisma/system/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { OrganizationInterface } from "../lib/interface/organization.interface.js";
+import { Organization } from "../lib/prisma/system/generated/prisma/client.js";
+import { OrganizationWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 
 // Manage
 

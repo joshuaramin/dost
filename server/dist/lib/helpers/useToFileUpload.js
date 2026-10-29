@@ -1,13 +1,10 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadFileToS3 = void 0;
-const client_s3_1 = require("@aws-sdk/client-s3");
-const lib_storage_1 = require("@aws-sdk/lib-storage");
-const aws_config_1 = require("../config/aws.config");
-const client = new client_s3_1.S3Client([aws_config_1.AWS_CONFIG]);
-const uploadFileToS3 = async (file, filename) => {
+import { S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import { AWS_CONFIG } from "../config/aws.config.js";
+const client = new S3Client([AWS_CONFIG]);
+export const uploadFileToS3 = async (file, filename) => {
     try {
-        const upload = new lib_storage_1.Upload({
+        const upload = new Upload({
             client,
             params: {
                 Bucket: process.env.BUCKET,
@@ -27,4 +24,3 @@ const uploadFileToS3 = async (file, filename) => {
         throw error;
     }
 };
-exports.uploadFileToS3 = uploadFileToS3;

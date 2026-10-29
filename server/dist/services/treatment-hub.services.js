@@ -1,12 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateTreatmentHubById = exports.CreateTreatmentHub = exports.GetTreatmentHubBySlug = exports.GetAllTreatmentHub = void 0;
-const tslib_1 = require("tslib");
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/geospatial/prisma.js");
-const useSlugify_1 = tslib_1.__importDefault(require("../lib/helpers/useSlugify.js"));
-const TreatmentHubManage = new useCrud_1.PrismaCRUDManager(prisma_1.geodb.treatment_hubs, "treatment_hub_id");
-const GetAllTreatmentHub = async ({ limit, after, before, filter: { orderBy, search, sortBy }, psgc_code, service_id, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { geodb } from "../lib/prisma/geospatial/prisma.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+const TreatmentHubManage = new PrismaCRUDManager(geodb.treatment_hubs, "treatment_hub_id");
+export const GetAllTreatmentHub = async ({ limit, after, before, filter: { orderBy, search, sortBy }, psgc_code, service_id, }) => {
     let where = {
         is_deleted: false,
         ...(search && {
@@ -64,8 +60,7 @@ const GetAllTreatmentHub = async ({ limit, after, before, filter: { orderBy, sea
         },
     });
 };
-exports.GetAllTreatmentHub = GetAllTreatmentHub;
-const GetTreatmentHubBySlug = async (data) => {
+export const GetTreatmentHubBySlug = async (data) => {
     return TreatmentHubManage.readById(data, "slug", {
         select: {
             treatment_hub_id: true,
@@ -78,11 +73,10 @@ const GetTreatmentHubBySlug = async (data) => {
         },
     });
 };
-exports.GetTreatmentHubBySlug = GetTreatmentHubBySlug;
-const CreateTreatmentHub = async (data) => {
+export const CreateTreatmentHub = async (data) => {
     return TreatmentHubManage.create({
         name: data.name,
-        slug: (0, useSlugify_1.default)(data.name),
+        slug: useSlugify(data.name),
         description: data.description,
         address: data.address,
         region_id: data.region_id,
@@ -132,8 +126,6 @@ const CreateTreatmentHub = async (data) => {
         }),
     });
 };
-exports.CreateTreatmentHub = CreateTreatmentHub;
-const UpdateTreatmentHubById = async (id, data) => {
+export const UpdateTreatmentHubById = async (id, data) => {
     return TreatmentHubManage.update("slug", data, {});
 };
-exports.UpdateTreatmentHubById = UpdateTreatmentHubById;

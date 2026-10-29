@@ -9,16 +9,16 @@ import {
   GetEducationTag,
   SoftDeleteEducationResource,
   UpdateEducationalResourcre,
-} from "@/services/educational-resources.services";
+} from "../services/educational-resources.services.js";
 import {
   CreateEducationCategorySchema,
   CreateEducationResourceBodySchema,
   CreateEducationResourceSchema,
   CreateEducationTagSchema,
   UpdateEducationResourceSchema,
-} from "@/lib/validation/educational-resource.validation";
-import useSlugify from "@/lib/helpers/useSlugify";
-import { getAttachmentType } from "@/lib/helpers/useGetAttachment";
+} from "../lib/validation/educational-resource.validation.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { getAttachmentType } from "../lib/helpers/useGetAttachment.js";
 
 export const getAllEducationResources = async (
   request: Request,

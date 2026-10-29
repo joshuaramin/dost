@@ -3,10 +3,10 @@ import {
   createForm,
   getAllForms,
   getFormById,
-} from "@/controller/form.controller";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import upload from "@/lib/helpers/useMulter";
+} from "../controller/form.controller.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import upload from "../lib/helpers/useMulter.js";
 
 const router = express.Router();
 

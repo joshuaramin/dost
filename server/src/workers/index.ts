@@ -1,3 +1,3 @@
-import "@/jobs/auth/auth.worker";
+import "../jobs/auth/auth.worker.js";
 
 console.log("🚀  ALL WORKES LOADED");

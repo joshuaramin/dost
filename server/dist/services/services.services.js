@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateTreatmentHubService = exports.GetAllTreatmentHubService = void 0;
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/geospatial/prisma.js");
-const ServiceManage = new useCrud_1.PrismaCRUDManager(prisma_1.geodb.services, "service_id", false);
-const GetAllTreatmentHubService = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { geodb } from "../lib/prisma/geospatial/prisma.js";
+const ServiceManage = new PrismaCRUDManager(geodb.services, "service_id", false);
+export const GetAllTreatmentHubService = ({ after, before, filter: { orderBy, search, sortBy }, limit, }) => {
     const where = {
         ...(search && {
             name: {
@@ -33,11 +30,9 @@ const GetAllTreatmentHubService = ({ after, before, filter: { orderBy, search, s
         },
     });
 };
-exports.GetAllTreatmentHubService = GetAllTreatmentHubService;
-const CreateTreatmentHubService = (data) => {
+export const CreateTreatmentHubService = (data) => {
     return ServiceManage.create({
         name: data.name,
         description: data.description,
     });
 };
-exports.CreateTreatmentHubService = CreateTreatmentHubService;

@@ -1,10 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateActivityLogs = exports.GetAllActivityLogs = void 0;
-const useCrud_1 = require("../lib/helpers/useCrud.js");
-const prisma_1 = require("../lib/prisma/system/prisma.js");
-const ActivityLogManage = new useCrud_1.PrismaCRUDManager(prisma_1.prisma.activityLog, "activity_logs_id");
-const GetAllActivityLogs = async (id, { after, before, filter: { orderBy, sortBy }, limit }) => {
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+const ActivityLogManage = new PrismaCRUDManager(prisma.activityLog, "activity_logs_id");
+export const GetAllActivityLogs = async (id, { after, before, filter: { orderBy, sortBy }, limit }) => {
     let where = {
         is_deleted: false,
         user: { user_id: id },
@@ -34,12 +31,10 @@ const GetAllActivityLogs = async (id, { after, before, filter: { orderBy, sortBy
         },
     });
 };
-exports.GetAllActivityLogs = GetAllActivityLogs;
-const CreateActivityLogs = async (data) => {
+export const CreateActivityLogs = async (data) => {
     return ActivityLogManage.create({
         type: data.type,
         description: data.description,
         user: { connect: { user_id: data.user_id } },
     });
 };
-exports.CreateActivityLogs = CreateActivityLogs;

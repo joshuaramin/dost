@@ -1,7 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatMultiAdminToGeoJSON = void 0;
-const formatMultiAdminToGeoJSON = (rows) => {
+export const formatMultiAdminToGeoJSON = (rows) => {
     const groupByLevel = {
         region: [],
         province: [],
@@ -39,4 +36,3 @@ const formatMultiAdminToGeoJSON = (rows) => {
         },
     };
 };
-exports.formatMultiAdminToGeoJSON = formatMultiAdminToGeoJSON;
