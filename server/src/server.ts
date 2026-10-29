@@ -37,9 +37,9 @@ import { initializeSocket } from "./sockets";
 
 export const app = express();
 
-const httpServer = http.createServer(app);
+// const httpServer = http.createServer(app);
 
-initializeSocket(httpServer);
+// initializeSocket(httpServer);
 
 const serverAdapter = new ExpressAdapter();
 
@@ -165,6 +165,8 @@ app.use(errorHandler);
 
 printEndpoints(routeDefinitions);
 
-httpServer.listen(4000, () => {
+app.listen(4000, () => {
   console.log("Server is running at http://localhost:4000/");
 });
+
+export default app;
