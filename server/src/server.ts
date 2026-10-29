@@ -33,13 +33,8 @@ import { createBullBoard } from "@bull-board/api";
 import { ExpressAdapter } from "@bull-board/express";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { authQueue } from "./jobs/auth/auth.queue";
-import { initializeSocket } from "./sockets";
-
 export const app = express();
 
-// const httpServer = http.createServer(app);
-
-// initializeSocket(httpServer);
 
 const serverAdapter = new ExpressAdapter();
 
@@ -165,7 +160,7 @@ app.use(errorHandler);
 
 printEndpoints(routeDefinitions);
 
-app.listen(4000, () => {
+app.listen(process.env.PORT ?? 4000, () => {
   console.log("Server is running at http://localhost:4000/");
 });
 
