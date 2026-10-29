@@ -7,9 +7,9 @@
     "dev": "concurrently \"pnpm run server:dev\" \"pnpm run workers:dev\"",
     "server:dev": "tsx watch src/local-server.ts",
     "workers:dev": "tsx watch src/workers/index.ts",
-    "build": "prisma generate --schema=src/lib/prisma/schema.prisma && tsc --noEmit",
-    "prisma:generate": "prisma generate --schema=src/lib/prisma/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/schema.prisma"
+    "build": "prisma generate --schema=src/lib/prisma/system/schema.prisma && tsc --noEmit",
+    "prisma:generate": "prisma generate --schema=src/lib/prisma/system/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/system/schema.prisma"
   }
   ,
   "keywords": [ ],
