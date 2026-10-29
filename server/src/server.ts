@@ -38,7 +38,7 @@ export const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://dost-server-git-development-joshuaramins-projects.vercel.app",
-  "https://dost-ap8f-git-development-joshuaramins-projects.vercel.app/",
+  "https://dost-ap8f-git-development-joshuaramins-projects.vercel.app",
   ...(process.env.FRONTEND_URL
     ? process.env.FRONTEND_URL.split(",")
         .map((origin) => origin.trim())
