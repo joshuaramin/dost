@@ -15,8 +15,6 @@ import {
 import { getDeviceInfo } from "../utils/deviceParser.js";
 import { Response, Request } from "express";
 
-import UAPARSER from "ua-parser-js";
-
 interface DeviceSessions {
   device_name: string;
   device_type: string;
