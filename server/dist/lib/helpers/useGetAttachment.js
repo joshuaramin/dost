@@ -1,4 +1,4 @@
-import { AttachmentType } from "../prisma/system/generated/prisma/client.js";
+import { AttachmentType } from "../../lib//prisma/system/generated/prisma/client.js";
 export const getAttachmentType = (mimeType) => {
     if (mimeType.startsWith("image/")) {
         return AttachmentType.IMAGE;

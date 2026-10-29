@@ -1,7 +1,7 @@
-import UAParser from "ua-parser-js";
+import { UAParser } from "ua-parser-js";
 export const getDeviceInfo = (req) => {
     const userAgent = req.headers["user-agent"] || "";
-    const parser = new UAParser.UAParser(userAgent);
+    const parser = new UAParser(userAgent);
     const ua = parser.getResult();
     return {
         ip_address: req.headers["x-forwarded-for"]?.split(",")[0] ||
