@@ -8,8 +8,8 @@
     "server:dev": "tsx watch src/local-server.ts",
     "workers:dev": "tsx watch src/workers/index.ts",
     "build": "prisma generate --schema=src/lib/prisma/system/schema.prisma && tsc --noEmit",
-    "prisma:generate": "prisma generate --schema=src/lib/prisma/system/schema.prisma",
-    "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/system/schema.prisma",
+    "prisma:generate": "prisma generate --schema=src/lib/prisma/system/schema.prisma && prisma generate --schema=src/lib/prisma/geospatial/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/system/schema.prisma && prisma generate --schema=src/lib/prisma/geospatial/schema.prisma",
     "start": "tsx src/server.ts"
   }
   ,
