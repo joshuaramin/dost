@@ -2,12 +2,11 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import expressRateLimiter from "express-rate-limit";
-import http from "node:http";
-
-import { printEndpoints } from "@/utils/routes";
+import type { Request, Response } from "express";
 
 dotenv.config();
 
+import { printEndpoints } from "@/utils/routes";
 import { createApiVersionMiddleware } from "@/lib/common/middleware.ts/api.middleware";
 import { responseWrapperMiddleware } from "@/lib/common/middleware.ts/reponse.middleware";
 import { withAuth } from "@/lib/helpers/useAuth";
@@ -29,21 +28,36 @@ import ActivityRouter from "@/routes/log.routes";
 import FormRouter from "@/routes/form.route";
 import RewardsRouter from "@/routes/rewards.routes";
 
-import { createBullBoard } from "@bull-board/api";
-import { ExpressAdapter } from "@bull-board/express";
-import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
-import { authQueue } from "./jobs/auth/auth.queue";
 export const app = express();
 
+/**
+ * CORS
+ * Configure FRONTEND_URL in Vercel environment variables
+ * with your deployed frontend origin.
+ */
+const allowedOrigins = [
+  "http://localhost:3000",
+  ...(process.env.FRONTEND_URL
+    ? process.env.FRONTEND_URL.split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+    : []),
+];
 
-const serverAdapter = new ExpressAdapter();
+app.use(
+  cors({
+    credentials: true,
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
+    origin: (origin, callback) => {
+      // Permit requests without an Origin header, such as server-to-server calls.
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-serverAdapter.setBasePath("/admin/queues");
-
-createBullBoard({
-  queues: [new BullMQAdapter(authQueue)],
-  serverAdapter,
-});
+      return callback(new Error(`CORS blocked request from origin: ${origin}`));
+    },
+  }),
+);
 
 app.use(
   createApiVersionMiddleware({
@@ -63,105 +77,74 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   expressRateLimiter({
     limit: 1000,
-    windowMs: 60000,
+    windowMs: 60_000,
     standardHeaders: true,
     legacyHeaders: true,
-    message: "Too many request, Please try again",
+    message: "Too many requests. Please try again.",
   }),
 );
 
-app.use(
-  cors({
-    credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
-    origin: ["http://localhost:3000"],
-  }),
-);
+/**
+ * Health check
+ * Does not require authentication or a database connection.
+ */
+app.get("/", (_req: Request, res: Response) => {
+  res.status(200).json({
+    name: "DOST API",
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  });
+});
 
-app.use("/admin/queues", serverAdapter.getRouter());
+/**
+ * API version test
+ */
+app.get("/test-version", withAuth, (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "API versioning works!",
+    api_version: req.apiVersionInfo,
+  });
+});
 
-app.use(responseWrapperMiddleware);
-
+/**
+ * Route definitions
+ */
 const routeDefinitions = [
-  {
-    prefix: "/maintenance/contribution",
-    router: ContributionRouter,
-  },
-  {
-    prefix: "/maintenance/users",
-    router: UserRouter,
-  },
-  {
-    prefix: "/maintenance/resource",
-    router: ResourceRouter,
-  },
+  { prefix: "/maintenance/contribution", router: ContributionRouter },
+  { prefix: "/maintenance/users", router: UserRouter },
+  { prefix: "/maintenance/resource", router: ResourceRouter },
   {
     prefix: "/maintenance/educational-resource",
     router: EducationResourceRouter,
   },
-  {
-    prefix: "/maintenance/survey",
-    router: SurveyRouter,
-  },
-  {
-    prefix: "/maintenance/roles",
-    router: RolesRouter,
-  },
-  {
-    prefix: "/auth",
-    router: AuthRouter,
-  },
-  {
-    prefix: "/maintenance/geospatial",
-    router: RegionRouter,
-  },
-  {
-    prefix: "/maintenance/services",
-    router: ServiceRouter,
-  },
-  {
-    prefix: "/maintenance/nlp",
-    router: NlpRouter,
-  },
-  {
-    prefix: "/maintenance/organization",
-    router: OrganizationRouter,
-  },
-  {
-    prefix: "/maintenance/treatment-hub",
-    router: TreatmentHubRouter,
-  },
-  {
-    prefix: "/maintenance/activity-logs",
-    router: ActivityRouter,
-  },
-  {
-    prefix: "/maintenance/form",
-    router: FormRouter,
-  },
-  {
-    prefix: "/maintenance/rewards",
-    router: RewardsRouter,
-  },
+  { prefix: "/maintenance/survey", router: SurveyRouter },
+  { prefix: "/maintenance/roles", router: RolesRouter },
+  { prefix: "/auth", router: AuthRouter },
+  { prefix: "/maintenance/geospatial", router: RegionRouter },
+  { prefix: "/maintenance/services", router: ServiceRouter },
+  { prefix: "/maintenance/nlp", router: NlpRouter },
+  { prefix: "/maintenance/organization", router: OrganizationRouter },
+  { prefix: "/maintenance/treatment-hub", router: TreatmentHubRouter },
+  { prefix: "/maintenance/activity-logs", router: ActivityRouter },
+  { prefix: "/maintenance/form", router: FormRouter },
+  { prefix: "/maintenance/rewards", router: RewardsRouter },
 ] as const;
 
 for (const { prefix, router } of routeDefinitions) {
   app.use(prefix, router);
 }
 
-app.get("/test-version", withAuth, (req, res) => {
-  res.json({
-    message: "API versioning works!",
-    api_version: req.apiVersionInfo,
-  });
-});
-
+/**
+ * Centralized error handler.
+ * Must be registered after all routes.
+ */
 app.use(errorHandler);
 
-printEndpoints(routeDefinitions);
-
-app.listen(process.env.PORT ?? 4000, () => {
-  console.log("Server is running at http://localhost:4000/");
-});
+/**
+ * Print routes for local debugging.
+ */
+if (process.env.NODE_ENV !== "production") {
+  printEndpoints(routeDefinitions);
+}
 
 export default app;
