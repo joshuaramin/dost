@@ -41,18 +41,7 @@ const allowedOrigins = new Set(
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      if (allowedOrigins.has(normalizeOrigin(origin))) {
-        return callback(null, true);
-      }
-
-      console.warn(`[CORS] Blocked origin: ${origin}`);
-      return callback(new Error("Origin not allowed by CORS"));
-    },
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization", "X-API-Version"],
