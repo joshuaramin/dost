@@ -30,34 +30,33 @@ import RewardsRouter from "./routes/rewards.routes.js";
 
 export const app = express();
 
-/**
- * CORS
- * Configure FRONTEND_URL in Vercel environment variables
- * with your deployed frontend origin.
- */
-const allowedOrigins = [
-  "http://localhost:3000",
-  "https://dost-server-git-development-joshuaramins-projects.vercel.app",
-  "https://dost-ap8f-git-development-joshuaramins-projects.vercel.app",
-  ...(process.env.FRONTEND_URL
-    ? process.env.FRONTEND_URL.split(",")
-        .map((origin) => origin.trim())
-        .filter(Boolean)
-    : []),
-];
+const normalizeOrigin = (value: string): string =>
+  value.trim().replace(/\/+$/, "");
+
+const allowedOrigins = new Set(
+  ["http://localhost:3000", ...(process.env.FRONTEND_URL?.split(",") ?? [])]
+    .map(normalizeOrigin)
+    .filter(Boolean),
+);
 
 app.use(
   cors({
-    credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
     origin: (origin, callback) => {
-      // Permit requests without an Origin header, such as server-to-server calls.
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin) {
         return callback(null, true);
       }
 
-      return callback(new Error(`CORS blocked request from origin: ${origin}`));
+      if (allowedOrigins.has(normalizeOrigin(origin))) {
+        return callback(null, true);
+      }
+
+      console.warn(`[CORS] Blocked origin: ${origin}`);
+      return callback(new Error("Origin not allowed by CORS"));
     },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-API-Version"],
+    optionsSuccessStatus: 204,
   }),
 );
 
