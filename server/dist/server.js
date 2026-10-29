@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import expressRateLimiter from "express-rate-limit";
+import { rateLimit } from "express-rate-limit";
 dotenv.config();
 import { printEndpoints } from "./utils/routes.js";
 import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
@@ -58,7 +58,7 @@ app.use(createApiVersionMiddleware({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(expressRateLimiter({
+app.use(rateLimit({
     limit: 1000,
     windowMs: 60_000,
     standardHeaders: true,

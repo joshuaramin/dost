@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import expressRateLimiter from "express-rate-limit";
+import { rateLimit } from "express-rate-limit";
 import type { Request, Response } from "express";
 
 dotenv.config();
@@ -75,7 +75,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
-  expressRateLimiter({
+  rateLimit({
     limit: 1000,
     windowMs: 60_000,
     standardHeaders: true,
