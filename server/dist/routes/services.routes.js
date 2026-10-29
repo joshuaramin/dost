@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const services_controller_1 = require("../controller/services.controller.js");
+const asyncHandler_1 = require("../lib/common/middleware.ts/asyncHandler.js");
+const useAuth_1 = require("../lib/helpers/useAuth.js");
+const express_1 = tslib_1.__importDefault(require("express"));
+const router = express_1.default.Router();
+router.get("/", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(services_controller_1.getAllTreatmentHubService));
+router.post("/", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(services_controller_1.createTreatmentHubService));
+exports.default = router;

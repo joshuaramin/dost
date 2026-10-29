@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const auth_controller_1 = require("../controller/auth.controller.js");
+const asyncHandler_1 = require("../lib/common/middleware.ts/asyncHandler.js");
+const useAuth_1 = require("../lib/helpers/useAuth.js");
+const express_1 = tslib_1.__importDefault(require("express"));
+const router = express_1.default.Router();
+router.get("/device-sessions/:id", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(auth_controller_1.DeviceSessions));
+router.post("/login", (0, asyncHandler_1.asyncHandler)(auth_controller_1.Login));
+router.post("/verification", (0, asyncHandler_1.asyncHandler)(auth_controller_1.VerifyOTP));
+router.post("/verified", (0, asyncHandler_1.asyncHandler)(auth_controller_1.Verified));
+router.post("/logout/:id", (0, asyncHandler_1.asyncHandler)(auth_controller_1.Logout));
+router.post("/registration", (0, asyncHandler_1.asyncHandler)(auth_controller_1.Registration));
+router.post("/resend-otp", (0, asyncHandler_1.asyncHandler)(auth_controller_1.ResendOTP));
+exports.default = router;

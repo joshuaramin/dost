@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const useAuth_1 = require("../lib/helpers/useAuth.js");
+const usePermission_1 = require("../lib/helpers/usePermission.js");
+const express_1 = tslib_1.__importDefault(require("express"));
+const treatment_hub_controller_1 = require("../controller/treatment-hub.controller.js");
+const router = express_1.default.Router();
+router.get("/", treatment_hub_controller_1.getAllTreatmentHub);
+router.get("/:id", treatment_hub_controller_1.getTreatmentHubById);
+router.post("/", useAuth_1.withAuth, (0, usePermission_1.withPermission)("treatment-hub:create"), treatment_hub_controller_1.createTreatmentHub);
+router.patch("/:id", useAuth_1.withAuth, (0, usePermission_1.withPermission)("treatment-hub:update"));
+exports.default = router;

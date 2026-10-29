@@ -1,0 +1,139 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdateTreatmentHubById = exports.CreateTreatmentHub = exports.GetTreatmentHubBySlug = exports.GetAllTreatmentHub = void 0;
+const tslib_1 = require("tslib");
+const useCrud_1 = require("../lib/helpers/useCrud.js");
+const prisma_1 = require("../lib/prisma/geospatial/prisma.js");
+const useSlugify_1 = tslib_1.__importDefault(require("../lib/helpers/useSlugify.js"));
+const TreatmentHubManage = new useCrud_1.PrismaCRUDManager(prisma_1.geodb.treatment_hubs, "treatment_hub_id");
+const GetAllTreatmentHub = async ({ limit, after, before, filter: { orderBy, search, sortBy }, psgc_code, service_id, }) => {
+    let where = {
+        is_deleted: false,
+        ...(search && {
+            name: { contains: search, mode: "insensitive" },
+        }),
+        ...(psgc_code && {
+            regions: {
+                psgc_code: { contains: psgc_code, mode: "insensitive" },
+            },
+        }),
+        ...(service_id && {
+            services: { every: { service_id } },
+        }),
+    };
+    return TreatmentHubManage.read({
+        where,
+        limit,
+        ...(after && {
+            cursor: after,
+            direction: "forward",
+        }),
+        ...(before && {
+            cursor: before,
+            direction: "backward",
+        }),
+        orderBy: {
+            [orderBy]: sortBy,
+        },
+        select: {
+            treatment_hub_id: true,
+            name: true,
+            slug: true,
+            description: true,
+            status: true,
+            created_at: true,
+            updated_at: true,
+            address: true,
+            barangays: true,
+            provinces: true,
+            code: true,
+            email: true,
+            latitude: true,
+            longitude: true,
+            contact_number: true,
+            municipalities: true,
+            regions: true,
+            services: {
+                select: {
+                    services: { select: { name: true } },
+                },
+            },
+            website: true,
+            operating_hours: true,
+            region_id: true,
+        },
+    });
+};
+exports.GetAllTreatmentHub = GetAllTreatmentHub;
+const GetTreatmentHubBySlug = async (data) => {
+    return TreatmentHubManage.readById(data, "slug", {
+        select: {
+            treatment_hub_id: true,
+            name: true,
+            slug: true,
+            description: true,
+            status: true,
+            created_at: true,
+            updated_at: true,
+        },
+    });
+};
+exports.GetTreatmentHubBySlug = GetTreatmentHubBySlug;
+const CreateTreatmentHub = async (data) => {
+    return TreatmentHubManage.create({
+        name: data.name,
+        slug: (0, useSlugify_1.default)(data.name),
+        description: data.description,
+        address: data.address,
+        region_id: data.region_id,
+        status: data.status,
+        website: data.website,
+        code: data.code,
+        contact_number: data.contact_number,
+        email: data.email,
+        latitude: data.latitude,
+        longitude: data.longitude,
+        ...(data.region_ogc_fid && {
+            regions: {
+                connect: { region_id: data.region_ogc_fid },
+            },
+        }),
+        ...(data.barangay_ogc_fid && {
+            barangays: {
+                connect: {
+                    ogc_fid: data.barangay_ogc_fid,
+                },
+            },
+        }),
+        ...(data.municipality_ogc_fid && {
+            municipalities: {
+                connect: {
+                    ogc_fid: data.municipality_ogc_fid,
+                },
+            },
+        }),
+        ...(data.province_ogc_fid && {
+            provinces: {
+                connect: {
+                    ogc_fid: data.province_ogc_fid,
+                },
+            },
+        }),
+        ...(data.service_id && {
+            services: {
+                create: {
+                    services: {
+                        connect: {
+                            service_id: data.service_id,
+                        },
+                    },
+                },
+            },
+        }),
+    });
+};
+exports.CreateTreatmentHub = CreateTreatmentHub;
+const UpdateTreatmentHubById = async (id, data) => {
+    return TreatmentHubManage.update("slug", data, {});
+};
+exports.UpdateTreatmentHubById = UpdateTreatmentHubById;

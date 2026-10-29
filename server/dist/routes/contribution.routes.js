@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const contribution_controller_1 = require("../controller/contribution.controller.js");
+const asyncHandler_1 = require("../lib/common/middleware.ts/asyncHandler.js");
+const useAuth_1 = require("../lib/helpers/useAuth.js");
+const useMulter_1 = tslib_1.__importDefault(require("../lib/helpers/useMulter.js"));
+const express_1 = tslib_1.__importDefault(require("express"));
+const router = express_1.default.Router();
+router.get("/", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(contribution_controller_1.getAllContributions));
+router.get("/:id", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(contribution_controller_1.getContributionById));
+router.post("/", useAuth_1.withAuth, useMulter_1.default.single("attachment"), (0, asyncHandler_1.asyncHandler)(contribution_controller_1.createContribution));
+router.patch("/:id", useAuth_1.withAuth, (0, asyncHandler_1.asyncHandler)(contribution_controller_1.updateContribution));
+exports.default = router;

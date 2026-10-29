@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = tslib_1.__importDefault(require("express"));
+const geom_controller_1 = require("../controller/geom.controller.js");
+const router = express_1.default.Router();
+router.get("/geom", geom_controller_1.getAllGeom);
+router.get("/hierarchy", geom_controller_1.getRegionsHierachy);
+router.get("/regions", geom_controller_1.getRegions);
+router.get("/provinces", geom_controller_1.getProvinces);
+router.get("/municipalities", geom_controller_1.getMunicipalities);
+router.get("/barangays", geom_controller_1.getBarangays);
+exports.default = router;
