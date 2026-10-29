@@ -1,3 +1,15 @@
 {
-    "$schema": "https://openapi.vercel.sh/vercel.json"
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "buildCommand": "pnpm run build",
+    "functions": {
+        "api/index.ts": {
+            "includeFiles": "dist/**"
+        }
+    },
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api/index"
+        }
+    ]
 }
