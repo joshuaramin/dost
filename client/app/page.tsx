@@ -72,7 +72,7 @@ export default function Home() {
       </section>
       <section className={styles.mapSection}>
         <TitleWrapper title="Surveillance Map" />
-        <SurveillanceMapClient />
+        {/* <SurveillanceMapClient /> */}
         <div className={styles.mapDisclaimer}>
           <Text size="sm" style={{ fontStyle: "italic", color: "#808080" }}>
             Disclaimer: This feature is intended for viewing the hotspot only.
