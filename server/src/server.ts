@@ -64,6 +64,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(responseWrapperMiddleware);
+
 app.use(
   rateLimit({
     limit: 1000,
@@ -86,19 +88,13 @@ app.get("/", (_req: Request, res: Response) => {
   });
 });
 
-/**
- * API version test
- */
-app.get("/test-version", withAuth, (req: Request, res: Response) => {
+app.get("/test-version", (req: Request, res: Response) => {
   res.status(200).json({
     message: "API versioning works!",
     api_version: req.apiVersionInfo,
   });
 });
 
-/**
- * Route definitions
- */
 const routeDefinitions = [
   { prefix: "/maintenance/contribution", router: ContributionRouter },
   { prefix: "/maintenance/users", router: UserRouter },
@@ -124,15 +120,8 @@ for (const { prefix, router } of routeDefinitions) {
   app.use(prefix, router);
 }
 
-/**
- * Centralized error handler.
- * Must be registered after all routes.
- */
 app.use(errorHandler);
 
-/**
- * Print routes for local debugging.
- */
 if (process.env.NODE_ENV !== "production") {
   printEndpoints(routeDefinitions);
 }
