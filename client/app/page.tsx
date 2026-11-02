@@ -72,7 +72,7 @@ export default function Home() {
       </section>
       <section className={styles.mapSection}>
         <TitleWrapper title="Surveillance Map" />
-        <SurveillanceMapClient />
+        {/* <SurveillanceMapClient /> */}
         <div className={styles.mapDisclaimer}>
           <Text size="sm" style={{ fontStyle: "italic", color: "#808080" }}>
             Disclaimer: This feature is intended for viewing the hotspot only.
@@ -89,7 +89,7 @@ export default function Home() {
             ? Array.from({ length: 6 }).map((node, index) => (
                 <SkeletonCard key={index} />
               ))
-            : EducationalResourceData?.data.edges.map(
+            : EducationalResourceData?.data?.edges.map(
                 (
                   {
                     node: {
@@ -180,7 +180,7 @@ export default function Home() {
       <section>
         <TitleWrapper title="Research Partners" />
         <Grid gap={50} max={200} min={100}>
-          {OrganizationData?.data.edges.map(
+          {OrganizationData?.data?.edges.map(
             ({ node: { logo, name } }, index) => (
               <div
                 style={{

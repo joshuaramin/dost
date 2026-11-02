@@ -44,7 +44,12 @@ app.use(
     origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "X-API-Version"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-API-Version",
+      "x-api-key",
+    ],
     optionsSuccessStatus: 204,
   }),
 );
