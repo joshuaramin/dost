@@ -28,6 +28,9 @@ export default function Home() {
   const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
     url: "maintenance/organization",
+    params: {
+      created_at: "asc",
+    },
   });
 
   const { data: EducationalResourceData, isLoading: EducationLoading } =
