@@ -2,4 +2,29 @@ import z from "zod";
 
 export const UserSchema = z.object({
   email: z.string().min(1, "Email Address is required"),
+  is_active: z.boolean().optional(),
+  is_deleted: z.boolean().optional(),
 });
+
+export const UserLogin = z.object({
+  email: z.string().min(1, "Email Address is required"),
+});
+export const ProfileSchema = z.object({
+  first_name: z.string().min(1, "First Name is required"),
+  last_name: z.string().min(1, "Last Name is required"),
+});
+
+export const CreateUserSchema = UserSchema.extend({
+  ...ProfileSchema.shape,
+  role_id: z.string().min(1, "Role is required"),
+  organization_id: z.string().min(1, "Organization is required"),
+});
+
+export const UpdateSchema = z
+  .object({
+    email: z.string(),
+    first_name: z.string().min(1, "First Name is required"),
+    last_name: z.string().min(1, "Last Name is required"),
+    location: z.string().min(1, "Location is required"),
+  })
+  .partial();

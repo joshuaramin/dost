@@ -1,7 +1,9 @@
 export const AWS_CONFIG = {
-  region: process.env.REGION,
+  forcePathStyle: true,
+  endpoint: process.env.AWS_ENDPOINT,
+  region: process.env.AWS_REGION,
   credentials: {
-    accessKeyId: process.env.AWS_SES_KEY,
-    secretAccessKey: process.env.AWS_SES_SKEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 };

@@ -1,35 +1,48 @@
 import { Request, Response, NextFunction } from "express";
 
-declare global {
-  namespace Express {
-    interface Request {
-      UserPayload?: any;
-    }
-  }
-}
+type PermissionMode = "OR" | "AND";
 
-export function checkPermission(user: any, resource: string, action: string) {
+export function checkPermission(
+  user: Express.Request["user"],
+  permissions: string[],
+  mode: PermissionMode = "OR",
+): boolean {
   if (!user) {
-    return { allowed: false };
+    return false;
   }
 
-  if (user.role === "admin") {
-    return { allowed: true };
+  // Super Administrator bypass
+  if (user.role === "Super Administrator") {
+    return true;
   }
 
-  const permissions = user.permissions || [];
+  const userPermissions = user.permissions ?? [];
 
-  const hasPermission = permissions.some((perm: any) => {
-    return perm.resource === resource && perm.actions.includes(action);
-  });
+  if (mode === "AND") {
+    return permissions.every((permission) =>
+      userPermissions.includes(permission),
+    );
+  }
 
-  return { allowed: hasPermission };
+  return permissions.some((permission) => userPermissions.includes(permission));
 }
 
-export const withPermission = (resource: string, action: string) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+export const withPermission =
+  (permissions: string | string[], mode: PermissionMode = "OR") =>
+  (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { allowed } = checkPermission(req.user, resource, action);
+      const requiredPermissions = Array.isArray(permissions)
+        ? permissions
+        : [permissions];
+
+      if (requiredPermissions.length === 0) {
+        return res.status(500).json({
+          success: false,
+          message: "No permissions configured",
+        });
+      }
+
+      const allowed = checkPermission(req.user, requiredPermissions, mode);
 
       if (!allowed) {
         return res.status(403).json({
@@ -38,13 +51,13 @@ export const withPermission = (resource: string, action: string) => {
         });
       }
 
-      next();
+      return next();
     } catch (error) {
       console.error("PERMISSION ERROR:", error);
+
       return res.status(500).json({
         success: false,
         message: "Permission check failed",
       });
     }
   };
-};

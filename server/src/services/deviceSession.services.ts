@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { DeviceSession } from "@/lib/prisma/system/generated/prisma/client";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { DeviceSessionInterface } from "@/lib/interface/deviceSession.interface";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { DeviceSession } from "../lib/prisma/system/generated/prisma/client.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { DeviceSessionWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 
 const DeviceSessionManage = new PrismaCRUDManager<
   DeviceSession,
@@ -12,7 +12,12 @@ const DeviceSessionManage = new PrismaCRUDManager<
 
 export const GetAllDeviceSession = async (
   id: string,
-  { after, filter: { orderBy, search, sortBy }, limit }: DeviceSessionInterface,
+  {
+    after,
+    filter: { orderBy, search, sortBy },
+    limit,
+    before,
+  }: DeviceSessionInterface,
 ) => {
   let where: DeviceSessionWhereInput = {
     is_deleted: false,
@@ -22,7 +27,14 @@ export const GetAllDeviceSession = async (
   return DeviceSessionManage.read({
     where,
     limit,
-    cursor: after,
+    ...(after && {
+      cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
+    }),
     orderBy: {
       [orderBy]: sortBy,
     },

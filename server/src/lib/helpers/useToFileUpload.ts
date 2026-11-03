@@ -1,6 +1,6 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import { Upload } from "@aws-sdk/lib-storage";
-import { AWS_CONFIG } from "../config/aws.config";
+import { AWS_CONFIG } from "../config/aws.config.js";
 
 const client = new S3Client([AWS_CONFIG]);
 
@@ -25,7 +25,7 @@ export const uploadFileToS3 = async (
 
     await upload.done();
 
-    return `https://${process.env.BUCKET}.s3.amazonaws.com/${filename}`;
+    return `https://ajxuatqnkjknuqeszdzz.supabase.co/storage/v1/object/public/${process.env.BUCKET}/${filename}`;
   } catch (error) {
     console.error("S3 upload failed:", error);
     throw error;

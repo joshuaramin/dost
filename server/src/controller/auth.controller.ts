@@ -1,7 +1,19 @@
-import { AuthLogin, AuthLogout } from "@/services/auth.services";
+import {
+  CreateUserSchema,
+  RegisterUserSchema,
+  UserSchema,
+} from "../lib/validation/user.validation.js";
+import {
+  AuthLogin,
+  AuthLogout,
+  AuthRegister,
+  AuthVerfiy,
+  AuthVerified,
+  GetDeviceSessions,
+  GetResendOTP,
+} from "..//services/auth.services.js";
+import { getDeviceInfo } from "../utils/deviceParser.js";
 import { Response, Request } from "express";
-
-import UAPARSER from "ua-parser-js";
 
 interface DeviceSessions {
   device_name: string;
@@ -15,52 +27,122 @@ interface DeviceSessions {
 }
 
 export const Login = async (request: Request, response: Response) => {
-  try {
-    const userAgent = request.headers["user-agent"] || "";
-    const parser = new UAPARSER.UAParser(userAgent);
-    const uaResult = parser.getResult();
+  const deviceInfo = getDeviceInfo(request);
 
-    const deviceInfo: DeviceSessions = {
-      ip_address:
-        (request.headers["x-forwarded-for"] as string)?.split(",")[0] ||
-        request.socket.remoteAddress ||
-        "Unknown",
-      device_type: uaResult.device.type || "Desktop",
-      os: uaResult.os.name || "Unknown",
-      browser: uaResult.browser.name || "Unknown",
-      device_name: uaResult.device.model || "Unknown",
-      user_agent: userAgent,
-      is_deleted: false,
-      is_revoked: false,
-    };
+  const result = await AuthLogin(request.body, deviceInfo);
 
-    console.log("Request Body: ", request.body);
-    const result = await AuthLogin(request.body, deviceInfo);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
 
-    return response.status(200).json({
-      ...result,
-      timestamp: new Date(Date.now()),
-      success: true,
-    });
-  } catch (error) {
-    return response.status(500).json({
-      message: "Internal Server Error",
-      success: false,
-      timestamp: new Date(Date.now()),
-    });
-  }
+export const VerifyOTP = async (request: Request, response: Response) => {
+  const deviceInfo = getDeviceInfo(request);
+
+  const email = String(request.query.email);
+
+  const result = await AuthVerfiy(email, request.body, deviceInfo);
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
 };
 
 export async function Logout(request: Request, response: Response) {
-  try {
-    const userId = String(request.params.id);
-    const result = await AuthLogout(userId);
+  const userId = String(request.params.id);
+  const result = await AuthLogout(userId);
 
-    return response
-      .status(200)
-      .json({ data: result, message: "Logged out successfully" });
-  } catch (error) {
-    console.error("Logout error:", error);
-    return response.status(500).json({ message: "Server error during logout" });
-  }
+  return response
+    .status(200)
+    .json({ data: result, message: "Logged out successfully" });
 }
+
+export const DeviceSessions = async (request: Request, response: Response) => {
+  const userId = String(request.params.id);
+
+  const { orderBy, sortBy, after, before, limit, search } = request.query;
+
+  const result = await GetDeviceSessions({
+    after: after as string,
+    before: before as string,
+    filter: {
+      orderBy: orderBy as string,
+      search: search as string,
+      sortBy: sortBy as string,
+    },
+    limit: limit as string,
+    user_id: userId,
+  });
+
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const ResendOTP = async (request: Request, response: Response) => {
+  const deviceInfo = getDeviceInfo(request);
+
+  const email = String(request.query.email);
+
+  const result = await GetResendOTP(email, deviceInfo);
+  return response.status(200).json({
+    ...result,
+    timestamp: new Date(Date.now()),
+    success: true,
+  });
+};
+
+export const Registration = async (request: Request, response: Response) => {
+  const body = request.body;
+  const parsedData = RegisterUserSchema.safeParse(body);
+
+  if (!parsedData.success) {
+    return response.status(400).json({
+      message: parsedData.error.flatten(),
+      success: false,
+      timestamp: new Date(),
+    });
+  }
+
+  const result = await AuthRegister(parsedData.data);
+
+  return response.status(200).json({
+    ...result,
+    success: true,
+    timestamp: new Date(),
+  });
+};
+
+export const Verified = async (request: Request, response: Response) => {
+  const token = String(request.query.token);
+
+  if (!token) {
+    return response.status(400).json({
+      success: false,
+      message: "Verification token is required.",
+      timestamp: new Date(),
+    });
+  }
+
+  try {
+    const result = await AuthVerified(token);
+
+    return response.status(200).json({
+      ...result,
+      success: true,
+      timestamp: new Date(),
+    });
+  } catch (error) {
+    return response.status(400).json({
+      success: false,
+      message: "Invalid or expired verification token.",
+      timestamp: new Date(),
+    });
+  }
+};

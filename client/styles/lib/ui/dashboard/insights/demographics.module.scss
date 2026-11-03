@@ -1,0 +1,42 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+
+
+
+    .card {
+        border: 1px solid color(neutral, 500);
+        padding: 20px;
+        border-radius: radius(sm);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .iconChart {
+            width: 45px;
+            height: 45px;
+            background-color: color(primary, 100);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+
+            svg {
+                color: color(primary, 500);
+            }
+        }
+    }
+}

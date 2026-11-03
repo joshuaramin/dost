@@ -27,7 +27,7 @@ export type AggregateActivityLog = {
 export type ActivityLogMinAggregateOutputType = {
   activity_logs_id: string | null
   type: string | null
-  decription: string | null
+  description: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -37,7 +37,7 @@ export type ActivityLogMinAggregateOutputType = {
 export type ActivityLogMaxAggregateOutputType = {
   activity_logs_id: string | null
   type: string | null
-  decription: string | null
+  description: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -47,7 +47,7 @@ export type ActivityLogMaxAggregateOutputType = {
 export type ActivityLogCountAggregateOutputType = {
   activity_logs_id: number
   type: number
-  decription: number
+  description: number
   is_deleted: number
   created_at: number
   updated_at: number
@@ -59,7 +59,7 @@ export type ActivityLogCountAggregateOutputType = {
 export type ActivityLogMinAggregateInputType = {
   activity_logs_id?: true
   type?: true
-  decription?: true
+  description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -69,7 +69,7 @@ export type ActivityLogMinAggregateInputType = {
 export type ActivityLogMaxAggregateInputType = {
   activity_logs_id?: true
   type?: true
-  decription?: true
+  description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -79,7 +79,7 @@ export type ActivityLogMaxAggregateInputType = {
 export type ActivityLogCountAggregateInputType = {
   activity_logs_id?: true
   type?: true
-  decription?: true
+  description?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
@@ -162,7 +162,7 @@ export type ActivityLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type ActivityLogGroupByOutputType = {
   activity_logs_id: string
   type: string
-  decription: string | null
+  description: string | null
   is_deleted: boolean
   created_at: Date
   updated_at: Date
@@ -193,7 +193,7 @@ export type ActivityLogWhereInput = {
   NOT?: Prisma.ActivityLogWhereInput | Prisma.ActivityLogWhereInput[]
   activity_logs_id?: Prisma.StringFilter<"ActivityLog"> | string
   type?: Prisma.StringFilter<"ActivityLog"> | string
-  decription?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
+  description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   is_deleted?: Prisma.BoolFilter<"ActivityLog"> | boolean
   created_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
@@ -204,7 +204,7 @@ export type ActivityLogWhereInput = {
 export type ActivityLogOrderByWithRelationInput = {
   activity_logs_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  decription?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -218,7 +218,7 @@ export type ActivityLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ActivityLogWhereInput[]
   NOT?: Prisma.ActivityLogWhereInput | Prisma.ActivityLogWhereInput[]
   type?: Prisma.StringFilter<"ActivityLog"> | string
-  decription?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
+  description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   is_deleted?: Prisma.BoolFilter<"ActivityLog"> | boolean
   created_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
@@ -229,7 +229,7 @@ export type ActivityLogWhereUniqueInput = Prisma.AtLeast<{
 export type ActivityLogOrderByWithAggregationInput = {
   activity_logs_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  decription?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -245,7 +245,7 @@ export type ActivityLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ActivityLogScalarWhereWithAggregatesInput | Prisma.ActivityLogScalarWhereWithAggregatesInput[]
   activity_logs_id?: Prisma.StringWithAggregatesFilter<"ActivityLog"> | string
   type?: Prisma.StringWithAggregatesFilter<"ActivityLog"> | string
-  decription?: Prisma.StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
+  description?: Prisma.StringNullableWithAggregatesFilter<"ActivityLog"> | string | null
   is_deleted?: Prisma.BoolWithAggregatesFilter<"ActivityLog"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"ActivityLog"> | Date | string
@@ -255,7 +255,7 @@ export type ActivityLogScalarWhereWithAggregatesInput = {
 export type ActivityLogCreateInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -265,7 +265,7 @@ export type ActivityLogCreateInput = {
 export type ActivityLogUncheckedCreateInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -275,7 +275,7 @@ export type ActivityLogUncheckedCreateInput = {
 export type ActivityLogUpdateInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -285,7 +285,7 @@ export type ActivityLogUpdateInput = {
 export type ActivityLogUncheckedUpdateInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -295,7 +295,7 @@ export type ActivityLogUncheckedUpdateInput = {
 export type ActivityLogCreateManyInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -305,7 +305,7 @@ export type ActivityLogCreateManyInput = {
 export type ActivityLogUpdateManyMutationInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -314,7 +314,7 @@ export type ActivityLogUpdateManyMutationInput = {
 export type ActivityLogUncheckedUpdateManyInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -334,7 +334,7 @@ export type ActivityLogOrderByRelationAggregateInput = {
 export type ActivityLogCountOrderByAggregateInput = {
   activity_logs_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  decription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -344,7 +344,7 @@ export type ActivityLogCountOrderByAggregateInput = {
 export type ActivityLogMaxOrderByAggregateInput = {
   activity_logs_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  decription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -354,7 +354,7 @@ export type ActivityLogMaxOrderByAggregateInput = {
 export type ActivityLogMinOrderByAggregateInput = {
   activity_logs_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
-  decription?: Prisma.SortOrder
+  description?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -406,7 +406,7 @@ export type ActivityLogUncheckedUpdateManyWithoutUserNestedInput = {
 export type ActivityLogCreateWithoutUserInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -415,7 +415,7 @@ export type ActivityLogCreateWithoutUserInput = {
 export type ActivityLogUncheckedCreateWithoutUserInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -453,7 +453,7 @@ export type ActivityLogScalarWhereInput = {
   NOT?: Prisma.ActivityLogScalarWhereInput | Prisma.ActivityLogScalarWhereInput[]
   activity_logs_id?: Prisma.StringFilter<"ActivityLog"> | string
   type?: Prisma.StringFilter<"ActivityLog"> | string
-  decription?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
+  description?: Prisma.StringNullableFilter<"ActivityLog"> | string | null
   is_deleted?: Prisma.BoolFilter<"ActivityLog"> | boolean
   created_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"ActivityLog"> | Date | string
@@ -463,7 +463,7 @@ export type ActivityLogScalarWhereInput = {
 export type ActivityLogCreateManyUserInput = {
   activity_logs_id?: string
   type: string
-  decription?: string | null
+  description?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -472,7 +472,7 @@ export type ActivityLogCreateManyUserInput = {
 export type ActivityLogUpdateWithoutUserInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -481,7 +481,7 @@ export type ActivityLogUpdateWithoutUserInput = {
 export type ActivityLogUncheckedUpdateWithoutUserInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -490,7 +490,7 @@ export type ActivityLogUncheckedUpdateWithoutUserInput = {
 export type ActivityLogUncheckedUpdateManyWithoutUserInput = {
   activity_logs_id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  decription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -501,7 +501,7 @@ export type ActivityLogUncheckedUpdateManyWithoutUserInput = {
 export type ActivityLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   activity_logs_id?: boolean
   type?: boolean
-  decription?: boolean
+  description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -512,7 +512,7 @@ export type ActivityLogSelect<ExtArgs extends runtime.Types.Extensions.InternalA
 export type ActivityLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   activity_logs_id?: boolean
   type?: boolean
-  decription?: boolean
+  description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -523,7 +523,7 @@ export type ActivityLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
 export type ActivityLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   activity_logs_id?: boolean
   type?: boolean
-  decription?: boolean
+  description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -534,14 +534,14 @@ export type ActivityLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type ActivityLogSelectScalar = {
   activity_logs_id?: boolean
   type?: boolean
-  decription?: boolean
+  description?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
   user_id?: boolean
 }
 
-export type ActivityLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"activity_logs_id" | "type" | "decription" | "is_deleted" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["activityLog"]>
+export type ActivityLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"activity_logs_id" | "type" | "description" | "is_deleted" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["activityLog"]>
 export type ActivityLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.ActivityLog$userArgs<ExtArgs>
 }
@@ -560,7 +560,7 @@ export type $ActivityLogPayload<ExtArgs extends runtime.Types.Extensions.Interna
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     activity_logs_id: string
     type: string
-    decription: string | null
+    description: string | null
     is_deleted: boolean
     created_at: Date
     updated_at: Date
@@ -991,7 +991,7 @@ export interface Prisma__ActivityLogClient<T, Null = never, ExtArgs extends runt
 export interface ActivityLogFieldRefs {
   readonly activity_logs_id: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly type: Prisma.FieldRef<"ActivityLog", 'String'>
-  readonly decription: Prisma.FieldRef<"ActivityLog", 'String'>
+  readonly description: Prisma.FieldRef<"ActivityLog", 'String'>
   readonly is_deleted: Prisma.FieldRef<"ActivityLog", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"ActivityLog", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"ActivityLog", 'DateTime'>

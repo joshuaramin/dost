@@ -1,0 +1,69 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0px 0px 3px 0px color(neutral, 500);
+
+    .filter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .card {
+        width: 100%;
+        border-radius: radius(sm);
+        border: 1px solid color(neutral, 500);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .sub {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+
+            span {
+                &:nth-child(2) {
+                    font-size: font-size(tiny);
+                    color: color(neutral, 700)
+                }
+            }
+
+        }
+
+        progress {
+            width: 100%;
+            height: 15px;
+            appearance: none;
+            border: none;
+            border-radius: radius(tiny);
+            overflow: hidden;
+
+            &::-webkit-progress-bar {
+                background-color: color(neutral, 200);
+            }
+
+            &::-webkit-progress-value {
+                background-color: color(primary, 500);
+            }
+
+            &::-moz-progress-bar {
+                background-color: color(primary, 500);
+            }
+        }
+    }
+}

@@ -23,10 +23,55 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel
 /**
+ * Model UserPreference
+ * 
+ */
+export type UserPreference = Prisma.UserPreferenceModel
+/**
+ * Model OTP
+ * 
+ */
+export type OTP = Prisma.OTPModel
+/**
  * Model Profile
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model Form
+ * 
+ */
+export type Form = Prisma.FormModel
+/**
+ * Model RewardPointRule
+ * 
+ */
+export type RewardPointRule = Prisma.RewardPointRuleModel
+/**
+ * Model RewardTransaction
+ * 
+ */
+export type RewardTransaction = Prisma.RewardTransactionModel
+/**
+ * Model UserReward
+ * 
+ */
+export type UserReward = Prisma.UserRewardModel
+/**
+ * Model RewardLevel
+ * 
+ */
+export type RewardLevel = Prisma.RewardLevelModel
+/**
+ * Model Badge
+ * 
+ */
+export type Badge = Prisma.BadgeModel
+/**
+ * Model UserBadge
+ * 
+ */
+export type UserBadge = Prisma.UserBadgeModel
 /**
  * Model Resource
  * 
@@ -53,7 +98,82 @@ export type RolePermission = Prisma.RolePermissionModel
  */
 export type ActivityLog = Prisma.ActivityLogModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
  * Model DeviceSession
  * 
  */
 export type DeviceSession = Prisma.DeviceSessionModel
+/**
+ * Model EducationAttachment
+ * 
+ */
+export type EducationAttachment = Prisma.EducationAttachmentModel
+/**
+ * Model EducationTag
+ * 
+ */
+export type EducationTag = Prisma.EducationTagModel
+/**
+ * Model EducationResourceTag
+ * 
+ */
+export type EducationResourceTag = Prisma.EducationResourceTagModel
+/**
+ * Model EducationCategory
+ * 
+ */
+export type EducationCategory = Prisma.EducationCategoryModel
+/**
+ * Model EducationResource
+ * 
+ */
+export type EducationResource = Prisma.EducationResourceModel
+/**
+ * Model Survey
+ * 
+ */
+export type Survey = Prisma.SurveyModel
+/**
+ * Model SurveyQuestion
+ * 
+ */
+export type SurveyQuestion = Prisma.SurveyQuestionModel
+/**
+ * Model QuestionOption
+ * 
+ */
+export type QuestionOption = Prisma.QuestionOptionModel
+/**
+ * Model SurveyResponse
+ * 
+ */
+export type SurveyResponse = Prisma.SurveyResponseModel
+/**
+ * Model SurveyAnswer
+ * 
+ */
+export type SurveyAnswer = Prisma.SurveyAnswerModel
+/**
+ * Model SurveyAnswerOption
+ * 
+ */
+export type SurveyAnswerOption = Prisma.SurveyAnswerOptionModel
+/**
+ * Model spatial_ref_sys
+ * This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+ */
+export type spatial_ref_sys = Prisma.spatial_ref_sysModel
+/**
+ * Model Contribution
+ * 
+ */
+export type Contribution = Prisma.ContributionModel

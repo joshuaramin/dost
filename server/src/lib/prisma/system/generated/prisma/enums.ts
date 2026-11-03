@@ -9,7 +9,100 @@
 * 🟢 You can import this file directly.
 */
 
+export const RewardActionType = {
+  EXPERIENCE: 'EXPERIENCE',
+  MISINFORMATION: 'MISINFORMATION',
+  MEDIA: 'MEDIA'
+} as const
+
+export type RewardActionType = (typeof RewardActionType)[keyof typeof RewardActionType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const BadgeRequirementType = {
+  TOTAL_POINTS: 'TOTAL_POINTS',
+  APPROVED_CONTRIBUTIONS: 'APPROVED_CONTRIBUTIONS',
+  APPROVED_MISINFORMATION: 'APPROVED_MISINFORMATION',
+  APPROVED_MEDIA: 'APPROVED_MEDIA'
+} as const
+
+export type BadgeRequirementType = (typeof BadgeRequirementType)[keyof typeof BadgeRequirementType]
+
+
+export const ContributionClassification = {
+  PENDING: 'PENDING',
+  MISINFORMATION: 'MISINFORMATION',
+  FACTUAL: 'FACTUAL'
+} as const
+
+export type ContributionClassification = (typeof ContributionClassification)[keyof typeof ContributionClassification]
+
+
+export const ClassificationMethod = {
+  MANUAL: 'MANUAL',
+  AI: 'AI',
+  HYBRID: 'HYBRID'
+} as const
+
+export type ClassificationMethod = (typeof ClassificationMethod)[keyof typeof ClassificationMethod]
+
+
+export const ContributionSentiment = {
+  POSITIVE: 'POSITIVE',
+  NEGATIVE: 'NEGATIVE',
+  NEUTRAL: 'NEUTRAL'
+} as const
+
+export type ContributionSentiment = (typeof ContributionSentiment)[keyof typeof ContributionSentiment]
+
+
+export const ContributionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DECLINED: 'DECLINED'
+} as const
+
+export type ContributionStatus = (typeof ContributionStatus)[keyof typeof ContributionStatus]
+
+
+export const EducationResourceType = {
+  ARTICLE: 'ARTICLE',
+  VIDEO: 'VIDEO',
+  DOCUMENT: 'DOCUMENT',
+  CATALOGUE: 'CATALOGUE',
+  INFOGRAPHIC: 'INFOGRAPHIC',
+  WEBINAR: 'WEBINAR',
+  PODCAST: 'PODCAST',
+  EXTERNAL_LINK: 'EXTERNAL_LINK'
+} as const
+
+export type EducationResourceType = (typeof EducationResourceType)[keyof typeof EducationResourceType]
+
+
+export const EducationStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED'
+} as const
+
+export type EducationStatus = (typeof EducationStatus)[keyof typeof EducationStatus]
+
+
+export const AttachmentType = {
+  IMAGE: 'IMAGE',
+  VIDEO: 'VIDEO',
+  PDF: 'PDF',
+  DOCUMENT: 'DOCUMENT',
+  AUDIO: 'AUDIO',
+  OTHER: 'OTHER'
+} as const
+
+export type AttachmentType = (typeof AttachmentType)[keyof typeof AttachmentType]
+
+
+export const SurveyType = {
+  SHORT_TEXT: 'SHORT_TEXT',
+  LONG_TEXT: 'LONG_TEXT',
+  MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
+  CHECKBOX: 'CHECKBOX'
+} as const
+
+export type SurveyType = (typeof SurveyType)[keyof typeof SurveyType]

@@ -1,0 +1,140 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+.container {
+    width: 100%;
+    padding: 20px;
+    background-color: color(base, white);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: radius(sm);
+    box-shadow: 0 0 3px 0 color(neutral, 500);
+    position: relative;
+
+    .header {
+        width: 100%;
+        min-height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .header_col1 {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            h1 {
+                margin: 0;
+                padding: 0;
+                color: color(primary, 500);
+                font-size: font-size(lg);
+                cursor: pointer;
+            }
+        }
+
+        >button {
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 100px;
+            background-color: transparent;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+                background-color: color(neutral, 200);
+            }
+        }
+    }
+
+    .body {
+        width: 100%;
+        height: auto;
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-align: justify;
+    }
+
+    .footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .model_footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .options {
+        position: absolute;
+        top: 55px;
+        right: 10px;
+        z-index: 100;
+
+        width: 170px;
+        display: flex;
+        flex-direction: column;
+
+        overflow: hidden;
+        background-color: color(base, white);
+        border-radius: radius(tiny);
+        box-shadow: 0 0 3px 0 color(neutral, 400);
+
+        button {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            border: none;
+            border-radius: 0;
+            background-color: transparent;
+            cursor: pointer;
+            text-align: left;
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease;
+
+            &:hover {
+                background-color: color(neutral, 200);
+            }
+
+            &:first-child {
+                border-top-left-radius: radius(tiny);
+                border-top-right-radius: radius(tiny);
+            }
+
+            &:last-child {
+                border-bottom-left-radius: radius(tiny);
+                border-bottom-right-radius: radius(tiny);
+            }
+
+            &:nth-child(2) {
+                &:hover {
+                    background-color: color(error, 500);
+                    color: color(base, white);
+                }
+            }
+        }
+    }
+
+    span {
+        font-size: font-size(tiny);
+    }
+}

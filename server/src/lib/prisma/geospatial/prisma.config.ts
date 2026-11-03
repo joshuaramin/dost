@@ -7,6 +7,6 @@ export default defineConfig({
     path: "migrations",
   },
   datasource: {
-    url: "postgres://postgres:root@localhost:5432/geodb",
+    url: env("DATABASE_URL_POOLED_GEO_DB"),
   },
 });

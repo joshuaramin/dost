@@ -11,4 +11,22 @@ export const ProfileSchema = z.object({
 
 export const CreateUserSchema = UserSchema.extend({
   ...ProfileSchema.shape,
+  role_id: z.string().min(1, "Role ID is required"),
+  organization_id: z.string().optional(),
+});
+
+export const UpdateSchema = z
+  .object({
+    email: z.string(),
+    first_name: z.string().min(1, "First Name is required"),
+    last_name: z.string().min(1, "Last Name is required"),
+    location: z.string().min(1, "Location is required"),
+  })
+  .partial();
+
+export const RegisterUserSchema = UserSchema.extend({
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  role_id: z.string().min(1, "Role is required"),
+  organization_id: z.string().optional(),
 });

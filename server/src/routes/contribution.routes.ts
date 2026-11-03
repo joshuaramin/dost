@@ -1,0 +1,24 @@
+import {
+  getAllContributions,
+  getContributionById,
+  updateContribution,
+  createContribution,
+} from "../controller/contribution.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import upload from "../lib/helpers/useMulter.js";
+import express from "express";
+
+const router = express.Router();
+
+router.get("/", withAuth, asyncHandler(getAllContributions));
+router.get("/:id", withAuth, asyncHandler(getContributionById));
+router.post(
+  "/",
+  withAuth,
+  upload.single("attachment"),
+  asyncHandler(createContribution),
+);
+router.patch("/:id", withAuth, asyncHandler(updateContribution));
+
+export default router;

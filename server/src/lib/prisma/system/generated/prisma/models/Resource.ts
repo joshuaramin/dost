@@ -38,33 +38,33 @@ export type ResourceMinAggregateOutputType = {
   resource_id: string | null
   name: string | null
   slug: string | null
-  order: number | null
   parent_id: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  order: number | null
 }
 
 export type ResourceMaxAggregateOutputType = {
   resource_id: string | null
   name: string | null
   slug: string | null
-  order: number | null
   parent_id: string | null
   is_deleted: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  order: number | null
 }
 
 export type ResourceCountAggregateOutputType = {
   resource_id: number
   name: number
   slug: number
-  order: number
   parent_id: number
   is_deleted: number
   created_at: number
   updated_at: number
+  order: number
   _all: number
 }
 
@@ -81,33 +81,33 @@ export type ResourceMinAggregateInputType = {
   resource_id?: true
   name?: true
   slug?: true
-  order?: true
   parent_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  order?: true
 }
 
 export type ResourceMaxAggregateInputType = {
   resource_id?: true
   name?: true
   slug?: true
-  order?: true
   parent_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  order?: true
 }
 
 export type ResourceCountAggregateInputType = {
   resource_id?: true
   name?: true
   slug?: true
-  order?: true
   parent_id?: true
   is_deleted?: true
   created_at?: true
   updated_at?: true
+  order?: true
   _all?: true
 }
 
@@ -201,11 +201,11 @@ export type ResourceGroupByOutputType = {
   resource_id: string
   name: string
   slug: string
-  order: number
   parent_id: string | null
   is_deleted: boolean
   created_at: Date
   updated_at: Date
+  order: number
   _count: ResourceCountAggregateOutputType | null
   _avg: ResourceAvgAggregateOutputType | null
   _sum: ResourceSumAggregateOutputType | null
@@ -235,28 +235,28 @@ export type ResourceWhereInput = {
   resource_id?: Prisma.StringFilter<"Resource"> | string
   name?: Prisma.StringFilter<"Resource"> | string
   slug?: Prisma.StringFilter<"Resource"> | string
-  order?: Prisma.IntFilter<"Resource"> | number
   parent_id?: Prisma.StringNullableFilter<"Resource"> | string | null
   is_deleted?: Prisma.BoolFilter<"Resource"> | boolean
   created_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
+  order?: Prisma.IntFilter<"Resource"> | number
+  permissions?: Prisma.PermissionListRelationFilter
   parent?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
   children?: Prisma.ResourceListRelationFilter
-  permissions?: Prisma.PermissionListRelationFilter
 }
 
 export type ResourceOrderByWithRelationInput = {
   resource_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  order?: Prisma.SortOrder
+  permissions?: Prisma.PermissionOrderByRelationAggregateInput
   parent?: Prisma.ResourceOrderByWithRelationInput
   children?: Prisma.ResourceOrderByRelationAggregateInput
-  permissions?: Prisma.PermissionOrderByRelationAggregateInput
 }
 
 export type ResourceWhereUniqueInput = Prisma.AtLeast<{
@@ -266,25 +266,25 @@ export type ResourceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ResourceWhereInput | Prisma.ResourceWhereInput[]
   OR?: Prisma.ResourceWhereInput[]
   NOT?: Prisma.ResourceWhereInput | Prisma.ResourceWhereInput[]
-  order?: Prisma.IntFilter<"Resource"> | number
   parent_id?: Prisma.StringNullableFilter<"Resource"> | string | null
   is_deleted?: Prisma.BoolFilter<"Resource"> | boolean
   created_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
+  order?: Prisma.IntFilter<"Resource"> | number
+  permissions?: Prisma.PermissionListRelationFilter
   parent?: Prisma.XOR<Prisma.ResourceNullableScalarRelationFilter, Prisma.ResourceWhereInput> | null
   children?: Prisma.ResourceListRelationFilter
-  permissions?: Prisma.PermissionListRelationFilter
 }, "resource_id" | "name" | "slug">
 
 export type ResourceOrderByWithAggregationInput = {
   resource_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  order?: Prisma.SortOrder
   _count?: Prisma.ResourceCountOrderByAggregateInput
   _avg?: Prisma.ResourceAvgOrderByAggregateInput
   _max?: Prisma.ResourceMaxOrderByAggregateInput
@@ -299,95 +299,95 @@ export type ResourceScalarWhereWithAggregatesInput = {
   resource_id?: Prisma.StringWithAggregatesFilter<"Resource"> | string
   name?: Prisma.StringWithAggregatesFilter<"Resource"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Resource"> | string
-  order?: Prisma.IntWithAggregatesFilter<"Resource"> | number
   parent_id?: Prisma.StringNullableWithAggregatesFilter<"Resource"> | string | null
   is_deleted?: Prisma.BoolWithAggregatesFilter<"Resource"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Resource"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Resource"> | Date | string
+  order?: Prisma.IntWithAggregatesFilter<"Resource"> | number
 }
 
 export type ResourceCreateInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
+  permissions?: Prisma.PermissionCreateNestedManyWithoutResourceInput
   parent?: Prisma.ResourceCreateNestedOneWithoutChildrenInput
   children?: Prisma.ResourceCreateNestedManyWithoutParentInput
-  permissions?: Prisma.PermissionCreateNestedManyWithoutResourceInput
 }
 
 export type ResourceUncheckedCreateInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   parent_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  children?: Prisma.ResourceUncheckedCreateNestedManyWithoutParentInput
+  order: number
   permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutResourceInput
+  children?: Prisma.ResourceUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type ResourceUpdateInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  permissions?: Prisma.PermissionUpdateManyWithoutResourceNestedInput
   parent?: Prisma.ResourceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.ResourceUpdateManyWithoutParentNestedInput
-  permissions?: Prisma.PermissionUpdateManyWithoutResourceNestedInput
 }
 
 export type ResourceUncheckedUpdateInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  children?: Prisma.ResourceUncheckedUpdateManyWithoutParentNestedInput
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   permissions?: Prisma.PermissionUncheckedUpdateManyWithoutResourceNestedInput
+  children?: Prisma.ResourceUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type ResourceCreateManyInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   parent_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
 }
 
 export type ResourceUpdateManyMutationInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ResourceUncheckedUpdateManyInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type ResourceNullableScalarRelationFilter = {
@@ -409,11 +409,11 @@ export type ResourceCountOrderByAggregateInput = {
   resource_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  order?: Prisma.SortOrder
 }
 
 export type ResourceAvgOrderByAggregateInput = {
@@ -424,22 +424,22 @@ export type ResourceMaxOrderByAggregateInput = {
   resource_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  order?: Prisma.SortOrder
 }
 
 export type ResourceMinOrderByAggregateInput = {
   resource_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  order?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   is_deleted?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  order?: Prisma.SortOrder
 }
 
 export type ResourceSumOrderByAggregateInput = {
@@ -464,14 +464,6 @@ export type ResourceUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.ResourceCreateOrConnectWithoutParentInput | Prisma.ResourceCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.ResourceCreateManyParentInputEnvelope
   connect?: Prisma.ResourceWhereUniqueInput | Prisma.ResourceWhereUniqueInput[]
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type ResourceUpdateOneWithoutChildrenNestedInput = {
@@ -532,23 +524,23 @@ export type ResourceCreateWithoutChildrenInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  parent?: Prisma.ResourceCreateNestedOneWithoutChildrenInput
+  order: number
   permissions?: Prisma.PermissionCreateNestedManyWithoutResourceInput
+  parent?: Prisma.ResourceCreateNestedOneWithoutChildrenInput
 }
 
 export type ResourceUncheckedCreateWithoutChildrenInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   parent_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
   permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutResourceInput
 }
 
@@ -561,24 +553,24 @@ export type ResourceCreateWithoutParentInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  children?: Prisma.ResourceCreateNestedManyWithoutParentInput
+  order: number
   permissions?: Prisma.PermissionCreateNestedManyWithoutResourceInput
+  children?: Prisma.ResourceCreateNestedManyWithoutParentInput
 }
 
 export type ResourceUncheckedCreateWithoutParentInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  children?: Prisma.ResourceUncheckedCreateNestedManyWithoutParentInput
+  order: number
   permissions?: Prisma.PermissionUncheckedCreateNestedManyWithoutResourceInput
+  children?: Prisma.ResourceUncheckedCreateNestedManyWithoutParentInput
 }
 
 export type ResourceCreateOrConnectWithoutParentInput = {
@@ -606,23 +598,23 @@ export type ResourceUpdateWithoutChildrenInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  parent?: Prisma.ResourceUpdateOneWithoutChildrenNestedInput
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   permissions?: Prisma.PermissionUpdateManyWithoutResourceNestedInput
+  parent?: Prisma.ResourceUpdateOneWithoutChildrenNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutChildrenInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   permissions?: Prisma.PermissionUncheckedUpdateManyWithoutResourceNestedInput
 }
 
@@ -649,21 +641,21 @@ export type ResourceScalarWhereInput = {
   resource_id?: Prisma.StringFilter<"Resource"> | string
   name?: Prisma.StringFilter<"Resource"> | string
   slug?: Prisma.StringFilter<"Resource"> | string
-  order?: Prisma.IntFilter<"Resource"> | number
   parent_id?: Prisma.StringNullableFilter<"Resource"> | string | null
   is_deleted?: Prisma.BoolFilter<"Resource"> | boolean
   created_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Resource"> | Date | string
+  order?: Prisma.IntFilter<"Resource"> | number
 }
 
 export type ResourceCreateWithoutPermissionsInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
   parent?: Prisma.ResourceCreateNestedOneWithoutChildrenInput
   children?: Prisma.ResourceCreateNestedManyWithoutParentInput
 }
@@ -672,11 +664,11 @@ export type ResourceUncheckedCreateWithoutPermissionsInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   parent_id?: string | null
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
   children?: Prisma.ResourceUncheckedCreateNestedManyWithoutParentInput
 }
 
@@ -700,10 +692,10 @@ export type ResourceUpdateWithoutPermissionsInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   parent?: Prisma.ResourceUpdateOneWithoutChildrenNestedInput
   children?: Prisma.ResourceUpdateManyWithoutParentNestedInput
 }
@@ -712,11 +704,11 @@ export type ResourceUncheckedUpdateWithoutPermissionsInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   children?: Prisma.ResourceUncheckedUpdateManyWithoutParentNestedInput
 }
 
@@ -724,44 +716,44 @@ export type ResourceCreateManyParentInput = {
   resource_id?: string
   name: string
   slug: string
-  order: number
   is_deleted?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  order: number
 }
 
 export type ResourceUpdateWithoutParentInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  children?: Prisma.ResourceUpdateManyWithoutParentNestedInput
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   permissions?: Prisma.PermissionUpdateManyWithoutResourceNestedInput
+  children?: Prisma.ResourceUpdateManyWithoutParentNestedInput
 }
 
 export type ResourceUncheckedUpdateWithoutParentInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  children?: Prisma.ResourceUncheckedUpdateManyWithoutParentNestedInput
+  order?: Prisma.IntFieldUpdateOperationsInput | number
   permissions?: Prisma.PermissionUncheckedUpdateManyWithoutResourceNestedInput
+  children?: Prisma.ResourceUncheckedUpdateManyWithoutParentNestedInput
 }
 
 export type ResourceUncheckedUpdateManyWithoutParentInput = {
   resource_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  order?: Prisma.IntFieldUpdateOperationsInput | number
   is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  order?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -770,13 +762,13 @@ export type ResourceUncheckedUpdateManyWithoutParentInput = {
  */
 
 export type ResourceCountOutputType = {
-  children: number
   permissions: number
+  children: number
 }
 
 export type ResourceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  children?: boolean | ResourceCountOutputTypeCountChildrenArgs
   permissions?: boolean | ResourceCountOutputTypeCountPermissionsArgs
+  children?: boolean | ResourceCountOutputTypeCountChildrenArgs
 }
 
 /**
@@ -792,15 +784,15 @@ export type ResourceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * ResourceCountOutputType without action
  */
-export type ResourceCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ResourceWhereInput
+export type ResourceCountOutputTypeCountPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PermissionWhereInput
 }
 
 /**
  * ResourceCountOutputType without action
  */
-export type ResourceCountOutputTypeCountPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PermissionWhereInput
+export type ResourceCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ResourceWhereInput
 }
 
 
@@ -808,14 +800,14 @@ export type ResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   resource_id?: boolean
   name?: boolean
   slug?: boolean
-  order?: boolean
   parent_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  order?: boolean
+  permissions?: boolean | Prisma.Resource$permissionsArgs<ExtArgs>
   parent?: boolean | Prisma.Resource$parentArgs<ExtArgs>
   children?: boolean | Prisma.Resource$childrenArgs<ExtArgs>
-  permissions?: boolean | Prisma.Resource$permissionsArgs<ExtArgs>
   _count?: boolean | Prisma.ResourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["resource"]>
 
@@ -823,11 +815,11 @@ export type ResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   resource_id?: boolean
   name?: boolean
   slug?: boolean
-  order?: boolean
   parent_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  order?: boolean
   parent?: boolean | Prisma.Resource$parentArgs<ExtArgs>
 }, ExtArgs["result"]["resource"]>
 
@@ -835,11 +827,11 @@ export type ResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   resource_id?: boolean
   name?: boolean
   slug?: boolean
-  order?: boolean
   parent_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  order?: boolean
   parent?: boolean | Prisma.Resource$parentArgs<ExtArgs>
 }, ExtArgs["result"]["resource"]>
 
@@ -847,18 +839,18 @@ export type ResourceSelectScalar = {
   resource_id?: boolean
   name?: boolean
   slug?: boolean
-  order?: boolean
   parent_id?: boolean
   is_deleted?: boolean
   created_at?: boolean
   updated_at?: boolean
+  order?: boolean
 }
 
-export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"resource_id" | "name" | "slug" | "order" | "parent_id" | "is_deleted" | "created_at" | "updated_at", ExtArgs["result"]["resource"]>
+export type ResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"resource_id" | "name" | "slug" | "parent_id" | "is_deleted" | "created_at" | "updated_at" | "order", ExtArgs["result"]["resource"]>
 export type ResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  permissions?: boolean | Prisma.Resource$permissionsArgs<ExtArgs>
   parent?: boolean | Prisma.Resource$parentArgs<ExtArgs>
   children?: boolean | Prisma.Resource$childrenArgs<ExtArgs>
-  permissions?: boolean | Prisma.Resource$permissionsArgs<ExtArgs>
   _count?: boolean | Prisma.ResourceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ResourceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -871,19 +863,19 @@ export type ResourceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $ResourcePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Resource"
   objects: {
+    permissions: Prisma.$PermissionPayload<ExtArgs>[]
     parent: Prisma.$ResourcePayload<ExtArgs> | null
     children: Prisma.$ResourcePayload<ExtArgs>[]
-    permissions: Prisma.$PermissionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     resource_id: string
     name: string
     slug: string
-    order: number
     parent_id: string | null
     is_deleted: boolean
     created_at: Date
     updated_at: Date
+    order: number
   }, ExtArgs["result"]["resource"]>
   composites: {}
 }
@@ -1278,9 +1270,9 @@ readonly fields: ResourceFieldRefs;
  */
 export interface Prisma__ResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  permissions<T extends Prisma.Resource$permissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   parent<T extends Prisma.Resource$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$parentArgs<ExtArgs>>): Prisma.Prisma__ResourceClient<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   children<T extends Prisma.Resource$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResourcePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  permissions<T extends Prisma.Resource$permissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Resource$permissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1313,11 +1305,11 @@ export interface ResourceFieldRefs {
   readonly resource_id: Prisma.FieldRef<"Resource", 'String'>
   readonly name: Prisma.FieldRef<"Resource", 'String'>
   readonly slug: Prisma.FieldRef<"Resource", 'String'>
-  readonly order: Prisma.FieldRef<"Resource", 'Int'>
   readonly parent_id: Prisma.FieldRef<"Resource", 'String'>
   readonly is_deleted: Prisma.FieldRef<"Resource", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Resource", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Resource", 'DateTime'>
+  readonly order: Prisma.FieldRef<"Resource", 'Int'>
 }
     
 
@@ -1719,6 +1711,30 @@ export type ResourceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Resource.permissions
+ */
+export type Resource$permissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Permission
+   */
+  select?: Prisma.PermissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Permission
+   */
+  omit?: Prisma.PermissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PermissionInclude<ExtArgs> | null
+  where?: Prisma.PermissionWhereInput
+  orderBy?: Prisma.PermissionOrderByWithRelationInput | Prisma.PermissionOrderByWithRelationInput[]
+  cursor?: Prisma.PermissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PermissionScalarFieldEnum | Prisma.PermissionScalarFieldEnum[]
+}
+
+/**
  * Resource.parent
  */
 export type Resource$parentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1759,30 +1775,6 @@ export type Resource$childrenArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ResourceScalarFieldEnum | Prisma.ResourceScalarFieldEnum[]
-}
-
-/**
- * Resource.permissions
- */
-export type Resource$permissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Permission
-   */
-  select?: Prisma.PermissionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Permission
-   */
-  omit?: Prisma.PermissionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PermissionInclude<ExtArgs> | null
-  where?: Prisma.PermissionWhereInput
-  orderBy?: Prisma.PermissionOrderByWithRelationInput | Prisma.PermissionOrderByWithRelationInput[]
-  cursor?: Prisma.PermissionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PermissionScalarFieldEnum | Prisma.PermissionScalarFieldEnum[]
 }
 
 /**

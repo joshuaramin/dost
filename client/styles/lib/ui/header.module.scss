@@ -1,8 +1,28 @@
 @use "@/styles/mixins.module" as *;
 @use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
 
 .container {
     width: 100%;
+
+    .header_nav {
+        width: 100%;
+        padding: 1em 10rem;
+        background-color: color(primary, 500);
+        border-bottom: 0.5px solid color(secondary, 500);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 15px;
+
+        a {
+            font-size: font-size(base);
+            color: color(base, white);
+            text-decoration: none;
+        }
+    }
 
     .main {
         width: 100%;
@@ -10,7 +30,7 @@
         align-items: center;
         padding: 3rem 10rem;
         color: #fff;
-        background-color: #1B4264;
+        background-color: color(primary, 500);
 
         @include down(xxl) {
             padding: 3rem 7rem;
@@ -33,29 +53,23 @@
         }
 
         button {
-            height: 35px;
             width: 40px;
-            border-radius: 100px;
-            border: none;
-            display: flex;
+            height: 35px;
+            display: none;
             justify-content: center;
             align-items: center;
-            background-color: transparent;
+            border: none;
+            border-radius: 100px;
+            background: transparent;
+            cursor: pointer;
 
             svg {
                 stroke: #fff;
             }
 
-            @include up(xxl) {
-                display: none;
-            }
-
-
             @include down(xl) {
-                display: block;
+                display: flex;
             }
-
-
         }
 
         header {
@@ -65,15 +79,15 @@
 
             h2 {
                 @include up(lg) {
-                    font-size: $fnt2xl;
+                    font-size: font-size(2xl);
                 }
 
                 @include up(md) {
-                    font-size: $fntlg;
+                    font-size: font-size(lg);
                 }
 
                 @include down(md) {
-                    font-size: $fntbase;
+                    font-size: font-size(base);
                 }
             }
 
@@ -81,7 +95,7 @@
                 text-transform: uppercase;
 
                 @include up(lg) {
-                    font-size: $fntbase;
+                    font-size: font-size(base);
                 }
             }
         }
@@ -90,32 +104,26 @@
             width: 100%;
             display: flex;
             justify-content: flex-end;
-            font-size: $fntbase;
             gap: 1rem;
-
-            a {
-                color: #fff;
-                text-decoration: none;
-
-                font-size: $fntlg;
-
-                &:hover {
-                    text-decoration: 1px solid underline #fff;
-                }
-            }
+            font-size: font-size(base);
 
 
-            @include down(xxl) {
+            @include down(xl) {
                 display: none;
             }
 
+            a {
+                color: color(neutral, 100);
+                font-size: font-size(lg);
+                font-weight: 400;
+                text-decoration: none;
 
-            // @include up(xl) {
-            //     display: none;
-            // }
-
-
-
+                &:hover {
+                    color: color(secondary, 401);
+                    // text-decoration: underline;
+                    text-decoration-thickness: 1.5px;
+                }
+            }
         }
     }
 
@@ -126,6 +134,16 @@
     .sub {
         width: 100%;
         height: 10px;
-        background-color: #FFA400;
+        background-color: color(secondary, 401);
+        // background: linear-gradient(90deg,
+        //         color(primary, 500),
+        //         color(secondary, 500));
+    }
+
+    .logoBG {
+        background-color: #fff;
+        border-radius: 50%;
+        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+
     }
 }

@@ -1,0 +1,51 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    width: 100%;
+    min-height: 300px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    text-align: center;
+
+    svg {
+        width: 96px;
+        height: 96px;
+        stroke: color(neutral, 500);
+        stroke-width: 1.2px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        max-width: 500px;
+
+        span {
+            padding: 0;
+            margin: 0;
+            font-size: font-size(lg);
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        p {
+            padding: 0;
+            margin: 0;
+            color: color(neutral, 500);
+            line-height: 1.6;
+        }
+    }
+}

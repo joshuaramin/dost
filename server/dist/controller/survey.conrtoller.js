@@ -1,0 +1,137 @@
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { CreateSurveyResponseSchema, CreateSurveySchema, } from "../lib/validation/survey.validation.js";
+import { CreateSurvey, CreateSurveyQuestion, CreateSurveyResponse, DeleteSurveytQuestion, GetAllSurveys, GetSurveyById, GetSurveyResponseById, SoftDeleteSurvey, UpdateSurveyPublished, UpdateSurveyQuestion, } from "../services/survey.service.js";
+import { z } from "zod";
+export const getAllSurvey = async (request, response) => {
+    const { after, orderBy, search, sortBy, limit, before, is_published } = request.query;
+    const result = await GetAllSurveys({
+        after: after,
+        before: before,
+        filter: {
+            orderBy: orderBy,
+            search: search,
+            sortBy: sortBy,
+        },
+        limit: limit,
+        is_published: Boolean(is_published),
+    });
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const createSurvey = async (request, response) => {
+    const parsedData = CreateSurveySchema.safeParse(request.body);
+    if (!parsedData.success) {
+        return response.status(400).json({
+            message: "Invalid Schema",
+            schema: z.flattenError(parsedData.error),
+            timestamp: new Date(Date.now()),
+        });
+    }
+    const result = await CreateSurvey({
+        title: parsedData.data.title,
+        description: parsedData.data.description,
+        slug: useSlugify(parsedData.data.title),
+    });
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const createQuestionById = async (request, response) => {
+    const id = String(request.params.id);
+    const body = request.body;
+    const result = await CreateSurveyQuestion(id, body);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const updateSurveyQuestionById = async (request, response) => {
+    const id = String(request.params.id);
+    const body = request.body;
+    const result = await UpdateSurveyQuestion(id, body);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const deleteSurveyQuestionBytId = async (request, response) => {
+    const id = String(request.params.id);
+    console.log("ID: ", id);
+    const result = await DeleteSurveytQuestion(id);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const createSurveyResponse = async (request, response) => {
+    const id = String(request.params.id);
+    const parsedData = CreateSurveyResponseSchema.safeParse(request.body);
+    if (!parsedData.success) {
+        return response.status(400).json({
+            message: "Invalid Schema",
+            schema: z.flattenError(parsedData.error),
+            timestamp: new Date(Date.now()),
+        });
+    }
+    const result = await CreateSurveyResponse({
+        slug: id,
+        answer: parsedData.data.answers.map((answer) => ({
+            survey_question_id: answer.survey_question_id,
+            text: answer.text ?? "",
+        })),
+    });
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const getSurveyById = async (request, response) => {
+    const id = String(request.params.id);
+    const result = await GetSurveyById(id);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const getSurvreyResponseById = async (request, response) => {
+    const id = String(request.query.id);
+    console.log("SURVEY RESPONSE: ", id);
+    const result = await GetSurveyResponseById(id);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const updateSurvey = (request, response) => {
+    const id = String(request.params.id);
+};
+export const softDeleteSurvey = async (request, response) => {
+    const id = String(request.params.id);
+    const result = await SoftDeleteSurvey(id);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};
+export const surveyPublished = async (request, response) => {
+    const id = String(request.params.id);
+    const body = request.body;
+    const result = await UpdateSurveyPublished(id, body.is_published);
+    return response.status(200).json({
+        ...result,
+        timestamp: new Date(Date.now()),
+        success: true,
+    });
+};

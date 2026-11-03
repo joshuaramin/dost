@@ -1,0 +1,32 @@
+.button {
+    min-width: 90px;
+    height: 40px;
+    padding: 0 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #6b7280;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all .2s ease;
+
+    &:hover:not(:disabled) {
+        border-color: #2563eb;
+    }
+
+    &:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+}
+
+.active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}

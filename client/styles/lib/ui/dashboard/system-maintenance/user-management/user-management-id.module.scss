@@ -1,0 +1,74 @@
+@use "@/styles/mixins.module" as *;
+@use "@/styles/variables.module" as *;
+@use "@/styles/colors.module" as *;
+@use "@/styles/spacing.module" as *;
+@use "@/styles/radius.module" as *;
+
+
+.container {
+    width: 100%;
+
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+
+        .sub_header {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+
+            .statusIndicator {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+            }
+
+            &.active {
+                background-color: rgba(34, 197, 94, 0.1);
+
+                .statusIndicator {
+                    background-color: #22c55e;
+                }
+            }
+
+            &.inactive {
+                background-color: rgba(107, 114, 128, 0.1);
+
+                .statusIndicator {
+                    background-color: #6b7280;
+                }
+            }
+        }
+    }
+
+    .body {
+        width: 100%;
+        padding: 20px 0;
+
+        .body_content {
+            width: 100%;
+            padding: 10;
+
+            .session_group, .activity_logs_group{
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid color(neutral, 500);
+                border-radius: radius(tiny);
+                overflow: hidden;
+            }
+        }
+    }
+}

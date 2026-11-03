@@ -25,7 +25,7 @@ const useFormQuery = <TData = unknown, TVariables = unknown>({
     enabled,
     queryFn: async () => {
       const res = await axios.get<TData>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/${url}`,
+        `https://dost-server-git-development-joshuaramins-projects.vercel.app/${url}`,
         {
           headers,
           params,

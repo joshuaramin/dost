@@ -1,4 +1,4 @@
-import { GetAllDeviceSession } from "@/services/deviceSession.services";
+import { GetAllDeviceSession } from "../services/deviceSession.services.js";
 import { Request, Response } from "express";
 
 export const getAllDeviceSesisonByUserId = async (
@@ -7,16 +7,19 @@ export const getAllDeviceSesisonByUserId = async (
 ) => {
   try {
     const id = String(request.params.id);
-    const { limit, after, orderBy, sortBy, search } = request.query;
+    const { limit, after, orderBy, sortBy, search, before, user_id } =
+      request.query;
 
     const result = await GetAllDeviceSession(id, {
       after: after as string,
+      before: before as string,
       filter: {
         orderBy: orderBy as string,
         search: search as string,
         sortBy: sortBy as string,
       },
       limit: limit as string,
+      user_id: user_id as string,
     });
 
     return response.status(200).json({

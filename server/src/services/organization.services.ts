@@ -1,0 +1,67 @@
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { OrganizationInterface } from "../lib/interface/organization.interface.js";
+import { Organization } from "../lib/prisma/system/generated/prisma/client.js";
+import { OrganizationWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+
+// Manage
+
+const OrganizationManage = new PrismaCRUDManager<
+  Organization,
+  "organization_id",
+  typeof prisma.organization
+>(prisma.organization, "organization_id");
+
+// Functions
+
+export const GetAllOrganization = ({
+  after,
+  before,
+  filter: { orderBy, search, sortBy },
+  limit,
+}: OrganizationInterface) => {
+  let where: OrganizationWhereInput = {
+    is_deleted: false,
+    ...(search && {
+      name: { contains: search, mode: "insensitive" },
+    }),
+  };
+
+  return OrganizationManage.read({
+    where,
+    limit,
+    ...(after && {
+      cursor: after,
+      direction: "forward",
+    }),
+    ...(before && {
+      cursor: before,
+      direction: "backward",
+    }),
+    orderBy: {
+      [orderBy]: sortBy,
+    },
+  });
+};
+
+export const CreateOrganization = (data: any) => {
+  return OrganizationManage.create({
+    logo: data.logo,
+    name: data.name,
+    contact: data.contact,
+    address: data.address,
+  });
+};
+
+export const UpdateOrganization = (id: string, data: any) => {
+  return OrganizationManage.update("organization_id", id, {
+    address: data.address,
+    contact: data.contact,
+    name: data.name,
+    logo: data.logo,
+  });
+};
+
+export const SoftDeleteOrganization = (data: any) => {
+  return OrganizationManage.delete("organization_id", data);
+};
