@@ -29,7 +29,8 @@ export default function Home() {
     key: ["Organizations"],
     url: "maintenance/organization",
     params: {
-      created_at: "asc",
+      orderBy: "created_at",
+      sortBy: "asc",
     },
   });
 
