@@ -40,8 +40,6 @@ const allowedOrigins = new Set(
     .filter(Boolean),
 );
 
-app.use("/admin/queues", withAuth, serverAdapter.getRouter());
-
 app.use(
   cors({
     origin: "*",
@@ -102,6 +100,8 @@ app.get("/test-version", (req: Request, res: Response) => {
     api_version: req.apiVersionInfo,
   });
 });
+
+app.use("/admin/queues", withAuth, serverAdapter.getRouter());
 
 const routeDefinitions = [
   { prefix: "/maintenance/contribution", router: ContributionRouter },
