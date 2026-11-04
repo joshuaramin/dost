@@ -1,20 +1,18 @@
 import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import type { Request, Response } from "express";
-
 import { serverAdapter } from "./lib/config/bull-board.js";
-import { printEndpoints } from "./utils/routes.js";
 
+dotenv.config();
+
+import { printEndpoints } from "./utils/routes.js";
 import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
 import { responseWrapperMiddleware } from "./lib/common/middleware.ts/reponse.middleware.js";
-import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
 import { withAuth } from "./lib/helpers/useAuth.js";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
 
-// Routers
 import RolesRouter from "./routes/roles.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import AuthRouter from "./routes/auth.routes.js";
@@ -51,15 +49,11 @@ app.use(
       "Content-Type",
       "Authorization",
       "X-API-Version",
-      "X-API-Key",
+      "x-api-key",
     ],
-
     optionsSuccessStatus: 204,
   }),
 );
-
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ extended: true }));
 
 app.use(
   createApiVersionMiddleware({
@@ -73,22 +67,25 @@ app.use(
   }),
 );
 
-app.use(
-  rateLimit({
-    windowMs: 60_000,
-    limit: 1000,
-    standardHeaders: "draft-8",
-    legacyHeaders: false,
-    message: {
-      success: false,
-      message: "Too many requests. Please try again.",
-    },
-    skip: (req) => req.path === "/",
-  }),
-);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(responseWrapperMiddleware);
 
+app.use(
+  rateLimit({
+    limit: 1000,
+    windowMs: 60_000,
+    standardHeaders: true,
+    legacyHeaders: true,
+    message: "Too many requests. Please try again.",
+  }),
+);
+
+/**
+ * Health check
+ * Does not require authentication or a database connection.
+ */
 app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({
     name: "DOST API",
@@ -103,8 +100,6 @@ app.get("/test-version", (req: Request, res: Response) => {
     api_version: req.apiVersionInfo,
   });
 });
-
-app.use("/admin/queues", withAuth, serverAdapter.getRouter());
 
 const routeDefinitions = [
   { prefix: "/maintenance/contribution", router: ContributionRouter },
