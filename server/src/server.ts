@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import { rateLimit } from "express-rate-limit";
 import type { Request, Response } from "express";
+import { serverAdapter } from "./lib/config/bull-board.js";
 
 dotenv.config();
 
@@ -38,6 +39,8 @@ const allowedOrigins = new Set(
     .map(normalizeOrigin)
     .filter(Boolean),
 );
+
+app.use("/admin/queues", withAuth, serverAdapter.getRouter());
 
 app.use(
   cors({
