@@ -48,7 +48,7 @@ const useFormMutation = <TVariables = unknown, TData = unknown>({
       }
 
       const res = await axios({
-        url: `${process.env.NEXT_PUBLIC_BASE_URL}/${url}`,
+        url: `https://dost-server-git-development-joshuaramins-projects.vercel.app}/${url}`,
         method,
         headers: requestHeaders,
         params,
