@@ -66,7 +66,7 @@ const useFormMutation = <TVariables = unknown, TData = unknown>({
       }
 
       const res = await axios({
-        url: `https://dost-server-git-development-joshuaramins-projects.vercel.app`,
+        url: `https://dost-server-git-development-joshuaramins-projects.vercel.app/${url}`,
         method,
         headers: requestHeaders,
         params,
