@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import { rateLimit } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
+import parseForwarded from "forwarded-parse";
 dotenv.config();
 import { printEndpoints } from "./utils/routes.js";
 import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
@@ -57,6 +58,22 @@ app.use(rateLimit({
     standardHeaders: true,
     legacyHeaders: true,
     message: "Too many requests. Please try again.",
+    keyGenerator: (request) => {
+        let ip = request.ip;
+        try {
+            const forwarded = request.headers.forwarded;
+            if (forwarded) {
+                const proxies = parseForwarded(forwarded);
+                if (proxies.length > 0) {
+                    ip = proxies[0].for;
+                }
+            }
+        }
+        catch (error) {
+            console.error("Failed to parse Forwarded header:", error);
+        }
+        return ipKeyGenerator(ip || request.socket.remoteAddress || "unknown");
+    },
 }));
 /**
  * Health check
