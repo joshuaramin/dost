@@ -5,7 +5,7 @@ import { rateLimit } from "express-rate-limit";
 dotenv.config();
 import { printEndpoints } from "./utils/routes.js";
 import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
-import { withAuth } from "./lib/helpers/useAuth.js";
+import { responseWrapperMiddleware } from "./lib/common/middleware.ts/reponse.middleware.js";
 import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
 import RolesRouter from "./routes/roles.routes.js";
 import UserRouter from "./routes/user.routes.js";
@@ -23,30 +23,21 @@ import ActivityRouter from "./routes/log.routes.js";
 import FormRouter from "./routes/form.route.js";
 import RewardsRouter from "./routes/rewards.routes.js";
 export const app = express();
-/**
- * CORS
- * Configure FRONTEND_URL in Vercel environment variables
- * with your deployed frontend origin.
- */
-const allowedOrigins = [
-    "http://localhost:3000",
-    "https://dost-server-git-development-joshuaramins-projects.vercel.app",
-    ...(process.env.FRONTEND_URL
-        ? process.env.FRONTEND_URL.split(",")
-            .map((origin) => origin.trim())
-            .filter(Boolean)
-        : []),
-];
+const normalizeOrigin = (value) => value.trim().replace(/\/+$/, "");
+const allowedOrigins = new Set(["http://localhost:3000", ...(process.env.FRONTEND_URL?.split(",") ?? [])]
+    .map(normalizeOrigin)
+    .filter(Boolean));
 app.use(cors({
+    origin: "*",
     credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
-    origin: (origin, callback) => {
-        // Permit requests without an Origin header, such as server-to-server calls.
-        if (!origin || allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        }
-        return callback(new Error(`CORS blocked request from origin: ${origin}`));
-    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-API-Version",
+        "x-api-key",
+    ],
+    optionsSuccessStatus: 204,
 }));
 app.use(createApiVersionMiddleware({
     supported: ["2026-02-26"],
@@ -59,6 +50,7 @@ app.use(createApiVersionMiddleware({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(responseWrapperMiddleware);
 app.use(rateLimit({
     limit: 1000,
     windowMs: 60_000,
@@ -77,18 +69,12 @@ app.get("/", (_req, res) => {
         timestamp: new Date().toISOString(),
     });
 });
-/**
- * API version test
- */
-app.get("/test-version", withAuth, (req, res) => {
+app.get("/test-version", (req, res) => {
     res.status(200).json({
         message: "API versioning works!",
         api_version: req.apiVersionInfo,
     });
 });
-/**
- * Route definitions
- */
 const routeDefinitions = [
     { prefix: "/maintenance/contribution", router: ContributionRouter },
     { prefix: "/maintenance/users", router: UserRouter },
@@ -112,14 +98,7 @@ const routeDefinitions = [
 for (const { prefix, router } of routeDefinitions) {
     app.use(prefix, router);
 }
-/**
- * Centralized error handler.
- * Must be registered after all routes.
- */
 app.use(errorHandler);
-/**
- * Print routes for local debugging.
- */
 if (process.env.NODE_ENV !== "production") {
     printEndpoints(routeDefinitions);
 }
