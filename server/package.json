@@ -13,7 +13,7 @@
     "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/system/schema.prisma && prisma generate --schema=src/lib/prisma/geospatial/schema.prisma",
     "start": "node dist/server.js"
   },
-  "keywords": [ ],
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.33.0",
@@ -44,6 +44,7 @@
     "nodemailer": "^10.0.12",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "redis": "^6.3.1",
     "slugify": "^1.6.8",
     "socket.io": "^4.8.3",
     "ua-parser-js": "^2.0.9",
