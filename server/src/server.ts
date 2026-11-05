@@ -81,23 +81,9 @@ app.use(
     legacyHeaders: true,
     message: "Too many requests. Please try again.",
     keyGenerator: (request) => {
-      let ip = request.ip;
+      const clientIp = request.ip || request.socket.remoteAddress;
 
-      try {
-        const forwarded = request.headers.forwarded;
-
-        if (forwarded) {
-          const proxies = parseForwarded(forwarded);
-
-          if (proxies.length > 0) {
-            ip = proxies[0].for;
-          }
-        }
-      } catch (error) {
-        console.error("Failed to parse Forwarded header:", error);
-      }
-
-      return ipKeyGenerator(ip || request.socket.remoteAddress || "unknown");
+      return ipKeyGenerator(clientIp || "unknown");
     },
   }),
 );
