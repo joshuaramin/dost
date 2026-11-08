@@ -18,8 +18,7 @@ export async function sendEmail({
     throw new Error("Sendliberty environment variables are missing.");
   }
 
-  
-  const response = await fetch(SENDLIB_URL, {
+  return await fetch(SENDLIB_URL, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${SENDLIB_KEY}`,
@@ -33,21 +32,4 @@ export async function sendEmail({
     }),
     signal: AbortSignal.timeout(15_000),
   });
-
-  if (!response.ok) {
-    const error = await response.json().catch(() => null);
-
-    console.error("Sendliberty API request failed:", {
-      status: response.status,
-      response: error,
-    });
-
-    throw new Error(`Sendliberty API returned HTTP ${response.status}`);
-  }
-
-  const result: unknown = await response.json();
-
-  console.log(`Email request accepted for ${to}.`);
-
-  return result;
 }
