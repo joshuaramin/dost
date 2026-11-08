@@ -445,14 +445,7 @@ export const AuthRegister = async (data: any) => {
       email: true,
       is_active: true,
       is_deleted: true,
-      Profile: {
-        select: {
-          first_name: true,
-          last_name: true,
-          location: true,
-          image_url: true,
-        },
-      },
+      Profile: true,
       user_preference: {
         select: {
           created_at: true,
@@ -515,9 +508,7 @@ export const AuthRegister = async (data: any) => {
 
   const activationUrl = `${baseUrl.replace(/\/+$/, "")}/auth/verified?token=${encodeURIComponent(token)}`;
 
-  const fullname = [user.Profile?.first_name, user.Profile?.last_name]
-    .filter(Boolean)
-    .join(" ");
+  const fullname = [data.first_name, data.last_name].filter(Boolean).join(" ");
 
   try {
     const html = await renderWelcome(fullname, activationUrl);
