@@ -18,6 +18,7 @@ export async function sendEmail({
     throw new Error("Sendliberty environment variables are missing.");
   }
 
+  
   const response = await fetch(SENDLIB_URL, {
     method: "POST",
     headers: {
