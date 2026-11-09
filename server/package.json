@@ -11,7 +11,8 @@
     "build": "pnpm run prisma:generate && tsc && tsc-alias",
     "prisma:generate": "prisma generate --schema=src/lib/prisma/system/schema.prisma && prisma generate --schema=src/lib/prisma/geospatial/schema.prisma",
     "prisma:migrate": "prisma migrate dev --name=init-db --schema=src/lib/prisma/system/schema.prisma && prisma generate --schema=src/lib/prisma/geospatial/schema.prisma",
-    "start": "node dist/server.js"
+    "start": "node dist/local-server.js",
+    "start:worker": "node dist/workers/index.js"
   },
   "keywords": [ ],
   "author": "",
@@ -37,6 +38,7 @@
     "express": "^5.2.1",
     "express-list-endpoints": "^7.1.1",
     "express-rate-limit": "^8.3.1",
+    "forwarded-parse": "^2.2.0",
     "ioredis": "^5.10.1",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.1",
@@ -44,6 +46,7 @@
     "nodemailer": "^10.0.12",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "redis": "^6.3.1",
     "slugify": "^1.6.8",
     "socket.io": "^4.8.3",
     "ua-parser-js": "^2.0.9",

@@ -1,8 +1,10 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import { rateLimit } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import type { Request, Response } from "express";
+import { serverAdapter } from "./lib/config/bull-board.js";
+import parseForwarded from "forwarded-parse";
 
 dotenv.config();
 
@@ -78,6 +80,11 @@ app.use(
     standardHeaders: true,
     legacyHeaders: true,
     message: "Too many requests. Please try again.",
+    keyGenerator: (request) => {
+      const clientIp = request.ip || request.socket.remoteAddress;
+
+      return ipKeyGenerator(clientIp || "unknown");
+    },
   }),
 );
 
