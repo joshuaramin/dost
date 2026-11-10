@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma/system/prisma.js";
 import { AppError } from "../lib/common/appError.js";
 import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
 import { renderOTPTemplate } from "../lib/emails/templates/advocaid-otp.js";
-import { renderWelcomeTemplate } from "../lib/emails/templates/welcome.js";
+import { renderWelcomeTemplate } from "../lib/emails/templates/adovocaid-welcome.js";
 import { sendEmail } from "../lib/emails/sendEmail.js";
 const UserManage = new PrismaCRUDManager(prisma.user, "user_id");
 const OTPManage = new PrismaCRUDManager(prisma.oTP, "otp_id");

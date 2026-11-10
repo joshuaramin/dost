@@ -19,10 +19,8 @@ import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
 
 import { renderOTPTemplate } from "../lib/emails/templates/advocaid-otp.js";
-import { renderWelcomeTemplate } from "../lib/emails/templates/welcome.js";
+import { renderWelcomeTemplate } from "../lib/emails/templates/adovocaid-welcome.js";
 import { sendEmail } from "../lib/emails/sendEmail.js";
-import { render } from "@react-email/render";
-
 interface DeviceSessions {
   device_name: string;
   device_type: string;
