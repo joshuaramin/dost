@@ -8,3 +8,4 @@ router.get("/provinces", getProvinces);
 router.get("/municipalities", getMunicipalities);
 router.get("/barangays", getBarangays);
 export default router;
+//# sourceMappingURL=geom.routes.js.map

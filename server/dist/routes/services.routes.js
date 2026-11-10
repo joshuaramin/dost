@@ -6,3 +6,4 @@ const router = express.Router();
 router.get("/", withAuth, asyncHandler(getAllTreatmentHubService));
 router.post("/", withAuth, asyncHandler(createTreatmentHubService));
 export default router;
+//# sourceMappingURL=services.routes.js.map

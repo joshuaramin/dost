@@ -21,3 +21,4 @@ export const getAttachmentType = (mimeType) => {
     }
     return AttachmentType.OTHER;
 };
+//# sourceMappingURL=useGetAttachment.js.map

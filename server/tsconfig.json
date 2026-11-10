@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": false,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
@@ -19,13 +20,18 @@
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
+    "sourceMap": true,
     "paths": {
       "@/*": [ "./src/*" ]
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": [ "src/**/*.ts",
+  "include": [
+    "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.d.ts" ],
+    "src/**/*.d.ts",
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ],
   "exclude": [ "node_modules", "dist" ]
 }

@@ -3,3 +3,4 @@ import express from "express";
 const router = express.Router();
 router.get("/", getAllHeatMapGeo);
 export default router;
+//# sourceMappingURL=nlp.routes.js.map

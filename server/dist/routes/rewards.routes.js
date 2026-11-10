@@ -19,3 +19,4 @@ router.post("/badge", withAuth, asyncHandler(createBadge));
 router.patch("/badge/:id", () => { });
 router.put("/badge/:id", () => { });
 export default router;
+//# sourceMappingURL=rewards.routes.js.map

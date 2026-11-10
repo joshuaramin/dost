@@ -16,3 +16,4 @@ export const getDeviceInfo = (req) => {
         is_revoked: false,
     };
 };
+//# sourceMappingURL=deviceParser.js.map

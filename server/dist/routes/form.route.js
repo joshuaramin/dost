@@ -8,3 +8,4 @@ router.get("/", withAuth, asyncHandler(getAllForms));
 router.get("/:id", withAuth, asyncHandler(getFormById));
 router.post("/", withAuth, upload.single("attachment"), asyncHandler(createForm));
 export default router;
+//# sourceMappingURL=form.route.js.map

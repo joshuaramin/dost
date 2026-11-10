@@ -113,3 +113,4 @@ export const getRegionsHierachy = async (request, response) => {
         return response.status(500).json({});
     }
 };
+//# sourceMappingURL=geom.controller.js.map

@@ -74,3 +74,4 @@ export const addSubResource = async (request, response) => {
         success: true,
     });
 };
+//# sourceMappingURL=resource.controller.js.map

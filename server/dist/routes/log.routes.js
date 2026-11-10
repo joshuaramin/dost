@@ -6,3 +6,4 @@ const router = express.Router();
 router.get("/:id", withAuth, asyncHandler(getAllActivityLogs));
 router.post("/", asyncHandler(createActivityLgos));
 export default router;
+//# sourceMappingURL=log.routes.js.map

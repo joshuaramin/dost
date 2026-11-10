@@ -14,3 +14,4 @@ router.patch("/:id", withAuth, asyncHandler(softDeleteOrganization));
 //Patch
 router.put("/:id", withAuth, withPermission("organization-management:update"), updateOrganizatoin);
 export default router;
+//# sourceMappingURL=organization.routes.js.map

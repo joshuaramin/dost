@@ -9,3 +9,4 @@ createBullBoard({
     serverAdapter,
 });
 export { serverAdapter };
+//# sourceMappingURL=bull-board.js.map

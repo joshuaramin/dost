@@ -66,3 +66,4 @@ export const SurveyType = {
     MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
     CHECKBOX: 'CHECKBOX'
 };
+//# sourceMappingURL=enums.js.map

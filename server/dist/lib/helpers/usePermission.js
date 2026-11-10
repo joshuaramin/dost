@@ -40,3 +40,4 @@ export const withPermission = (permissions, mode = "OR") => (req, res, next) => 
         });
     }
 };
+//# sourceMappingURL=usePermission.js.map

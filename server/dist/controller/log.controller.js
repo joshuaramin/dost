@@ -37,3 +37,4 @@ export const createActivityLgos = async (request, response) => {
         success: true,
     });
 };
+//# sourceMappingURL=log.controller.js.map

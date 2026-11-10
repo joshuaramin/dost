@@ -1,0 +1,1 @@
+{"version":3,"file":"prisma.config.js","sourceRoot":"","sources":["../../../../src/lib/prisma/system/prisma.config.ts"],"names":[],"mappings":"AAAA,OAAO,eAAe,CAAC;AACvB,OAAO,EAAE,YAAY,EAAO,MAAM,eAAe,CAAC;AAElD,eAAe,YAAY,CAAC;IAC1B,MAAM,EAAE,eAAe;IACvB,UAAU,EAAE;QACV,IAAI,EAAE,YAAY;KACnB;IACD,UAAU,EAAE;QACV,GAAG,EAAE,OAAO,CAAC,GAAG,CAAC,mBAAmB;KACrC;CACF,CAAC,CAAC"}

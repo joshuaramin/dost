@@ -284,3 +284,4 @@ export const softDeleteEducationResource = async (request, response) => {
         success: true,
     });
 };
+//# sourceMappingURL=educational-resources.controller.js.map

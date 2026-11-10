@@ -45,3 +45,4 @@ export const UpdateOrganization = (id, data) => {
 export const SoftDeleteOrganization = (data) => {
     return OrganizationManage.delete("organization_id", data);
 };
+//# sourceMappingURL=organization.services.js.map

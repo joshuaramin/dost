@@ -34,3 +34,4 @@ export const GetGroupedHeatMapGeo = async () => {
         })),
     };
 };
+//# sourceMappingURL=nlp.services.js.map

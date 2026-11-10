@@ -43,3 +43,4 @@ export const CreateForm = async (data) => {
         user: { connect: { user_id: data.user_id } },
     });
 };
+//# sourceMappingURL=form.services.js.map

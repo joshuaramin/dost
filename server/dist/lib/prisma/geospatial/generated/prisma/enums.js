@@ -12,3 +12,4 @@ export const TreatmentHubStatus = {
     INACTIVE: 'INACTIVE',
     CLOSED: 'CLOSED'
 };
+//# sourceMappingURL=enums.js.map

@@ -15,3 +15,4 @@ router.post("/response/:id", withAuth, asyncHandler(createSurveyResponse));
 router.put("/:id", withAuth, asyncHandler(softDeleteSurvey));
 router.patch("/publish/:id", withAuth, asyncHandler(surveyPublished));
 export default router;
+//# sourceMappingURL=survey.routes.js.map

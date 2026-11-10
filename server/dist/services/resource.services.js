@@ -127,3 +127,4 @@ export const AddSubResources = async (id, data) => {
         },
     });
 };
+//# sourceMappingURL=resource.services.js.map

@@ -99,3 +99,4 @@ export const Verified = async (request, response) => {
         });
     }
 };
+//# sourceMappingURL=auth.controller.js.map

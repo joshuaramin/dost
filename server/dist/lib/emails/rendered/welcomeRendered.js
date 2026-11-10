@@ -6,3 +6,4 @@ export const renderWelcome = async (fullname, activationUrl) => {
         activationUrl,
     }));
 };
+//# sourceMappingURL=welcomeRendered.js.map

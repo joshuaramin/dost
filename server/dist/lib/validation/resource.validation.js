@@ -12,3 +12,4 @@ export const AddSubResourceSchema = z.object({
     name: z.string().min(1, "Sub Resource name is required"),
     order: z.number().positive(),
 });
+//# sourceMappingURL=resource.validation.js.map

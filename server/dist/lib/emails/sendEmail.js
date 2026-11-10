@@ -20,3 +20,4 @@ export async function sendEmail({ to, subject, html, }) {
         signal: AbortSignal.timeout(15_000),
     });
 }
+//# sourceMappingURL=sendEmail.js.map

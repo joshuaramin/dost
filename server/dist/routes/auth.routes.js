@@ -11,3 +11,4 @@ router.post("/logout/:id", asyncHandler(Logout));
 router.post("/registration", asyncHandler(Registration));
 router.post("/resend-otp", asyncHandler(ResendOTP));
 export default router;
+//# sourceMappingURL=auth.routes.js.map

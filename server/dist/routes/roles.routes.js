@@ -15,3 +15,4 @@ router.put("/:id", withAuth, asyncHandler(updateRoles));
 //Put
 router.put("/addRolePermission/:id", withAuth, withPermission("roles-and-permissions:update"), asyncHandler(addRolePermission));
 export default router;
+//# sourceMappingURL=roles.routes.js.map

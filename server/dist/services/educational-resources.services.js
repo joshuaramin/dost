@@ -184,3 +184,4 @@ export const SoftDeleteEducationResource = (data) => {
     console.log("DELETE", data);
     return EducationResourceManage.delete("slug", data);
 };
+//# sourceMappingURL=educational-resources.services.js.map

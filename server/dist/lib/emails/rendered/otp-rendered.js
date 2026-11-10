@@ -4,3 +4,4 @@ import AdvocaidOTP from "../templates/advocaid-otp.js";
 export const renderOTPTemplate = async (fullname, code) => {
     return await render(_jsx(AdvocaidOTP, { fullname: fullname, code: code }));
 };
+//# sourceMappingURL=otp-rendered.js.map

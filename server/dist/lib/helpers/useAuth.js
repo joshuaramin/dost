@@ -41,3 +41,4 @@ export function withAuth(req, res, next) {
         });
     }
 }
+//# sourceMappingURL=useAuth.js.map

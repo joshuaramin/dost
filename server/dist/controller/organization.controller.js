@@ -111,3 +111,4 @@ export const softDeleteOrganization = async (request, response) => {
         success: true,
     });
 };
+//# sourceMappingURL=organization.controller.js.map

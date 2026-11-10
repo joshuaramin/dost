@@ -26,3 +26,4 @@ export const createTreatmentHubService = async (request, response) => {
         success: true,
     });
 };
+//# sourceMappingURL=services.controller.js.map

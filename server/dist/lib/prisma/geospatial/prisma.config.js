@@ -9,3 +9,4 @@ export default defineConfig({
         url: env("DATABASE_URL_POOLED_GEO_DB"),
     },
 });
+//# sourceMappingURL=prisma.config.js.map

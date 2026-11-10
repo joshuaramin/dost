@@ -5,3 +5,4 @@ export const FormSchema = z.object({
     image_url: z.string().optional(),
     user_id: z.string().min(1, "User ID is required"),
 });
+//# sourceMappingURL=form.validation.js.map

@@ -36,3 +36,4 @@ export const CreateTreatmentHubService = (data) => {
         description: data.description,
     });
 };
+//# sourceMappingURL=services.services.js.map

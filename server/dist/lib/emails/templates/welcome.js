@@ -139,3 +139,4 @@ const footerText = {
     marginTop: "10px",
     fontFamily: "Poppins",
 };
+//# sourceMappingURL=welcome.js.map

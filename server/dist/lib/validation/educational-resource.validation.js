@@ -112,3 +112,4 @@ export const CreateEducationCategorySchema = EducationCategorySchema;
 export const UpdateEducationCategorySchema = EducationCategorySchema.partial();
 export const CreateEducationTagSchema = EducationTagSchema;
 export const UpdateEducationTagSchema = EducationTagSchema.partial();
+//# sourceMappingURL=educational-resource.validation.js.map

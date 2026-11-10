@@ -4,3 +4,4 @@ const adapter = new PrismaPg({
     connectionString: "postgres://postgres:root@localhost:5432/nlp",
 });
 export const nlpdb = new PrismaClient({ adapter });
+//# sourceMappingURL=prisma.js.map

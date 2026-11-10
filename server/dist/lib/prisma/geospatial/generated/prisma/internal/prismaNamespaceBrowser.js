@@ -160,3 +160,4 @@ export const NullsOrder = {
     first: 'first',
     last: 'last'
 };
+//# sourceMappingURL=prismaNamespaceBrowser.js.map

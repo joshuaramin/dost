@@ -55,3 +55,4 @@ export const UpdateContributionSchema = z
         });
     }
 });
+//# sourceMappingURL=contribution.validation.js.map

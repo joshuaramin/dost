@@ -9,3 +9,4 @@ export default defineConfig({
         url: process.env.DATABASE_URL_POOLED,
     },
 });
+//# sourceMappingURL=prisma.config.js.map

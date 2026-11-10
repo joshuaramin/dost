@@ -5,3 +5,4 @@ export const OrganizationSchema = z.object({
     contact: z.string().min(1, "Contact Number is required"),
 });
 export const OrganizationUpdateSchema = OrganizationSchema;
+//# sourceMappingURL=organization.validation.js.map

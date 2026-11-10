@@ -19,3 +19,4 @@ router.put("/:slug", withAuth, withPermission("educational-resource:update"), up
 //Patch
 router.patch("/:id", withAuth, withPermission("educational-resources:update"), asyncHandler(softDeleteEducationResource));
 export default router;
+//# sourceMappingURL=educational-resources.routes.js.map

@@ -43,3 +43,4 @@ export const TreatmentHubSchema = z.object({
     has_viral_load_testing: z.boolean().default(false),
 });
 export const CreateTreatmentHubSchema = TreatmentHubSchema;
+//# sourceMappingURL=treatment-hub.validation.js.map

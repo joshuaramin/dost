@@ -90,3 +90,4 @@ export const AddRolePermission = async (role_id, data) => {
         },
     });
 };
+//# sourceMappingURL=roles.services.js.map
