@@ -1,141 +1,378 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { Body, Column, Container, Head, Html, Img, Preview, Row, Section, Text, Button, Font, } from "@react-email/components";
-export default function AdvocaidWelcome({ fullname, activationUrl }) {
-    return (_jsxs(Html, { children: [_jsxs(Head, { children: [_jsx(Font, { fontFamily: "Alegreya", webFont: {
-                            url: "https://fonts.googleapis.com/css2?family=Alegreya",
-                            format: "embedded-opentype",
-                        }, fontWeight: 400, fallbackFontFamily: "Arial" }), _jsx(Font, { fontFamily: "Poppins", webFont: {
-                            url: "https://fonts.googleapis.com/css2?family=Poppins",
-                            format: "embedded-opentype",
-                        }, fontWeight: 400, fallbackFontFamily: "Arial" })] }), _jsx(Preview, { children: "Welcome to ADVOC-AID \u2014 Activate your email address" }), _jsxs(Body, { style: main, children: [_jsx(Section, { style: headerWrapper, children: _jsx(Container, { style: content, children: _jsxs(Row, { children: [_jsx(Column, { style: logoCol, children: _jsx(Img, { src: "https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png", alt: "Advocaid PH", height: 80, width: 80 }) }), _jsxs(Column, { children: [_jsx(Text, { style: headerTitle, children: "HIV GEOSPATIAL SURVEILLANCE" }), _jsx(Text, { style: headerSub, children: "ADVOCACY PROGRAM" })] })] }) }) }), _jsx(Section, { style: divider }), _jsx(Container, { children: _jsxs(Section, { children: [_jsxs(Row, { children: [_jsx(Column, { width: "50", children: _jsx(Section, { style: {
-                                                    borderTop: "2px solid #000",
-                                                    width: "100%",
-                                                    top: "40px",
-                                                } }) }), _jsx(Column, { width: "20", children: _jsx(Text, { children: "\u00A0" }) }), _jsx(Column, { children: _jsx(Text, { style: sectionLabel, children: "You're In" }) })] }), _jsx(Text, { style: titleStyle, children: "Welcome Aboard," }), _jsx(Text, { style: name, children: fullname }), _jsxs(Text, { style: text, children: ["Your Advocaid account has been created and is ready to use. We\u2019re glad to have you as part of the team working toward", " ", _jsx("b", { children: "data-driven HIV advocacy" }), " across the Philippines."] }), _jsx(Text, { style: text, children: "Before you can access your account, please activate your email address by clicking the button below." }), _jsx(Section, { style: buttonSection, children: _jsx(Button, { href: activationUrl, style: activationButton, children: "Activate Email Address" }) }), _jsx(Text, { style: activationText, children: "Clicking this link will verify and activate your email address for your Advocaid account." }), _jsx(Text, { style: text, children: "Once your email has been activated, you can sign in using your email address. We\u2019ll send you a one-time code each time you sign in. No password needed, ever." }), _jsx(Text, { style: text, children: "If you have any questions or need assistance getting started, don\u2019t hesitate to reach out to your team administrator." }), _jsx(Text, { style: fallbackText, children: "If the button above does not work, copy and paste the following link into your browser:" }), _jsx(Text, { style: activationUrlText, children: activationUrl })] }) }), _jsx(Section, { style: footerWrapper, children: _jsxs(Container, { style: content, children: [_jsxs(Row, { children: [_jsx(Column, { style: logoCol, children: _jsx(Img, { src: "https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png", alt: "Advocaid PH", height: 80, width: 80 }) }), _jsxs(Column, { children: [_jsx(Text, { style: footerTitle, children: "ADVOCAID" }), _jsx(Text, { style: footerSub, children: "SECURITY NOTIFICATION" })] })] }), _jsx(Text, { style: footerText, children: "This is an automated security message from Advocaid PH. Please do not reply to this email." }), _jsx(Section, { style: divider2 }), _jsx(Text, { style: footerText, children: "RA 10173 - Data Privacy Act Compliant" })] }) })] })] }));
-}
-const titleStyle = {
-    fontSize: "25px",
-    fontFamily: "Alegreya",
-    margin: "10px 0 0",
+const escapeHtml = (value) => value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+export const renderWelcomeTemplate = async (fullname, activationUrl) => {
+    const safeFullname = escapeHtml(fullname ?? "");
+    const safeActivationUrl = escapeHtml(activationUrl ?? "");
+    return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <title>Welcome to ADVOC-AID</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      font-family: Poppins, Arial, sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    img {
+      border: 0;
+      display: block;
+      outline: none;
+    }
+
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        width: 100% !important;
+      }
+
+      .email-content {
+        padding: 20px !important;
+      }
+
+      .header-title {
+        font-size: 15px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <table
+    role="presentation"
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="background-color: #f2f2f2;"
+  >
+    <tr>
+      <td align="center">
+
+        <!-- Header -->
+        <table
+          role="presentation"
+          class="email-container"
+          width="600"
+          cellpadding="0"
+          cellspacing="0"
+          border="0"
+          style="width: 100%; max-width: 600px;"
+        >
+          <tr>
+            <td style="background-color: #234a6b; padding: 20px;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="90" valign="middle">
+                    <img
+                      src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
+                      alt="Advocaid PH"
+                      width="80"
+                      height="80"
+                    />
+                  </td>
+
+                  <td valign="middle">
+                    <p
+                      class="header-title"
+                      style="
+                        color: #ffffff;
+                        font-family: Alegreya, Georgia, serif;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      HIV GEOSPATIAL SURVEILLANCE
+                    </p>
+
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 12px;
+                        margin: 5px 0 0;
+                      "
+                    >
+                      ADVOCACY PROGRAM
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Accent Divider -->
+          <tr>
+            <td style="background-color: #f59e0b; height: 5px;"></td>
+          </tr>
+
+          <!-- Email Content -->
+          <tr>
+            <td
+              class="email-content"
+              style="background-color: #ffffff; padding: 35px 40px;"
+            >
+
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="50%" valign="middle">
+                    <div style="border-top: 2px solid #000000;"></div>
+                  </td>
+
+                  <td width="20"></td>
+
+                  <td valign="middle">
+                    <p
+                      style="
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      You're In
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <h1
+                style="
+                  color: #222222;
+                  font-family: Alegreya, Georgia, serif;
+                  font-size: 25px;
+                  font-weight: normal;
+                  margin: 25px 0 0;
+                "
+              >
+                Welcome Aboard,
+              </h1>
+
+              <p
+                style="
+                  color: #222222;
+                  font-family: Alegreya, Georgia, serif;
+                  font-size: 18px;
+                  font-weight: bold;
+                  margin: 5px 0 15px;
+                "
+              >
+                ${safeFullname}
+              </p>
+
+              <p style="${bodyTextStyle}">
+                Your Advocaid account has been created and is ready to use.
+                We’re glad to have you as part of the team working toward
+                <strong>data-driven HIV advocacy</strong> across the Philippines.
+              </p>
+
+              <p style="${bodyTextStyle}">
+                Before you can access your account, please activate your email
+                address by clicking the button below.
+              </p>
+
+              <!-- Activation Button -->
+              <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="margin: 30px 0;"
+              >
+                <tr>
+                  <td align="center">
+                    <table role="presentation" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td
+                          align="center"
+                          bgcolor="#f59e0b"
+                          style="border-radius: 6px;"
+                        >
+                          <a
+                            href="${safeActivationUrl}"
+                            target="_blank"
+                            style="
+                              background-color: #f59e0b;
+                              border: 1px solid #f59e0b;
+                              border-radius: 6px;
+                              color: #ffffff;
+                              display: inline-block;
+                              font-family: Poppins, Arial, sans-serif;
+                              font-size: 14px;
+                              font-weight: bold;
+                              padding: 14px 28px;
+                              text-decoration: none;
+                            "
+                          >
+                            Activate Email Address
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <p
+                style="
+                  color: #555555;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  margin: 0 0 25px;
+                  text-align: center;
+                "
+              >
+                Clicking this link will verify and activate your email address
+                for your Advocaid account.
+              </p>
+
+              <p style="${bodyTextStyle}">
+                Once your email has been activated, you can sign in using your
+                email address. We’ll send you a one-time code each time you
+                sign in. No password needed, ever.
+              </p>
+
+              <p style="${bodyTextStyle}">
+                If you have any questions or need assistance getting started,
+                don’t hesitate to reach out to your team administrator.
+              </p>
+
+              <p
+                style="
+                  color: #555555;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  margin: 25px 0 5px;
+                "
+              >
+                If the button above does not work, copy and paste the following
+                link into your browser:
+              </p>
+
+              <p
+                style="
+                  color: #234a6b;
+                  font-family: Arial, sans-serif;
+                  font-size: 11px;
+                  line-height: 1.5;
+                  word-break: break-all;
+                  overflow-wrap: anywhere;
+                  margin: 5px 0 25px;
+                "
+              >
+                <a
+                  href="${safeActivationUrl}"
+                  target="_blank"
+                  style="color: #234a6b;"
+                >
+                  ${safeActivationUrl}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #234a6b; padding: 25px 20px;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="90" valign="middle">
+                    <img
+                      src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
+                      alt="Advocaid PH"
+                      width="80"
+                      height="80"
+                    />
+                  </td>
+
+                  <td valign="middle">
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Alegreya, Georgia, serif;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      ADVOCAID
+                    </p>
+
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 13px;
+                        margin: 5px 0 0;
+                      "
+                    >
+                      SECURITY NOTIFICATION
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <p
+                style="
+                  color: #ffffff;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 11px;
+                  line-height: 1.6;
+                  margin: 15px 0 10px;
+                "
+              >
+                This is an automated security message from Advocaid PH.
+                Please do not reply to this email.
+              </p>
+
+              <div style="height: 1px; background-color: #ffffff;"></div>
+
+              <p
+                style="
+                  color: #ffffff;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 11px;
+                  margin: 10px 0 0;
+                "
+              >
+                RA 10173 - Data Privacy Act Compliant
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
 };
-const divider2 = {
-    padding: "0.1px",
-    backgroundColor: "#ffffff",
-};
-const headerWrapper = {
-    backgroundColor: "#234a6b",
-    padding: "10px 0",
-};
-const sectionLabel = {
-    fontWeight: "bold",
-    fontSize: "12px",
-    marginBottom: "20px",
-    fontFamily: "Poppins",
-};
-const text = {
-    fontSize: "14px",
-    margin: "20px 0",
-    fontFamily: "Poppins",
-    lineHeight: "1.7",
-};
-const name = {
-    fontSize: "18px",
-    fontWeight: "bold",
-    margin: "5px 0 15px",
-    fontFamily: "Alegreya",
-};
-const headerTitle = {
-    color: "#fff",
-    fontSize: "18px",
-    margin: 0,
-    fontFamily: "Alegreya",
-    fontWeight: "bolder",
-};
-const headerSub = {
-    color: "#fff",
-    fontSize: "12px",
-    margin: 0,
-    fontFamily: "Poppins",
-};
-const main = {
-    backgroundColor: "#f2f2f2",
-    margin: 0,
-    padding: 0,
-};
-const content = {
-    width: "100%",
-    maxWidth: "600px",
-    padding: "10px",
-};
-const divider = {
-    backgroundColor: "#f59e0b",
-    paddingTop: "5px",
-};
-const buttonSection = {
-    textAlign: "center",
-    margin: "30px 0",
-};
-const activationButton = {
-    backgroundColor: "#f59e0b",
-    borderRadius: "6px",
-    color: "#ffffff",
-    display: "inline-block",
-    fontFamily: "Poppins, Arial, sans-serif",
-    fontSize: "14px",
-    fontWeight: "bold",
-    lineHeight: "100%",
-    padding: "14px 28px",
-    textDecoration: "none",
-    textAlign: "center",
-};
-const activationText = {
-    fontSize: "12px",
-    color: "#555555",
-    textAlign: "center",
-    fontFamily: "Poppins",
-    lineHeight: "1.6",
-    margin: "0 0 25px",
-};
-const fallbackText = {
-    fontSize: "12px",
-    color: "#555555",
-    fontFamily: "Poppins",
-    lineHeight: "1.6",
-    margin: "25px 0 5px",
-};
-const activationUrlText = {
-    fontSize: "11px",
-    color: "#234a6b",
-    fontFamily: "Arial",
-    lineHeight: "1.5",
-    wordBreak: "break-all",
-    margin: "5px 0 25px",
-};
-const footerWrapper = {
-    backgroundColor: "#234a6b",
-    padding: "20px 0",
-    marginTop: "30px",
-};
-const logoCol = {
-    width: "60px",
-    padding: "0 10px 0 0",
-};
-const footerTitle = {
-    color: "#fff",
-    fontSize: "18px",
-    margin: 0,
-    fontFamily: "Alegreya",
-    fontWeight: "bolder",
-};
-const footerSub = {
-    color: "#fff",
-    fontSize: "13px",
-    margin: 0,
-    fontFamily: "Poppins",
-};
-const footerText = {
-    color: "#fff",
-    fontSize: "11px",
-    marginTop: "10px",
-    fontFamily: "Poppins",
-};
+const bodyTextStyle = `
+  color: #222222;
+  font-family: Poppins, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 20px 0;
+`;

@@ -3,8 +3,6 @@ import express from "express";
 import cors from "cors";
 import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import type { Request, Response } from "express";
-import { serverAdapter } from "./lib/config/bull-board.js";
-import parseForwarded from "forwarded-parse";
 
 dotenv.config();
 
