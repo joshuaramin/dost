@@ -18,10 +18,9 @@ import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 
 import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
 
-import { renderOTPTemplate } from "../lib/emails/rendered/otpRendered.js";
-import { renderWelcome } from "../lib/emails/rendered/welcomeRendered.js";
+import { renderOTPTemplate } from "../lib/emails/templates/advocaid-otp.js";
+import { renderWelcomeTemplate } from "../lib/emails/templates/adovocaid-welcome.js";
 import { sendEmail } from "../lib/emails/sendEmail.js";
-
 interface DeviceSessions {
   device_name: string;
   device_type: string;
@@ -511,7 +510,7 @@ export const AuthRegister = async (data: any) => {
   const fullname = [data.first_name, data.last_name].filter(Boolean).join(" ");
 
   try {
-    const html = await renderWelcome(fullname, activationUrl);
+    const html = await renderWelcomeTemplate(fullname, activationUrl);
 
     await sendEmail({
       to: user.email,
