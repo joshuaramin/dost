@@ -4,4 +4,3 @@ export const authQueue = new Queue("auth", {
     connection,
 });
 export const authVerified = new Queue("registration-email", { connection });
-//# sourceMappingURL=auth.queue.js.map

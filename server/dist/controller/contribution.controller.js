@@ -84,4 +84,3 @@ export const softDeleteContribution = async (request, response) => {
         success: true,
     });
 };
-//# sourceMappingURL=contribution.controller.js.map

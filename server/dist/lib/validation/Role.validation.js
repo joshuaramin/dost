@@ -4,4 +4,3 @@ export const RoleSchema = z.object({
     description: z.string().min(1, "Role Description is required"),
 });
 export const UpdaetRoleSchema = RoleSchema;
-//# sourceMappingURL=Role.validation.js.map

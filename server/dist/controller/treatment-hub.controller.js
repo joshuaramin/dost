@@ -46,4 +46,3 @@ export const createTreatmentHub = async (request, response) => {
         success: true,
     });
 };
-//# sourceMappingURL=treatment-hub.controller.js.map

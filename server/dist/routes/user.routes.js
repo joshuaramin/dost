@@ -16,4 +16,3 @@ router.patch("/:id/language", withAuth, asyncHandler(userLanguage));
 router.patch("/:id/avatar", withAuth, upload.single("image_url"), asyncHandler(updateUserProfile));
 router.put("/:id", withAuth, withPermission("user-management:update"), asyncHandler(softDeleteUser));
 export default router;
-//# sourceMappingURL=user.routes.js.map

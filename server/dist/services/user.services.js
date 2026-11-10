@@ -220,4 +220,3 @@ export const SoftDeleteUser = async (data) => {
     console.log(data);
     return UserManage.delete("user_id", data);
 };
-//# sourceMappingURL=user.services.js.map

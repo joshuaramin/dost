@@ -150,4 +150,3 @@ authVerified.on("error", (error) => {
     console.error("[Registration Worker] Error:", error.message);
 });
 console.log("🚀 Email workers initialized");
-//# sourceMappingURL=auth.worker.js.map

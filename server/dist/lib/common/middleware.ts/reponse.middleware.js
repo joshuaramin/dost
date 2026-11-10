@@ -19,4 +19,3 @@ export function responseWrapperMiddleware(req, res, next) {
     };
     next();
 }
-//# sourceMappingURL=reponse.middleware.js.map

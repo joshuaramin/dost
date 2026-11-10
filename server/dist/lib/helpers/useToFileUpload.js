@@ -24,4 +24,3 @@ export const uploadFileToS3 = async (file, filename) => {
         throw error;
     }
 };
-//# sourceMappingURL=useToFileUpload.js.map

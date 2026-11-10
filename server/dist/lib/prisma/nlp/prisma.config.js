@@ -9,4 +9,3 @@ export default defineConfig({
         url: "postgres://postgres:root@localhost:5432/nlp",
     },
 });
-//# sourceMappingURL=prisma.config.js.map

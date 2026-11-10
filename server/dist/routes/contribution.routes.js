@@ -9,4 +9,3 @@ router.get("/:id", withAuth, asyncHandler(getContributionById));
 router.post("/", withAuth, upload.single("attachment"), asyncHandler(createContribution));
 router.patch("/:id", withAuth, asyncHandler(updateContribution));
 export default router;
-//# sourceMappingURL=contribution.routes.js.map

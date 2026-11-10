@@ -88,4 +88,3 @@ export const softDeleteUser = async (request, response) => {
         success: true,
     });
 };
-//# sourceMappingURL=user.controller.js.map

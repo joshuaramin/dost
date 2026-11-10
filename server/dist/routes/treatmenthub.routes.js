@@ -8,4 +8,3 @@ router.get("/:id", getTreatmentHubById);
 router.post("/", withAuth, withPermission("treatment-hub:create"), createTreatmentHub);
 router.patch("/:id", withAuth, withPermission("treatment-hub:update"));
 export default router;
-//# sourceMappingURL=treatmenthub.routes.js.map

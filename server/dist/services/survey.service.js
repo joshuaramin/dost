@@ -257,4 +257,3 @@ export const UpdateSurveyPublished = async (id, data) => {
         is_published: data,
     });
 };
-//# sourceMappingURL=survey.service.js.map

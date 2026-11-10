@@ -147,4 +147,3 @@ const footerText = {
     marginTop: "10px",
     fontFamily: "Poppins",
 };
-//# sourceMappingURL=advocaid-otp.js.map

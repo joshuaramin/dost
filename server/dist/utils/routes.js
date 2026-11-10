@@ -53,4 +53,3 @@ export const printEndpoints = (routeDefinitions) => {
     const routes = getEndpoints(routeDefinitions);
     console.table(routes);
 };
-//# sourceMappingURL=routes.js.map

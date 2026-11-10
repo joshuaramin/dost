@@ -46,4 +46,3 @@ export const welcomeQueue = new Worker("welcome", async (job) => {
     return result;
 }, { connection });
 console.log("🚀 WELCOME EMAIL EXECUTED");
-//# sourceMappingURL=user.workers.js.map

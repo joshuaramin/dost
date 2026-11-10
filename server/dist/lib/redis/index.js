@@ -26,4 +26,3 @@ connection.on("error", (error) => {
 connection.on("close", () => {
     console.warn("[Redis] Connection closed.");
 });
-//# sourceMappingURL=index.js.map

@@ -25,4 +25,3 @@ export const RegisterUserSchema = UserSchema.extend({
     role_id: z.string().min(1, "Role is required"),
     organization_id: z.string().optional(),
 });
-//# sourceMappingURL=user.validation.js.map

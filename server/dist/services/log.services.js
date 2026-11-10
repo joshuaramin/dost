@@ -38,4 +38,3 @@ export const CreateActivityLogs = async (data) => {
         user: { connect: { user_id: data.user_id } },
     });
 };
-//# sourceMappingURL=log.services.js.map

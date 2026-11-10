@@ -9,4 +9,3 @@ const adapter = new PrismaPg({
     connectionString,
 });
 export const geodb = new PrismaClient({ adapter });
-//# sourceMappingURL=prisma.js.map

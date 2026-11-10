@@ -133,4 +133,3 @@ export const UpdateContributeById = async (data) => {
 export const SoftDeleteContribution = async (contribution_id) => {
     return ContributionManage.delete("contribution_id", contribution_id);
 };
-//# sourceMappingURL=contribution.services.js.map

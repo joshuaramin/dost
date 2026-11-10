@@ -9,4 +9,3 @@ const useSlugify = (text) => {
     });
 };
 export default useSlugify;
-//# sourceMappingURL=useSlugify.js.map

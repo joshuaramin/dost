@@ -14,4 +14,3 @@ export const errorHandler = (err, req, res, next) => {
         message: "Internal Server Error",
     });
 };
-//# sourceMappingURL=errorHandler.js.map

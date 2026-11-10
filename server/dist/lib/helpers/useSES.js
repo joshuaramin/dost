@@ -40,4 +40,3 @@ const sendEmailSES = async ({ html, subject, bccAddress, ccAddress, toAddress, }
     }
 };
 export default sendEmailSES;
-//# sourceMappingURL=useSES.js.map

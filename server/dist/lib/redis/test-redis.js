@@ -32,4 +32,3 @@ async function main() {
     }
 }
 main();
-//# sourceMappingURL=test-redis.js.map

@@ -174,4 +174,3 @@ export const GetBarangays = async (municipalityId) => {
         ORDER BY b.name_3;
         `, municipalityId);
 };
-//# sourceMappingURL=geom.services.js.map

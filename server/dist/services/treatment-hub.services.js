@@ -129,4 +129,3 @@ export const CreateTreatmentHub = async (data) => {
 export const UpdateTreatmentHubById = async (id, data) => {
     return TreatmentHubManage.update("slug", data, {});
 };
-//# sourceMappingURL=treatment-hub.services.js.map

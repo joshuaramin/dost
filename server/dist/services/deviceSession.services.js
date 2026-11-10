@@ -22,4 +22,3 @@ export const GetAllDeviceSession = async (id, { after, filter: { orderBy, search
         },
     });
 };
-//# sourceMappingURL=deviceSession.services.js.map

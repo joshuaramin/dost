@@ -56,4 +56,3 @@ export function createApiVersionMiddleware(config) {
         next();
     };
 }
-//# sourceMappingURL=api.middleware.js.map

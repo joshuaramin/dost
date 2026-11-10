@@ -36,4 +36,3 @@ export const formatMultiAdminToGeoJSON = (rows) => {
         },
     };
 };
-//# sourceMappingURL=formatRegionToGeoJSON.js.map

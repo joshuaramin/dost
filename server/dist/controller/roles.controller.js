@@ -82,4 +82,3 @@ export const addRolePermission = async (request, response) => {
         success: true,
     });
 };
-//# sourceMappingURL=roles.controller.js.map

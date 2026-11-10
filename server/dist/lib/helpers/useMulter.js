@@ -25,4 +25,3 @@ const upload = multer({
     }),
 });
 export default upload;
-//# sourceMappingURL=useMulter.js.map

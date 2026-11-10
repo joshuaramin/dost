@@ -62,4 +62,3 @@ export const CreateSurveyResponseSchema = z.object({
         .array(SurveyAnswerSchema)
         .min(1, "At least one answer is required."),
 });
-//# sourceMappingURL=survey.validation.js.map

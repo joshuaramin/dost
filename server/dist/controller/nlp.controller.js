@@ -17,4 +17,3 @@ export const getAllHeatMapGeo = async (request, response) => {
         });
     }
 };
-//# sourceMappingURL=nlp.controller.js.map

@@ -107,4 +107,3 @@ if (process.env.NODE_ENV !== "production") {
     printEndpoints(routeDefinitions);
 }
 export default app;
-//# sourceMappingURL=server.js.map

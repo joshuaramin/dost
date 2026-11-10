@@ -168,4 +168,3 @@ export class PrismaCRUDManager {
         });
     }
 }
-//# sourceMappingURL=useCrud.js.map

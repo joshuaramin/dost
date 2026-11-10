@@ -21,4 +21,3 @@ router.patch("/:id", withAuth, withPermission("resource:update"), asyncHandler(s
 router.patch("/addResource/:id", withAuth, withPermission("resource:update"), asyncHandler(addSubResource));
 //Put
 export default router;
-//# sourceMappingURL=resource.routes.js.map

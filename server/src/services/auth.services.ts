@@ -18,7 +18,7 @@ import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 
 import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
 
-import { renderOTPTemplate } from "../lib/emails/otp-rendered.js";
+import { renderOTPTemplate } from "../lib/emails/rendered/otp-rendered.js";
 import { renderWelcome } from "../lib/emails/rendered/welcomeRendered.js";
 import { sendEmail } from "../lib/emails/sendEmail.js";
 import { render } from "@react-email/render";

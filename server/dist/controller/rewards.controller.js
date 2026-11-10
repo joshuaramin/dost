@@ -97,4 +97,3 @@ export const createRuleReward = async (request, response) => {
         success: true,
     });
 };
-//# sourceMappingURL=rewards.controller.js.map

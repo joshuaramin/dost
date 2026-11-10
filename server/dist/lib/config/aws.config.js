@@ -7,4 +7,3 @@ export const AWS_CONFIG = {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     },
 };
-//# sourceMappingURL=aws.config.js.map
