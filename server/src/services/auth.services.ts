@@ -19,9 +19,8 @@ import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
 
 import { renderOTPTemplate } from "../lib/emails/templates/advocaid-otp.js";
-import { renderWelcome } from "../lib/emails/rendered/welcomeRendered.js";
+import { renderWelcomeTemplate } from "../lib/emails/templates/welcome.js";
 import { sendEmail } from "../lib/emails/sendEmail.js";
-import { render } from "@react-email/render";
 
 interface DeviceSessions {
   device_name: string;
@@ -512,7 +511,7 @@ export const AuthRegister = async (data: any) => {
   const fullname = [data.first_name, data.last_name].filter(Boolean).join(" ");
 
   try {
-    const html = await renderWelcome(fullname, activationUrl);
+    const html = await renderWelcomeTemplate(fullname, activationUrl);
 
     await sendEmail({
       to: user.email,

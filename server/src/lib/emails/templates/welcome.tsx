@@ -1,321 +1,390 @@
-import {
-  Body,
-  Column,
-  Container,
-  Head,
-  Html,
-  Img,
-  Preview,
-  Row,
-  Section,
-  Text,
-  Button,
-  Font,
-} from "@react-email/components";
-
-interface Props {
+interface WelcomeEmailProps {
   fullname: string;
   activationUrl: string;
 }
 
-export default function AdvocaidWelcome({ fullname, activationUrl }: Props) {
-  return (
-    <Html>
-      <Head>
-        <Font
-          fontFamily="Alegreya"
-          webFont={{
-            url: "https://fonts.googleapis.com/css2?family=Alegreya",
-            format: "embedded-opentype",
-          }}
-          fontWeight={400}
-          fallbackFontFamily={"Arial"}
-        />
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
-        <Font
-          fontFamily="Poppins"
-          webFont={{
-            url: "https://fonts.googleapis.com/css2?family=Poppins",
-            format: "embedded-opentype",
-          }}
-          fontWeight={400}
-          fallbackFontFamily={"Arial"}
-        />
-      </Head>
+export const renderWelcomeTemplate = async (
+  fullname: string,
+  activationUrl: string,
+): Promise<string> => {
+  const safeFullname = escapeHtml(fullname ?? "");
+  const safeActivationUrl = escapeHtml(activationUrl ?? "");
 
-      <Preview>Welcome to ADVOC-AID — Activate your email address</Preview>
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <title>Welcome to ADVOC-AID</title>
 
-      <Body style={main}>
-        <Section style={headerWrapper}>
-          <Container style={content}>
-            <Row>
-              <Column style={logoCol}>
-                <Img
-                  src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
-                  alt="Advocaid PH"
-                  height={80}
-                  width={80}
-                />
-              </Column>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
 
-              <Column>
-                <Text style={headerTitle}>HIV GEOSPATIAL SURVEILLANCE</Text>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+      font-family: Poppins, Arial, sans-serif;
+    }
 
-                <Text style={headerSub}>ADVOCACY PROGRAM</Text>
-              </Column>
-            </Row>
-          </Container>
-        </Section>
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
 
-        <Section style={divider} />
+    img {
+      border: 0;
+      display: block;
+      outline: none;
+    }
 
-        <Container>
-          <Section>
-            <Row>
-              <Column width="50">
-                <Section
-                  style={{
-                    borderTop: "2px solid #000",
-                    width: "100%",
-                    top: "40px",
-                  }}
-                />
-              </Column>
+    @media only screen and (max-width: 600px) {
+      .email-container {
+        width: 100% !important;
+      }
 
-              <Column width="20">
-                <Text>&nbsp;</Text>
-              </Column>
+      .email-content {
+        padding: 20px !important;
+      }
 
-              <Column>
-                <Text style={sectionLabel}>You're In</Text>
-              </Column>
-            </Row>
+      .header-title {
+        font-size: 15px !important;
+      }
+    }
+  </style>
+</head>
 
-            <Text style={titleStyle}>Welcome Aboard,</Text>
+<body>
+  <table
+    role="presentation"
+    width="100%"
+    cellpadding="0"
+    cellspacing="0"
+    border="0"
+    style="background-color: #f2f2f2;"
+  >
+    <tr>
+      <td align="center">
 
-            <Text style={name}>{fullname}</Text>
+        <!-- Header -->
+        <table
+          role="presentation"
+          class="email-container"
+          width="600"
+          cellpadding="0"
+          cellspacing="0"
+          border="0"
+          style="width: 100%; max-width: 600px;"
+        >
+          <tr>
+            <td style="background-color: #234a6b; padding: 20px;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="90" valign="middle">
+                    <img
+                      src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
+                      alt="Advocaid PH"
+                      width="80"
+                      height="80"
+                    />
+                  </td>
 
-            <Text style={text}>
-              Your Advocaid account has been created and is ready to use. We’re
-              glad to have you as part of the team working toward{" "}
-              <b>data-driven HIV advocacy</b> across the Philippines.
-            </Text>
+                  <td valign="middle">
+                    <p
+                      class="header-title"
+                      style="
+                        color: #ffffff;
+                        font-family: Alegreya, Georgia, serif;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      HIV GEOSPATIAL SURVEILLANCE
+                    </p>
 
-            <Text style={text}>
-              Before you can access your account, please activate your email
-              address by clicking the button below.
-            </Text>
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 12px;
+                        margin: 5px 0 0;
+                      "
+                    >
+                      ADVOCACY PROGRAM
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-            <Section style={buttonSection}>
-              <Button href={activationUrl} style={activationButton}>
-                Activate Email Address
-              </Button>
-            </Section>
+          <!-- Accent Divider -->
+          <tr>
+            <td style="background-color: #f59e0b; height: 5px;"></td>
+          </tr>
 
-            <Text style={activationText}>
-              Clicking this link will verify and activate your email address for
-              your Advocaid account.
-            </Text>
+          <!-- Email Content -->
+          <tr>
+            <td
+              class="email-content"
+              style="background-color: #ffffff; padding: 35px 40px;"
+            >
 
-            <Text style={text}>
-              Once your email has been activated, you can sign in using your
-              email address. We’ll send you a one-time code each time you sign
-              in. No password needed, ever.
-            </Text>
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="50%" valign="middle">
+                    <div style="border-top: 2px solid #000000;"></div>
+                  </td>
 
-            <Text style={text}>
-              If you have any questions or need assistance getting started,
-              don’t hesitate to reach out to your team administrator.
-            </Text>
+                  <td width="20"></td>
 
-            <Text style={fallbackText}>
-              If the button above does not work, copy and paste the following
-              link into your browser:
-            </Text>
+                  <td valign="middle">
+                    <p
+                      style="
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      You're In
+                    </p>
+                  </td>
+                </tr>
+              </table>
 
-            <Text style={activationUrlText}>{activationUrl}</Text>
-          </Section>
-        </Container>
+              <h1
+                style="
+                  color: #222222;
+                  font-family: Alegreya, Georgia, serif;
+                  font-size: 25px;
+                  font-weight: normal;
+                  margin: 25px 0 0;
+                "
+              >
+                Welcome Aboard,
+              </h1>
 
-        <Section style={footerWrapper}>
-          <Container style={content}>
-            <Row>
-              <Column style={logoCol}>
-                <Img
-                  src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
-                  alt="Advocaid PH"
-                  height={80}
-                  width={80}
-                />
-              </Column>
+              <p
+                style="
+                  color: #222222;
+                  font-family: Alegreya, Georgia, serif;
+                  font-size: 18px;
+                  font-weight: bold;
+                  margin: 5px 0 15px;
+                "
+              >
+                ${safeFullname}
+              </p>
 
-              <Column>
-                <Text style={footerTitle}>ADVOCAID</Text>
+              <p style="${bodyTextStyle}">
+                Your Advocaid account has been created and is ready to use.
+                We’re glad to have you as part of the team working toward
+                <strong>data-driven HIV advocacy</strong> across the Philippines.
+              </p>
 
-                <Text style={footerSub}>SECURITY NOTIFICATION</Text>
-              </Column>
-            </Row>
+              <p style="${bodyTextStyle}">
+                Before you can access your account, please activate your email
+                address by clicking the button below.
+              </p>
 
-            <Text style={footerText}>
-              This is an automated security message from Advocaid PH. Please do
-              not reply to this email.
-            </Text>
+              <!-- Activation Button -->
+              <table
+                role="presentation"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                border="0"
+                style="margin: 30px 0;"
+              >
+                <tr>
+                  <td align="center">
+                    <table role="presentation" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td
+                          align="center"
+                          bgcolor="#f59e0b"
+                          style="border-radius: 6px;"
+                        >
+                          <a
+                            href="${safeActivationUrl}"
+                            target="_blank"
+                            style="
+                              background-color: #f59e0b;
+                              border: 1px solid #f59e0b;
+                              border-radius: 6px;
+                              color: #ffffff;
+                              display: inline-block;
+                              font-family: Poppins, Arial, sans-serif;
+                              font-size: 14px;
+                              font-weight: bold;
+                              padding: 14px 28px;
+                              text-decoration: none;
+                            "
+                          >
+                            Activate Email Address
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
 
-            <Section style={divider2} />
+              <p
+                style="
+                  color: #555555;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  margin: 0 0 25px;
+                  text-align: center;
+                "
+              >
+                Clicking this link will verify and activate your email address
+                for your Advocaid account.
+              </p>
 
-            <Text style={footerText}>
-              RA 10173 - Data Privacy Act Compliant
-            </Text>
-          </Container>
-        </Section>
-      </Body>
-    </Html>
-  );
-}
+              <p style="${bodyTextStyle}">
+                Once your email has been activated, you can sign in using your
+                email address. We’ll send you a one-time code each time you
+                sign in. No password needed, ever.
+              </p>
 
-const titleStyle = {
-  fontSize: "25px",
-  fontFamily: "Alegreya",
-  margin: "10px 0 0",
+              <p style="${bodyTextStyle}">
+                If you have any questions or need assistance getting started,
+                don’t hesitate to reach out to your team administrator.
+              </p>
+
+              <p
+                style="
+                  color: #555555;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 12px;
+                  line-height: 1.6;
+                  margin: 25px 0 5px;
+                "
+              >
+                If the button above does not work, copy and paste the following
+                link into your browser:
+              </p>
+
+              <p
+                style="
+                  color: #234a6b;
+                  font-family: Arial, sans-serif;
+                  font-size: 11px;
+                  line-height: 1.5;
+                  word-break: break-all;
+                  overflow-wrap: anywhere;
+                  margin: 5px 0 25px;
+                "
+              >
+                <a
+                  href="${safeActivationUrl}"
+                  target="_blank"
+                  style="color: #234a6b;"
+                >
+                  ${safeActivationUrl}
+                </a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #234a6b; padding: 25px 20px;">
+              <table role="presentation" width="100%">
+                <tr>
+                  <td width="90" valign="middle">
+                    <img
+                      src="https://d2i0afz2m2bklk.cloudfront.net/advocaid-logo.png"
+                      alt="Advocaid PH"
+                      width="80"
+                      height="80"
+                    />
+                  </td>
+
+                  <td valign="middle">
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Alegreya, Georgia, serif;
+                        font-size: 18px;
+                        font-weight: bold;
+                        margin: 0;
+                      "
+                    >
+                      ADVOCAID
+                    </p>
+
+                    <p
+                      style="
+                        color: #ffffff;
+                        font-family: Poppins, Arial, sans-serif;
+                        font-size: 13px;
+                        margin: 5px 0 0;
+                      "
+                    >
+                      SECURITY NOTIFICATION
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <p
+                style="
+                  color: #ffffff;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 11px;
+                  line-height: 1.6;
+                  margin: 15px 0 10px;
+                "
+              >
+                This is an automated security message from Advocaid PH.
+                Please do not reply to this email.
+              </p>
+
+              <div style="height: 1px; background-color: #ffffff;"></div>
+
+              <p
+                style="
+                  color: #ffffff;
+                  font-family: Poppins, Arial, sans-serif;
+                  font-size: 11px;
+                  margin: 10px 0 0;
+                "
+              >
+                RA 10173 - Data Privacy Act Compliant
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+`;
 };
 
-const divider2 = {
-  padding: "0.1px",
-  backgroundColor: "#ffffff",
-};
-
-const headerWrapper = {
-  backgroundColor: "#234a6b",
-  padding: "10px 0",
-};
-
-const sectionLabel = {
-  fontWeight: "bold",
-  fontSize: "12px",
-  marginBottom: "20px",
-  fontFamily: "Poppins",
-};
-
-const text = {
-  fontSize: "14px",
-  margin: "20px 0",
-  fontFamily: "Poppins",
-  lineHeight: "1.7",
-};
-
-const name = {
-  fontSize: "18px",
-  fontWeight: "bold",
-  margin: "5px 0 15px",
-  fontFamily: "Alegreya",
-};
-
-const headerTitle = {
-  color: "#fff",
-  fontSize: "18px",
-  margin: 0,
-  fontFamily: "Alegreya",
-  fontWeight: "bolder",
-};
-
-const headerSub = {
-  color: "#fff",
-  fontSize: "12px",
-  margin: 0,
-  fontFamily: "Poppins",
-};
-
-const main = {
-  backgroundColor: "#f2f2f2",
-  margin: 0,
-  padding: 0,
-};
-
-const content = {
-  width: "100%",
-  maxWidth: "600px",
-  padding: "10px",
-};
-
-const divider = {
-  backgroundColor: "#f59e0b",
-  paddingTop: "5px",
-};
-
-const buttonSection = {
-  textAlign: "center" as const,
-  margin: "30px 0",
-};
-
-const activationButton = {
-  backgroundColor: "#f59e0b",
-  borderRadius: "6px",
-  color: "#ffffff",
-  display: "inline-block",
-  fontFamily: "Poppins, Arial, sans-serif",
-  fontSize: "14px",
-  fontWeight: "bold",
-  lineHeight: "100%",
-  padding: "14px 28px",
-  textDecoration: "none",
-  textAlign: "center" as const,
-};
-
-const activationText = {
-  fontSize: "12px",
-  color: "#555555",
-  textAlign: "center" as const,
-  fontFamily: "Poppins",
-  lineHeight: "1.6",
-  margin: "0 0 25px",
-};
-
-const fallbackText = {
-  fontSize: "12px",
-  color: "#555555",
-  fontFamily: "Poppins",
-  lineHeight: "1.6",
-  margin: "25px 0 5px",
-};
-
-const activationUrlText = {
-  fontSize: "11px",
-  color: "#234a6b",
-  fontFamily: "Arial",
-  lineHeight: "1.5",
-  wordBreak: "break-all" as const,
-  margin: "5px 0 25px",
-};
-
-const footerWrapper = {
-  backgroundColor: "#234a6b",
-  padding: "20px 0",
-  marginTop: "30px",
-};
-
-const logoCol = {
-  width: "60px",
-  padding: "0 10px 0 0",
-};
-
-const footerTitle = {
-  color: "#fff",
-  fontSize: "18px",
-  margin: 0,
-  fontFamily: "Alegreya",
-  fontWeight: "bolder",
-};
-
-const footerSub = {
-  color: "#fff",
-  fontSize: "13px",
-  margin: 0,
-  fontFamily: "Poppins",
-};
-
-const footerText = {
-  color: "#fff",
-  fontSize: "11px",
-  marginTop: "10px",
-  fontFamily: "Poppins",
-};
+const bodyTextStyle = `
+  color: #222222;
+  font-family: Poppins, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 20px 0;
+`;
