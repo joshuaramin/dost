@@ -9,19 +9,16 @@ interface SendEmailOptions {
   html: string;
 }
 
-export async function sendEmail({
-  to,
-  subject,
-  html,
-}: SendEmailOptions): Promise<unknown> {
+export async function sendEmail({ to, subject, html }: SendEmailOptions) {
   if (!SENDLIB_KEY || !SENDLIB_FROM_EMAIL) {
     throw new Error("Sendliberty environment variables are missing.");
   }
 
-  return await fetch(SENDLIB_URL, {
+  await fetch(SENDLIB_URL, {
     method: "POST",
     headers: {
-      Authorization: `Bearer sl_fa99766a_70215ca10b2a09aa6435b6ac574955410e5088dcca64f6e54aaa901d`,
+      Authorization:
+        "Bearer sl_fa99766a_70215ca10b2a09aa6435b6ac574955410e5088dcca64f6e54aaa901d",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -30,6 +27,5 @@ export async function sendEmail({
       subject,
       html,
     }),
-    signal: AbortSignal.timeout(15_000),
   });
 }
