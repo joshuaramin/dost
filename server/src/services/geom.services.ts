@@ -2,19 +2,10 @@ import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
 import { geodb } from "../lib/prisma/geospatial/prisma.js";
 import { formatMultiAdminToGeoJSON } from "../lib/common/formatRegionToGeoJSON.js";
 import { regions } from "../lib/prisma/geospatial/generated/prisma/client.js";
-import { connection } from "../lib/redis/index.js";
 
 const GEO_TTL_SECONDS = 60 * 60 * 24; // 24 hours
 
 export const GetAllAdminGeo = async () => {
-  const cacheKey = "advocaid:geo:admin:v1";
-
-  const cached = await connection.get(cacheKey);
-
-  if (cached) {
-    return JSON.parse(cached);
-  }
-
   const rows = await geodb.$queryRawUnsafe<any[]>(`
     SELECT
       'region' AS level,
@@ -67,9 +58,7 @@ export const GetAllAdminGeo = async () => {
 
   const result = formatMultiAdminToGeoJSON(rows);
 
-  await connection.set(cacheKey, JSON.stringify(result), "EX", GEO_TTL_SECONDS);
-
-  return result;
+  return await result;
 };
 
 export const GetRegionHierarchy = async () => {

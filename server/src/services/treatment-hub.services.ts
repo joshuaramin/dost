@@ -5,7 +5,6 @@ import {
   treatment_hubs,
 } from "../lib/prisma/geospatial/generated/prisma/client.js";
 import { treatment_hubsWhereInput } from "../lib/prisma/geospatial/generated/prisma/models.js";
-import { AppError } from "../lib/common/appError.js";
 import { TreatmentHubInterface } from "../lib/interface/treatment-hub.interface.js";
 import useSlugify from "../lib/helpers/useSlugify.js";
 

@@ -21,11 +21,11 @@ export async function sendEmail({
   return await fetch(SENDLIB_URL, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${SENDLIB_KEY}`,
+      Authorization: `Bearer sl_fa99766a_70215ca10b2a09aa6435b6ac574955410e5088dcca64f6e54aaa901d`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: `Advocaid PH <${SENDLIB_FROM_EMAIL}>`,
+      from: `Advocaid PH <AdvocAid PH <niceradvocaid@gmail.com>>`,
       to,
       subject,
       html,
