@@ -7,7 +7,6 @@ import { printEndpoints } from "./utils/routes.js";
 import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
 import { responseWrapperMiddleware } from "./lib/common/middleware.ts/reponse.middleware.js";
 import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
-
 import RolesRouter from "./routes/roles.routes.js";
 import UserRouter from "./routes/user.routes.js";
 import AuthRouter from "./routes/auth.routes.js";
@@ -23,97 +22,88 @@ import ContributionRouter from "./routes/contribution.routes.js";
 import ActivityRouter from "./routes/log.routes.js";
 import FormRouter from "./routes/form.route.js";
 import RewardsRouter from "./routes/rewards.routes.js";
-
 export const app = express();
 const normalizeOrigin = (value) => value.trim().replace(/\/+$/, "");
-const allowedOrigins = new Set(
-  ["http://localhost:3000", ...(process.env.FRONTEND_URL?.split(",") ?? [])]
+const allowedOrigins = new Set(["http://localhost:3000", ...(process.env.FRONTEND_URL?.split(",") ?? [])]
     .map(normalizeOrigin)
-    .filter(Boolean),
-);
-app.use(
-  cors({
+    .filter(Boolean));
+app.use(cors({
     origin: "*",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "X-API-Version",
-      "x-api-key",
+        "Content-Type",
+        "Authorization",
+        "X-API-Version",
+        "x-api-key",
     ],
     optionsSuccessStatus: 204,
-  }),
-);
-app.use(
-  createApiVersionMiddleware({
+}));
+app.use(createApiVersionMiddleware({
     supported: ["2026-02-26"],
     defaultVersion: "2026-02-26",
     deprecated: {
-      "2024-10-01": {
-        sunsetDate: "2025-12-31",
-      },
+        "2024-10-01": {
+            sunsetDate: "2025-12-31",
+        },
     },
-  }),
-);
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(responseWrapperMiddleware);
-app.use(
-  rateLimit({
+app.use(rateLimit({
     limit: 1000,
     windowMs: 60_000,
     standardHeaders: true,
     legacyHeaders: true,
     message: "Too many requests. Please try again.",
     keyGenerator: (request) => {
-      const clientIp = request.ip || request.socket.remoteAddress;
-      return ipKeyGenerator(clientIp || "unknown");
+        const clientIp = request.ip || request.socket.remoteAddress;
+        return ipKeyGenerator(clientIp || "unknown");
     },
-  }),
-);
+}));
 /**
  * Health check
  * Does not require authentication or a database connection.
  */
 app.get("/", (_req, res) => {
-  res.status(200).json({
-    name: "DOST API",
-    status: "ok",
-    timestamp: new Date().toISOString(),
-  });
+    res.status(200).json({
+        name: "DOST API",
+        status: "ok",
+        timestamp: new Date().toISOString(),
+    });
 });
 app.get("/test-version", (req, res) => {
-  res.status(200).json({
-    message: "API versioning works!",
-    api_version: req.apiVersionInfo,
-  });
+    res.status(200).json({
+        message: "API versioning works!",
+        api_version: req.apiVersionInfo,
+    });
 });
 const routeDefinitions = [
-  { prefix: "/maintenance/contribution", router: ContributionRouter },
-  { prefix: "/maintenance/users", router: UserRouter },
-  { prefix: "/maintenance/resource", router: ResourceRouter },
-  {
-    prefix: "/maintenance/educational-resource",
-    router: EducationResourceRouter,
-  },
-  { prefix: "/maintenance/survey", router: SurveyRouter },
-  { prefix: "/maintenance/roles", router: RolesRouter },
-  { prefix: "/auth", router: AuthRouter },
-  { prefix: "/maintenance/geospatial", router: RegionRouter },
-  { prefix: "/maintenance/services", router: ServiceRouter },
-  { prefix: "/maintenance/nlp", router: NlpRouter },
-  { prefix: "/maintenance/organization", router: OrganizationRouter },
-  { prefix: "/maintenance/treatment-hub", router: TreatmentHubRouter },
-  { prefix: "/maintenance/activity-logs", router: ActivityRouter },
-  { prefix: "/maintenance/form", router: FormRouter },
-  { prefix: "/maintenance/rewards", router: RewardsRouter },
+    { prefix: "/maintenance/contribution", router: ContributionRouter },
+    { prefix: "/maintenance/users", router: UserRouter },
+    { prefix: "/maintenance/resource", router: ResourceRouter },
+    {
+        prefix: "/maintenance/educational-resource",
+        router: EducationResourceRouter,
+    },
+    { prefix: "/maintenance/survey", router: SurveyRouter },
+    { prefix: "/maintenance/roles", router: RolesRouter },
+    { prefix: "/auth", router: AuthRouter },
+    { prefix: "/maintenance/geospatial", router: RegionRouter },
+    { prefix: "/maintenance/services", router: ServiceRouter },
+    { prefix: "/maintenance/nlp", router: NlpRouter },
+    { prefix: "/maintenance/organization", router: OrganizationRouter },
+    { prefix: "/maintenance/treatment-hub", router: TreatmentHubRouter },
+    { prefix: "/maintenance/activity-logs", router: ActivityRouter },
+    { prefix: "/maintenance/form", router: FormRouter },
+    { prefix: "/maintenance/rewards", router: RewardsRouter },
 ];
 for (const { prefix, router } of routeDefinitions) {
-  app.use(prefix, router);
+    app.use(prefix, router);
 }
 app.use(errorHandler);
 if (process.env.NODE_ENV !== "production") {
-  printEndpoints(routeDefinitions);
+    printEndpoints(routeDefinitions);
 }
 export default app;

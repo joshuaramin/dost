@@ -1,7 +1,7 @@
 import "dotenv/config";
 import { Worker } from "bullmq";
 import { connection } from "../../lib/redis/index.js";
-import { renderOTPTemplate } from "../../lib/emails/rendered/otpRendered.js";
+import { renderOTPTemplate } from "../../lib/emails/rendered/otp-rendered.js";
 import { renderWelcome } from "../../lib/emails/rendered/welcomeRendered.js";
 import { PrismaCRUDManager } from "../../lib/helpers/useCrud.js";
 import { prisma } from "../../lib/prisma/system/prisma.js";
