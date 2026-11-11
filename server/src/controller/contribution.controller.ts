@@ -1,14 +1,14 @@
 import {
   CreateContributionSchema,
   UpdateContributionSchema,
-} from "@/lib/validation/contribution.validation";
+} from "../lib/validation/contribution.validation.js";
 import {
   GetAllContributions,
   GetContributionById,
   CreateContribution,
   SoftDeleteContribution,
   UpdateContributeById,
-} from "@/services/contribution.services";
+} from "../services/contribution.services.js";
 import { Request, Response } from "express";
 import z from "zod";
 

@@ -1,7 +1,7 @@
 import {
   CreateTreatmentHubService,
   GetAllTreatmentHubService,
-} from "@/services/services.services";
+} from "../services/services.services.js";
 import { Request, Response } from "express";
 
 export const getAllTreatmentHubService = async (

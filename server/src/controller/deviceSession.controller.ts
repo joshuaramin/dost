@@ -1,4 +1,4 @@
-import { GetAllDeviceSession } from "@/services/deviceSession.services";
+import { GetAllDeviceSession } from "../services/deviceSession.services.js";
 import { Request, Response } from "express";
 
 export const getAllDeviceSesisonByUserId = async (

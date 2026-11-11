@@ -1,19 +1,26 @@
 import "dotenv/config";
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { prisma } from "@/lib/prisma/system/prisma";
+
+import jwt from "jsonwebtoken";
+
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+
 import {
   ActivityLog,
   DeviceSession,
   OTP,
   User,
-} from "@/lib/prisma/system/generated/prisma/client";
-import jwt from "jsonwebtoken";
-import { generateOTP, hashOTP } from "@/utils/otpGenerator";
-import { AppError } from "@/lib/common/appError";
-import { authQueue, authVerified } from "@/jobs/auth/auth.queue";
-import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { DeviceSessionInterface } from "@/lib/interface/device-sessions";
+} from "../lib/prisma/system/generated/prisma/client.js";
 
+import { AppError } from "../lib/common/appError.js";
+import { DeviceSessionWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
+
+import { generateOTP, hashOTP } from "../utils/otpGenerator.js";
+
+import { renderOTPTemplate } from "../lib/emails/templates/advocaid-otp.js";
+import { renderWelcomeTemplate } from "../lib/emails/templates/adovocaid-welcome.js";
+import { sendEmail } from "../lib/emails/sendEmail.js";
 interface DeviceSessions {
   device_name: string;
   device_type: string;
@@ -24,6 +31,7 @@ interface DeviceSessions {
   is_deleted: boolean;
   is_revoked: boolean;
 }
+
 const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   prisma.user,
   "user_id",
@@ -46,6 +54,77 @@ const ActivityLogManage = new PrismaCRUDManager<
   typeof prisma.activityLog
 >(prisma.activityLog, "activity_logs_id");
 
+const sendLoginOTP = async (
+  email: string,
+  fullname: string,
+  deviceSession: DeviceSessions,
+) => {
+  const recent = await prisma.oTP.count({
+    where: {
+      identifier: email,
+      type: "login",
+      created_at: {
+        gte: new Date(Date.now() - 60 * 1000),
+      },
+    },
+  });
+
+  if (recent >= 3) {
+    throw new AppError("Too many requests. Try again later.", 429);
+  }
+
+  await prisma.oTP.updateMany({
+    where: {
+      identifier: email,
+      type: "login",
+      is_used: false,
+    },
+    data: {
+      is_used: true,
+    },
+  });
+
+  const code = generateOTP();
+  const code_hash = hashOTP(code);
+
+  const otp = await OTPManage.create({
+    identifier: email,
+    type: "login",
+    code_hash,
+    expires_at: new Date(Date.now() + 10 * 60 * 1000),
+    ip_address: deviceSession.ip_address,
+    user_agent: deviceSession.user_agent,
+  });
+
+  try {
+    const html = await renderOTPTemplate(fullname, code);
+
+    await sendEmail({
+      to: "raminjoshua05@gmail.com",
+      subject: "One-Time Password",
+      html,
+    });
+
+    return {
+      email,
+      success: true,
+    };
+  } catch (error) {
+    console.error("OTP email delivery failed:", error);
+
+    await prisma.oTP.update({
+      where: {
+        otp_id: otp.otp_id,
+      },
+      data: {
+        is_used: true,
+      },
+    });
+
+    throw new AppError("Failed to send OTP email.", 500);
+  }
+};
+
 export const AuthLogin = async (data: any, deviceSession: DeviceSessions) => {
   const user = await UserManage.unique("email", data.email);
 
@@ -54,30 +133,18 @@ export const AuthLogin = async (data: any, deviceSession: DeviceSessions) => {
   }
 
   const profile = await prisma.profile.findFirst({
-    where: { User: { email: data.email } },
+    where: {
+      User: {
+        email: data.email,
+      },
+    },
   });
 
-  const fullname = profile?.first_name + " " + profile?.last_name;
+  const fullname = [profile?.first_name, profile?.last_name]
+    .filter(Boolean)
+    .join(" ");
 
-  await authQueue.add(
-    "send-login-otp",
-    {
-      email: data.email,
-      fullname,
-      ip: deviceSession.ip_address,
-      userAgent: deviceSession.user_agent,
-    },
-    {
-      attempts: 5,
-      backoff: {
-        type: "exponential",
-        delay: 3000,
-      },
-      removeOnComplete: true,
-    },
-  );
-
-  return { email: data.email, success: true };
+  return await sendLoginOTP(data.email, fullname, deviceSession);
 };
 
 export const AuthVerfiy = async (
@@ -93,7 +160,9 @@ export const AuthVerfiy = async (
       type: "login",
       is_used: false,
     },
-    orderBy: { created_at: "desc" },
+    orderBy: {
+      created_at: "desc",
+    },
   });
 
   if (!otp) {
@@ -110,8 +179,14 @@ export const AuthVerfiy = async (
 
   if (otp.code_hash !== hashed) {
     await prisma.oTP.update({
-      where: { otp_id: otp.otp_id },
-      data: { attempts: { increment: 1 } },
+      where: {
+        otp_id: otp.otp_id,
+      },
+      data: {
+        attempts: {
+          increment: 1,
+        },
+      },
     });
 
     throw new AppError("Invalid Code", 400);
@@ -121,8 +196,10 @@ export const AuthVerfiy = async (
     is_used: true,
   });
 
-  let user = await prisma.user.findUnique({
-    where: { email },
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
     select: {
       user_id: true,
       email: true,
@@ -139,7 +216,9 @@ export const AuthVerfiy = async (
           rolePermissions: {
             select: {
               Permission: {
-                select: { name: true },
+                select: {
+                  name: true,
+                },
               },
               permission_id: true,
             },
@@ -158,6 +237,7 @@ export const AuthVerfiy = async (
   if (!user) {
     throw new AppError("Email Address is not found", 404);
   }
+
   await DeviceSessionManage.create({
     device_name: deviceSession.device_name,
     expired_at: new Date(Date.now() + 1000 * 60 * 60 * 24),
@@ -168,23 +248,37 @@ export const AuthVerfiy = async (
     ip_address: deviceSession.ip_address,
     is_deleted: false,
     is_revoked: false,
-    user: { connect: { user_id: user.user_id } },
+    user: {
+      connect: {
+        user_id: user.user_id,
+      },
+    },
   });
 
-  const permissions = user?.role?.rolePermissions.map(
+  const permissions = user.role?.rolePermissions.map(
     ({ Permission }) => Permission.name,
   );
 
   console.log("PERMISSIONS: ", permissions);
 
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is not configured.");
+  }
+  await sendEmail({
+    to: "raminjoshua05@gmail.com",
+    subject: "One-Time Password",
+    html: `<p>Login successful for ${user.email}.</p>`,
+  });
   const token = jwt.sign(
     {
       email: user.email,
       user_id: user.user_id,
-      role: user?.role?.name,
+      role: user.role?.name,
       permissions,
     },
-    (process.env.JWT_SECRET as string) || "testing",
+    jwtSecret,
     {
       algorithm: "HS512",
       expiresIn: "1d",
@@ -203,10 +297,16 @@ export const AuthLogout = async (id: string) => {
   await ActivityLogManage.create({
     type: "Logged Out",
     description: "User logged out of the system.",
-    user: { connect: { user_id: user?.user_id } },
+    user: {
+      connect: {
+        user_id: user?.user_id,
+      },
+    },
   });
 
-  return { user };
+  return {
+    user,
+  };
 };
 
 export const GetDeviceSessions = async ({
@@ -216,12 +316,13 @@ export const GetDeviceSessions = async ({
   limit,
   user_id,
 }: DeviceSessionInterface) => {
-  let where: DeviceSessionWhereInput = {
+  const where: DeviceSessionWhereInput = {
     is_deleted: false,
     user: {
       user_id,
     },
   };
+
   return await DeviceSessionManage.read({
     where,
     limit,
@@ -247,53 +348,47 @@ export const GetDeviceSessions = async ({
       os: true,
       user_agent: true,
       user: {
-        select: { user_id: true },
+        select: {
+          user_id: true,
+        },
       },
     },
   });
 };
 
-export const GetResendOTP = async (email: string, deviceSession: any) => {
+export const GetResendOTP = async (
+  email: string,
+  deviceSession: DeviceSessions,
+) => {
   const user = await UserManage.unique("email", email);
 
   if (!user) {
-    throw new AppError("Email address is not found ", 400);
+    throw new AppError("Email address is not found", 400);
   }
 
   const profile = await prisma.profile.findFirst({
     where: {
-      User: { email },
+      User: {
+        email,
+      },
     },
   });
-  const fullname =
-    `${profile?.first_name ?? ""} ${profile?.last_name ?? ""}`.trim();
 
-  await authQueue.add(
-    email,
-    {
-      email: email,
-      fullname,
-      ip: deviceSession.ip_address,
-      userAgent: deviceSession.user_agent,
-    },
-    {
-      attempts: 5,
-      backoff: {
-        type: "exponential",
-        delay: 3000,
-      },
-      removeOnComplete: true,
-    },
-  );
+  const fullname = [profile?.first_name, profile?.last_name]
+    .filter(Boolean)
+    .join(" ");
 
-  return {
-    email,
-    success: true,
-  };
+  return await sendLoginOTP(email, fullname, deviceSession);
 };
 
 export const AuthVerified = async (token: string) => {
-  const payload = jwt.verify(token, process.env.JWT_SECRET!) as {
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is not configured.");
+  }
+
+  const payload = jwt.verify(token, jwtSecret) as {
     user_id: string;
     email: string;
     type: string;
@@ -313,7 +408,7 @@ export const AuthVerified = async (token: string) => {
     return user;
   }
 
-  return UserManage.update("user_id", payload.user_id, {
+  return await UserManage.update("user_id", payload.user_id, {
     is_active: true,
   });
 };
@@ -322,7 +417,6 @@ export const AuthRegister = async (data: any) => {
   const user = await UserManage.create(
     {
       email: data.email,
-
       Profile: {
         create: {
           first_name: data.first_name,
@@ -330,13 +424,11 @@ export const AuthRegister = async (data: any) => {
           location: data.location,
         },
       },
-
       role: {
         connect: {
           role_id: data.role_id,
         },
       },
-
       ...(data.organization_id && {
         organization: {
           connect: {
@@ -356,14 +448,7 @@ export const AuthRegister = async (data: any) => {
       email: true,
       is_active: true,
       is_deleted: true,
-      Profile: {
-        select: {
-          first_name: true,
-          last_name: true,
-          location: true,
-          image_url: true,
-        },
-      },
+      Profile: true,
       user_preference: {
         select: {
           created_at: true,
@@ -383,8 +468,16 @@ export const AuthRegister = async (data: any) => {
           total_points: true,
         },
       },
-      role: { select: { name: true } },
-      organization: { select: { name: true } },
+      role: {
+        select: {
+          name: true,
+        },
+      },
+      organization: {
+        select: {
+          name: true,
+        },
+      },
       created_at: true,
     },
   );
@@ -402,23 +495,40 @@ export const AuthRegister = async (data: any) => {
       type: "email-verification",
     },
     jwtSecret,
+    {
+      expiresIn: "24h",
+    },
   );
 
-  await authVerified.add(
-    "registration-email",
-    {
-      email: user.email,
-      token,
-    },
-    {
-      attempts: 5,
-      backoff: {
-        type: "exponential",
-        delay: 3000,
-      },
-      removeOnComplete: true,
-    },
-  );
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? process.env.PRODUCTION_URL
+      : process.env.DEVELOPMENT_URL;
+
+  if (!baseUrl) {
+    throw new Error("Application URL is not configured.");
+  }
+
+  const activationUrl = `${baseUrl.replace(/\/+$/, "")}/auth/verified?token=${encodeURIComponent(token)}`;
+
+  const fullname = [data.first_name, data.last_name].filter(Boolean).join(" ");
+
+  try {
+    const html = await renderWelcomeTemplate(fullname, activationUrl);
+
+    await sendEmail({
+      to: user.email,
+      subject: "Account Verification",
+      html,
+    });
+  } catch (error) {
+    console.error("Registration email delivery failed:", error);
+
+    throw new AppError(
+      "Account created, but verification email could not be sent. Please request another verification email.",
+      500,
+    );
+  }
 
   return {
     user,

@@ -1,5 +1,9 @@
-import { FormSchema } from "@/lib/validation/form.validation";
-import { CreateForm, GetAllForm, GetFormById } from "@/services/form.services";
+import { FormSchema } from "../lib/validation/form.validation.js";
+import {
+  CreateForm,
+  GetAllForm,
+  GetFormById,
+} from "../services/form.services.js";
 
 import { Request, Response } from "express";
 import { z } from "zod";

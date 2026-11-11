@@ -1,9 +1,9 @@
-import useSlugify from "@/lib/helpers/useSlugify";
+import useSlugify from "../lib/helpers/useSlugify.js";
 
 import {
   CreateSurveyResponseSchema,
   CreateSurveySchema,
-} from "@/lib/validation/survey.validation";
+} from "../lib/validation/survey.validation.js";
 
 import {
   CreateSurvey,
@@ -16,7 +16,7 @@ import {
   SoftDeleteSurvey,
   UpdateSurveyPublished,
   UpdateSurveyQuestion,
-} from "@/services/survey.service";
+} from "../services/survey.service.js";
 
 import { Request, Response } from "express";
 

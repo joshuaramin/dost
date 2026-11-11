@@ -28,6 +28,10 @@ export default function Home() {
   const { data: OrganizationData } = useFormQuery<OrganizationResult>({
     key: ["Organizations"],
     url: "maintenance/organization",
+    params: {
+      orderBy: "created_at",
+      sortBy: "asc",
+    },
   });
 
   const { data: EducationalResourceData, isLoading: EducationLoading } =

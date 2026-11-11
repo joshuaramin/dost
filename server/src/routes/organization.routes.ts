@@ -3,11 +3,11 @@ import {
   getAllOrganization,
   softDeleteOrganization,
   updateOrganizatoin,
-} from "@/controller/organization.controller";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
-import upload from "@/lib/helpers/useMulter";
-import { withPermission } from "@/lib/helpers/usePermission";
+} from "../controller/organization.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import upload from "../lib/helpers/useMulter.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
 import express from "express";
 
 const router = express.Router();

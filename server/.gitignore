@@ -6,3 +6,5 @@ node_modules
 src/prisma/generated
 
 src/prisma/migrations
+.vercel
+.env*

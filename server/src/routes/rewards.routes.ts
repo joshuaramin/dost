@@ -8,9 +8,9 @@ import {
   createReward,
   createRuleReward,
   getAllRewardPointRule,
-} from "@/controller/rewards.controller";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
+} from "../controller/rewards.controller.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
 
 const router = express.Router();
 

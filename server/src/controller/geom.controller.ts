@@ -6,7 +6,7 @@ import {
   GetMunicipalities,
   GetRegionHierarchy,
   GetBarangays,
-} from "@/services/geom.services";
+} from "../services/geom.services.js";
 
 export const getAllGeom = async (_req: Request, res: Response) => {
   try {

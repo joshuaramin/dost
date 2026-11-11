@@ -4,11 +4,11 @@ import {
   GetAllOrganization,
   SoftDeleteOrganization,
   UpdateOrganization,
-} from "@/services/organization.services";
+} from "../services/organization.services.js";
 import {
   OrganizationSchema,
   OrganizationUpdateSchema,
-} from "@/lib/validation/organization.validation";
+} from "../lib/validation/organization.validation.js";
 
 export const getAllOrganization = async (
   request: Request,

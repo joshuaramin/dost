@@ -6,7 +6,7 @@ import {
   getMunicipalities,
   getBarangays,
   getRegionsHierachy,
-} from "@/controller/geom.controller";
+} from "..//controller/geom.controller.js";
 
 const router = express.Router();
 

@@ -1,9 +1,9 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { ActivityLog } from "@/lib/prisma/system/generated/prisma/client";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { ActivityLog } from "../lib/prisma/system/generated/prisma/client.js";
 
-import { prisma } from "@/lib/prisma/system/prisma";
-import { ActivityLogsInterface } from "@/lib/interface/activityLogs.interface";
-import { ActivityLogWhereInput } from "@/lib/prisma/system/generated/prisma/models";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { ActivityLogsInterface } from "../lib/interface/activityLogs.interface.js";
+import { ActivityLogWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
 
 const ActivityLogManage = new PrismaCRUDManager<
   ActivityLog,

@@ -9,11 +9,11 @@ import {
   softDeleteSurvey,
   surveyPublished,
   updateSurveyQuestionById,
-} from "@/controller/survey.conrtoller";
+} from "../controller/survey.conrtoller.js";
 
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { withPermission } from "@/lib/helpers/usePermission";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
 import express from "express";
 
 const router = express.Router();

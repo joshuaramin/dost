@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { DeviceSession } from "@/lib/prisma/system/generated/prisma/client";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { DeviceSessionWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { DeviceSessionInterface } from "@/lib/interface/device-sessions";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { DeviceSession } from "../lib/prisma/system/generated/prisma/client.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { DeviceSessionWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { DeviceSessionInterface } from "../lib/interface/device-sessions.js";
 
 const DeviceSessionManage = new PrismaCRUDManager<
   DeviceSession,

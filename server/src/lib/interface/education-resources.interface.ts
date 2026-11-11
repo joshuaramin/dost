@@ -1,5 +1,4 @@
-import { BasicArgs } from "./basicargs";
-
+import { BasicArgs } from "./basicargs.js";
 export interface EducationalResourceInterface extends BasicArgs {
   category: string;
   status: "DRAFT" | "PUBLISHED" | "ARCHIVED" | string;

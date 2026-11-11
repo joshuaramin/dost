@@ -1,54 +1,58 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import expressRateLimiter from "express-rate-limit";
-import http from "node:http";
-
-import { printEndpoints } from "@/utils/routes";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
+import type { Request, Response } from "express";
 
 dotenv.config();
 
-import { createApiVersionMiddleware } from "@/lib/common/middleware.ts/api.middleware";
-import { responseWrapperMiddleware } from "@/lib/common/middleware.ts/reponse.middleware";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { errorHandler } from "./lib/common/middleware.ts/errorHandler";
+import { printEndpoints } from "./utils/routes.js";
+import { createApiVersionMiddleware } from "./lib/common/middleware.ts/api.middleware.js";
+import { responseWrapperMiddleware } from "./lib/common/middleware.ts/reponse.middleware.js";
+import { withAuth } from "./lib/helpers/useAuth.js";
+import { errorHandler } from "./lib/common/middleware.ts/errorHandler.js";
 
-import RolesRouter from "@/routes/roles.routes";
-import UserRouter from "@/routes/user.routes";
-import AuthRouter from "@/routes/auth.routes";
-import ResourceRouter from "@/routes/resource.routes";
-import RegionRouter from "@/routes/geom.routes";
-import NlpRouter from "@/routes/nlp.routes";
-import OrganizationRouter from "@/routes/organization.routes";
-import EducationResourceRouter from "@/routes/educational-resources.routes";
-import SurveyRouter from "@/routes/survey.routes";
-import TreatmentHubRouter from "@/routes/treatmenthub.routes";
-import ServiceRouter from "@/routes/services.routes";
-import ContributionRouter from "@/routes/contribution.routes";
-import ActivityRouter from "@/routes/log.routes";
-import FormRouter from "@/routes/form.route";
-import RewardsRouter from "@/routes/rewards.routes";
-
-import { createBullBoard } from "@bull-board/api";
-import { ExpressAdapter } from "@bull-board/express";
-import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
-import { authQueue } from "./jobs/auth/auth.queue";
-import { initializeSocket } from "./sockets";
+import RolesRouter from "./routes/roles.routes.js";
+import UserRouter from "./routes/user.routes.js";
+import AuthRouter from "./routes/auth.routes.js";
+import ResourceRouter from "./routes/resource.routes.js";
+import RegionRouter from "./routes/geom.routes.js";
+import NlpRouter from "./routes/nlp.routes.js";
+import OrganizationRouter from "./routes/organization.routes.js";
+import EducationResourceRouter from "./routes/educational-resources.routes.js";
+import SurveyRouter from "./routes/survey.routes.js";
+import TreatmentHubRouter from "./routes/treatmenthub.routes.js";
+import ServiceRouter from "./routes/services.routes.js";
+import ContributionRouter from "./routes/contribution.routes.js";
+import ActivityRouter from "./routes/log.routes.js";
+import FormRouter from "./routes/form.route.js";
+import RewardsRouter from "./routes/rewards.routes.js";
 
 export const app = express();
 
-const httpServer = http.createServer(app);
+const normalizeOrigin = (value: string): string =>
+  value.trim().replace(/\/+$/, "");
 
-initializeSocket(httpServer);
+const allowedOrigins = new Set(
+  ["http://localhost:3000", ...(process.env.FRONTEND_URL?.split(",") ?? [])]
+    .map(normalizeOrigin)
+    .filter(Boolean),
+);
 
-const serverAdapter = new ExpressAdapter();
-
-serverAdapter.setBasePath("/admin/queues");
-
-createBullBoard({
-  queues: [new BullMQAdapter(authQueue)],
-  serverAdapter,
-});
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-API-Version",
+      "x-api-key",
+    ],
+    optionsSuccessStatus: 204,
+  }),
+);
 
 app.use(
   createApiVersionMiddleware({
@@ -65,106 +69,71 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  expressRateLimiter({
-    limit: 1000,
-    windowMs: 60000,
-    standardHeaders: true,
-    legacyHeaders: true,
-    message: "Too many request, Please try again",
-  }),
-);
-
-app.use(
-  cors({
-    credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS"],
-    origin: ["http://localhost:3000"],
-  }),
-);
-
-app.use("/admin/queues", serverAdapter.getRouter());
-
 app.use(responseWrapperMiddleware);
 
+app.use(
+  rateLimit({
+    limit: 1000,
+    windowMs: 60_000,
+    standardHeaders: true,
+    legacyHeaders: true,
+    message: "Too many requests. Please try again.",
+    keyGenerator: (request) => {
+      const clientIp = request.ip || request.socket.remoteAddress;
+
+      return ipKeyGenerator(clientIp || "unknown");
+    },
+  }),
+);
+
+/**
+ * Health check
+ * Does not require authentication or a database connection.
+ */
+app.get("/", (_req: Request, res: Response) => {
+  res.status(200).json({
+    name: "DOST API",
+    status: "ok",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+app.get("/test-version", (req: Request, res: Response) => {
+  res.status(200).json({
+    message: "API versioning works!",
+    api_version: req.apiVersionInfo,
+  });
+});
+
 const routeDefinitions = [
-  {
-    prefix: "/maintenance/contribution",
-    router: ContributionRouter,
-  },
-  {
-    prefix: "/maintenance/users",
-    router: UserRouter,
-  },
-  {
-    prefix: "/maintenance/resource",
-    router: ResourceRouter,
-  },
+  { prefix: "/maintenance/contribution", router: ContributionRouter },
+  { prefix: "/maintenance/users", router: UserRouter },
+  { prefix: "/maintenance/resource", router: ResourceRouter },
   {
     prefix: "/maintenance/educational-resource",
     router: EducationResourceRouter,
   },
-  {
-    prefix: "/maintenance/survey",
-    router: SurveyRouter,
-  },
-  {
-    prefix: "/maintenance/roles",
-    router: RolesRouter,
-  },
-  {
-    prefix: "/auth",
-    router: AuthRouter,
-  },
-  {
-    prefix: "/maintenance/geospatial",
-    router: RegionRouter,
-  },
-  {
-    prefix: "/maintenance/services",
-    router: ServiceRouter,
-  },
-  {
-    prefix: "/maintenance/nlp",
-    router: NlpRouter,
-  },
-  {
-    prefix: "/maintenance/organization",
-    router: OrganizationRouter,
-  },
-  {
-    prefix: "/maintenance/treatment-hub",
-    router: TreatmentHubRouter,
-  },
-  {
-    prefix: "/maintenance/activity-logs",
-    router: ActivityRouter,
-  },
-  {
-    prefix: "/maintenance/form",
-    router: FormRouter,
-  },
-  {
-    prefix: "/maintenance/rewards",
-    router: RewardsRouter,
-  },
+  { prefix: "/maintenance/survey", router: SurveyRouter },
+  { prefix: "/maintenance/roles", router: RolesRouter },
+  { prefix: "/auth", router: AuthRouter },
+  { prefix: "/maintenance/geospatial", router: RegionRouter },
+  { prefix: "/maintenance/services", router: ServiceRouter },
+  { prefix: "/maintenance/nlp", router: NlpRouter },
+  { prefix: "/maintenance/organization", router: OrganizationRouter },
+  { prefix: "/maintenance/treatment-hub", router: TreatmentHubRouter },
+  { prefix: "/maintenance/activity-logs", router: ActivityRouter },
+  { prefix: "/maintenance/form", router: FormRouter },
+  { prefix: "/maintenance/rewards", router: RewardsRouter },
 ] as const;
 
 for (const { prefix, router } of routeDefinitions) {
   app.use(prefix, router);
 }
 
-app.get("/test-version", withAuth, (req, res) => {
-  res.json({
-    message: "API versioning works!",
-    api_version: req.apiVersionInfo,
-  });
-});
-
 app.use(errorHandler);
 
-printEndpoints(routeDefinitions);
+if (process.env.NODE_ENV !== "production") {
+  printEndpoints(routeDefinitions);
+}
 
-httpServer.listen(4000, () => {
-  console.log("Server is running at http://localhost:4000/");
-});
+export default app;

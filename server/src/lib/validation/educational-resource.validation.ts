@@ -1,4 +1,4 @@
-import { booleanField } from "@/utils/booleanParser";
+import { booleanField } from "../../utils/booleanParser.js";
 import { z } from "zod";
 
 export const AttachmentType = z.enum([

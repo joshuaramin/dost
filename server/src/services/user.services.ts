@@ -1,9 +1,9 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { UserInterface } from "@/lib/interface/user.interface";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { User } from "@/lib/prisma/system/generated/prisma/client";
-import { UserWhereInput } from "@/lib/prisma/system/generated/prisma/models";
-import { AppError } from "@/lib/common/appError";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { UserInterface } from "../lib/interface/user.interface.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import { User } from "../lib/prisma/system/generated/prisma/client.js";
+import { UserWhereInput } from "../lib/prisma/system/generated/prisma/models.js";
+import { AppError } from "../lib/common/appError.js";
 
 const UserManage = new PrismaCRUDManager<User, "user_id", typeof prisma.user>(
   prisma.user,

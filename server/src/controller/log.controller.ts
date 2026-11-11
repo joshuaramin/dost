@@ -1,8 +1,8 @@
-import { CreateActivityLog } from "@/lib/validation/activity-log.validation";
+import { CreateActivityLog } from "../lib/validation/activity-log.validation.js";
 import {
   CreateActivityLogs,
   GetAllActivityLogs,
-} from "@/services/log.services";
+} from "../services/log.services.js";
 import { Request, Response } from "express";
 import { z } from "zod";
 

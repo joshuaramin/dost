@@ -5,10 +5,10 @@ import {
   getAllResource,
   getResourceById,
   softDeleteResource,
-} from "@/controller/resource.controller";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { withPermission } from "@/lib/helpers/usePermission";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
+} from "../controller/resource.controller.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
 
 const router = express.Router();
 

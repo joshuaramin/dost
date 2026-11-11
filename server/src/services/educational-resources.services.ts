@@ -1,9 +1,9 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
 import {
   EducationalResourceInterface,
   EducationCategoryInterface,
   EducationTagInterface,
-} from "@/lib/interface/education-resources.interface";
+} from "../lib/interface/education-resources.interface.js";
 import {
   EducationResource,
   EducationCategory,
@@ -11,13 +11,13 @@ import {
   EducationStatus,
   EducationTag,
   Prisma,
-} from "@/lib/prisma/system/generated/prisma/client";
+} from "../lib/prisma/system/generated/prisma/client.js";
 import {
   EducationResourceWhereInput,
   EducationTagWhereInput,
   EducationCategoryWhereInput,
-} from "@/lib/prisma/system/generated/prisma/models";
-import { prisma } from "@/lib/prisma/system/prisma";
+} from "../lib/prisma/system/generated/prisma/models.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 
 //Manage
 

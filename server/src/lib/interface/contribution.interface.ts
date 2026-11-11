@@ -1,4 +1,4 @@
-import { BasicArgs } from "./basicargs";
+import { BasicArgs } from "./basicargs.js";
 
 export interface ContributionInterface extends BasicArgs {
   method: string;

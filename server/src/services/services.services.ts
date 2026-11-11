@@ -1,8 +1,8 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { geodb } from "@/lib/prisma/geospatial/prisma";
-import { services } from "@/lib/prisma/geospatial/generated/prisma/client";
-import { servicesWhereInput } from "@/lib/prisma/geospatial/generated/prisma/models";
-import { TreatmentHubServiceInterace } from "@/lib/interface/service.interface";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { geodb } from "../lib/prisma/geospatial/prisma.js";
+import { services } from "../lib/prisma/geospatial/generated/prisma/client.js";
+import { servicesWhereInput } from "../lib/prisma/geospatial/generated/prisma/models.js";
+import { TreatmentHubServiceInterace } from "../lib/interface/service.interface.js";
 
 const ServiceManage = new PrismaCRUDManager<
   services,
@@ -15,7 +15,7 @@ export const GetAllTreatmentHubService = ({
   before,
   filter: { orderBy, search, sortBy },
   limit,
-}: TreatmentHubServiceInterace) => {
+}: any) => {
   const where: servicesWhereInput = {
     ...(search && {
       name: {

@@ -9,19 +9,24 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "jsx": "react-jsx",
-
-    "noEmit": true,
-    "lib": [ "ES2023" ],
+    "noEmit": false,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "lib": [ "ES2023", "DOM", "ES2022" ],
     "target": "ESNext",
-    "module": "nodenext",
+    "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
+    "types": [ "node" ],
     "paths": {
       "@/*": [ "./src/*" ]
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": [ "src", "src/lib/prisma/system/prisma.config.ts" ]
+  "include": [ "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.d.ts" ],
+  "exclude": [ "node_modules", "dist" ]
 }

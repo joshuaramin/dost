@@ -6,9 +6,9 @@ import {
   Registration,
   ResendOTP,
   Verified,
-} from "@/controller/auth.controller";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import { withAuth } from "@/lib/helpers/useAuth";
+} from "../controller/auth.controller.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
 import express from "express";
 
 const router = express.Router();

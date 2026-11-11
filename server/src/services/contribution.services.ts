@@ -1,11 +1,11 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { ContributionInterface } from "@/lib/interface/contribution.interface";
-import { prisma } from "@/lib/prisma/system/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { ContributionInterface } from "../lib/interface/contribution.interface.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 import {
   Prisma,
   Contribution,
-} from "@/lib/prisma/system/generated/prisma/client";
-import useSlugify from "@/lib/helpers/useSlugify";
+} from "../lib/prisma/system/generated/prisma/client.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
 
 const ContributionManage = new PrismaCRUDManager<
   Contribution,

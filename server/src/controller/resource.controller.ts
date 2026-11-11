@@ -7,11 +7,11 @@ import {
   GetResourceBySlug,
   SoftDeleteResource,
   UpdateResourceById,
-} from "@/services/resource.services";
+} from "../services/resource.services.js";
 import {
   AddSubResourceSchema,
   ResourceSchema,
-} from "@/lib/validation/resource.validation";
+} from "../lib/validation/resource.validation.js";
 
 export const getAllResource = async (request: Request, response: Response) => {
   const { limit, after, orderBy, sortBy, search, before } = request.query;

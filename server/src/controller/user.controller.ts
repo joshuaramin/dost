@@ -2,7 +2,7 @@ import {
   CreateUserSchema,
   UpdateSchema,
   UserSchema,
-} from "@/lib/validation/user.validation";
+} from "../lib/validation/user.validation.js";
 import {
   CreateUser,
   GetAllUsers,
@@ -11,7 +11,7 @@ import {
   UpdateUser,
   UpdateUserAvatar,
   UpdateUserLanguage,
-} from "@/services/user.services";
+} from "../services/user.services.js";
 import { Request, Response } from "express";
 import z from "zod";
 

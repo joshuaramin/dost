@@ -1,8 +1,11 @@
-import useSlugify from "@/lib/helpers/useSlugify";
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import { ResourceInterface } from "@/lib/interface/resource.interface";
-import { prisma } from "@/lib/prisma/system/prisma";
-import { Prisma, Resource } from "@/lib/prisma/system/generated/prisma/client";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import { ResourceInterface } from "../lib/interface/resource.interface.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
+import {
+  Prisma,
+  Resource,
+} from "../lib/prisma/system/generated/prisma/client.js";
 
 const defaultActions = ["create", "read", "update", "delete", "deny", "export"];
 

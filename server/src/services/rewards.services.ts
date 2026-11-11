@@ -1,6 +1,6 @@
-import { PrismaCRUDManager } from "@/lib/helpers/useCrud";
-import useSlugify from "@/lib/helpers/useSlugify";
-import { prisma } from "@/lib/prisma/system/prisma";
+import { PrismaCRUDManager } from "../lib/helpers/useCrud.js";
+import useSlugify from "../lib/helpers/useSlugify.js";
+import { prisma } from "../lib/prisma/system/prisma.js";
 import {
   Prisma,
   RewardLevel,
@@ -8,13 +8,13 @@ import {
   UserBadge,
   RewardPointRule,
   Badge,
-} from "@/lib/prisma/system/generated/prisma/client";
+} from "../lib/prisma/system/generated/prisma/client.js";
 import {
   BadgeWhereInput,
   BadgeWhereUniqueInput,
   RewardLevelWhereInput,
   RewardPointRuleWhereInput,
-} from "@/lib/prisma/system/generated/prisma/models";
+} from "../lib/prisma/system/generated/prisma/models.js";
 import {
   BadgeInterface,
   RewardLevelInterface,
@@ -22,8 +22,8 @@ import {
   RewardTransaction,
   UserBadgeInterface,
   UserRewardInterface,
-} from "@/lib/interface/rewards.interface";
-import { Reward, badge, Rule } from "@/utils/reward_badge.util";
+} from "../lib/interface/rewards.interface.js";
+import { Reward, badge, Rule } from "../utils/reward_badge.util.js";
 
 const RewardLevelManage = new PrismaCRUDManager<
   RewardLevel,

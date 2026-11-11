@@ -9,11 +9,11 @@ import {
   getEducationTag,
   softDeleteEducationResource,
   updateEducationResource,
-} from "@/controller/educational-resources.controller";
-import { withAuth } from "@/lib/helpers/useAuth";
-import { asyncHandler } from "@/lib/common/middleware.ts/asyncHandler";
-import upload from "@/lib/helpers/useMulter";
-import { withPermission } from "@/lib/helpers/usePermission";
+} from "../controller/educational-resources.controller.js";
+import { withAuth } from "../lib/helpers/useAuth.js";
+import { asyncHandler } from "../lib/common/middleware.ts/asyncHandler.js";
+import upload from "../lib/helpers/useMulter.js";
+import { withPermission } from "../lib/helpers/usePermission.js";
 
 const router = express.Router();
 
