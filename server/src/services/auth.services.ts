@@ -100,7 +100,7 @@ const sendLoginOTP = async (
     const html = await renderOTPTemplate(fullname, code);
 
     await sendEmail({
-      to: "raminjoshua05@gmail.com",
+      to: email,
       subject: "One-Time Password",
       html,
     });
@@ -266,11 +266,7 @@ export const AuthVerfiy = async (
   if (!jwtSecret) {
     throw new Error("JWT_SECRET is not configured.");
   }
-  await sendEmail({
-    to: "raminjoshua05@gmail.com",
-    subject: "One-Time Password",
-    html: `<p>Login successful for ${user.email}.</p>`,
-  });
+
   const token = jwt.sign(
     {
       email: user.email,
